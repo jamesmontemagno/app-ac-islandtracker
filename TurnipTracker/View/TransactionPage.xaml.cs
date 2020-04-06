@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace TurnipTracker.View
 {
-    public partial class TurnipTrackingPage : ContentPage
+    public partial class TransactionPage : ContentPage
     {
-        public TurnipTrackingPage()
+        public TransactionPage()
         {
             InitializeComponent();
         }

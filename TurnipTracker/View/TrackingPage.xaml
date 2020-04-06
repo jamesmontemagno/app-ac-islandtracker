@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:model="clr-namespace:TurnipTracker.Model"
+             xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+             x:Class="TurnipTracker.View.TrackingPage"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="Turnip Prices"
+             Shell.NavBarIsVisible="False"
+             x:DataType="viewmodel:TurnipTrackingViewModel">
+    <d:ContentPage.BindingContext>
+        <viewmodel:TrackingViewModel/>
+    </d:ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid RowSpacing="12"
+              Padding="{OnPlatform Android='0,12,0,0', iOS='0,66,0,0'}"
+              BackgroundColor="{StaticResource NavigationPrimary}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label HorizontalOptions="Center" Text="Turnip Tracking"
+                   TextColor="White" FontSize="44"
+                   FontFamily="AnimalCrossing"/>
+            <pancake:PancakeView CornerRadius="36,36,0,0" Grid.Row="1"
+                                 Padding="12,24,12,12"
+                                 BackgroundColor="#F5F5F5">
+                <StackLayout>
+                    <Label FontSize="44"
+                           FontFamily="AnimalCrossing"
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource NavigationPrimary}"
+                           Text="{Binding Source={x:Reference CollectionViewDay}, Path=SelectedItem.DayLong}"/>
+                    <CollectionView x:Name="CollectionViewDay"
+                                    HeightRequest="46"
+                                    SelectionMode="Single"
+                                    ItemsSource="{Binding Days}"
+                                    SelectedItem="{Binding SelectedDay}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="4" Orientation="Horizontal"/>
+                        </CollectionView.ItemsLayout>
+                        <d:CollectionView.ItemsSource>
+                            <x:Array Type="{x:Type model:Day}">
+                                <model:Day DayLong="Sunday" IsSunday="True"/>
+                                <model:Day DayLong="Monday"/>
+                                <model:Day DayLong="Tuesday"/>
+                                <model:Day DayLong="Wednesday"/>
+                                <model:Day DayLong="Thursday"/>
+                                <model:Day DayLong="Friday"/>
+                                <model:Day DayLong="Saturday"/>
+                            </x:Array>
+                        </d:CollectionView.ItemsSource>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Day">
+                                <Grid Padding="2">
+                                    <Frame HeightRequest="42"
+                                           WidthRequest="42"
+                                           Padding="0"
+                                           HasShadow="True"
+                                           Visual="Material"
+                                           CornerRadius="21">
+                                        <Label Text="{Binding DayShort}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <pancake:PancakeView
+                                Margin="4,12"
+                                CornerRadius="24"
+                                BackgroundColor="White"
+                                HasShadow="True"
+                                Padding="12"
+                                IsVisible="{Binding SelectedDay.IsSunday}">
+                        <Grid BindingContext="{Binding SelectedDay}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="🔔" HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   FontSize="32"/>
+                            <Entry
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Visual="Material"
+                                Keyboard="Numeric"
+                                Placeholder="Price"
+                                x:DataType="model:Day"
+                                Text="{Binding PriceAM}"/>
+
+                        </Grid>
+                    </pancake:PancakeView>
+
+                    <!--Sell Days-->
+                    <Grid Margin="0,12,0,0"
+                          RowSpacing="12"
+                          IsVisible="{Binding SelectedDay.IsNotSunday}"
+                          VerticalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <pancake:PancakeView Grid.RowSpan="2"
+                                BindingContext="{Binding SelectedDay}"
+                                CornerRadius="24"
+                                BackgroundColor="White"
+                                Margin="4"
+                                HasShadow="True"
+                                Padding="12">
+                            <Grid x:DataType="model:Day">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="🌅🔔" HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       FontSize="32"
+                                       Grid.ColumnSpan="2"/>
+                                <Entry
+                                       Grid.Row="1"
+                                       Grid.ColumnSpan="2"
+                                       Visual="Material"
+                                       Keyboard="Numeric"
+                                       Placeholder="Price"
+                                       VerticalOptions="Center"
+                                       Text="{Binding PriceAM}"/>
+
+
+                                <Label Grid.Row="2" Grid.Column="0"
+                                       TextColor="Green"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="End"
+                                       FontSize="Large"
+                                       Text="↗️ +14"/>
+
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       TextColor="Green"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="End"
+                                       FontSize="Large"
+                                       Text="🔮 85"/>
+                            </Grid>
+                        </pancake:PancakeView>
+                        <pancake:PancakeView Grid.RowSpan="2"
+                                             Grid.Row="1" Grid.Column="1"
+                                             BindingContext="{Binding SelectedDay}"
+                                CornerRadius="24"
+                                BackgroundColor="White"
+                                Margin="4"
+                                HasShadow="True"
+                                Padding="12">
+                            <Grid x:DataType="model:Day">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="🌉🔔" HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       FontSize="32"
+                                       Grid.ColumnSpan="2"/>
+                                <Entry Grid.Row="1"
+                                       Grid.ColumnSpan="2"
+                                       Visual="Material"
+                                       Keyboard="Numeric"
+                                       Placeholder="Price"
+                                       VerticalOptions="Center"
+                                       Text="{Binding PricePM}"/>
+
+                                <Label Grid.Row="2" Grid.Column="0"
+                                       TextColor="Red"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="End"
+                                       FontSize="Large"
+                                       Text="↘️ -18"/>
+
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       TextColor="Green"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="End"
+                                       FontSize="Large"
+                                       Text="🔮 85"/>
+                            </Grid>
+                        </pancake:PancakeView>
+                    </Grid>
+
+                    <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="End"
+                                 IsVisible="{Binding SelectedDay.IsNotSunday}">
+                        <Label Text="Time Left to Sell:"
+                               TextColor="{StaticResource NavigationPrimary}"
+                               FontSize="Medium"
+                               FontFamily="AnimalCrossing"
+                               VerticalOptions="Center"/>
+                        <Label HorizontalOptions="Center"
+                               Text="3 hours"
+                               TextColor="{StaticResource NavigationPrimary}"
+                               FontSize="44"
+                               FontFamily="AnimalCrossing"/>
+                    </StackLayout>
+                </StackLayout>
+
+            </pancake:PancakeView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

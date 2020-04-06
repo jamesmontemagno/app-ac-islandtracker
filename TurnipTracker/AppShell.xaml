@@ -28,7 +28,15 @@
 
     
     <!-- Your Pages -->
-    <ShellContent ContentTemplate="{DataTemplate view:TurnipTrackingPage}"/>
+    
+    <TabBar>
+        <Tab Title="Tracker">
+            <ShellContent ContentTemplate="{DataTemplate view:TrackingPage}"/>
+        </Tab>
+        <Tab Title="Transations">
+            <ShellContent ContentTemplate="{DataTemplate view:TurnipTrackingPage}"/>
+        </Tab>
+    </TabBar>
     <!-- Optional Templates 
     // These may be provided inline as below or as separate classes.
 
