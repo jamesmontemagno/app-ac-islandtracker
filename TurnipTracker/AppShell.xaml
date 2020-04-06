@@ -34,7 +34,7 @@
             <ShellContent ContentTemplate="{DataTemplate view:TrackingPage}"/>
         </Tab>
         <Tab Title="Transations">
-            <ShellContent ContentTemplate="{DataTemplate view:TurnipTrackingPage}"/>
+            <ShellContent ContentTemplate="{DataTemplate view:TransactionPage}"/>
         </Tab>
     </TabBar>
     <!-- Optional Templates 

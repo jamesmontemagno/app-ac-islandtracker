@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              Title="Turnip Prices"
              Shell.NavBarIsVisible="False"
-             x:DataType="viewmodel:TurnipTrackingViewModel">
+             x:DataType="viewmodel:TrackingViewModel">
     <d:ContentPage.BindingContext>
         <viewmodel:TrackingViewModel/>
     </d:ContentPage.BindingContext>
