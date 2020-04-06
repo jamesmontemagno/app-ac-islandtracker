@@ -8,7 +8,6 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             Title="Turnip Prices"
              Shell.NavBarIsVisible="False"
              x:DataType="viewmodel:TrackingViewModel">
     <d:ContentPage.BindingContext>
@@ -33,7 +32,7 @@
                            FontFamily="AnimalCrossing"
                            HorizontalOptions="Center"
                            TextColor="{StaticResource NavigationPrimary}"
-                           Text="{Binding Source={x:Reference CollectionViewDay}, Path=SelectedItem.DayLong}"/>
+                           Text="{Binding SelectedDay.DayLong}"/>
                     <CollectionView x:Name="CollectionViewDay"
                                     HeightRequest="46"
                                     SelectionMode="Single"

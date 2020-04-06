@@ -1,5 +1,82 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TurnipTracker.View.TransactionPage">
-    <ContentPage.Content>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:model="clr-namespace:TurnipTracker.Model"
+    x:Class="TurnipTracker.View.TransactionPage"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Shell.NavBarIsVisible="False">
+   <ContentPage.Content>
+        <Grid RowSpacing="12"
+              Padding="{OnPlatform Android='0,12,0,0', iOS='0,66,0,0'}"
+              BackgroundColor="{StaticResource NavigationPrimary}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label HorizontalOptions="Center"
+                   Text="Transactions"
+                   TextColor="White" FontSize="44"
+                   FontFamily="AnimalCrossing"/>
+            <pancake:PancakeView CornerRadius="36,36,0,0" Grid.Row="1"
+                                 Padding="0"
+                                 BackgroundColor="#F5F5F5">
+                <CollectionView>
+                    <CollectionView.ItemsSource>
+                         <x:Array Type="{x:Type x:String}">
+                             <x:String></x:String>
+                             <x:String></x:String>
+                             <x:String></x:String>
+                             <x:String></x:String>
+                             <x:String></x:String>
+                             <x:String></x:String>
+                         </x:Array>
+                    </CollectionView.ItemsSource>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <pancake:PancakeView
+                                    BackgroundColor="White"
+                                    CornerRadius="36,0,0,36"
+                                    HasShadow="True"
+                                    Margin="12,8,12,8"
+                                    Padding="12">
+                                    <StackLayout>
+                                        <Label Text="Sun, Apr 5"/>
+                                        <Label Text="100 🔔"/>
+                                        <Label Text="87 bundles"/>
+                                        <Label Text="87000 🔔"/>
+                                    </StackLayout>
+                                </pancake:PancakeView>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                
+            </pancake:PancakeView>
+            <StackLayout Orientation="Horizontal"
+                    Grid.RowSpan="2"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Margin="12">
+                <pancake:PancakeView
+                    HeightRequest="66"
+                    WidthRequest="66"
+                    CornerRadius="33"
+                    HasShadow="True"
+                    BackgroundColor="White">
+                    <pancake:PancakeView.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                    </pancake:PancakeView.GestureRecognizers>
+                    <Label HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Text="➕"
+                           FontSize="Large"/>
+                </pancake:PancakeView>
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

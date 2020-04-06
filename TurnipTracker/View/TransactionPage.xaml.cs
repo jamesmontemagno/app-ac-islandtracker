@@ -11,5 +11,10 @@ namespace TurnipTracker.View
         {
             InitializeComponent();
         }
+
+        async void TapGestureRecognizer_Tapped(System.Object sender, System.EventArgs e)
+        {
+            await DisplayActionSheet("Add Transaction", "Cancel", null, "Purchase", "Sale");
+        }
     }
 }
