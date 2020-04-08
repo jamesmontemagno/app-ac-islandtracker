@@ -24,6 +24,18 @@ namespace TurnipTracker.Model
             set => SetProperty(ref pricePM, value);
         }
 
+        string predictionAM = string.Empty;
+        public string PredictionAM {
+            get => predictionAM;
+            set => SetProperty(ref predictionAM, value);
+        }
+
+        string predictionPM = string.Empty;
+        public string PredictionPM {
+            get => predictionPM;
+            set => SetProperty(ref predictionPM, value);
+        }
+
         public bool IsSunday { get; set; }
         public bool IsNotSunday => !IsSunday;
     }
