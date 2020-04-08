@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+
+namespace TurnipTracker.Model
+{
+    public sealed class PredictedPriceSeries
+    {
+        public string PatternDesc { get; }
+        public int PatternNumber { get; }
+        public List<(int min, int max)> Prices { get; }
+
+        public PredictedPriceSeries(string patternDesc, int patternNumber, List<(int min, int max)> prices)
+        {
+            this.PatternDesc = patternDesc;
+            this.PatternNumber = patternNumber;
+            this.Prices = prices;
+        }
+
+        public int WeeklyMin {
+            get {
+                int min = int.MaxValue;
+                for (int i = 2; i < this.Prices.Count; i++)
+                {
+                    var entry = this.Prices[i];
+                    if (entry.min < min)
+                        min = entry.min;
+                }
+                return min;
+            }
+        }
+
+        public int WeeklyMax {
+            get {
+                int max = 0;
+                for (int i = 2; i < this.Prices.Count; i++)
+                {
+                    var entry = this.Prices[i];
+                    if (entry.max > max)
+                        max = entry.max;
+                }
+                return max;
+            }
+        }
+
+        internal (int min, int max) GetMinMax(int i, bool isPM)
+        {
+            var index = i * 2;
+            if (isPM) index++;
+            return this.Prices[index];
+        }
+
+        [Conditional("DEBUG")]
+        public void Dump()
+        {
+            Console.Write($"{PatternDesc,40}");
+            for (int index = 1; index < this.Prices.Count; index++)
+            {
+                int minPrice = this.Prices[index].min;
+                int maxPrice = this.Prices[index].max;
+                string prices;
+                if (minPrice == maxPrice)
+                    prices = $"{minPrice}";
+                else
+                    prices = $"{minPrice}..{maxPrice}";
+                Console.Write($"{prices,10}");
+            }
+            Console.Write($"{this.WeeklyMin,10}");
+            Console.Write($"{this.WeeklyMax,10}");
+            Console.WriteLine();
+        }
+
+        public override string ToString() => this.PatternDesc;
+    }
+}

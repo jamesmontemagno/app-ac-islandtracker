@@ -153,8 +153,8 @@
                                        TextColor="Green"
                                        HorizontalOptions="Center"
                                        VerticalOptions="End"
-                                       FontSize="Large"
-                                       Text="🔮 85"/>
+                                       FontSize="Small"
+                                       Text="{Binding PredictionAM}"/>
                             </Grid>
                         </pancake:PancakeView>
                         <pancake:PancakeView Grid.RowSpan="2"
@@ -198,8 +198,8 @@
                                        TextColor="Green"
                                        HorizontalOptions="Center"
                                        VerticalOptions="End"
-                                       FontSize="Large"
-                                       Text="🔮 85"/>
+                                       FontSize="Small"
+                                       Text="{Binding PredictionPM}"/>
                             </Grid>
                         </pancake:PancakeView>
                     </Grid>

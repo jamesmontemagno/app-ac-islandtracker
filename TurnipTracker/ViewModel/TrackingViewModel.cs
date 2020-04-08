@@ -34,7 +34,12 @@ namespace TurnipTracker.ViewModel
         public Day SelectedDay
         {
             get => selectedDay;
-            set => SetProperty(ref selectedDay, value);
+            set => SetProperty(ref selectedDay, value, onChanged: SelectedDayChanged);
+        }
+
+        public void SelectedDayChanged()
+        {
+            PredictionUpdater.Update(this.Days);
         }
     }
 }
