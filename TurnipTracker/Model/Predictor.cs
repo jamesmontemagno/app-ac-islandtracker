@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable enable
 namespace TurnipTracker.Model
 {
     public static class Predictor
@@ -17,14 +18,14 @@ namespace TurnipTracker.Model
             int decPhase2Len,
             int highPhase3Len)
         {
-            int buyPrice = givenPrices[0];
+            var buyPrice = givenPrices[0];
             var predictedPrices = new List<(int min, int max)> { (buyPrice, buyPrice), (buyPrice, buyPrice) };
 
             // High Phase 1
             for (var i = 2; i < 2 + highPhase1Len; i++)
             {
-                double minPred = Math.Floor(0.9 * buyPrice);
-                double maxPred = Math.Ceiling(1.4 * buyPrice);
+                var minPred = Math.Floor(0.9 * buyPrice);
+                var maxPred = Math.Ceiling(1.4 * buyPrice);
                 if (i < givenPrices.Length)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
@@ -44,8 +45,8 @@ namespace TurnipTracker.Model
             double maxRate = 8000;
             for (var i = 2 + highPhase1Len; i < 2 + highPhase1Len + decPhase1Len; i++)
             {
-                double minPred = Math.Floor(minRate * buyPrice / 10000.0);
-                double maxPred = Math.Ceiling(maxRate * buyPrice / 10000.0);
+                var minPred = Math.Floor(minRate * buyPrice / 10000.0);
+                var maxPred = Math.Ceiling(maxRate * buyPrice / 10000.0);
 
 
                 if (i < givenPrices.Length)
@@ -70,8 +71,8 @@ namespace TurnipTracker.Model
             // High Phase 2
             for (var i = 2 + highPhase1Len + decPhase1Len; i < 2 + highPhase1Len + decPhase1Len + highPhase2Len; i++)
             {
-                double minPred = Math.Floor(0.9 * buyPrice);
-                double maxPred = Math.Ceiling(1.4 * buyPrice);
+                var minPred = Math.Floor(0.9 * buyPrice);
+                var maxPred = Math.Ceiling(1.4 * buyPrice);
                 if (i < givenPrices.Length)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
@@ -91,8 +92,8 @@ namespace TurnipTracker.Model
             maxRate = 8000;
             for (var i = 2 + highPhase1Len + decPhase1Len + highPhase2Len; i < 2 + highPhase1Len + decPhase1Len + highPhase2Len + decPhase2Len; i++)
             {
-                double minPred = Math.Floor(minRate * buyPrice / 10000);
-                double maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
+                var minPred = Math.Floor(minRate * buyPrice / 10000);
+                var maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
 
 
                 if (i < givenPrices.Length)
@@ -121,8 +122,8 @@ namespace TurnipTracker.Model
             }
             for (var i = 2 + highPhase1Len + decPhase1Len + highPhase2Len + decPhase2Len; i < 14; i++)
             {
-                double minPred = Math.Floor(0.9 * buyPrice);
-                double maxPred = Math.Ceiling(1.4 * buyPrice);
+                var minPred = Math.Floor(0.9 * buyPrice);
+                var maxPred = Math.Ceiling(1.4 * buyPrice);
                 if (i < givenPrices.Length)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
@@ -160,7 +161,7 @@ namespace TurnipTracker.Model
            int[] givenPrices,
            int peakStart)
         {
-            int buyPrice = givenPrices[0];
+            var buyPrice = givenPrices[0];
             var predictedPrices = new List<(int min, int max)> { (buyPrice, buyPrice), (buyPrice, buyPrice) };
 
             double minRate = 8500;
@@ -168,8 +169,8 @@ namespace TurnipTracker.Model
 
             for (var i = 2; i < peakStart; i++)
             {
-                double minPred = Math.Floor(minRate * buyPrice / 10000.0);
-                double maxPred = Math.Ceiling(maxRate * buyPrice / 10000.0);
+                var minPred = Math.Floor(minRate * buyPrice / 10000.0);
+                var maxPred = Math.Ceiling(maxRate * buyPrice / 10000.0);
 
 
                 if (i < givenPrices.Length)
@@ -192,12 +193,12 @@ namespace TurnipTracker.Model
             }
 
             // Now each day is independent of next
-            double[] minRandoms = new double[] { 0.9, 1.4, 2.0, 1.4, 0.9, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4 };
-            double[] maxRandoms = new double[] { 1.4, 2.0, 6.0, 2.0, 1.4, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9 };
+            var minRandoms = new double[] { 0.9, 1.4, 2.0, 1.4, 0.9, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4 };
+            var maxRandoms = new double[] { 1.4, 2.0, 6.0, 2.0, 1.4, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9 };
             for (var i = peakStart; i < 14; i++)
             {
-                double minPred = Math.Floor(minRandoms[i - peakStart] * buyPrice);
-                double maxPred = Math.Ceiling(maxRandoms[i - peakStart] * buyPrice);
+                var minPred = Math.Floor(minRandoms[i - peakStart] * buyPrice);
+                var maxPred = Math.Ceiling(maxRandoms[i - peakStart] * buyPrice);
 
                 if (i < givenPrices.Length)
                 {
@@ -228,15 +229,15 @@ namespace TurnipTracker.Model
 
         static IEnumerable<PredictedPriceSeries> GeneratePattern2(int[] givenPrices)
         {
-            int buyPrice = givenPrices[0];
+            var buyPrice = givenPrices[0];
             var predictedPrices = new List<(int min, int max)> { (buyPrice, buyPrice), (buyPrice, buyPrice) };
 
             double minRate = 8500;
             double maxRate = 9000;
             for (var i = 2; i < 14; i++)
             {
-                double minPred = Math.Floor(minRate * buyPrice / 10000);
-                double maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
+                var minPred = Math.Floor(minRate * buyPrice / 10000);
+                var maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
 
 
                 if (i < givenPrices.Length)
@@ -264,7 +265,7 @@ namespace TurnipTracker.Model
             int[] givenPrices,
             int peakStart)
         {
-            int buyPrice = givenPrices[0];
+            var buyPrice = givenPrices[0];
             var predictedPrices = new List<(int min, int max)> { (buyPrice, buyPrice), (buyPrice, buyPrice) };
 
             double minRate = 4000;
@@ -272,8 +273,8 @@ namespace TurnipTracker.Model
 
             for (var i = 2; i < peakStart; i++)
             {
-                double minPred = Math.Floor(minRate * buyPrice / 10000);
-                double maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
+                var minPred = Math.Floor(minRate * buyPrice / 10000);
+                var maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
 
 
                 if (i < givenPrices.Length)
@@ -299,8 +300,8 @@ namespace TurnipTracker.Model
 
             for (var i = peakStart; i < peakStart + 2; i++)
             {
-                double minPred = Math.Floor(0.9 * buyPrice);
-                double maxPred = Math.Ceiling(1.4 * buyPrice);
+                var minPred = Math.Floor(0.9 * buyPrice);
+                var maxPred = Math.Ceiling(1.4 * buyPrice);
                 if (i < givenPrices.Length)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
@@ -316,8 +317,8 @@ namespace TurnipTracker.Model
 
             // Main spike 1
             {
-                double minPred = Math.Floor(1.4 * buyPrice) - 1;
-                double maxPred = Math.Ceiling(2.0 * buyPrice) - 1;
+                var minPred = Math.Floor(1.4 * buyPrice) - 1;
+                var maxPred = Math.Ceiling(2.0 * buyPrice) - 1;
                 if (peakStart + 2 < givenPrices.Length)
                 {
                     if (givenPrices[peakStart + 2] < minPred || givenPrices[peakStart + 2] > maxPred)
@@ -334,7 +335,7 @@ namespace TurnipTracker.Model
             // Main spike 2
             {
                 double minPred = predictedPrices[peakStart + 2].min;
-                double maxPred = Math.Ceiling(2.0 * buyPrice);
+                var maxPred = Math.Ceiling(2.0 * buyPrice);
                 if (peakStart + 3 < givenPrices.Length)
                 {
                     if (givenPrices[peakStart + 3] < minPred || givenPrices[peakStart + 3] > maxPred)
@@ -350,7 +351,7 @@ namespace TurnipTracker.Model
 
             // Main spike 3
             {
-                double minPred = Math.Floor(1.4 * buyPrice) - 1;
+                var minPred = Math.Floor(1.4 * buyPrice) - 1;
                 double maxPred = predictedPrices[peakStart + 3].max - 1;
                 if (peakStart + 4 < givenPrices.Length)
                 {
@@ -400,7 +401,7 @@ namespace TurnipTracker.Model
 
         static IEnumerable<PredictedPriceSeries> GeneratePattern3(int[] givenPrices)
         {
-            for (int peakStart = 2; peakStart < 10; peakStart++)
+            for (var peakStart = 2; peakStart < 10; peakStart++)
             {
                 var series = GeneratePattern3WithPeak(givenPrices, peakStart);
                 if (series != null)
@@ -420,7 +421,7 @@ namespace TurnipTracker.Model
                 for (var buyPrice = 90; buyPrice <= 110; buyPrice++)
                 {
                     // Create a copy so as not to mutate passed in values
-                    int[] iterSellPrices = new int[sellPrices.Length];
+                    var iterSellPrices = new int[sellPrices.Length];
                     Array.Copy(sellPrices, iterSellPrices, sellPrices.Length);
                     iterSellPrices[0] = iterSellPrices[1] = buyPrice;
                     possibilities.AddRange(Enumerate(iterSellPrices));
@@ -460,16 +461,28 @@ namespace TurnipTracker.Model
         static PredictedPriceSeries GetDailyMinMax(List<PredictedPriceSeries> series)
         {
             var weekMinMaxs = new List<(int min, int max)>();
-            for (int i = 0; i < 14; i++)
+            for (var i = 0; i < 14; i++)
             {
-                int min = int.MaxValue;
-                int max = 0;
-                foreach (var entry in series)
+                int min;
+                int max;
+                if (series.Count == 0)
                 {
-                    if (entry.Prices[i].min < min)
-                        min = entry.Prices[i].min;
-                    if (entry.Prices[i].max > max)
-                        max = entry.Prices[i].max;
+                    // If no series found then return 0 to 999
+                    // This happens when the input data is invalid
+                    min = 0;
+                    max = 999;
+                }
+                else
+                {
+                    min = int.MaxValue;
+                    max = 0;
+                    foreach (var entry in series)
+                    {
+                        if (entry.Prices[i].min < min)
+                            min = entry.Prices[i].min;
+                        if (entry.Prices[i].max > max)
+                            max = entry.Prices[i].max;
+                    }
                 }
                 weekMinMaxs.Add((min, max));
             }
