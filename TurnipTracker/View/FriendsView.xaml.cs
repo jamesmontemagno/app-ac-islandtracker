@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
 
-namespace TurnipTracker
+namespace TurnipTracker.View
 {
-    public partial class AppShell : Xamarin.Forms.Shell
+    public partial class FriendsView : ContentView
     {
-        public AppShell()
+        public FriendsView()
         {
             InitializeComponent();
         }

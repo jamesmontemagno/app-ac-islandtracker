@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms" xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="TurnipTracker.View.FriendsView"
+             BackgroundColor="{StaticResource AcrylicSurface}">
+        <ListView HasUnevenRows="True"
+                  SelectionMode="None"
+                  SeparatorVisibility="None"
+                  VerticalOptions="FillAndExpand"
+                  CachingStrategy="RecycleElement">
+            <ListView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Heather</x:String>
+                    <x:String>Jesse</x:String>
+                    <x:String>Samantha</x:String>
+                    <x:String>Michael</x:String>
+                    <x:String>Christina</x:String>
+                    <x:String>Nana</x:String>
+                </x:Array>
+            </ListView.ItemsSource>
+            <ListView.Header>
+                <Grid BackgroundColor="{StaticResource NavigationPrimary}">
+                    <pancake:PancakeView CornerRadius="36,36,0,0"
+                            Margin="{OnPlatform Android='0,12,0,0', iOS='0,66,0,0'}"
+                        HasShadow="True"
+                        VerticalOptions="FillAndExpand"
+                        BackgroundColor="{StaticResource AcrylicSurface}">
+                        <Grid Padding="12,12,12,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <sharpnado:MaterialFrame
+                                    MaterialTheme="Acrylic"
+                                    CornerRadius="10"
+                                    Padding="24,12"
+                                    Margin="4,12"
+                                    Elevation="4"
+                                    Grid.Column="0"
+                                    HorizontalOptions="FillAndExpand"
+                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                <Grid ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="&#xf01c;"
+                                       FontFamily="FA-S"
+                                       FontSize="24"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                                    <Label Text="Requests"
+                                           FontSize="Medium"
+                                           VerticalOptions="Center"
+                                           Grid.Column="1"/>
+                                    <Frame Padding="0"
+                                           Grid.Column="2"
+                                           HorizontalOptions="End"
+                                           HasShadow="True"
+                                           Visual="Material"
+                                           BackgroundColor="White"
+                                           VerticalOptions="Center"
+                                           HeightRequest="36"
+                                           WidthRequest="36"
+                                           CornerRadius="18">
+                                        <Label Text="1" HorizontalOptions="Center"
+                                               VerticalOptions="Center"
+                                               FontSize="Medium"/>
+                                    </Frame>
+                                </Grid>
+                            </sharpnado:MaterialFrame>
+                
+                            <sharpnado:MaterialFrame 
+                                    MaterialTheme="Acrylic"
+                                    CornerRadius="10"
+                                    Margin="4,12"
+                                    Elevation="4"
+                                    Grid.Column="1"
+                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                <Label Text="&#xf1d8;"
+                                       FontSize="24"
+                                       FontFamily="FA-S"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </sharpnado:MaterialFrame>
+                            <Label Grid.Row="1" Grid.ColumnSpan="2"
+                                   Text="Friends"
+                                   FontFamily="AnimalCrossing"
+                                   Margin="4,0"
+                                   FontSize="36"/>
+                        </Grid>
+                    </pancake:PancakeView>
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                         <sharpnado:MaterialFrame
+                            MaterialTheme="Acrylic"
+                            CornerRadius="10"
+                            Margin="12,8"
+                            Elevation="4"
+                            LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                             <Grid ColumnSpacing="12"
+                                   RowSpacing="4">
+                                 <Grid.RowDefinitions>
+                                     <RowDefinition Height="Auto"/>
+                                     <RowDefinition Height="Auto"/>
+                                     <RowDefinition Height="Auto"/>
+                                 </Grid.RowDefinitions>
+                                 <Grid.ColumnDefinitions>
+                                     <ColumnDefinition Width="Auto"/>
+                                     <ColumnDefinition Width="*"/>
+                                     <ColumnDefinition Width="Auto"/>
+                                 </Grid.ColumnDefinitions>
+                                 <Label Text="🍎" Grid.RowSpan="3"
+                                        FontSize="24"/>
+                                 <Label Text="{Binding .}"
+                                        FontSize="Large"
+                                        Grid.Column="1"/>
+                                 <Label Text="Town Name"
+                                        FontSize="Small"
+                                        Grid.Column="1"
+                                        Grid.Row="1"/>
+                                 <Label Text="1:00 PM"
+                                        FontSize="Small"
+                                        Grid.Column="1"
+                                        Grid.Row="2"/>
+
+                                 <StackLayout Grid.RowSpan="3"
+                                              Grid.Column="2"
+                                              VerticalOptions="Center">
+                                 
+                                     <Label Text="AM: 100 🔔"
+                                            FontSize="Large"/>
+                                 
+                                     <Label Text="PM: 100 🔔"
+                                            FontSize="Large"/>
+                                 </StackLayout>
+
+                             </Grid>
+                    </sharpnado:MaterialFrame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+</ContentView>

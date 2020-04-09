@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TurnipTracker.View.TrackingPage"
+             x:Class="TurnipTracker.View.TrackingView"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:model="clr-namespace:TurnipTracker.Model"
              xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
@@ -11,10 +11,9 @@
              mc:Ignorable="d"
              Shell.NavBarIsVisible="False"
              x:DataType="viewmodel:TrackingViewModel">
-    <d:ContentPage.BindingContext>
+    <ContentView.BindingContext>
         <viewmodel:TrackingViewModel/>
-    </d:ContentPage.BindingContext>
-    <ContentPage.Content>
+    </ContentView.BindingContext>
         <Grid RowSpacing="12"
               Padding="{OnPlatform Android='0,12,0,0', iOS='0,66,0,0'}"
               BackgroundColor="{StaticResource NavigationPrimary}">
@@ -28,9 +27,9 @@
             <pancake:PancakeView CornerRadius="36,36,0,0"
                                  Grid.Row="1"
                                  HasShadow="True"
-                                 Padding="12,24,12,12"
+                                 Padding="12"
                                  BackgroundColor="{StaticResource AcrylicSurface}">
-                <StackLayout>
+                <StackLayout Spacing="0">
                     <Label FontSize="44"
                            FontFamily="AnimalCrossing"
                            HorizontalOptions="Center"
@@ -80,7 +79,7 @@
                     <sharpnado:MaterialFrame
                                 MaterialTheme="Acrylic"
                                 CornerRadius="10"
-                                Margin="4,12"
+                                Margin="4"
                                 Elevation="4"
                                 LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                 IsVisible="{Binding SelectedDay.IsSunday}">
@@ -120,7 +119,7 @@
                         <sharpnado:MaterialFrame
                                 MaterialTheme="Acrylic"
                                 CornerRadius="10"
-                                Margin="4,12"
+                                Margin="4"
                                 Elevation="4"
                                 LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                 Grid.RowSpan="2"
@@ -215,7 +214,7 @@
                     <StackLayout Orientation="Horizontal"
                                  HorizontalOptions="Center"
                                  VerticalOptions="End"
-                                 IsVisible="{Binding SelectedDay.IsNotSunday}">
+                                 IsVisible="false">
                         <Label Text="Time Left to Sell:"
                                TextColor="{StaticResource NavigationPrimary}"
                                FontSize="Medium"
@@ -231,5 +230,4 @@
 
             </pancake:PancakeView>
         </Grid>
-    </ContentPage.Content>
-</ContentPage>
+</ContentView>

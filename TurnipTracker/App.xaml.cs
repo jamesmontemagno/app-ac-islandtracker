@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TurnipTracker.View;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,7 +19,7 @@ namespace TurnipTracker
                     "MediaElement_Experimental"
                 });
 
-            MainPage = new AppShell();
+            MainPage = new MainPage();
         }
 
         protected override void OnStart()
