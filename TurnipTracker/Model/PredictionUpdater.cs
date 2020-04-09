@@ -10,13 +10,16 @@ namespace TurnipTracker.Model
         {
             var sellPrices = GetPricesFromDays(days);
             var dailyMinMax = Predictor.GetDailyMinMax(sellPrices);
-            for (int i = 0; i < days.Count; i++)
+            for (var i = 0; i < days.Count; i++)
             {
-                Day day = days[i];
+                var day = days[i];
                 if (!day.PriceAM.HasValue)
                 {
                     var (min, max) = dailyMinMax.GetMinMax(i, isPM: false);
-                    day.PredictionAM = $"🔮 {min}-{max}";
+                    if (min == max)
+                        day.PredictionAM = $"🔮 {min}";
+                    else
+                        day.PredictionAM = $"🔮 {min}-{max}";
                 }
                 else
                 {
@@ -26,7 +29,10 @@ namespace TurnipTracker.Model
                 if (!day.PricePM.HasValue)
                 {
                     var (min, max) = dailyMinMax.GetMinMax(i, isPM: true);
-                    day.PredictionPM = $"🔮 {min}-{max}";
+                    if (min == max)
+                        day.PredictionPM = $"🔮 {min}";
+                    else
+                        day.PredictionPM = $"🔮 {min}-{max}";
                 }
                 else
                 {
@@ -45,7 +51,7 @@ namespace TurnipTracker.Model
                     if (day.BuyPrice.HasValue)
                     {
                         var price = day.BuyPrice.Value;
-                        
+
                         prices.Add(price);
                         prices.Add(price);
                     }

@@ -19,8 +19,8 @@ namespace TurnipTracker.Model
 
         public int WeeklyMin {
             get {
-                int min = int.MaxValue;
-                for (int i = 2; i < this.Prices.Count; i++)
+                var min = int.MaxValue;
+                for (var i = 2; i < this.Prices.Count; i++)
                 {
                     var entry = this.Prices[i];
                     if (entry.min < min)
@@ -32,8 +32,8 @@ namespace TurnipTracker.Model
 
         public int WeeklyMax {
             get {
-                int max = 0;
-                for (int i = 2; i < this.Prices.Count; i++)
+                var max = 0;
+                for (var i = 2; i < this.Prices.Count; i++)
                 {
                     var entry = this.Prices[i];
                     if (entry.max > max)
@@ -54,10 +54,10 @@ namespace TurnipTracker.Model
         public void Dump()
         {
             Console.Write($"{PatternDesc,40}");
-            for (int index = 1; index < this.Prices.Count; index++)
+            for (var index = 1; index < this.Prices.Count; index++)
             {
-                int minPrice = this.Prices[index].min;
-                int maxPrice = this.Prices[index].max;
+                var minPrice = this.Prices[index].min;
+                var maxPrice = this.Prices[index].max;
                 string prices;
                 if (minPrice == maxPrice)
                     prices = $"{minPrice}";
