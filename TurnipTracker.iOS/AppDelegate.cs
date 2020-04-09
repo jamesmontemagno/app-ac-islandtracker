@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Sharpnado.Presentation.Forms.iOS;
 using UIKit;
 
 namespace TurnipTracker.iOS
@@ -25,6 +26,7 @@ namespace TurnipTracker.iOS
             global::Xamarin.Forms.Forms.Init();
             global::Xamarin.Forms.FormsMaterial.Init(); LoadApplication(new App());
 
+            SharpnadoInitializer.Initialize(enableInternalLogger: true);
             return base.FinishedLaunching(app, options);
         }
     }

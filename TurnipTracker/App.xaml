@@ -1,8 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="TurnipTracker.App">
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"
+             mc:Ignorable="d"
+             xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
+             x:Class="TurnipTracker.App">
     <Application.Resources>
         <ResourceDictionary>
             <Color x:Key="NavigationPrimary">#2196F3</Color>
+            <Color x:Key="AcrylicSurface">#E6E6E6</Color>
+
+            <Color x:Key="AcrylicFrameBackgroundColor">#F1F1F1</Color>
+
+            <Color x:Key="AccentColor">#00E000</Color>
+
+            <Color x:Key="PrimaryColor">Black</Color>
+            <Color x:Key="SecondaryColor">#60000000</Color>
+            <Color x:Key="TernaryColor">#30000000</Color>
+
+            <Color x:Key="TextPrimaryColor">Black</Color>
+            <Color x:Key="TextSecondaryColor">#60000000</Color>
+            <Color x:Key="TextTernaryColor">#40000000</Color>
+            <x:Int32 x:Key="BottomBarHeight">66</x:Int32>
+             <Style x:Key="BottomTabStyle" TargetType="tabs:BottomTabItem">
+                <Setter Property="SelectedTabColor" Value="{StaticResource AccentColor}" />
+                <Setter Property="UnselectedLabelColor" Value="Gray" />
+                <Setter Property="UnselectedIconColor" Value="LightGray" />
+                <Setter Property="LabelSize" Value="14" />
+                <Setter Property="IconSize" Value="28" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
