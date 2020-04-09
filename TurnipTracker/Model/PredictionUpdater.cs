@@ -13,24 +13,24 @@ namespace TurnipTracker.Model
             for (int i = 0; i < days.Count; i++)
             {
                 Day day = days[i];
-                if (string.IsNullOrEmpty(day.PriceAM))
+                if (!day.PriceAM.HasValue)
                 {
                     var (min, max) = dailyMinMax.GetMinMax(i, isPM: false);
                     day.PredictionAM = $"🔮 {min}-{max}";
                 }
                 else
                 {
-                    day.PredictionAM = day.PriceAM;
+                    day.PredictionAM = string.Empty;
                 }
 
-                if (string.IsNullOrEmpty(day.PricePM))
+                if (!day.PricePM.HasValue)
                 {
                     var (min, max) = dailyMinMax.GetMinMax(i, isPM: true);
                     day.PredictionPM = $"🔮 {min}-{max}";
                 }
                 else
                 {
-                    day.PredictionPM = day.PricePM;
+                    day.PredictionPM = string.Empty;
                 }
             }
         }
@@ -38,22 +38,16 @@ namespace TurnipTracker.Model
         static int[] GetPricesFromDays(List<Day> days)
         {
             var prices = new List<int>();
-            for (int i = 0; i < days.Count; i++)
+            foreach (var day in days)
             {
-                if (days[i].IsSunday)
+                if (day.IsSunday)
                 {
-                    if (!string.IsNullOrEmpty(days[i].PriceAM))
+                    if (day.BuyPrice.HasValue)
                     {
-                        if (int.TryParse(days[i].PriceAM, out int price))
-                        {
-                            prices.Add(price);
-                            prices.Add(price);
-                        }
-                        else
-                        {
-                            prices.Add(0);
-                            prices.Add(0);
-                        }
+                        var price = day.BuyPrice.Value;
+                        
+                        prices.Add(price);
+                        prices.Add(price);
                     }
                     else
                     {
@@ -63,27 +57,14 @@ namespace TurnipTracker.Model
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(days[i].PriceAM))
+                    if (day.PriceAM.HasValue)
                     {
-                        if (int.TryParse(days[i].PriceAM, out int price))
-                        {
-                            prices.Add(price);
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        prices.Add(day.PriceAM.Value);
                     }
-                    if (!string.IsNullOrEmpty(days[i].PricePM))
+
+                    if (day.PricePM.HasValue)
                     {
-                        if (int.TryParse(days[i].PricePM, out int price))
-                        {
-                            prices.Add(price);
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        prices.Add(day.PricePM.Value);
                     }
                 }
             }

@@ -19,7 +19,7 @@
             <view:ProfileView/>
             <view:TrackingView/>
             <view:FriendsView/>
-            <view:TransactionsView/>
+            <!--<view:TransactionsView/>-->
             <!--<customViews:LazyView x:TypeArguments="view:ProfileView" />
             <customViews:LazyView x:TypeArguments="view:TrackingView" />
             <customViews:LazyView x:TypeArguments="view:FriendsView" />
@@ -62,13 +62,13 @@
                                          Glyph="&#xf0c0;"/>
                     </tabs:BottomTabItem.IconImageSource>
                 </tabs:BottomTabItem>
-                <tabs:BottomTabItem Style="{StaticResource BottomTabStyle}"
+                <!--<tabs:BottomTabItem Style="{StaticResource BottomTabStyle}"
                                     Label="Transactions" >
                     <tabs:BottomTabItem.IconImageSource>
                         <FontImageSource FontFamily="FA-S"
                                          Glyph="&#xf073;"/>
                     </tabs:BottomTabItem.IconImageSource>
-                </tabs:BottomTabItem>
+                </tabs:BottomTabItem>-->
             </tabs:TabHostView.Tabs>
         </tabs:TabHostView>
     </Grid>

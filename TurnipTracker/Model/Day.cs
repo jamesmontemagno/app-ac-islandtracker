@@ -6,32 +6,43 @@ namespace TurnipTracker.Model
 {
     public class Day : ObservableObject
     {
+        public Action UpdatePredictionAction { get; set; }
         public string DayLong { get; set; }
         public string DayShort => DayLong.FirstOrDefault().ToString();
 
-        string priceAM = string.Empty;
+        int? buyPrice;
 
-        public string PriceAM
+        public int? BuyPrice
         {
-            get => priceAM;
-            set => SetProperty(ref priceAM, value);
+            get => buyPrice;
+            set => SetProperty(ref buyPrice, value, onChanged: UpdatePredictionAction);
         }
 
-        string pricePM = string.Empty;
-        public string PricePM
+        int? priceAM;
+
+        public int? PriceAM
+        {
+            get => priceAM;
+            set => SetProperty(ref priceAM, value, onChanged: UpdatePredictionAction);
+        }
+
+        int? pricePM;
+        public int? PricePM
         {
             get => pricePM;
-            set => SetProperty(ref pricePM, value);
+            set => SetProperty(ref pricePM, value, onChanged: UpdatePredictionAction);
         }
 
         string predictionAM = string.Empty;
-        public string PredictionAM {
+        public string PredictionAM
+        {
             get => predictionAM;
             set => SetProperty(ref predictionAM, value);
         }
 
         string predictionPM = string.Empty;
-        public string PredictionPM {
+        public string PredictionPM
+        {
             get => predictionPM;
             set => SetProperty(ref predictionPM, value);
         }

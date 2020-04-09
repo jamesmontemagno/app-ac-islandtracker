@@ -7,7 +7,7 @@
              xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
+             xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms" xmlns:sfntb="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms" xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              mc:Ignorable="d"
              Shell.NavBarIsVisible="False"
              x:DataType="viewmodel:TrackingViewModel">
@@ -79,88 +79,96 @@
                     <sharpnado:MaterialFrame
                                 MaterialTheme="Acrylic"
                                 CornerRadius="10"
-                                Margin="4"
+                                Margin="4,24"
                                 Elevation="4"
                                 LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                 IsVisible="{Binding SelectedDay.IsSunday}">
-                        <Grid BindingContext="{Binding SelectedDay}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Text="🔔" HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                   FontSize="32"/>
-                            <Entry
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Visual="Material"
-                                Keyboard="Numeric"
-                                Placeholder="Price"
-                                x:DataType="model:Day"
-                                Text="{Binding PriceAM}"/>
 
-                        </Grid>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="Buy Price"
+                                       FontFamily="AnimalCrossing"
+                                       FontSize="Large"/>
+                                <inputLayout:SfTextInputLayout
+                                           Grid.Row="1"
+                                            ContainerType="Outlined"
+                                            Hint="Turnip Price"
+                                           VerticalOptions="Center">
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                      <Label Text="🔔" FontSize="Medium"/>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                    <sfntb:SfNumericTextBox
+                                           Visual="Material"
+                                           Value="{Binding SelectedDay.BuyPrice}"
+                                           MaximumNumberDecimalDigits="0"
+                                           AllowNull="True"
+                                           Maximum="10000"
+                                           ParserMode="Double"/>
+                                </inputLayout:SfTextInputLayout>
+                            </Grid>
                     </sharpnado:MaterialFrame>
                     <!--Sell Days-->
-                    <Grid Margin="0,12,0,0"
+                    <Grid Margin="0,20,0,0"
                           RowSpacing="12"
                           IsVisible="{Binding SelectedDay.IsNotSunday}"
                           VerticalOptions="FillAndExpand">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
                         <sharpnado:MaterialFrame
                                 MaterialTheme="Acrylic"
                                 CornerRadius="10"
                                 Margin="4"
                                 Elevation="4"
                                 LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
-                                Grid.RowSpan="2"
                                 BindingContext="{Binding SelectedDay}">
                             <Grid x:DataType="model:Day">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width=".65*"/>
+                                    <ColumnDefinition Width=".35*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="🌅🔔" HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       FontSize="32"
-                                       Grid.ColumnSpan="2"/>
-                                <Entry
-                                       Grid.Row="1"
-                                       Grid.ColumnSpan="2"
-                                       Visual="Material"
-                                       Keyboard="Numeric"
-                                       Placeholder="Price"
-                                       VerticalOptions="Center"
-                                       Text="{Binding PriceAM}"/>
+                                <Label Text="Morning"
+                                       FontFamily="AnimalCrossing"
+                                       FontSize="Large"/>
+                                <inputLayout:SfTextInputLayout
+                                           Grid.Row="1"
+                                            ContainerType="Outlined"
+                                            Hint="AM Price"
+                                           VerticalOptions="Center">
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                      <Label Text="🔔" FontSize="Medium"/>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                    <sfntb:SfNumericTextBox
+                                           Visual="Material"
+                                           Value="{Binding PriceAM}"
+                                           MaximumNumberDecimalDigits="0"
+                                           AllowNull="True"
+                                           Maximum="10000"
+                                           ParserMode="Double"/>
+                                </inputLayout:SfTextInputLayout>
 
 
-                                <Label Grid.Row="2" Grid.Column="0"
-                                       TextColor="Green"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="End"
-                                       FontSize="Large"
-                                       Text="↗️ +14"/>
+                                <StackLayout Grid.Column="1" Grid.RowSpan="2"
+                                             VerticalOptions="Center"
+                                             HorizontalOptions="Center">
+                                    <Label TextColor="Green"
+                                           FontSize="Medium"
+                                             HorizontalOptions="Center"
+                                           Text="↗️ +14"/>
 
-                                <Label Grid.Row="2" Grid.Column="1"
-                                       TextColor="Green"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="End"
-                                       FontSize="Large"
-                                       Text="🔮 85"/>
+                                    <Label TextColor="Green"
+                                           FontSize="Medium"
+                                             HorizontalOptions="Center"
+                                           Text="{Binding PredictionAM}"/>
+                                </StackLayout>
                             </Grid>
                         </sharpnado:MaterialFrame>
                         <sharpnado:MaterialFrame
@@ -169,44 +177,51 @@
                                 Margin="4,12"
                                 Elevation="4"
                                 LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
-                                Grid.RowSpan="2"
-                                Grid.Row="1" Grid.Column="1"
+                                Grid.Row="1" 
                                 BindingContext="{Binding SelectedDay}">
                             <Grid x:DataType="model:Day">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width=".65*"/>
+                                    <ColumnDefinition Width=".35*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="🌉🔔" HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       FontSize="32"
-                                       Grid.ColumnSpan="2"/>
-                                <Entry Grid.Row="1"
-                                       Grid.ColumnSpan="2"
-                                       Visual="Material"
-                                       Keyboard="Numeric"
-                                       Placeholder="Price"
-                                       VerticalOptions="Center"
-                                       Text="{Binding PricePM}"/>
+                                <Label Text="Afternoon"
+                                       FontFamily="AnimalCrossing"
+                                       FontSize="Large"/>
+                                <inputLayout:SfTextInputLayout
+                                           Grid.Row="1"
+                                            ContainerType="Outlined"
+                                            Hint="PM Price"
+                                           VerticalOptions="Center">
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                      <Label Text="🔔" FontSize="Medium"/>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                    <sfntb:SfNumericTextBox
+                                           Visual="Material"
+                                           Value="{Binding PricePM}"
+                                           MaximumNumberDecimalDigits="0"
+                                           AllowNull="True"
+                                           Maximum="10000"
+                                           ParserMode="Double"/>
+                                </inputLayout:SfTextInputLayout>
 
-                                <Label Grid.Row="2" Grid.Column="0"
-                                       TextColor="Red"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="End"
-                                       FontSize="Large"
-                                       Text="↘️ -18"/>
 
-                                <Label Grid.Row="2" Grid.Column="1"
-                                       TextColor="Green"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="End"
-                                       FontSize="Large"
-                                       Text="🔮 85"/>
+                                <StackLayout Grid.Column="1" Grid.RowSpan="2"
+                                             VerticalOptions="Center"
+                                             HorizontalOptions="Center">
+                                    <Label TextColor="Green"
+                                           FontSize="Medium"
+                                             HorizontalOptions="Center"
+                                           Text="↗️ +14"/>
+
+                                    <Label TextColor="Green"
+                                           FontSize="Medium"
+                                             HorizontalOptions="Center"
+                                           Text="{Binding PredictionPM}"/>
+                                </StackLayout>
                             </Grid>
                         </sharpnado:MaterialFrame>
                     </Grid>
