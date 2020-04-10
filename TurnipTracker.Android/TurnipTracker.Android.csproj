@@ -73,6 +73,9 @@
     <PackageReference Include="Syncfusion.Xamarin.Core">
       <Version>18.1.0.43</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
+      <Version>18.1.0.43</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

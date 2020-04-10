@@ -10,6 +10,20 @@ namespace TurnipTracker.Model
         public string DayLong { get; set; }
         public string DayShort => DayLong.FirstOrDefault().ToString();
 
+        bool firstPurchase;
+        public bool FirstPurchase
+        {
+            get => firstPurchase;
+            set => SetProperty(ref firstPurchase, value, onChanged: UpdatePredictionAction);
+        }
+
+        int lastWeekPattern = (int)PredictionPattern.IDontKnow;
+        public int LastWeekPattern
+        {
+            get => lastWeekPattern;
+            set => SetProperty(ref lastWeekPattern, value, onChanged: UpdatePredictionAction);
+        }
+
         int? buyPrice;
 
         public int? BuyPrice
