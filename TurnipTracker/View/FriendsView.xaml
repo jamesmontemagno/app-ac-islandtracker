@@ -107,57 +107,59 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <shimmer:SfShimmer VerticalOptions="FillAndExpand"
-                                           Margin="12,8"
-                                           IsActive ="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsBusy}"
-                                           Type="Article">
-                            <shimmer:SfShimmer.Content>
-                                 <sharpnado:MaterialFrame
-                                    MaterialTheme="Acrylic"
-                                    CornerRadius="10"
-                                    Elevation="4"
-                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
-                                     <Grid ColumnSpacing="12"
-                                           RowSpacing="4">
-                                         <Grid.RowDefinitions>
-                                             <RowDefinition Height="Auto"/>
-                                             <RowDefinition Height="Auto"/>
-                                             <RowDefinition Height="Auto"/>
-                                         </Grid.RowDefinitions>
-                                         <Grid.ColumnDefinitions>
-                                             <ColumnDefinition Width="Auto"/>
-                                             <ColumnDefinition Width="*"/>
-                                             <ColumnDefinition Width="Auto"/>
-                                         </Grid.ColumnDefinitions>
-                                         <Label Text="🍎" Grid.RowSpan="3"
-                                                FontSize="24"/>
-                                         <Label Text="{Binding .}"
-                                                FontSize="Large"
-                                                Grid.Column="1"/>
-                                         <Label Text="Town Name"
-                                                FontSize="Small"
-                                                Grid.Column="1"
-                                                Grid.Row="1"/>
-                                         <Label Text="1:00 PM"
-                                                FontSize="Small"
-                                                Grid.Column="1"
-                                                Grid.Row="2"/>
+                        <Grid Padding="0">
+                            <shimmer:SfShimmer VerticalOptions="FillAndExpand"
+                                               IsActive ="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsBusy}"
+                                               Type="Article"
+                                               Padding="12">
+                                <shimmer:SfShimmer.Content>
+                                     <sharpnado:MaterialFrame
+                                        MaterialTheme="Acrylic"
+                                        CornerRadius="10"
+                                        Elevation="4"
+                                        LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                         <Grid ColumnSpacing="12"
+                                               RowSpacing="4">
+                                             <Grid.RowDefinitions>
+                                                 <RowDefinition Height="Auto"/>
+                                                 <RowDefinition Height="Auto"/>
+                                                 <RowDefinition Height="Auto"/>
+                                             </Grid.RowDefinitions>
+                                             <Grid.ColumnDefinitions>
+                                                 <ColumnDefinition Width="Auto"/>
+                                                 <ColumnDefinition Width="*"/>
+                                                 <ColumnDefinition Width="Auto"/>
+                                             </Grid.ColumnDefinitions>
+                                             <Label Text="🍎" Grid.RowSpan="3"
+                                                    FontSize="24"/>
+                                             <Label Text="{Binding .}"
+                                                    FontSize="Large"
+                                                    Grid.Column="1"/>
+                                             <Label Text="Town Name"
+                                                    FontSize="Small"
+                                                    Grid.Column="1"
+                                                    Grid.Row="1"/>
+                                             <Label Text="1:00 PM"
+                                                    FontSize="Small"
+                                                    Grid.Column="1"
+                                                    Grid.Row="2"/>
 
-                                         <StackLayout Grid.RowSpan="3"
-                                                      Grid.Column="2"
-                                                      VerticalOptions="Center">
+                                             <StackLayout Grid.RowSpan="3"
+                                                          Grid.Column="2"
+                                                          VerticalOptions="Center">
                                  
-                                             <Label Text="AM: 100 🔔"
-                                                    FontSize="Large"/>
+                                                 <Label Text="AM: 100 🔔"
+                                                        FontSize="Large"/>
                                  
-                                             <Label Text="PM: 100 🔔"
-                                                    FontSize="Large"/>
-                                         </StackLayout>
+                                                 <Label Text="PM: 100 🔔"
+                                                        FontSize="Large"/>
+                                             </StackLayout>
 
-                                     </Grid>
-                                </sharpnado:MaterialFrame>
-                            </shimmer:SfShimmer.Content>
-                        </shimmer:SfShimmer>
+                                         </Grid>
+                                    </sharpnado:MaterialFrame>
+                                </shimmer:SfShimmer.Content>
+                            </shimmer:SfShimmer>
+                        </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
