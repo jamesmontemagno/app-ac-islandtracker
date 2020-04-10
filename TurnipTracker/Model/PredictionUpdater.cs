@@ -48,7 +48,7 @@ namespace TurnipTracker.Model
             {
                 if (day.IsSunday)
                 {
-                    if (day.BuyPrice.HasValue)
+                    if (day.BuyPrice.HasValue && !day.FirstPurchase)
                     {
                         var price = day.BuyPrice.Value;
 
