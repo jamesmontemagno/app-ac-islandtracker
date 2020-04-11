@@ -121,10 +121,10 @@
                             <SwipeView.LeftItems>
                                 <SwipeItems>
                                     <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}">
+                                        <Grid Padding="12">
                                         <sharpnado:MaterialFrame 
                                                 MaterialTheme="Acrylic"
                                                 CornerRadius="10"
-                                                Margin="12"
                                                 Elevation="4"
                                                 Padding="0"
                                                 LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
@@ -142,33 +142,35 @@
                                             </StackLayout>
                                                 </effectsview:SfEffectsView>
                                         </sharpnado:MaterialFrame>
+                                         </Grid>
                                     </SwipeItemView>
                                 </SwipeItems>
                             </SwipeView.LeftItems>
                             <SwipeView.RightItems>
                                 <SwipeItems>
                                     <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}">
-                                        <sharpnado:MaterialFrame 
-                                                MaterialTheme="Acrylic"
-                                                CornerRadius="10"
-                                                Margin="12"
-                                                Elevation="4"
-                                                Padding="0"
-                                                LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
-                                            <effectsview:SfEffectsView
-                                                Padding="24,12"
-                                                CornerRadius="10">
-                                            <StackLayout VerticalOptions="Center"  >
+                                        <Grid Padding="12">
+                                            <sharpnado:MaterialFrame 
+                                                    MaterialTheme="Acrylic"
+                                                    CornerRadius="10"
+                                                    Elevation="4"
+                                                    Padding="0"
+                                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                                <effectsview:SfEffectsView
+                                                    Padding="24,12"
+                                                    CornerRadius="10">
+                                                <StackLayout VerticalOptions="Center"  >
                                             
-                                                <Label Text="&#xf2ed;"
-                                                       FontSize="24"
-                                                       FontFamily="FA-R"
-                                                       HorizontalOptions="Center"/>
-                                                <Label Text="Remove"
-                                                       HorizontalOptions="Center"/>
-                                            </StackLayout>
-                                                </effectsview:SfEffectsView>
-                                        </sharpnado:MaterialFrame>
+                                                    <Label Text="&#xf2ed;"
+                                                           FontSize="24"
+                                                           FontFamily="FA-R"
+                                                           HorizontalOptions="Center"/>
+                                                    <Label Text="Remove"
+                                                           HorizontalOptions="Center"/>
+                                                </StackLayout>
+                                                    </effectsview:SfEffectsView>
+                                            </sharpnado:MaterialFrame>
+                                        </Grid>
                                     </SwipeItemView>
                                 </SwipeItems>
                             </SwipeView.RightItems>
