@@ -7,6 +7,7 @@ namespace TurnipTracker.Model
         Fluctuating,
         SmallSpike,
         LargeSpike,
-        Decreasing
+        Decreasing,
+        All
     }
 }
