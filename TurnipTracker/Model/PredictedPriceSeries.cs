@@ -7,18 +7,20 @@ namespace TurnipTracker.Model
     public sealed class PredictedPriceSeries
     {
         public string PatternDesc { get; }
-        public int PatternNumber { get; }
+        public PredictionPattern PatternNumber { get; }
         public List<(int min, int max)> Prices { get; }
 
-        public PredictedPriceSeries(string patternDesc, int patternNumber, List<(int min, int max)> prices)
+        public PredictedPriceSeries(string patternDesc, PredictionPattern patternNumber, List<(int min, int max)> prices)
         {
             this.PatternDesc = patternDesc;
             this.PatternNumber = patternNumber;
             this.Prices = prices;
         }
 
-        public int WeeklyMin {
-            get {
+        public int WeeklyMin
+        {
+            get
+            {
                 var min = int.MaxValue;
                 for (var i = 2; i < this.Prices.Count; i++)
                 {
@@ -30,8 +32,10 @@ namespace TurnipTracker.Model
             }
         }
 
-        public int WeeklyMax {
-            get {
+        public int WeeklyMax
+        {
+            get
+            {
                 var max = 0;
                 for (var i = 2; i < this.Prices.Count; i++)
                 {
