@@ -16,7 +16,8 @@ namespace TurnipTracker
                     "StateTriggers_Experimental",
                     "IndicatorView_Experimental",
                     "CarouselView_Experimental",
-                    "MediaElement_Experimental"
+                    "MediaElement_Experimental",
+                    "SwipeView_Experimental"
                 });
 
             MainPage = new MainPage();

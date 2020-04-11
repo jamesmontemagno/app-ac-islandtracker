@@ -1,27 +1,32 @@
 ﻿using System;
 using System.Linq;
 using MvvmHelpers;
+using Newtonsoft.Json;
 
 namespace TurnipTracker.Model
 {
     public class Day : ObservableObject
     {
-        public Action UpdatePredictionAction { get; set; }
+        [JsonIgnore]
+        public Action SaveCurrentWeekAction { get; set; }
+
         public string DayLong { get; set; }
+
+        [JsonIgnore]
         public string DayShort => DayLong.FirstOrDefault().ToString();
 
         bool firstPurchase;
         public bool FirstPurchase
         {
             get => firstPurchase;
-            set => SetProperty(ref firstPurchase, value, onChanged: UpdatePredictionAction);
+            set => SetProperty(ref firstPurchase, value, onChanged: SaveCurrentWeekAction);
         }
 
         int lastWeekPattern = (int)PredictionPattern.IDontKnow;
         public int LastWeekPattern
         {
             get => lastWeekPattern;
-            set => SetProperty(ref lastWeekPattern, value, onChanged: UpdatePredictionAction);
+            set => SetProperty(ref lastWeekPattern, value, onChanged: SaveCurrentWeekAction);
         }
 
         int? buyPrice;
@@ -29,7 +34,7 @@ namespace TurnipTracker.Model
         public int? BuyPrice
         {
             get => buyPrice;
-            set => SetProperty(ref buyPrice, value, onChanged: UpdatePredictionAction);
+            set => SetProperty(ref buyPrice, value, onChanged: SaveCurrentWeekAction);
         }
 
         int? priceAM;
@@ -37,14 +42,14 @@ namespace TurnipTracker.Model
         public int? PriceAM
         {
             get => priceAM;
-            set => SetProperty(ref priceAM, value, onChanged: UpdatePredictionAction);
+            set => SetProperty(ref priceAM, value, onChanged: SaveCurrentWeekAction);
         }
 
         int? pricePM;
         public int? PricePM
         {
             get => pricePM;
-            set => SetProperty(ref pricePM, value, onChanged: UpdatePredictionAction);
+            set => SetProperty(ref pricePM, value, onChanged: SaveCurrentWeekAction);
         }
 
         string predictionAM = string.Empty;
@@ -61,7 +66,17 @@ namespace TurnipTracker.Model
             set => SetProperty(ref predictionPM, value);
         }
 
+        bool isSelectedDay;
+        [JsonIgnore]
+        public bool IsSelectedDay
+        {
+            get => isSelectedDay;
+            set => SetProperty(ref isSelectedDay, value);
+        }
+
         public bool IsSunday { get; set; }
+
+        [JsonIgnore]
         public bool IsNotSunday => !IsSunday;
     }
 }

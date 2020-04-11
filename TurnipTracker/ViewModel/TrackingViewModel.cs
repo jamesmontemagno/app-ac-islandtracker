@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using MvvmHelpers;
 using TurnipTracker.Model;
+using TurnipTracker.Services;
+using Xamarin.Forms;
 
 namespace TurnipTracker.ViewModel
 {
@@ -15,18 +17,18 @@ namespace TurnipTracker.ViewModel
         {
             if (Xamarin.Forms.DesignMode.IsDesignModeEnabled)
                 return;
-            Days = new List<Day>
-            {
-                new Day { DayLong = "Sunday", IsSunday = true, UpdatePredictionAction = UpdatePredications },
-                new Day { DayLong = "Monday", UpdatePredictionAction = UpdatePredications },
-                new Day { DayLong = "Tuesday", UpdatePredictionAction = UpdatePredications },
-                new Day { DayLong = "Wednesday", UpdatePredictionAction = UpdatePredications },
-                new Day { DayLong = "Thursday", UpdatePredictionAction = UpdatePredications },
-                new Day { DayLong = "Friday", UpdatePredictionAction = UpdatePredications },
-                new Day { DayLong = "Saturday", UpdatePredictionAction = UpdatePredications }
-            };
+
+
+            
+            Days = DataService.GetCurrentWeek();
+            foreach (var day in Days)
+                day.SaveCurrentWeekAction = SaveCurrentWeek;
+
+
 
             SelectedDay = Days[(int)DateTime.Now.DayOfWeek];
+
+            DaySelectedCommand = new Command<Day>(OnDaySelected);
         }
 
         Day selectedDay;
@@ -34,7 +36,25 @@ namespace TurnipTracker.ViewModel
         public Day SelectedDay
         {
             get => selectedDay;
-            set => SetProperty(ref selectedDay, value, onChanged: UpdatePredications);
+            set
+            {
+                if (selectedDay != null)
+                    selectedDay.IsSelectedDay = false;
+
+                SetProperty(ref selectedDay, value, onChanged: UpdatePredications);
+                selectedDay.IsSelectedDay = true;
+            }
+        }
+
+        public Command<Day> DaySelectedCommand { get; }
+
+        void OnDaySelected(Day day) =>
+            SelectedDay = day;
+
+        public void SaveCurrentWeek()
+        {
+            DataService.SaveCurrentWeek(Days);
+            UpdatePredications();
         }
 
         public void UpdatePredications()

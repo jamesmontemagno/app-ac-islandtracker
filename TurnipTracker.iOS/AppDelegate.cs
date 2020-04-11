@@ -4,6 +4,11 @@ using System.Linq;
 
 using Foundation;
 using Sharpnado.Presentation.Forms.iOS;
+using Syncfusion.SfNumericTextBox.XForms.iOS;
+using Syncfusion.XForms.iOS.ComboBox;
+using Syncfusion.XForms.iOS.MaskedEdit;
+using Syncfusion.XForms.iOS.Shimmer;
+using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
 namespace TurnipTracker.iOS
@@ -24,9 +29,18 @@ namespace TurnipTracker.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            global::Xamarin.Forms.FormsMaterial.Init(); LoadApplication(new App());
+            global::Xamarin.Forms.FormsMaterial.Init();
 
+            SfMaskedEditRenderer.Init();
+            new SfNumericTextBoxRenderer();
+            new SfComboBoxRenderer();
+            SfTextInputLayoutRenderer.Init();
+
+            SfShimmerRenderer.Init();
+            Syncfusion.XForms.iOS.EffectsView.SfEffectsViewRenderer.Init();
             SharpnadoInitializer.Initialize(enableInternalLogger: true);
+            LoadApplication(new App());
+
             return base.FinishedLaunching(app, options);
         }
     }

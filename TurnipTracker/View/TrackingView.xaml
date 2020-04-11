@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TurnipTracker.View.TrackingView"
              xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
+             xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:model="clr-namespace:TurnipTracker.Model"
              xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms" xmlns:sfntb="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms" xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
@@ -27,58 +29,52 @@
                    FontFamily="AnimalCrossing"/>
         <pancake:PancakeView CornerRadius="36,36,0,0"
                                  Grid.Row="1"
-                                 HasShadow="True"
+                                 Elevation="8"
                                  Padding="12"
                                  BackgroundColor="{StaticResource AcrylicSurface}">
             <StackLayout Spacing="0">
-                <Label FontSize="44"
-                           FontFamily="AnimalCrossing"
-                           HorizontalOptions="Center"
-                           TextColor="{StaticResource NavigationPrimary}"
-                           Text="{Binding SelectedDay.DayLong}"/>
-                <CollectionView x:Name="CollectionViewDay"
-                                    HeightRequest="52"
-                                    SelectionMode="Single"
-                                    BackgroundColor="Transparent"
-                                    ItemsSource="{Binding Days}"
-                                    SelectedItem="{Binding SelectedDay}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="4" Orientation="Horizontal"/>
-                    </CollectionView.ItemsLayout>
-                    <d:CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type model:Day}">
-                            <model:Day DayLong="Sunday" IsSunday="True"/>
-                            <model:Day DayLong="Monday"/>
-                            <model:Day DayLong="Tuesday"/>
-                            <model:Day DayLong="Wednesday"/>
-                            <model:Day DayLong="Thursday"/>
-                            <model:Day DayLong="Friday"/>
-                            <model:Day DayLong="Saturday"/>
-                        </x:Array>
-                    </d:CollectionView.ItemsSource>
-                    <CollectionView.ItemTemplate>
+                <StackLayout x:Name="CollectionViewDay"
+                             Margin="0,24,0,0"
+                             Orientation="Horizontal"
+                             VerticalOptions="Center"
+                             BindableLayout.ItemsSource="{Binding Days}">
+                    <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="model:Day">
-                            <Grid Padding="2">
-                                <sharpnado:MaterialFrame
-                                        MaterialTheme="Acrylic"
-                                        CornerRadius="21"
-                                        Padding="0"
-                                        Margin="2,4"
-                                        Elevation="4"
-                                        HorizontalOptions="Center"
-                                        LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
-                                        HeightRequest="42"
-                                        WidthRequest="42">
-                                    <Label Text="{Binding DayShort}"
-                                               HorizontalOptions="Center"
-                                               VerticalOptions="Center"/>
-                                </sharpnado:MaterialFrame>
+                            <Grid Padding="0" WidthRequest="50">
+                                    <sharpnado:MaterialFrame
+                                            MaterialTheme="Acrylic"
+                                            CornerRadius="21"
+                                            Padding="0"
+                                            Margin="0"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
+                                            HeightRequest="42"
+                                            WidthRequest="42">
+                                        <effectsview:SfEffectsView
+                                                IsSelected="{Binding IsSelectedDay}"
+                                                SelectionColor="Red"
+                                                TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TrackingViewModel}}, Path=DaySelectedCommand}"
+                                                TouchUpCommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                                CornerRadius="{OnPlatform iOS=21}">
+                                                <Label Text="{Binding DayShort}"
+                                                           HorizontalOptions="Center"
+                                                           VerticalOptions="Center"
+                                                        TextColor="{StaticResource TextPrimaryColor}"/>
+                                        </effectsview:SfEffectsView>
+                                    </sharpnado:MaterialFrame>
                             </Grid>
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-
-                <Grid  Margin="0,20,0,0"
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+                
+                <Label FontSize="36"
+                       Margin="0,36,0,0"
+                       HorizontalOptions="Center"
+                        FontFamily="AnimalCrossing"
+                        TextColor="{StaticResource NavigationPrimary}"
+                        Text="{Binding SelectedDay.DayLong}"/>
+                <Grid  Margin="0,0,0,0"
                           RowSpacing="12"
                           VerticalOptions="FillAndExpand"
                            IsVisible="{Binding SelectedDay.IsSunday}">
@@ -106,7 +102,7 @@
                                             FocusedColor="{StaticResource NavigationPrimary}"
                                             ContainerType="Outlined"
                                             Hint="Turnip Price"
-                                    Margin="0,0,0,-12"
+                                            Margin="0,0,0,-12"
                                            VerticalOptions="Center">
                                 <inputLayout:SfTextInputLayout.TrailingView>
                                     <Label Text="🔔" FontSize="Medium"/>
@@ -134,11 +130,12 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="1"/>
-                                <RowDefinition Height="Auto"/>
+                                <!--<RowDefinition Height="1"/>
+                                <RowDefinition Height="Auto"/>-->
                             </Grid.RowDefinitions>
                             <CheckBox VerticalOptions="Center"
                                       Margin="0"
+                                      Visual="Material"
                                       IsChecked="{Binding SelectedDay.FirstPurchase}"
                                       Color="{StaticResource NavigationPrimary}"/>
                             <Label Grid.Column="1"
@@ -146,14 +143,14 @@
                                 FontFamily="AnimalCrossing"
                                 VerticalOptions="Center"
                                 FontSize="Large"/>
-                            <BoxView HorizontalOptions="FillAndExpand"
+                            <!--<BoxView HorizontalOptions="FillAndExpand"
                                      BackgroundColor="LightGray"
                                      Grid.Row="1" Grid.ColumnSpan="2"/>
-                            <!--<Label Grid.Row="2" Grid.ColumnSpan="2"
+                            <Label Grid.Row="2" Grid.ColumnSpan="2"
                                 Text="Last Weeks Pattern"
                                 FontFamily="AnimalCrossing"
                                 VerticalOptions="Center"
-                                FontSize="Large"/>-->
+                                FontSize="Large"/>
                             <inputLayout:SfTextInputLayout
                                     Margin="0,0,0,-12"
                                     FocusedColor="{StaticResource NavigationPrimary}"
@@ -173,14 +170,14 @@
                                         </ListCollection:List>
                                     </combobox:SfComboBox.ComboBoxSource>
                                 </combobox:SfComboBox>
-                            </inputLayout:SfTextInputLayout>
+                            </inputLayout:SfTextInputLayout>-->
                         </Grid>
                     </sharpnado:MaterialFrame>
 
                 </Grid>
 
                 <!--Sell Days-->
-                <Grid Margin="0,20,0,0"
+                <Grid Margin="0,0,0,0"
                           RowSpacing="12"
                           IsVisible="{Binding SelectedDay.IsNotSunday}"
                           VerticalOptions="FillAndExpand">
@@ -225,7 +222,15 @@
                                            MaximumNumberDecimalDigits="0"
                                            AllowNull="True"
                                            Maximum="10000"
-                                           ParserMode="Double"/>
+                                           ParserMode="Double">
+                                        <!--<sfntb:SfNumericTextBox.Behaviors>
+                                            <behaviors:EventHandlerBehavior EventName="ValueChanged">
+                                                <behaviors:SetPropertyAction TargetObject="{Binding}" 
+                                                                             PropertyName="PrimeAM" 
+                                                                             Value="Message text changed" />
+                                            </behaviors:EventHandlerBehavior>
+                                        </sfntb:SfNumericTextBox.Behaviors>-->
+                                    </sfntb:SfNumericTextBox>
                                 </inputLayout:SfTextInputLayout>
 
 

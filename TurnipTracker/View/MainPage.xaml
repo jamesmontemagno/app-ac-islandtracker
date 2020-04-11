@@ -14,8 +14,7 @@
 
         <tabs:ViewSwitcher x:Name="Switcher"
                            Grid.Row="0"
-                           Animate="False"
-                           SelectedIndex="{Binding SelectedViewModelIndex, Mode=TwoWay}">
+                           Animate="False">
             <view:ProfileView/>
             <view:TrackingView/>
             <view:FriendsView/>

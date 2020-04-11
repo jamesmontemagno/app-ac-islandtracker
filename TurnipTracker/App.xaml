@@ -16,11 +16,7 @@
 
             <Color x:Key="AccentColor">#00E000</Color>
 
-            <Color x:Key="PrimaryColor">Black</Color>
-            <Color x:Key="SecondaryColor">#60000000</Color>
-            <Color x:Key="TernaryColor">#30000000</Color>
-
-            <Color x:Key="TextPrimaryColor">Black</Color>
+            <Color x:Key="TextPrimaryColor">#6F6F6F</Color>
             <Color x:Key="TextSecondaryColor">#60000000</Color>
             <Color x:Key="TextTernaryColor">#40000000</Color>
             <x:Int32 x:Key="BottomBarHeight">66</x:Int32>

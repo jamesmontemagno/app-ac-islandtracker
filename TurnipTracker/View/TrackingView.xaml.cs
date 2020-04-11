@@ -10,6 +10,7 @@ namespace TurnipTracker.View
         public TrackingView()
         {
             InitializeComponent();
+            BindingContext = new TrackingViewModel();
         }
     }
 }

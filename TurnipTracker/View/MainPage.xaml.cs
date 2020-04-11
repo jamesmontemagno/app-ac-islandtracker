@@ -10,6 +10,7 @@ namespace TurnipTracker.View
         public MainPage()
         {
             InitializeComponent();
+            Switcher.SelectedIndex = 1;
         }
     }
 }
