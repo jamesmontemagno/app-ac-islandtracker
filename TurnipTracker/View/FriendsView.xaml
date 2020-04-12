@@ -63,11 +63,13 @@
                                        FontFamily="FA-S"
                                        FontSize="24"
                                        HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
+                                       VerticalOptions="Center"
+                                       TextColor="{StaticResource TextPrimaryColor}"/>
                                     <Label Text="Requests"
                                            FontSize="Medium"
                                            VerticalOptions="Center"
-                                           Grid.Column="1"/>
+                                           Grid.Column="1"
+                                           TextColor="{StaticResource TextPrimaryColor}"/>
                                     <pancake:PancakeView Padding="0"
                                            Grid.Column="2"
                                            HorizontalOptions="End"
@@ -81,7 +83,8 @@
                                         <Label Text="1"
                                                HorizontalOptions="Center"
                                                VerticalOptions="Center"
-                                               FontSize="Small"/>
+                                               FontSize="Small"
+                                               TextColor="{StaticResource TextPrimaryColor}"/>
                                     </pancake:PancakeView>
                                 </Grid>
                                 </effectsview:SfEffectsView>
@@ -102,14 +105,16 @@
                                            FontSize="24"
                                            FontFamily="FA-S"
                                            HorizontalOptions="Center"
-                                           VerticalOptions="Center"/>
+                                           VerticalOptions="Center"
+                                           TextColor="{StaticResource TextPrimaryColor}"/>
                                 </effectsview:SfEffectsView>
                             </sharpnado:MaterialFrame>
                             <Label Grid.Row="1" Grid.ColumnSpan="2"
                                    Text="Friends"
                                    FontFamily="AnimalCrossing"
                                    Margin="4,0"
-                                   FontSize="36"/>
+                                   FontSize="36"
+                                   TextColor="{StaticResource TextPrimaryColor}"/>
                         </Grid>
                     </pancake:PancakeView>
                 </Grid>
@@ -134,9 +139,11 @@
                                                 <Label Text="&#xf005;"
                                                        FontSize="24"
                                                        FontFamily="FA-R"
-                                                       HorizontalOptions="Center"/>
+                                                       HorizontalOptions="Center"
+                                                       TextColor="{StaticResource TextPrimaryColor}"/>
                                                 <Label Text="Favorite"
-                                                       HorizontalOptions="Center"/>
+                                                       HorizontalOptions="Center"
+                                                       TextColor="{StaticResource TextPrimaryColor}"/>
                                             </StackLayout>
                                         </sharpnado:MaterialFrame>
                                          </Grid>
@@ -161,9 +168,11 @@
                                                     <Label Text="&#xf2ed;"
                                                            FontSize="24"
                                                            FontFamily="FA-R"
-                                                           HorizontalOptions="Center"/>
+                                                           HorizontalOptions="Center"
+                                                           TextColor="{StaticResource TextPrimaryColor}"/>
                                                     <Label Text="Remove"
-                                                           HorizontalOptions="Center"/>
+                                                           HorizontalOptions="Center"
+                                                           TextColor="{StaticResource TextPrimaryColor}"/>
                                                 </StackLayout>
                                                     </effectsview:SfEffectsView>
                                             </sharpnado:MaterialFrame>
@@ -202,25 +211,30 @@
                                                         FontSize="24"/>
                                                  <Label Text="{Binding .}"
                                                         FontSize="Large"
-                                                        Grid.Column="1"/>
+                                                        Grid.Column="1"
+                                                        TextColor="{StaticResource TextPrimaryColor}"/>
                                                  <Label Text="Town Name"
                                                         FontSize="Small"
                                                         Grid.Column="1"
-                                                        Grid.Row="1"/>
+                                                        Grid.Row="1"
+                                                        TextColor="{StaticResource TextPrimaryColor}"/>
                                                  <Label Text="1:00 PM"
                                                         FontSize="Small"
                                                         Grid.Column="1"
-                                                        Grid.Row="2"/>
+                                                        Grid.Row="2"
+                                                        TextColor="{StaticResource TextPrimaryColor}"/>
 
                                                  <StackLayout Grid.RowSpan="3"
                                                               Grid.Column="2"
                                                               VerticalOptions="Center">
                                  
                                                      <Label Text="AM: 100 🔔"
-                                                            FontSize="Large"/>
+                                                            FontSize="Large"
+                                                            TextColor="{StaticResource TextPrimaryColor}"/>
                                  
                                                      <Label Text="PM: 100 🔔"
-                                                            FontSize="Large"/>
+                                                            FontSize="Large"
+                                                            TextColor="{StaticResource TextPrimaryColor}"/>
                                                  </StackLayout>
 
                                              </Grid>
