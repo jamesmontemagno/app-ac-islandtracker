@@ -53,6 +53,29 @@ namespace TurnipTracker.ViewModel
 
         public void SaveCurrentWeek()
         {
+            var sunday = Days[0];
+            if (sunday.BuyPrice.HasValue && SelectedDay != sunday)
+            {
+                if (SelectedDay.PriceAM.HasValue)
+                {
+                    var diffAM = SelectedDay.PriceAM.Value - sunday.BuyPrice.Value;
+                    SelectedDay.DifferenceAM = diffAM < 0 ? $"↘️ {diffAM}" : $"↗️ +{diffAM}";
+                }
+                else
+                {
+                    SelectedDay.DifferenceAM = string.Empty;
+                }
+
+                if (SelectedDay.PricePM.HasValue)
+                {
+                    var diffPM = SelectedDay.PricePM.Value - sunday.BuyPrice.Value;
+                    SelectedDay.DifferencePM = diffPM < 0 ? $"↘️ {diffPM}" : $"↗️ +{diffPM}";
+                }
+                else
+                {
+                    SelectedDay.DifferencePM = string.Empty;
+                }
+            }
             DataService.SaveCurrentWeek(Days);
             UpdatePredications();
         }

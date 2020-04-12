@@ -96,7 +96,8 @@
                             </Grid.RowDefinitions>
                             <Label Text="Buy Price"
                                        FontFamily="AnimalCrossing"
-                                       FontSize="Large"/>
+                                       FontSize="Large"
+                                       TextColor="{StaticResource TextPrimaryColor}"/>
                             <inputLayout:SfTextInputLayout
                                            Grid.Row="1"
                                             FocusedColor="{StaticResource NavigationPrimary}"
@@ -142,7 +143,8 @@
                                 Text="First Time Buying Turnips?"
                                 FontFamily="AnimalCrossing"
                                 VerticalOptions="Center"
-                                FontSize="Large"/>
+                                FontSize="Large"
+                                TextColor="{StaticResource TextPrimaryColor}"/>
                             <!--<BoxView HorizontalOptions="FillAndExpand"
                                      BackgroundColor="LightGray"
                                      Grid.Row="1" Grid.ColumnSpan="2"/>
@@ -205,7 +207,8 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Morning"
                                        FontFamily="AnimalCrossing"
-                                       FontSize="Large"/>
+                                       FontSize="Large"
+                                       TextColor="{StaticResource TextPrimaryColor}"/>
                                 <inputLayout:SfTextInputLayout
                                            Grid.Row="1"
                                             ContainerType="Outlined"
@@ -237,12 +240,12 @@
                                 <StackLayout Grid.Column="1" Grid.RowSpan="2"
                                              VerticalOptions="Center"
                                              HorizontalOptions="Center">
-                                    <Label TextColor="Green"
+                                    <Label TextColor="{StaticResource TextPrimaryColor}"
                                            FontSize="Medium"
                                              HorizontalOptions="Center"
-                                           Text="↗️ +14"/>
+                                           Text="{Binding DifferenceAM}"/>
 
-                                    <Label TextColor="Green"
+                                    <Label TextColor="{StaticResource TextPrimaryColor}"
                                            FontSize="Medium"
                                              HorizontalOptions="Center"
                                            Text="{Binding PredictionAM}"/>
@@ -268,7 +271,8 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Afternoon"
                                        FontFamily="AnimalCrossing"
-                                       FontSize="Large"/>
+                                       FontSize="Large"
+                                       TextColor="{StaticResource TextPrimaryColor}"/>
                                 <inputLayout:SfTextInputLayout
                                            Grid.Row="1"
                                             FocusedColor="{StaticResource NavigationPrimary}"
@@ -292,14 +296,14 @@
                                 <StackLayout Grid.Column="1" Grid.RowSpan="2"
                                              VerticalOptions="Center"
                                              HorizontalOptions="Center">
-                                    <Label TextColor="Green"
+                                    <Label TextColor="{StaticResource TextPrimaryColor}"
                                            FontSize="Medium"
-                                             HorizontalOptions="Center"
-                                           Text="↗️ +14"/>
+                                           HorizontalOptions="Center"
+                                           Text="{Binding DifferencePM}"/>
 
-                                    <Label TextColor="Green"
+                                    <Label TextColor="{StaticResource TextPrimaryColor}"
                                            FontSize="Medium"
-                                             HorizontalOptions="Center"
+                                           HorizontalOptions="Center"
                                            Text="{Binding PredictionPM}"/>
                                 </StackLayout>
                             </Grid>

@@ -52,6 +52,20 @@ namespace TurnipTracker.Model
             set => SetProperty(ref pricePM, value, onChanged: SaveCurrentWeekAction);
         }
 
+        string differenceAM = string.Empty;
+        public string DifferenceAM
+        {
+            get => differenceAM;
+            set => SetProperty(ref differenceAM, value);
+        }
+
+        string differencePM = string.Empty;
+        public string DifferencePM
+        {
+            get => differencePM;
+            set => SetProperty(ref differencePM, value);
+        }
+
         string predictionAM = string.Empty;
         public string PredictionAM
         {
