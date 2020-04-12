@@ -26,7 +26,7 @@ namespace TurnipTracker.Model
             {
                 var minPred = Math.Floor(0.9 * buyPrice);
                 var maxPred = Math.Ceiling(1.4 * buyPrice);
-                if (i < givenPrices.Length)
+                if (i < givenPrices.Length && givenPrices[i] > 0)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                     {
@@ -49,7 +49,7 @@ namespace TurnipTracker.Model
                 var maxPred = Math.Ceiling(maxRate * buyPrice / 10000.0);
 
 
-                if (i < givenPrices.Length)
+                if (i < givenPrices.Length && givenPrices[i] > 0)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                     {
@@ -73,7 +73,7 @@ namespace TurnipTracker.Model
             {
                 var minPred = Math.Floor(0.9 * buyPrice);
                 var maxPred = Math.Ceiling(1.4 * buyPrice);
-                if (i < givenPrices.Length)
+                if (i < givenPrices.Length && givenPrices[i] > 0)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                     {
@@ -96,7 +96,7 @@ namespace TurnipTracker.Model
                 var maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
 
 
-                if (i < givenPrices.Length)
+                if (i < givenPrices.Length && givenPrices[i] > 0)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                     {
@@ -124,7 +124,7 @@ namespace TurnipTracker.Model
             {
                 var minPred = Math.Floor(0.9 * buyPrice);
                 var maxPred = Math.Ceiling(1.4 * buyPrice);
-                if (i < givenPrices.Length)
+                if (i < givenPrices.Length && givenPrices[i] > 0)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                     {
@@ -138,7 +138,7 @@ namespace TurnipTracker.Model
                 predictedPrices.Add(((int)minPred, (int)maxPred));
 
             }
-            return new PredictedPriceSeries("high, decreasing, high, decreasing, high", 0, predictedPrices);
+            return new PredictedPriceSeries("Fluctuating", 0, predictedPrices);
         }
 
         static IEnumerable<PredictedPriceSeries> GeneratePattern0(int[] givenPrices)
@@ -173,7 +173,7 @@ namespace TurnipTracker.Model
                 var maxPred = Math.Ceiling(maxRate * buyPrice / 10000.0);
 
 
-                if (i < givenPrices.Length)
+                if (i < givenPrices.Length && givenPrices[i] > 0)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                     {
@@ -200,7 +200,7 @@ namespace TurnipTracker.Model
                 var minPred = Math.Floor(minRandoms[i - peakStart] * buyPrice);
                 var maxPred = Math.Ceiling(maxRandoms[i - peakStart] * buyPrice);
 
-                if (i < givenPrices.Length)
+                if (i < givenPrices.Length && givenPrices[i] > 0)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                     {
@@ -214,7 +214,7 @@ namespace TurnipTracker.Model
                 predictedPrices.Add(((int)minPred, (int)maxPred));
 
             }
-            return new PredictedPriceSeries("decreasing, high spike, random lows", 1, predictedPrices);
+            return new PredictedPriceSeries("Large spike", PredictionPattern.LargeSpike, predictedPrices);
         }
 
         static IEnumerable<PredictedPriceSeries> GeneratePattern1(int[] givenPrices)
@@ -240,7 +240,7 @@ namespace TurnipTracker.Model
                 var maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
 
 
-                if (i < givenPrices.Length)
+                if (i < givenPrices.Length && givenPrices[i] > 0)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                     {
@@ -258,7 +258,7 @@ namespace TurnipTracker.Model
                 minRate -= 500;
                 maxRate -= 300;
             }
-            yield return new PredictedPriceSeries("always decreasing", 2, predictedPrices);
+            yield return new PredictedPriceSeries("Decreasingg", PredictionPattern.Decreasing, predictedPrices);
         }
 
         static PredictedPriceSeries? GeneratePattern3WithPeak(
@@ -277,7 +277,7 @@ namespace TurnipTracker.Model
                 var maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
 
 
-                if (i < givenPrices.Length)
+                if (i < givenPrices.Length && givenPrices[i] > 0)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                     {
@@ -302,7 +302,7 @@ namespace TurnipTracker.Model
             {
                 var minPred = Math.Floor(0.9 * buyPrice);
                 var maxPred = Math.Ceiling(1.4 * buyPrice);
-                if (i < givenPrices.Length)
+                if (i < givenPrices.Length && givenPrices[i] > 0)
                 {
                     if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                     {
@@ -319,7 +319,7 @@ namespace TurnipTracker.Model
             {
                 var minPred = Math.Floor(1.4 * buyPrice) - 1;
                 var maxPred = Math.Ceiling(2.0 * buyPrice) - 1;
-                if (peakStart + 2 < givenPrices.Length)
+                if (peakStart + 2 < givenPrices.Length && givenPrices[peakStart + 2] > 0)
                 {
                     if (givenPrices[peakStart + 2] < minPred || givenPrices[peakStart + 2] > maxPred)
                     {
@@ -336,7 +336,7 @@ namespace TurnipTracker.Model
             {
                 double minPred = predictedPrices[peakStart + 2].min;
                 var maxPred = Math.Ceiling(2.0 * buyPrice);
-                if (peakStart + 3 < givenPrices.Length)
+                if (peakStart + 3 < givenPrices.Length && givenPrices[peakStart + 3] > 0)
                 {
                     if (givenPrices[peakStart + 3] < minPred || givenPrices[peakStart + 3] > maxPred)
                     {
@@ -353,7 +353,7 @@ namespace TurnipTracker.Model
             {
                 var minPred = Math.Floor(1.4 * buyPrice) - 1;
                 double maxPred = predictedPrices[peakStart + 3].max - 1;
-                if (peakStart + 4 < givenPrices.Length)
+                if (peakStart + 4 < givenPrices.Length && givenPrices[peakStart + 4] > 0)
                 {
                     if (givenPrices[peakStart + 4] < minPred || givenPrices[peakStart + 4] > maxPred)
                     {
@@ -376,7 +376,7 @@ namespace TurnipTracker.Model
                         maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
 
 
-                        if (i < givenPrices.Length)
+                        if (i < givenPrices.Length && givenPrices[i] > 0)
                         {
                             if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
                             {
@@ -396,7 +396,7 @@ namespace TurnipTracker.Model
                 }
             }
 
-            return new PredictedPriceSeries("decreasing, spike, decreasing", 3, predictedPrices);
+            return new PredictedPriceSeries("Small spike", PredictionPattern.SmallSpike, predictedPrices);
         }
 
         static IEnumerable<PredictedPriceSeries> GeneratePattern3(int[] givenPrices)
@@ -486,7 +486,7 @@ namespace TurnipTracker.Model
                 }
                 weekMinMaxs.Add((min, max));
             }
-            return new PredictedPriceSeries("predicted min/max across all patterns", 4, weekMinMaxs);
+            return new PredictedPriceSeries("All patterns", PredictionPattern.All, weekMinMaxs);
         }
     }
 }

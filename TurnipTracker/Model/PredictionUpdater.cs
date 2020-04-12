@@ -67,13 +67,28 @@ namespace TurnipTracker.Model
                     {
                         prices.Add(day.PriceAM.Value);
                     }
+                    else
+                    {
+                        prices.Add(0);
+                    }
 
                     if (day.PricePM.HasValue)
                     {
                         prices.Add(day.PricePM.Value);
                     }
+                    else
+                    {
+                        prices.Add(0);
+                    }
                 }
             }
+
+            // Trim zero entries at end
+            var lastNonZero = prices.FindLastIndex((x) => x > 0);
+            // There must be two entries for Sunday even if both zero
+            if (lastNonZero < 2)
+                lastNonZero = 1;
+            prices.RemoveRange(lastNonZero + 1, prices.Count - (lastNonZero + 1));
             return prices.ToArray();
         }
     }
