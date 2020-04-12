@@ -126,11 +126,9 @@
                                                 MaterialTheme="Acrylic"
                                                 CornerRadius="10"
                                                 Elevation="4"
-                                                Padding="0"
-                                                LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
-                                            <effectsview:SfEffectsView
                                                 Padding="24,12"
-                                                CornerRadius="10">
+                                                LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                            
                                             <StackLayout VerticalOptions="Center">
                                             
                                                 <Label Text="&#xf005;"
@@ -140,7 +138,6 @@
                                                 <Label Text="Favorite"
                                                        HorizontalOptions="Center"/>
                                             </StackLayout>
-                                                </effectsview:SfEffectsView>
                                         </sharpnado:MaterialFrame>
                                          </Grid>
                                     </SwipeItemView>
