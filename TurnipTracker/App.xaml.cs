@@ -41,6 +41,8 @@ namespace TurnipTracker
                 typeof(Analytics), 
                 typeof(Crashes),
                 typeof(Distribute));
+
+            Distribute.CheckForUpdate();
 #endif
             OnResume();
         }
