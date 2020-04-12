@@ -35,14 +35,13 @@ namespace TurnipTracker
         {
 
 #if !DEBUG
+            Distribute.UpdateTrack = UpdateTrack.Private;
             AppCenter.Start($"ios={AppCenteriOS};" +
                 $"android={AppCenterAndroid};" +
                 $"uwp={AppCenterUWP}", 
                 typeof(Analytics), 
                 typeof(Crashes),
                 typeof(Distribute));
-
-            Distribute.CheckForUpdate();
 #endif
             OnResume();
         }
