@@ -10,8 +10,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -23,7 +21,7 @@
 	<key>MinimumOSVersion</key>
 	<string>10.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>TurnipTracker</string>
+	<string>Island Tracker</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.refractored.islandtracker</string>
 	<key>CFBundleVersion</key>
@@ -36,7 +34,7 @@
 	<string>Island Tracker</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
-		<key>CFBundleURLTypes</key>
+	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLSchemes</key>

@@ -21,6 +21,7 @@
         <ResourceDictionary>
             <converters:DifferenceColorConverter x:Key="DifferenceColorConverter"/>
             <converters:StringEmptyConverter x:Key="StringEmptyConverter"/>
+            <converters:SelectedDayColorConverter x:Key="SelectedDayColorConverter"/>
         </ResourceDictionary>
     </ContentView.Resources>
     <Grid RowSpacing="12"
@@ -54,12 +55,10 @@
                                             Margin="0"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center"
-                                            LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
+                                            LightThemeBackgroundColor="{Binding IsSelectedDay, Converter={StaticResource SelectedDayColorConverter}}"
                                             HeightRequest="42"
                                             WidthRequest="42">
                                         <effectsview:SfEffectsView
-                                                IsSelected="{Binding IsSelectedDay}"
-                                                SelectionColor="Red"
                                                 TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TrackingViewModel}}, Path=DaySelectedCommand}"
                                                 TouchUpCommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                                 CornerRadius="{OnPlatform iOS=21}">
@@ -119,6 +118,7 @@
                                            Value="{Binding SelectedDay.BuyPrice}"
                                            MaximumNumberDecimalDigits="0"
                                            AllowNull="True"
+                                           TextColor="{StaticResource TextPrimaryColor}"
                                            Maximum="10000"
                                            ParserMode="Double"
                                            ValueChangeMode="OnKeyFocus"/>
@@ -233,6 +233,7 @@
                                            AllowNull="True"
                                            Maximum="10000"
                                            ParserMode="Double"
+                                           TextColor="{StaticResource TextPrimaryColor}"
                                            ValueChangeMode="OnKeyFocus">
                                         <!--<sfntb:SfNumericTextBox.Behaviors>
                                             <behaviors:EventHandlerBehavior EventName="ValueChanged">
@@ -301,7 +302,8 @@
                                            AllowNull="True"
                                            Maximum="10000"
                                            ParserMode="Double"
-                                           ValueChangeMode="OnKeyFocus"/>
+                                           ValueChangeMode="OnKeyFocus"
+                                        TextColor="{x:StaticResource TextPrimaryColor}"/>
                                 </inputLayout:SfTextInputLayout>
 
 
