@@ -4,6 +4,7 @@
              xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
              xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms" xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms" xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
              x:Class="TurnipTracker.View.FriendsView"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              BackgroundColor="{StaticResource NavigationPrimary}">
      <ContentView.BindingContext>
         <viewmodel:FriendsViewModel/>
@@ -13,10 +14,7 @@
                   SeparatorVisibility="None"
                   VerticalOptions="FillAndExpand"
                   CachingStrategy="RecycleElement"
-                  IsPullToRefreshEnabled="True"
-                  IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-                  RefreshCommand="{Binding RefreshCommand}"
-             BackgroundColor="{StaticResource AcrylicSurface}">
+                 BackgroundColor="{StaticResource AcrylicSurface}">
             <ListView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Heather</x:String>
@@ -38,6 +36,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -51,7 +50,7 @@
                                     HorizontalOptions="FillAndExpand"
                                     LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
                                 <effectsview:SfEffectsView
-                                    Padding="24,12"
+                                    Padding="18,12,12,12"
                                     CornerRadius="10">
                                 <Grid ColumnSpacing="12">
                                     <Grid.ColumnDefinitions>
@@ -109,7 +108,27 @@
                                            TextColor="{StaticResource TextPrimaryColor}"/>
                                 </effectsview:SfEffectsView>
                             </sharpnado:MaterialFrame>
-                            <Label Grid.Row="1" Grid.ColumnSpan="2"
+                              <sharpnado:MaterialFrame 
+                                    MaterialTheme="Acrylic"
+                                    CornerRadius="10"
+                                    Margin="4,12"
+                                    Elevation="4"
+                                    Padding="0"
+                                    Grid.Column="2"
+                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                <effectsview:SfEffectsView
+                                    Padding="24,12"
+                                    CornerRadius="10"
+                                    TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=RefreshCommand}">
+                                    <Label Text="&#xf021;"
+                                           FontSize="24"
+                                           FontFamily="FA-S"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           TextColor="{StaticResource TextPrimaryColor}"/>
+                                </effectsview:SfEffectsView>
+                            </sharpnado:MaterialFrame>
+                            <Label Grid.Row="1" Grid.ColumnSpan="3"
                                    Text="Friends"
                                    FontFamily="AnimalCrossing"
                                    Margin="4,0"
@@ -122,7 +141,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <SwipeView BackgroundColor="Transparent">
+                        <SwipeView IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsNotBusy}" BackgroundColor="Transparent">
                             <SwipeView.LeftItems>
                                 <SwipeItems>
                                     <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}">
@@ -131,20 +150,23 @@
                                                 MaterialTheme="Acrylic"
                                                 CornerRadius="10"
                                                 Elevation="4"
-                                                Padding="24,12"
+                                                Padding="0"
                                                 LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                            <effectsview:SfEffectsView
+                                                    Padding="24,12"
+                                                    CornerRadius="10">
+                                                <StackLayout VerticalOptions="Center">
                                             
-                                            <StackLayout VerticalOptions="Center">
-                                            
-                                                <Label Text="&#xf005;"
-                                                       FontSize="24"
-                                                       FontFamily="FA-R"
-                                                       HorizontalOptions="Center"
-                                                       TextColor="{StaticResource TextPrimaryColor}"/>
-                                                <Label Text="Favorite"
-                                                       HorizontalOptions="Center"
-                                                       TextColor="{StaticResource TextPrimaryColor}"/>
-                                            </StackLayout>
+                                                    <Label Text="&#xf005;"
+                                                           FontSize="24"
+                                                           FontFamily="FA-R"
+                                                           HorizontalOptions="Center"
+                                                           TextColor="{StaticResource TextPrimaryColor}"/>
+                                                    <Label Text="Favorite"
+                                                           HorizontalOptions="Center"
+                                                           TextColor="{StaticResource TextPrimaryColor}"/>
+                                                </StackLayout>
+                                            </effectsview:SfEffectsView>
                                         </sharpnado:MaterialFrame>
                                          </Grid>
                                     </SwipeItemView>
@@ -190,11 +212,8 @@
                                             MaterialTheme="Acrylic"
                                             CornerRadius="10"
                                             Elevation="4"
-                                             Padding="0"
+                                             Padding="18"
                                             LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
-                                             <effectsview:SfEffectsView
-                                                Padding="18"
-                                                CornerRadius="10">
                                              <Grid ColumnSpacing="12"
                                                    RowSpacing="4">
                                                  <Grid.RowDefinitions>
@@ -238,7 +257,6 @@
                                                  </StackLayout>
 
                                              </Grid>
-                                            </effectsview:SfEffectsView>
                                         </sharpnado:MaterialFrame>
                                     </shimmer:SfShimmer.Content>
                                 </shimmer:SfShimmer>

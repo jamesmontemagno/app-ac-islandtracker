@@ -10,15 +10,21 @@
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms" xmlns:sfntb="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms" xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms" xmlns:sfntb="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms" xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" xmlns:converters="clr-namespace:TurnipTracker.Converters"
              mc:Ignorable="d"
              Shell.NavBarIsVisible="False"
              x:DataType="viewmodel:TrackingViewModel">
     <ContentView.BindingContext>
         <viewmodel:TrackingViewModel/>
     </ContentView.BindingContext>
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:DifferenceColorConverter x:Key="DifferenceColorConverter"/>
+            <converters:StringEmptyConverter x:Key="StringEmptyConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
     <Grid RowSpacing="12"
-              Padding="{OnPlatform Android='0,12,0,0', iOS='0,66,0,0'}"
+              Padding="{OnPlatform Android='0,12,0,0', iOS='0,24,0,0'}"
               BackgroundColor="{StaticResource NavigationPrimary}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -103,7 +109,7 @@
                                             FocusedColor="{StaticResource NavigationPrimary}"
                                             ContainerType="Outlined"
                                             Hint="Turnip Price"
-                                            Margin="0,0,0,-12"
+                                            Margin="0,8,0,-12"
                                            VerticalOptions="Center">
                                 <inputLayout:SfTextInputLayout.TrailingView>
                                     <Label Text="🔔" FontSize="Medium"/>
@@ -114,7 +120,8 @@
                                            MaximumNumberDecimalDigits="0"
                                            AllowNull="True"
                                            Maximum="10000"
-                                           ParserMode="Double"/>
+                                           ParserMode="Double"
+                                           ValueChangeMode="OnKeyFocus"/>
                             </inputLayout:SfTextInputLayout>
                         </Grid>
                     </sharpnado:MaterialFrame>
@@ -225,7 +232,8 @@
                                            MaximumNumberDecimalDigits="0"
                                            AllowNull="True"
                                            Maximum="10000"
-                                           ParserMode="Double">
+                                           ParserMode="Double"
+                                           ValueChangeMode="OnKeyFocus">
                                         <!--<sfntb:SfNumericTextBox.Behaviors>
                                             <behaviors:EventHandlerBehavior EventName="ValueChanged">
                                                 <behaviors:SetPropertyAction TargetObject="{Binding}" 
@@ -240,12 +248,15 @@
                                 <StackLayout Grid.Column="1" Grid.RowSpan="2"
                                              VerticalOptions="Center"
                                              HorizontalOptions="Center">
-                                    <Label TextColor="{StaticResource TextPrimaryColor}"
+                                    <Label TextColor="{Binding DifferenceAM, Converter={StaticResource DifferenceColorConverter}}"
+                                           IsVisible="{Binding DifferenceAM, Converter={StaticResource StringEmptyConverter}}"
                                            FontSize="Medium"
                                              HorizontalOptions="Center"
                                            Text="{Binding DifferenceAM}"/>
 
                                     <Label TextColor="{StaticResource TextPrimaryColor}"
+                                           
+                                           IsVisible="{Binding PredictionAM, Converter={StaticResource StringEmptyConverter}}"
                                            FontSize="Medium"
                                              HorizontalOptions="Center"
                                            Text="{Binding PredictionAM}"/>
@@ -289,19 +300,23 @@
                                            MaximumNumberDecimalDigits="0"
                                            AllowNull="True"
                                            Maximum="10000"
-                                           ParserMode="Double"/>
+                                           ParserMode="Double"
+                                           ValueChangeMode="OnKeyFocus"/>
                                 </inputLayout:SfTextInputLayout>
 
 
                                 <StackLayout Grid.Column="1" Grid.RowSpan="2"
                                              VerticalOptions="Center"
                                              HorizontalOptions="Center">
-                                    <Label TextColor="{StaticResource TextPrimaryColor}"
+                                    <Label TextColor="{Binding DifferencePM, Converter={StaticResource DifferenceColorConverter}}"
+                                           IsVisible="{Binding DifferencePM, Converter={StaticResource StringEmptyConverter}}"
                                            FontSize="Medium"
                                            HorizontalOptions="Center"
                                            Text="{Binding DifferencePM}"/>
 
                                     <Label TextColor="{StaticResource TextPrimaryColor}"
+                                           
+                                           IsVisible="{Binding PredictionPM, Converter={StaticResource StringEmptyConverter}}"
                                            FontSize="Medium"
                                            HorizontalOptions="Center"
                                            Text="{Binding PredictionPM}"/>
@@ -310,6 +325,7 @@
                         </sharpnado:MaterialFrame>
 
                         <Label Grid.Row="3"
+                               IsVisible="False"
                                Margin="0,-6,0,0"
                                 VerticalOptions="EndAndExpand"
                                 Text="Prediction: Small Spike"

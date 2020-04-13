@@ -10,6 +10,7 @@ namespace TurnipTracker
         public AppShell()
         {
             InitializeComponent();
+            TabBar.CurrentItem = TabBar.Items[1];
         }
     }
 }

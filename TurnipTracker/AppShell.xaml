@@ -29,22 +29,22 @@
     
     <!-- Your Pages -->
     
-    <TabBar>
+    <TabBar x:Name="TabBar">
         <Tab Title="Profile">
             <Tab.Icon>
-                <FontImageSource FontFamily="FA-S" Glyph="&#xf2bd;"/>
+                <FontImageSource Glyph="{StaticResource IconProfile}" FontFamily="FA-S" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate view:ProfilePage}"/>
         </Tab>
         <Tab Title="Tracking">
             <Tab.Icon>
-                <FontImageSource FontFamily="FA-S" Glyph="&#xf080;"/>
+                <FontImageSource FontFamily="FA-S" Glyph="{StaticResource IconTracking}"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate view:TrackingPage}"/>
         </Tab>
         <Tab Title="Friends">
             <Tab.Icon>
-                <FontImageSource FontFamily="FA-S" Glyph="&#xf0c0;"/>
+                <FontImageSource FontFamily="FA-S" Glyph="{StaticResource IconFriends}"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate view:FriendsPage}"/>
         </Tab>

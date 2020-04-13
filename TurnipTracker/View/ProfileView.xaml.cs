@@ -10,5 +10,11 @@ namespace TurnipTracker.View
         {
             InitializeComponent();
         }
+
+        void ButtonSave_TouchUp(System.Object sender, System.EventArgs e)
+        {
+            LabelSaved.Opacity = 1;
+            LabelSaved.FadeTo(0, 2500);
+        }
     }
 }
