@@ -5,29 +5,6 @@
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
-    <IntermediateOutputPath>obj\iPhone\Ad-Hoc</IntermediateOutputPath>
-    <DebugType></DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
-    <DefineConstants></DefineConstants>
-    <NoWarn></NoWarn>
-    <LangVersion>Default</LangVersion>
-    <NoStdLib>false</NoStdLib>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'App Store|iPhone' ">
-    <IntermediateOutputPath>obj\iPhone\App Store</IntermediateOutputPath>
-    <DebugType></DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\iPhone\App Store</OutputPath>
-    <DefineConstants></DefineConstants>
-    <NoWarn></NoWarn>
-    <LangVersion>Default</LangVersion>
-    <NoStdLib>false</NoStdLib>
-  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.6.0.616-pre4" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
@@ -45,21 +22,6 @@
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.1.0" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.1.0" />
     <PackageReference Include="Microsoft.AppCenter" Version="3.1.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\" />
-    <Folder Include="Model\" />
-    <Folder Include="ViewModel\" />
-    <Folder Include="Resources\" />
-    <Folder Include="Resources\Fonts\" />
-    <Folder Include="Services\" />
-    <Folder Include="Converters\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Resources\Fonts\FinkHeavy.ttf" />
-    <None Remove="Resources\Fonts\fa-regular-400.ttf" />
-    <None Remove="Resources\Fonts\fa-solid-900.ttf" />
-    <None Remove="Resources\.DS_Store" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\FinkHeavy.ttf" />
