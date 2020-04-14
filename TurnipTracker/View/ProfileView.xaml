@@ -23,7 +23,7 @@
         <pancake:PancakeView CornerRadius="36,36,0,0"
                                  Grid.Row="1"
                                  Elevation="8"
-                                 Padding="12"
+                                 Padding="12,12,12,0"
                                  BackgroundColor="{StaticResource AcrylicSurface}">
             <StackLayout Spacing="4" Padding="12">
                 <Label 
@@ -116,7 +116,7 @@
                 <sharpnado:MaterialFrame 
                                     MaterialTheme="Acrylic"
                                     CornerRadius="33"
-                                    Margin="-8"
+                                    Margin="0"
                                     HorizontalOptions="End"
                                     VerticalOptions="End"
                                     HeightRequest="66"

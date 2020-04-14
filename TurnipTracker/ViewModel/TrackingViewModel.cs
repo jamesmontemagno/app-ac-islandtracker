@@ -76,6 +76,16 @@ namespace TurnipTracker.ViewModel
 
         public void SaveCurrentWeek()
         {
+            DataService.SaveCurrentWeek(Days);
+            UpdatePredications();
+        }
+
+
+
+        public void UpdatePredications()
+        {
+            PredictionUpdater.Update(Days);
+
             var sunday = Days[0];
             if (sunday.BuyPrice.HasValue && SelectedDay != sunday)
             {
@@ -99,15 +109,6 @@ namespace TurnipTracker.ViewModel
                     SelectedDay.DifferencePM = string.Empty;
                 }
             }
-            DataService.SaveCurrentWeek(Days);
-            UpdatePredications();
-        }
-
-
-
-        public void UpdatePredications()
-        {
-            PredictionUpdater.Update(Days);
 
             var low = 0;
             var high = 0;
