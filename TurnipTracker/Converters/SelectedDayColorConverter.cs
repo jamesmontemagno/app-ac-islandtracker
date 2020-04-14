@@ -6,18 +6,20 @@ namespace TurnipTracker.Converters
 {
     public class SelectedDayColorConverter : IValueConverter
     {
-        static Color acrylicColor;
+        static Color textPrimary;
+        static Color primary;
         static SelectedDayColorConverter()
         {
-            acrylicColor = (Color)App.Current.Resources["AcrylicFrameBackgroundColor"];
+            textPrimary = (Color)App.Current.Resources["TextPrimaryColor"];
+            primary = (Color)App.Current.Resources["NavigationPrimary"];
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is bool val)
-                return val ? Color.LightPink : acrylicColor;
+                return val ? primary : textPrimary;
 
-            return acrylicColor;
+            return textPrimary;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

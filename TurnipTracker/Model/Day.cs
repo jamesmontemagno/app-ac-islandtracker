@@ -52,7 +52,10 @@ namespace TurnipTracker.Model
             set => SetProperty(ref pricePM, value, onChanged: SaveCurrentWeekAction);
         }
 
+        public bool IsSunday { get; set; }
+
         string differenceAM = string.Empty;
+        [JsonIgnore]
         public string DifferenceAM
         {
             get => differenceAM;
@@ -60,13 +63,24 @@ namespace TurnipTracker.Model
         }
 
         string differencePM = string.Empty;
+        [JsonIgnore]
         public string DifferencePM
         {
             get => differencePM;
             set => SetProperty(ref differencePM, value);
         }
 
+        [JsonIgnore]
+        public int PredictionAMMin { get; set; }
+        [JsonIgnore]
+        public int PredictionAMMax { get; set; }
+        [JsonIgnore]
+        public int PredictionPMMin { get; set; }
+        [JsonIgnore]
+        public int PredictionPMMax { get; set; }
+
         string predictionAM = string.Empty;
+        [JsonIgnore]
         public string PredictionAM
         {
             get => predictionAM;
@@ -74,6 +88,7 @@ namespace TurnipTracker.Model
         }
 
         string predictionPM = string.Empty;
+        [JsonIgnore]
         public string PredictionPM
         {
             get => predictionPM;
@@ -88,7 +103,7 @@ namespace TurnipTracker.Model
             set => SetProperty(ref isSelectedDay, value);
         }
 
-        public bool IsSunday { get; set; }
+        
 
         [JsonIgnore]
         public bool IsNotSunday => !IsSunday;

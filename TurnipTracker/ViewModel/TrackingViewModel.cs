@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MvvmHelpers;
 using TurnipTracker.Model;
 using TurnipTracker.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace TurnipTracker.ViewModel
@@ -12,6 +13,7 @@ namespace TurnipTracker.ViewModel
 
         public List<Day> Days { get; }
 
+        public Command<Day> DaySelectedCommand { get; }
 
         public TrackingViewModel()
         {
@@ -38,6 +40,9 @@ namespace TurnipTracker.ViewModel
             get => selectedDay;
             set
             {
+                if (selectedDay == value)
+                    return;
+
                 if (selectedDay != null)
                     selectedDay.IsSelectedDay = false;
 
@@ -46,10 +51,28 @@ namespace TurnipTracker.ViewModel
             }
         }
 
-        public Command<Day> DaySelectedCommand { get; }
+        int min = 0;
+        public int Min
+        {
+            get => min;
+            set => SetProperty(ref min, value);
+        }
 
-        void OnDaySelected(Day day) =>
-            SelectedDay = day;
+        int max = 0;
+        public int Max
+        {
+            get => max;
+            set => SetProperty(ref max, value);
+        }
+
+
+        void OnDaySelected(Day day)
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                SelectedDay = day;
+            });
+        }
 
         public void SaveCurrentWeek()
         {
@@ -80,9 +103,29 @@ namespace TurnipTracker.ViewModel
             UpdatePredications();
         }
 
+
+
         public void UpdatePredications()
         {
-            PredictionUpdater.Update(this.Days);
+            PredictionUpdater.Update(Days);
+
+            var low = 0;
+            var high = 0;
+            foreach(var day in Days)
+            {
+                if (day.PredictionAMMin > low)
+                    low = day.PredictionAMMin;
+                if (day.PredictionPMMin > low)
+                    low = day.PredictionPMMin;
+
+                if (day.PredictionAMMax > high)
+                    high = day.PredictionAMMax;
+                if (day.PredictionPMMax > high)
+                    high = day.PredictionPMMax;
+            }
+
+            Min = low;
+            Max = high;
         }
     }
 }

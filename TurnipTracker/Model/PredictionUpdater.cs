@@ -20,10 +20,15 @@ namespace TurnipTracker.Model
                         day.PredictionAM = $"🔮 {min}";
                     else
                         day.PredictionAM = $"🔮 {min}-{max}";
+
+                    day.PredictionAMMin = min;
+                    day.PredictionAMMax = max;
                 }
                 else
                 {
                     day.PredictionAM = string.Empty;
+                    day.PredictionAMMin = 0;
+                    day.PredictionAMMax = 0;
                 }
 
                 if (!day.PricePM.HasValue)
@@ -33,10 +38,14 @@ namespace TurnipTracker.Model
                         day.PredictionPM = $"🔮 {min}";
                     else
                         day.PredictionPM = $"🔮 {min}-{max}";
+                    day.PredictionPMMin = min;
+                    day.PredictionPMMax = max;
                 }
                 else
                 {
                     day.PredictionPM = string.Empty;
+                    day.PredictionAMMin = 0;
+                    day.PredictionAMMax = 0;
                 }
             }
         }

@@ -37,7 +37,7 @@
         <pancake:PancakeView CornerRadius="36,36,0,0"
                                  Grid.Row="1"
                                  Elevation="8"
-                                 Padding="12"
+                                 Padding="12,12,12,0"
                                  BackgroundColor="{StaticResource AcrylicSurface}">
             <StackLayout Spacing="0">
                 <StackLayout x:Name="CollectionViewDay"
@@ -55,7 +55,7 @@
                                             Margin="0"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center"
-                                            LightThemeBackgroundColor="{Binding IsSelectedDay, Converter={StaticResource SelectedDayColorConverter}}"
+                                            LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                             HeightRequest="42"
                                             WidthRequest="42">
                                         <effectsview:SfEffectsView
@@ -65,7 +65,7 @@
                                                 <Label Text="{Binding DayShort}"
                                                            HorizontalOptions="Center"
                                                            VerticalOptions="Center"
-                                                        TextColor="{StaticResource TextPrimaryColor}"/>
+                                                        TextColor="{Binding IsSelectedDay, Converter={StaticResource SelectedDayColorConverter}}"/>
                                         </effectsview:SfEffectsView>
                                     </sharpnado:MaterialFrame>
                             </Grid>
@@ -73,8 +73,8 @@
                     </BindableLayout.ItemTemplate>
                 </StackLayout>
                 
-                <Label FontSize="36"
-                       Margin="0,36,0,0"
+                <Label FontSize="24"
+                       Margin="0,24,0,0"
                        HorizontalOptions="Center"
                         FontFamily="AnimalCrossing"
                         TextColor="{StaticResource NavigationPrimary}"
@@ -195,9 +195,16 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
                         <sharpnado:MaterialFrame
                                 MaterialTheme="Acrylic"
+                                Grid.ColumnSpan="2"
                                 CornerRadius="10"
                                 Margin="4"
                                 Elevation="4"
@@ -270,7 +277,8 @@
                                 Margin="4"
                                 Elevation="4"
                                 LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
-                                Grid.Row="1" 
+                                Grid.Row="1"
+                                Grid.ColumnSpan="2"
                                 BindingContext="{Binding SelectedDay}">
                             <Grid x:DataType="model:Day" RowSpacing="0">
                                 <Grid.RowDefinitions>
@@ -326,7 +334,7 @@
                             </Grid>
                         </sharpnado:MaterialFrame>
 
-                        <Label Grid.Row="3"
+                        <Label Grid.Row="4"
                                IsVisible="False"
                                Margin="0,-6,0,0"
                                 VerticalOptions="EndAndExpand"
@@ -334,6 +342,22 @@
                                 HorizontalOptions="Center"
                                 FontFamily="AnimalCrossing"
                                 FontSize="Medium"/>
+                        <Label
+                            Grid.Row="5"
+
+                            HorizontalOptions="Center"
+                            FontFamily="AnimalCrossing"
+                            FontSize="Small"
+                            Text="{Binding Min,
+                              StringFormat='Guaranteed Min: {0}'}"/>
+                    <Label
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            FontFamily="AnimalCrossing"
+                            FontSize="Small"
+                            Text="{Binding Max,
+                              StringFormat='Potential Max: {0}'}"/>
                     </Grid>
 
                 </StackLayout>
