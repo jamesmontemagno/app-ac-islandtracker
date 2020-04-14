@@ -15,6 +15,9 @@ namespace TurnipTracker
 
         public App()
         {
+#if !DEBUG
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(SyncFusionKey);
+#endif
             InitializeComponent();
             Xamarin.Forms.Device.SetFlags(new List<string>() {
                     "StateTriggers_Experimental",
@@ -30,6 +33,7 @@ namespace TurnipTracker
         const string AppCenteriOS = "AC_IOS";
         const string AppCenterAndroid = "AC_ANDROID";
         const string AppCenterUWP = "AC_UWP";
+        const string SyncFusionKey = "AC_SYNC";
 
         protected override void OnStart()
         {
