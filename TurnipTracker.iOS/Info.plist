@@ -42,6 +42,16 @@
 				<string>appcenter-APP_SECRET</string>
 			</array>
 		</dict>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>com.refractored.islandtracker</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>acislandtracker</string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+        </dict>
 	</array>
 </dict>
 </plist>

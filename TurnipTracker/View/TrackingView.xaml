@@ -37,7 +37,7 @@
         <pancake:PancakeView CornerRadius="36,36,0,0"
                                  Grid.Row="1"
                                  Elevation="8"
-                                 Padding="0,12,0,0"
+                                 Padding="0,12,0,8"
                                  BackgroundColor="{StaticResource AcrylicSurface}">
             <StackLayout Spacing="0" Padding="12,0">
                 <StackLayout x:Name="CollectionViewDay"
@@ -345,20 +345,23 @@
                                 FontSize="Medium"/>
                         <Label
                             Grid.Row="5"
-
+                            TextColor="{StaticResource TextPrimaryColor}"
                             HorizontalOptions="Center"
+                            VerticalOptions="End"
                             FontFamily="AnimalCrossing"
-                            FontSize="Small"
+                            FontSize="Micro"
                             Text="{Binding Min,
-                              StringFormat='Guaranteed Min: {0}'}"/>
+                              StringFormat='Guaranteed Weekly Min: {0}'}"/>
                     <Label
                             Grid.Row="5"
                             Grid.Column="1"
+                            TextColor="{StaticResource TextPrimaryColor}"
                             HorizontalOptions="Center"
+                            VerticalOptions="End"
                             FontFamily="AnimalCrossing"
-                            FontSize="Small"
+                            FontSize="Micro"
                             Text="{Binding Max,
-                              StringFormat='Potential Max: {0}'}"/>
+                              StringFormat='Potential Weekly Max: {0}'}"/>
                     </Grid>
 
                 </StackLayout>

@@ -99,7 +99,8 @@
                                     LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
                                 <effectsview:SfEffectsView
                                     Padding="24,12"
-                                    CornerRadius="10">
+                                    CornerRadius="10"
+                                    TouchUpCommand="{Binding SendFriendRequestCommand}">
                                     <Label Text="&#xf1d8;"
                                            FontSize="24"
                                            FontFamily="FA-S"
