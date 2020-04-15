@@ -12,6 +12,7 @@
             <x:String x:Key="IconProfile">&#xf2bd;</x:String>
             <x:String x:Key="IconTracking">&#xf080;</x:String>
             <x:String x:Key="IconFriends">&#xf0c0;</x:String>
+            <x:String x:Key="IconAbout">&#xf129;</x:String>
             <Color x:Key="NavigationPrimary">#2196F3</Color>
             <Color x:Key="AcrylicSurface">#E6E6E6</Color>
 

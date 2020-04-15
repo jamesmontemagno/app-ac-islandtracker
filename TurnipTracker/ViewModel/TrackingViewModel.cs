@@ -114,15 +114,26 @@ namespace TurnipTracker.ViewModel
             var high = 0;
             foreach(var day in Days)
             {
-                if (day.PredictionAMMin > low)
-                    low = day.PredictionAMMin;
-                if (day.PredictionPMMin > low)
-                    low = day.PredictionPMMin;
+                if (day == sunday)
+                    continue;
 
-                if (day.PredictionAMMax > high)
-                    high = day.PredictionAMMax;
-                if (day.PredictionPMMax > high)
-                    high = day.PredictionPMMax;
+                if (!day.PriceAM.HasValue)
+                {
+                    if (day.PredictionAMMin > low)
+                        low = day.PredictionAMMin;
+
+                    if (day.PredictionAMMax > high)
+                        high = day.PredictionAMMax;
+                }
+
+                if (!day.PricePM.HasValue)
+                {
+                    if (day.PredictionPMMin > low)
+                        low = day.PredictionPMMin;
+
+                    if (day.PredictionPMMax > high)
+                        high = day.PredictionPMMax;
+                }
             }
 
             Min = low;

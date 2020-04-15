@@ -48,6 +48,13 @@
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate view:FriendsPage}"/>
         </Tab>
+
+        <Tab Title="About">
+            <Tab.Icon>
+                <FontImageSource FontFamily="FA-S" Glyph="{StaticResource IconAbout}"/>
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate view:AboutPage}"/>
+        </Tab>
     </TabBar>
     <!-- Optional Templates 
     // These may be provided inline as below or as separate classes.

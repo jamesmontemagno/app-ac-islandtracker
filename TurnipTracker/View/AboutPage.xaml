@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
+             xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms" 
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+             xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms" 
+             xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+             mc:Ignorable="d"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             BackgroundColor="{StaticResource NavigationPrimary}"
+             ios:Page.UseSafeArea="True"
+             Shell.NavBarIsVisible="False"
+             x:Class="TurnipTracker.View.AboutPage"
+             x:DataType="viewmodel:AboutViewModel">
+    <ContentPage.BindingContext>
+        <viewmodel:AboutViewModel/>
+    </ContentPage.BindingContext>
+    <Grid RowSpacing="12"
+              Padding="{OnPlatform Android='0,12,0,0', iOS='0,24,0,0'}"
+              BackgroundColor="{StaticResource NavigationPrimary}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label HorizontalOptions="Center" Text="About"
+                   TextColor="White" FontSize="44"
+                   FontFamily="AnimalCrossing"/>
+        <pancake:PancakeView CornerRadius="36,36,0,0"
+                                 Grid.Row="1"
+                                 Elevation="8"
+                                 Padding="12,12,12,0"
+                                 BackgroundColor="{StaticResource AcrylicSurface}">
+            <StackLayout Spacing="4" Padding="12">
+                <Label 
+                       TextColor="{StaticResource TextPrimaryColor}"
+                       FontSize="Medium"
+                       Text="Thanks for beta testing Island Tracker! I really appreciate it. If you run into any issues or have a suggestion, please send me an email by using the nifty button below."
+                       Margin="0,0,0,0"
+                       FontFamily="AnimalCrossing"/>
+
+                <Button Visual="Material"
+                        Margin="0,24,0,0"
+                        BorderColor="{StaticResource NavigationPrimary}"
+                        BorderWidth="1"
+                        CornerRadius="22"
+                        HeightRequest="44"
+                        Text="Send Report/Feedback"
+                        Command="{Binding SendEmailCommand}"
+                        TextColor="{StaticResource NavigationPrimary}"
+                        Padding="12,0"
+                        BackgroundColor="{StaticResource AcrylicSurface}"
+                        HorizontalOptions="FillAndExpand"/>
+
+                <StackLayout Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding AttachDetails}"/>
+                    <Label VerticalOptions="Center" 
+                           TextColor="{StaticResource TextPrimaryColor}"
+                           Text="Add Turnip Details"/>
+                </StackLayout>
+
+
+                <Label 
+                       TextColor="{StaticResource TextPrimaryColor}"
+                       FontSize="Large"
+                       Text="Created by:"
+                       Margin="0,24,0,0"
+                       FontFamily="AnimalCrossing"/>
+                <sharpnado:MaterialFrame
+                                    MaterialTheme="Acrylic"
+                                    CornerRadius="10"
+                                    Padding="0"
+                                    HorizontalOptions="FillAndExpand"
+                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+
+                    <Grid Padding="24" RowSpacing="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label 
+                           TextColor="{StaticResource TextPrimaryColor}"
+                           FontSize="Medium"
+                           HorizontalOptions="Center"
+                           Text="James Montemagno | Refractored LLC"
+                           Margin="0,0,0,0"
+                           FontFamily="AnimalCrossing"/>
+                        <StackLayout Orientation="Horizontal"
+                                     Grid.Row="1"
+                                     Padding="0"
+                                     HorizontalOptions="Center">
+                            <pancake:PancakeView Padding="0"
+                                               Elevation="2"
+                                               Visual="Material"
+                                               BackgroundColor="White"
+                                               HeightRequest="40"
+                                               WidthRequest="40"
+                                               CornerRadius="20">
+                                <effectsview:SfEffectsView
+                                    CornerRadius="20"
+                                    TouchUpCommand="{Binding OpenBrowserCommand}"
+                                    TouchUpCommandParameter="twitter">
+                                    <Label Text="&#xf099;"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        FontSize="Small"
+                                        FontFamily="FA-B"
+                                        TextColor="{StaticResource TextPrimaryColor}"/>
+                                </effectsview:SfEffectsView>
+                            </pancake:PancakeView>
+                            <pancake:PancakeView Padding="0"
+                                               Elevation="2"
+                                               Visual="Material"
+                                               BackgroundColor="White"
+                                               HeightRequest="40"
+                                               WidthRequest="40"
+                                               CornerRadius="20">
+                                <effectsview:SfEffectsView
+                                    CornerRadius="20"
+                                    TouchUpCommand="{Binding OpenBrowserCommand}"
+                                    TouchUpCommandParameter="github">
+                                    <Label Text="&#xf09b;"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        FontSize="Small"
+                                        FontFamily="FA-B"
+                                        TextColor="{StaticResource TextPrimaryColor}"/>
+                                </effectsview:SfEffectsView>
+                            </pancake:PancakeView>
+                            <pancake:PancakeView Padding="0"
+                                               Elevation="2"
+                                               Visual="Material"
+                                               BackgroundColor="White"
+                                               HeightRequest="40"
+                                               WidthRequest="40"
+                                               CornerRadius="20">
+                                <effectsview:SfEffectsView
+                                    CornerRadius="20"
+                                    TouchUpCommand="{Binding OpenBrowserCommand}"
+                                    TouchUpCommandParameter="blog">
+                                    <Label Text="&#xf0ac;"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        FontSize="Small"
+                                        FontFamily="FA-S"
+                                        TextColor="{StaticResource TextPrimaryColor}"/>
+                                </effectsview:SfEffectsView>
+                            </pancake:PancakeView>
+                        </StackLayout>
+                    </Grid>
+                </sharpnado:MaterialFrame>
+               
+            </StackLayout>
+
+        </pancake:PancakeView>
+
+
+    </Grid>
+</ContentPage>
