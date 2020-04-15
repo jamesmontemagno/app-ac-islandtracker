@@ -48,7 +48,7 @@ namespace TurnipTracker.ViewModel
             {
                 Subject = "Island Tracker Issue",
                 Body = "Describe issue here",
-               
+               To = new List<string> { "refractoredllc@gmail.com"}
             };
 
             if (AttachDetails)
