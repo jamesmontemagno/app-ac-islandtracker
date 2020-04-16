@@ -10,10 +10,20 @@ using Android.Content;
 
 namespace TurnipTracker.Droid
 {
+    /*
+     * <intent-filter>
+        <action android:name="android.intent.action.SEND" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:mimeType="text/plain" />
+    </intent-filter>
+     */
     [Activity(Label = "Island Tracker", Icon = "@mipmap/icon", RoundIcon ="@mipmap/icon",
         Theme = "@style/MainTheme", MainLauncher = true,
         LaunchMode = LaunchMode.SingleTask,
         ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode)]
+    [IntentFilter(new[] { Android.Content.Intent.ActionSend },
+        Categories = new[] { Android.Content.Intent.CategoryDefault},
+        DataMimeType = "text/plain")]
     [IntentFilter(new[] { Android.Content.Intent.ActionView },
         Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable },
         DataScheme = "acislandtracker")]
@@ -42,10 +52,23 @@ namespace TurnipTracker.Droid
         {
             base.OnNewIntent(intent);
 
-            if(intent.Data != null && intent.Data.Host == "invite")
+            Android.Net.Uri uri = null;
+            if(intent.Action == Intent.ActionSend &&
+                intent.Type == "text/plain")
             {
-                var id = intent.Data.GetQueryParameter("id");
-                var name = intent.Data.GetQueryParameter("name");
+                var uriString = intent.GetStringExtra(Intent.ExtraText);
+                if (!string.IsNullOrWhiteSpace(uriString))
+                    uri = Android.Net.Uri.Parse(uriString);
+            }
+            else if(intent.Action == Intent.ActionView && intent.Data != null)
+            {
+                uri = intent.Data;
+            }
+
+            if(uri != null && uri.Scheme == "acislandtracker" && uri.Host == "invite")
+            {
+                var id = uri.GetQueryParameter("id");
+                var name = uri.GetQueryParameter("name");
                 if (!string.IsNullOrWhiteSpace(id))
                     await App.Current.MainPage.DisplayAlert($"Add Friend", $"Would you like to add {name} as a friend?", "Yes", "No");
             }

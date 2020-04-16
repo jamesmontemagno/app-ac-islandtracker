@@ -88,6 +88,10 @@ namespace TurnipTracker.ViewModel
 
         async Task SendEmail()
         {
+#if DEBUG
+            await App.Current.MainPage.Navigation.PushModalAsync(new View.AcceptFriendRequestPage());
+            return;
+#endif
             var message = new EmailMessage
             {
                 Subject = "Island Tracker Issue",
