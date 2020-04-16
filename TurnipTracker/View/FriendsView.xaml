@@ -158,7 +158,8 @@
                                                 LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
                                             <effectsview:SfEffectsView
                                                     Padding="24,12"
-                                                    CornerRadius="10">
+                                                    CornerRadius="10"
+                                                    >
                                                 <StackLayout VerticalOptions="Center">
                                             
                                                     <Label Text="&#xf005;"

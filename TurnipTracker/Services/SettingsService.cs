@@ -8,9 +8,14 @@ namespace TurnipTracker.Services
 {
     public static class SettingsService
     {
+#if DEBUG
+        static string publicCache = "TESTPUBLIC";
+        static string privateCache = "TESTPRIVATE";
+#else
         static string publicCache = string.Empty;
         static string privateCache = string.Empty;
-        
+#endif
+
         const string publicKey = "user_public_key";
         const string privateKey = "user_private_key";
 

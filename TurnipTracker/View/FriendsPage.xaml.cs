@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using TurnipTracker.ViewModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace TurnipTracker.View
@@ -10,6 +11,14 @@ namespace TurnipTracker.View
         public FriendsPage()
         {
             InitializeComponent();
+        }
+
+        protected override async void OnAppearing()
+        {
+          
+            await ((FriendsViewModel)this.Content.BindingContext).RegisterFriendClipboardCommand.ExecuteAsync();
+
+            base.OnAppearing();
         }
     }
 }

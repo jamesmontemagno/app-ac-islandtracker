@@ -43,5 +43,28 @@ namespace TurnipTracker.iOS
 
             return base.FinishedLaunching(app, options);
         }
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            //if (Xamarin.Essentials.Platform.OpenUrl(app, url, options))
+            //    return true;
+
+            
+            if(url != null && url.Host == "invite" &&
+                url.Scheme == "acislandtracker")
+            {
+                var component = new NSUrlComponents(url.AbsoluteString);
+                var id = component.QueryItems.FirstOrDefault(i => i.Name == "id")?.Value;
+                var name = component.QueryItems.FirstOrDefault(i => i.Name == "name")?.Value;
+
+                if (!string.IsNullOrWhiteSpace(id))
+                    App.Current.MainPage.DisplayAlert($"Add Friend", $"Would you like to add {name} as a friend?", "Yes", "No").ContinueWith(t => { }); ;
+                return true;
+            }
+
+            return base.OpenUrl(app, url, options);
+        }
+
+
     }
 }
