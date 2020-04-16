@@ -18,7 +18,8 @@
     <ContentPage.BindingContext>
         <viewmodel:AboutViewModel/>
     </ContentPage.BindingContext>
-    <Grid RowSpacing="12"
+    <ScrollView>
+        <Grid RowSpacing="12"
               Padding="{OnPlatform Android='0,12,0,0', iOS='0,24,0,0'}"
               BackgroundColor="{StaticResource NavigationPrimary}">
         <Grid.RowDefinitions>
@@ -38,13 +39,12 @@
                        TextColor="{StaticResource TextPrimaryColor}"
                        FontSize="Medium"
                        Text="Thanks for beta testing Island Tracker! I really appreciate it. If you run into any issues or have a suggestion, please send me an email by using the nifty button below."
-                       Margin="0,0,0,0"
-                       FontFamily="AnimalCrossing"/>
+                       Margin="0,0,0,0"/>
 
                 <Button Visual="Material"
                         Margin="0,24,0,0"
                         BorderColor="{StaticResource NavigationPrimary}"
-                        BorderWidth="1"
+                        BorderWidth="2"
                         CornerRadius="22"
                         HeightRequest="44"
                         Text="Send Report/Feedback"
@@ -61,8 +61,55 @@
                            Text="Add Turnip Details"/>
                 </StackLayout>
 
+                    <Label 
+                       TextColor="{StaticResource TextPrimaryColor}"
+                       FontSize="Large"
+                       Text="More Nintendo:"
+                       Margin="0,24,0,0"
+                       FontFamily="AnimalCrossing"/>
+                    <sharpnado:MaterialFrame
+                                    MaterialTheme="Acrylic"
+                                    CornerRadius="10"
+                                    Padding="0"
+                                    HorizontalOptions="FillAndExpand"
+                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
 
-                <Label 
+                        <Grid Padding="18" ColumnSpacing="12" RowSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".3*"/>
+                                <ColumnDefinition Width=".7*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="dispatch.png"
+                                   Aspect="AspectFit"
+                                   HeightRequest="100"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                            <StackLayout 
+                                Grid.Column="1"
+                                VerticalOptions="Start">
+                            <Label 
+                               TextColor="{StaticResource TextPrimaryColor}"
+                               FontSize="Small"
+                               Text="Listen to the Nintendo Dispatch podcast for a weekly update of news, games, reviews, and more from the Nintendo universe!"
+                               Margin="0,0,0,0"/>
+                            <Button Visual="Material"
+                                BorderColor="{StaticResource NavigationPrimary}"
+                                BorderWidth="2"
+                                CornerRadius="22"
+                                HeightRequest="44"
+                                Text="Subscribe"
+                                Command="{Binding SubscribeCommand}"
+                                TextColor="{StaticResource NavigationPrimary}"
+                                Padding="12,0"
+                                BackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
+                                HorizontalOptions="FillAndExpand"/>
+
+                            </StackLayout>
+                        </Grid>
+                    </sharpnado:MaterialFrame>
+
+
+                    <Label 
                        TextColor="{StaticResource TextPrimaryColor}"
                        FontSize="Large"
                        Text="Created by:"
@@ -75,7 +122,7 @@
                                     HorizontalOptions="FillAndExpand"
                                     LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
 
-                    <Grid Padding="24" RowSpacing="12">
+                    <Grid Padding="18" RowSpacing="12">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -85,8 +132,7 @@
                            FontSize="Medium"
                            HorizontalOptions="Center"
                            Text="James Montemagno | Refractored LLC"
-                           Margin="0,0,0,0"
-                           FontFamily="AnimalCrossing"/>
+                           Margin="0,0,0,0"/>
                         <StackLayout Orientation="Horizontal"
                                      Grid.Row="1"
                                      Padding="0"
@@ -158,4 +204,5 @@
 
 
     </Grid>
+    </ScrollView>
 </ContentPage>

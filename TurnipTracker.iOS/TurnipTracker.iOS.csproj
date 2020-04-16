@@ -65,10 +65,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <Optimize>false</Optimize>
     <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Distribution</CodesignKey>
-    <MtouchVerbosity></MtouchVerbosity>
+    <MtouchVerbosity>
+    </MtouchVerbosity>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchArch>ARM64</MtouchArch>
@@ -156,13 +158,16 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Resizetizer.NT">
+      <Version>0.1.0-preview8</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.6.0.616-pre4" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
     <PackageReference Include="Refractored.MvvmHelpers">
       <Version>1.6.1-beta</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.PancakeView">
-      <Version>1.3.7</Version>
+      <Version>1.4.1-beta</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.Visual.Material">
       <Version>4.6.0.616-pre4</Version>
@@ -171,16 +176,16 @@
       <Version>1.5.1</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox">
-      <Version>18.1.0.43</Version>
+      <Version>18.1.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>18.1.0.43</Version>
+      <Version>18.1.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>18.1.0.43</Version>
+      <Version>18.1.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit">
-      <Version>18.1.0.43</Version>
+      <Version>18.1.0.44</Version>
     </PackageReference>
     <PackageReference Include="MonkeyCache.FileStore">
       <Version>1.4.0-beta</Version>
