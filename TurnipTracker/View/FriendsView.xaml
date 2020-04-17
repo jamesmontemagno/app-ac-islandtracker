@@ -12,13 +12,11 @@
      <ContentView.BindingContext>
         <viewmodel:FriendsViewModel/>
     </ContentView.BindingContext>
-        <ListView HasUnevenRows="True"
+        <CollectionView
                   SelectionMode="None"
-                  SeparatorVisibility="None"
                   VerticalOptions="FillAndExpand"
-                  CachingStrategy="RecycleElement"
                  BackgroundColor="{StaticResource AcrylicSurface}">
-            <ListView.ItemsSource>
+            <CollectionView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Heather</x:String>
                     <x:String>Jesse</x:String>
@@ -27,8 +25,8 @@
                     <x:String>Christina</x:String>
                     <x:String>Nana</x:String>
                 </x:Array>
-            </ListView.ItemsSource>
-            <ListView.Header>
+            </CollectionView.ItemsSource>
+            <CollectionView.Header>
                 <Grid BackgroundColor="{StaticResource NavigationPrimary}">
                     <pancake:PancakeView CornerRadius="36,36,0,0"
                             Margin="{OnPlatform Android='0,12,0,0', iOS='0,12,0,0'}"
@@ -46,12 +44,12 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <sharpnado:MaterialFrame
-                                    MaterialTheme="Acrylic"
-                                    CornerRadius="10"
+                                    Style="{StaticResource AcrylicFrame}"
                                     Margin="4,12"
                                     Padding="0"
                                     HorizontalOptions="FillAndExpand"
-                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                    AutomationProperties.IsInAccessibleTree="True"
+                                    AutomationProperties.HelpText="Button - Inbox for friend requests">
                                 <effectsview:SfEffectsView
                                     Padding="18,12,12,12"
                                     CornerRadius="10">
@@ -61,7 +59,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="&#xf01c;"
+                                    <Label Text="{StaticResource IconInbox}"
                                        FontFamily="FA-S"
                                        FontSize="24"
                                        HorizontalOptions="Center"
@@ -93,18 +91,17 @@
                             </sharpnado:MaterialFrame>
                 
                             <sharpnado:MaterialFrame 
-                                    MaterialTheme="Acrylic"
-                                    CornerRadius="10"
+                                    Style="{StaticResource AcrylicFrame}"
                                     Margin="4,12"
-                                    Elevation="4"
                                     Padding="0"
                                     Grid.Column="1"
-                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                    AutomationProperties.IsInAccessibleTree="True"
+                                    AutomationProperties.HelpText="Button - Send Friend Request">
                                 <effectsview:SfEffectsView
                                     Padding="24,12"
                                     CornerRadius="10"
                                     TouchUpCommand="{Binding SendFriendRequestCommand}">
-                                    <Label Text="&#xf1d8;"
+                                    <Label Text="{StaticResource IconSend}"
                                            FontSize="24"
                                            FontFamily="FA-S"
                                            HorizontalOptions="Center"
@@ -113,13 +110,12 @@
                                 </effectsview:SfEffectsView>
                             </sharpnado:MaterialFrame>
                               <sharpnado:MaterialFrame 
-                                    MaterialTheme="Acrylic"
-                                    CornerRadius="10"
+                                    Style="{StaticResource AcrylicFrame}"
                                     Margin="4,12"
-                                    Elevation="4"
                                     Padding="0"
                                     Grid.Column="2"
-                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                    AutomationProperties.IsInAccessibleTree="True"
+                                    AutomationProperties.HelpText="Button - Refresh Friend Information">
                                 <effectsview:SfEffectsView
                                     Padding="24,12"
                                     CornerRadius="10"
@@ -141,28 +137,24 @@
                         </Grid>
                     </pancake:PancakeView>
                 </Grid>
-            </ListView.Header>
-            <ListView.ItemTemplate>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
                         <SwipeView IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsNotBusy}" BackgroundColor="Transparent">
                             <SwipeView.LeftItems>
                                 <SwipeItems>
-                                    <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}">
+                                    <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}"
+                                                     AutomationProperties.IsInAccessibleTree="True"
+                                                     AutomationProperties.HelpText="Button - Favorite Friend">
                                         <Grid Padding="12">
-                                        <sharpnado:MaterialFrame 
-                                                MaterialTheme="Acrylic"
-                                                CornerRadius="10"
-                                                Elevation="4"
-                                                Padding="0"
-                                                LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                        <sharpnado:MaterialFrame
+                                                Style="{StaticResource AcrylicFrame}"
+                                                Padding="0">
                                             <effectsview:SfEffectsView
                                                     Padding="24,12"
-                                                    CornerRadius="10"
-                                                    >
+                                                    CornerRadius="10" >
                                                 <StackLayout VerticalOptions="Center">
-                                            
-                                                    <Label Text="&#xf005;"
+                                                    <Label Text="{StaticResource IconFavorite}"
                                                            FontSize="24"
                                                            FontFamily="FA-R"
                                                            HorizontalOptions="Center"
@@ -179,29 +171,27 @@
                             </SwipeView.LeftItems>
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                    <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}">
+                                    <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}"
+                                                 AutomationProperties.IsInAccessibleTree="True"
+                                                 AutomationProperties.HelpText="Button - Remove Friend">
                                         <Grid Padding="12">
                                             <sharpnado:MaterialFrame 
-                                                    MaterialTheme="Acrylic"
-                                                    CornerRadius="10"
-                                                    Elevation="4"
-                                                    Padding="0"
-                                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                                    Style="{StaticResource AcrylicFrame}"
+                                                    Padding="0">
                                                 <effectsview:SfEffectsView
                                                     Padding="24,12"
                                                     CornerRadius="10">
-                                                <StackLayout VerticalOptions="Center"  >
-                                            
-                                                    <Label Text="&#xf2ed;"
-                                                           FontSize="24"
-                                                           FontFamily="FA-R"
-                                                           HorizontalOptions="Center"
-                                                           TextColor="{StaticResource TextPrimaryColor}"/>
-                                                    <Label Text="Remove"
-                                                           HorizontalOptions="Center"
-                                                           TextColor="{StaticResource TextPrimaryColor}"/>
-                                                </StackLayout>
-                                                    </effectsview:SfEffectsView>
+                                                    <StackLayout VerticalOptions="Center">
+                                                        <Label Text="{StaticResource IconTrash}"
+                                                               FontSize="24"
+                                                               FontFamily="FA-R"
+                                                               HorizontalOptions="Center"
+                                                               TextColor="{StaticResource TextPrimaryColor}"/>
+                                                        <Label Text="Remove"
+                                                               HorizontalOptions="Center"
+                                                               TextColor="{StaticResource TextPrimaryColor}"/>
+                                                    </StackLayout>
+                                                </effectsview:SfEffectsView>
                                             </sharpnado:MaterialFrame>
                                         </Grid>
                                     </SwipeItemView>
@@ -214,11 +204,8 @@
                                                    Padding="12">
                                     <shimmer:SfShimmer.Content>
                                          <sharpnado:MaterialFrame
-                                            MaterialTheme="Acrylic"
-                                            CornerRadius="10"
-                                            Elevation="4"
-                                             Padding="18"
-                                            LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                            Style="{StaticResource AcrylicFrame}"
+                                            Padding="18">
                                              <Grid ColumnSpacing="12"
                                                    RowSpacing="4">
                                                  <Grid.RowDefinitions>
@@ -267,8 +254,7 @@
                                 </shimmer:SfShimmer>
                             </Grid>
                         </SwipeView>
-                    </ViewCell>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 </ContentView>

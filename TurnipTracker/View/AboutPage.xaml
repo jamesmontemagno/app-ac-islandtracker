@@ -41,18 +41,10 @@
                        Text="Thanks for beta testing Island Tracker! I really appreciate it. If you run into any issues or have a suggestion, please send me an email by using the nifty button below."
                        Margin="0,0,0,0"/>
 
-                <Button Visual="Material"
-                        Margin="0,24,0,0"
-                        BorderColor="{StaticResource NavigationPrimary}"
-                        BorderWidth="2"
-                        CornerRadius="22"
-                        HeightRequest="44"
+                <Button Style="{StaticResource ButtonRoundedCorners}"
                         Text="Send Report/Feedback"
-                        Command="{Binding SendEmailCommand}"
-                        TextColor="{StaticResource NavigationPrimary}"
-                        Padding="12,0"
-                        BackgroundColor="{StaticResource AcrylicSurface}"
-                        HorizontalOptions="FillAndExpand"/>
+                        AutomationProperties.IsInAccessibleTree="True"
+                        Command="{Binding SendEmailCommand}"/>
 
                 <StackLayout Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding AttachDetails}"/>
@@ -68,11 +60,9 @@
                        Margin="0,24,0,0"
                        FontFamily="AnimalCrossing"/>
                     <sharpnado:MaterialFrame
-                                    MaterialTheme="Acrylic"
-                                    CornerRadius="10"
+                                    Style="{StaticResource AcrylicFrame}"
                                     Padding="0"
-                                    HorizontalOptions="FillAndExpand"
-                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                    HorizontalOptions="FillAndExpand">
 
                         <Grid Padding="18" ColumnSpacing="12" RowSpacing="12">
                             <Grid.ColumnDefinitions>
@@ -92,17 +82,11 @@
                                FontSize="Small"
                                Text="Listen to the Nintendo Dispatch podcast for a weekly update of news, games, reviews, and more from the Nintendo universe!"
                                Margin="0,0,0,0"/>
-                            <Button Visual="Material"
-                                BorderColor="{StaticResource NavigationPrimary}"
-                                BorderWidth="2"
-                                CornerRadius="22"
-                                HeightRequest="44"
+                            <Button Style="{StaticResource ButtonRoundedCorners}"
                                 Text="Subscribe"
-                                Command="{Binding SubscribeCommand}"
-                                TextColor="{StaticResource NavigationPrimary}"
-                                Padding="12,0"
-                                BackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
-                                HorizontalOptions="FillAndExpand"/>
+                                AutomationProperties.HelpText="Button to Subscribe to Nintendo Dispatch"
+                                AutomationProperties.IsInAccessibleTree="True"
+                                Command="{Binding SubscribeCommand}"/>
 
                             </StackLayout>
                         </Grid>
@@ -116,11 +100,9 @@
                        Margin="0,24,0,0"
                        FontFamily="AnimalCrossing"/>
                 <sharpnado:MaterialFrame
-                                    MaterialTheme="Acrylic"
-                                    CornerRadius="10"
+                                    Style="{StaticResource AcrylicFrame}"
                                     Padding="0"
-                                    HorizontalOptions="FillAndExpand"
-                                    LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                    HorizontalOptions="FillAndExpand">
 
                     <Grid Padding="18" RowSpacing="12">
                         <Grid.RowDefinitions>
@@ -137,72 +119,47 @@
                                      Grid.Row="1"
                                      Padding="0"
                                      HorizontalOptions="Center">
-                            <pancake:PancakeView Padding="0"
-                                               Elevation="2"
-                                               Visual="Material"
-                                               BackgroundColor="White"
-                                               HeightRequest="40"
-                                               WidthRequest="40"
-                                               CornerRadius="20">
+                            <pancake:PancakeView Style="{StaticResource SocialPancake}"
+                                                 AutomationProperties.IsInAccessibleTree="True"
+                                                 AutomationProperties.HelpText="Button - James' Twitter">
                                 <effectsview:SfEffectsView
                                     CornerRadius="20"
                                     TouchUpCommand="{Binding OpenBrowserCommand}"
                                     TouchUpCommandParameter="twitter">
-                                    <Label Text="&#xf099;"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center"
-                                        FontSize="Small"
-                                        FontFamily="FA-B"
-                                        TextColor="{StaticResource TextPrimaryColor}"/>
+                                    <Label Text="{StaticResource IconTwitter}"
+                                        Style="{StaticResource SocialLabel}"
+                                        FontFamily="FA-B"/>
                                 </effectsview:SfEffectsView>
                             </pancake:PancakeView>
-                            <pancake:PancakeView Padding="0"
-                                               Elevation="2"
-                                               Visual="Material"
-                                               BackgroundColor="White"
-                                               HeightRequest="40"
-                                               WidthRequest="40"
-                                               CornerRadius="20">
+                            <pancake:PancakeView Style="{StaticResource SocialPancake}"
+                                                 AutomationProperties.IsInAccessibleTree="True"
+                                                 AutomationProperties.HelpText="Button - James' GitHub">
                                 <effectsview:SfEffectsView
                                     CornerRadius="20"
                                     TouchUpCommand="{Binding OpenBrowserCommand}"
                                     TouchUpCommandParameter="github">
-                                    <Label Text="&#xf09b;"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center"
-                                        FontSize="Small"
-                                        FontFamily="FA-B"
-                                        TextColor="{StaticResource TextPrimaryColor}"/>
+                                    <Label Text="{StaticResource IconGitHub}"
+                                        Style="{StaticResource SocialLabel}"
+                                        FontFamily="FA-B"/>
                                 </effectsview:SfEffectsView>
                             </pancake:PancakeView>
-                            <pancake:PancakeView Padding="0"
-                                               Elevation="2"
-                                               Visual="Material"
-                                               BackgroundColor="White"
-                                               HeightRequest="40"
-                                               WidthRequest="40"
-                                               CornerRadius="20">
+                            <pancake:PancakeView Style="{StaticResource SocialPancake}"
+                                                 AutomationProperties.IsInAccessibleTree="True"
+                                                 AutomationProperties.HelpText="Button - James' Blog">
                                 <effectsview:SfEffectsView
                                     CornerRadius="20"
                                     TouchUpCommand="{Binding OpenBrowserCommand}"
                                     TouchUpCommandParameter="blog">
-                                    <Label Text="&#xf0ac;"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center"
-                                        FontSize="Small"
-                                        FontFamily="FA-S"
-                                        TextColor="{StaticResource TextPrimaryColor}"/>
+                                    <Label Text="{StaticResource IconBlog}"
+                                        Style="{StaticResource SocialLabel}"
+                                        FontFamily="FA-S"/>
                                 </effectsview:SfEffectsView>
                             </pancake:PancakeView>
                         </StackLayout>
                     </Grid>
                 </sharpnado:MaterialFrame>
-               
             </StackLayout>
-
         </pancake:PancakeView>
-
-
     </Grid>
     </ScrollView>
 </ContentPage>

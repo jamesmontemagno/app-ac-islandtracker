@@ -50,19 +50,13 @@
                         <DataTemplate x:DataType="model:Day">
                             <Grid Padding="0" WidthRequest="50">
                                     <sharpnado:MaterialFrame
-                                            MaterialTheme="Acrylic"
-                                            CornerRadius="21"
-                                            Padding="0"
-                                            Margin="0"
-                                            HorizontalOptions="Center"
-                                            VerticalOptions="Center"
-                                            LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
-                                            HeightRequest="42"
-                                            WidthRequest="42">
+                                        Style="{StaticResource AcrylicFABSmall}">
                                         <effectsview:SfEffectsView
                                                 TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TrackingViewModel}}, Path=DaySelectedCommand}"
                                                 TouchUpCommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
-                                                CornerRadius="{OnPlatform iOS=21}">
+                                                CornerRadius="{OnPlatform iOS=21}"
+                                                AutomationProperties.IsInAccessibleTree="True"
+                                                AutomationProperties.Name="{Binding DayLong, StringFormat='Button to change to {0}'}">
                                                 <Label Text="{Binding DayShort}"
                                                            HorizontalOptions="Center"
                                                            VerticalOptions="Center"
@@ -90,11 +84,8 @@
                     </Grid.RowDefinitions>
 
                     <sharpnado:MaterialFrame Grid.Row="0"
-                                MaterialTheme="Acrylic"
-                                CornerRadius="10"
-                                Margin="4"
-                                Elevation="4"
-                                LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                Style="{StaticResource AcrylicFrame}"
+                                Margin="4">
                         <Grid RowSpacing="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -127,11 +118,8 @@
                         </Grid>
                     </sharpnado:MaterialFrame>
                     <sharpnado:MaterialFrame Grid.Row="1"
-                                MaterialTheme="Acrylic"
-                                CornerRadius="10"
-                                Margin="4"
-                                Elevation="4"
-                                LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}">
+                                Style="{StaticResource AcrylicFrame}"
+                                Margin="4">
                         <Grid RowSpacing="12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -204,12 +192,9 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                         <sharpnado:MaterialFrame
-                                MaterialTheme="Acrylic"
+                                Style="{StaticResource AcrylicFrame}"
                                 Grid.ColumnSpan="2"
-                                CornerRadius="10"
                                 Margin="4"
-                                Elevation="4"
-                                LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                 BindingContext="{Binding SelectedDay}">
                             <Grid x:DataType="model:Day" RowSpacing="0">
                                 <Grid.RowDefinitions>
@@ -273,11 +258,8 @@
                             </Grid>
                         </sharpnado:MaterialFrame>
                         <sharpnado:MaterialFrame
-                                MaterialTheme="Acrylic"
-                                CornerRadius="10"
+                                Style="{StaticResource AcrylicFrame}"
                                 Margin="4"
-                                Elevation="4"
-                                LightThemeBackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="2"
                                 BindingContext="{Binding SelectedDay}">
@@ -312,7 +294,7 @@
                                            Maximum="10000"
                                            ParserMode="Double"
                                            ValueChangeMode="OnKeyFocus"
-                                        TextColor="{x:StaticResource TextPrimaryColor}"/>
+                                           TextColor="{x:StaticResource TextPrimaryColor}"/>
                                 </inputLayout:SfTextInputLayout>
 
 
@@ -350,18 +332,15 @@
                             VerticalOptions="End"
                             FontFamily="AnimalCrossing"
                             FontSize="Micro"
-                            Text="{Binding Min,
-                              StringFormat='Guaranteed Weekly Min: {0}'}"/>
-                    <Label
-                            Grid.Row="5"
+                            Text="{Binding Min, StringFormat='Guaranteed Weekly Min: {0}'}"/>
+                    <Label Grid.Row="5"
                             Grid.Column="1"
                             TextColor="{StaticResource TextPrimaryColor}"
                             HorizontalOptions="Center"
                             VerticalOptions="End"
                             FontFamily="AnimalCrossing"
                             FontSize="Micro"
-                            Text="{Binding Max,
-                              StringFormat='Potential Weekly Max: {0}'}"/>
+                            Text="{Binding Max, StringFormat='Potential Weekly Max: {0}'}"/>
                     </Grid>
 
                 </StackLayout>

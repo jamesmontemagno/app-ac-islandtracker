@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"
              mc:Ignorable="d"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
              x:Class="TurnipTracker.App">
     <Application.Resources>
@@ -13,6 +14,15 @@
             <x:String x:Key="IconTracking">&#xf080;</x:String>
             <x:String x:Key="IconFriends">&#xf0c0;</x:String>
             <x:String x:Key="IconAbout">&#xf129;</x:String>
+            <x:String x:Key="IconFavorite">&#xf005;</x:String>
+            <x:String x:Key="IconTrash">&#xf2ed;</x:String>
+            <x:String x:Key="IconSend">&#xf1d8;</x:String>
+            <x:String x:Key="IconInbox">&#xf01c;</x:String>
+            <x:String x:Key="IconBlog">&#xf0ac;</x:String>
+            <x:String x:Key="IconGitHub">&#xf09b;</x:String>
+            <x:String x:Key="IconTwitter">&#xf099;</x:String>
+            <x:String x:Key="IconSave">&#xf0c7;</x:String>
+
             <Color x:Key="NavigationPrimary">#2196F3</Color>
             <Color x:Key="AcrylicSurface">#E6E6E6</Color>
 
@@ -24,12 +34,68 @@
             <Color x:Key="TextSecondaryColor">#60000000</Color>
             <Color x:Key="TextTernaryColor">#40000000</Color>
             <x:Int32 x:Key="BottomBarHeight">66</x:Int32>
+
+            <Style x:Key="AcrylicFrame" TargetType="sharpnado:MaterialFrame">
+                <Setter Property="MaterialTheme" Value="Acrylic"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="LightThemeBackgroundColor" Value="{StaticResource AcrylicFrameBackgroundColor}"/>
+            </Style>
+
+            <Style x:Key="AcrylicFAB" TargetType="sharpnado:MaterialFrame" BasedOn="{StaticResource AcrylicFrame}">
+                <Setter Property="CornerRadius" Value="33"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="HorizontalOptions" Value="End"/>
+                <Setter Property="VerticalOptions" Value="End"/>
+                <Setter Property="HeightRequest" Value="66"/>
+                <Setter Property="WidthRequest" Value="66"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+
+            <Style x:Key="AcrylicFABSmall" TargetType="sharpnado:MaterialFrame" BasedOn="{StaticResource AcrylicFrame}">
+                <Setter Property="CornerRadius" Value="21"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HeightRequest" Value="42"/>
+                <Setter Property="WidthRequest" Value="42"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+
              <Style x:Key="BottomTabStyle" TargetType="tabs:BottomTabItem">
                 <Setter Property="SelectedTabColor" Value="{StaticResource AccentColor}" />
                 <Setter Property="UnselectedLabelColor" Value="Gray" />
                 <Setter Property="UnselectedIconColor" Value="LightGray" />
                 <Setter Property="LabelSize" Value="14" />
                 <Setter Property="IconSize" Value="28" />
+            </Style>
+
+            <Style x:Key="SocialPancake" TargetType="pancake:PancakeView">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Elevation" Value="2"/>
+                <Setter Property="Visual" Value="Material"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="WidthRequest" Value="40"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="CornerRadius" Value="20"/>
+            </Style>
+
+            <Style x:Key="SocialLabel" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}"/>
+            </Style>
+
+            <Style x:Key="ButtonRoundedCorners" TargetType="Button">
+                <Setter Property="Visual" Value="Material"/>
+                <Setter Property="BorderColor" Value="{StaticResource NavigationPrimary}"/>
+                <Setter Property="BorderWidth" Value="2"/>
+                <Setter Property="CornerRadius" Value="22"/>
+                <Setter Property="HeightRequest" Value="44"/>
+                <Setter Property="Padding" Value="12,0"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource AcrylicFrameBackgroundColor}"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="TextColor" Value="{StaticResource NavigationPrimary}"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
