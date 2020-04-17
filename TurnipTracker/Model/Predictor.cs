@@ -1,118 +1,268 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 #nullable enable
 namespace TurnipTracker.Model
 {
+    // C# version of https://github.com/mikebryant/ac-nh-turnip-prices/blob/master/js/predictions.js
+    [SuppressMessage("Style", "IDE0007:Use implicit type", Justification = "Explicit types are useful when converting from dynamically typed JS")]
     public static class Predictor
     {
-        static double MinimumRateFromGivenAndBase(int givenPrice, int buyPrice) => 10000.0 * (givenPrice - 1) / buyPrice;
+        // The reverse-engineered code is not perfectly accurate, especially as it's not
+        // 32-bit ARM floating point. So, be tolerant of slightly unexpected inputs
+        const double fudgeFactor = 5;
 
-        static double MaximumRateFromGivenAndBase(int givenPrice, int buyPrice) => 10000.0 * givenPrice / buyPrice;
-
-        static PredictedPriceSeries? GeneratePattern0WithLengths(
-            int[] givenPrices,
-            int highPhase1Len,
-            int decPhase1Len,
-            int highPhase2Len,
-            int decPhase2Len,
-            int highPhase3Len)
+        static readonly Dictionary<PredictionPattern, int> patternCounts = new Dictionary<PredictionPattern, int>
         {
-            var buyPrice = givenPrices[0];
+            { PredictionPattern.Fluctuating, 56 },
+            { PredictionPattern.LargeSpike, 7 },
+            { PredictionPattern.Decreasing, 1 },
+            { PredictionPattern.SmallSpike, 8 },
+        };
+
+        static readonly Dictionary<PredictionPattern, Dictionary<PredictionPattern, double>> probabilityMatrix =
+            new Dictionary<PredictionPattern, Dictionary<PredictionPattern, double>>
+        {
+            { PredictionPattern.Fluctuating ,  new Dictionary<PredictionPattern, double>
+                {
+                    { PredictionPattern.Fluctuating, 0.20 },
+                    { PredictionPattern.LargeSpike,  0.30 },
+                    { PredictionPattern.Decreasing,  0.15 },
+                    { PredictionPattern.SmallSpike, 0.35 },
+                }
+            },
+            { PredictionPattern.LargeSpike ,  new Dictionary<PredictionPattern, double>
+                {
+                    { PredictionPattern.Fluctuating, 0.50 },
+                    { PredictionPattern.LargeSpike,  0.05 },
+                    { PredictionPattern.Decreasing,  0.20 },
+                    { PredictionPattern.SmallSpike, 0.25 },
+                }
+            },
+            { PredictionPattern.Decreasing ,  new Dictionary<PredictionPattern, double>
+                {
+                    { PredictionPattern.Fluctuating, 0.25 },
+                    { PredictionPattern.LargeSpike,  0.45 },
+                    { PredictionPattern.Decreasing,  0.05 },
+                    { PredictionPattern.SmallSpike, 0.25 },
+                }
+            },
+            { PredictionPattern.SmallSpike ,  new Dictionary<PredictionPattern, double>
+                {
+                    { PredictionPattern.Fluctuating, 0.45 },
+                    { PredictionPattern.LargeSpike,  0.25 },
+                    { PredictionPattern.Decreasing,  0.15 },
+                    { PredictionPattern.SmallSpike, 0.15 },
+                }
+            },
+        };
+
+        const double rateMultiplier = 10000;
+
+        static int IntCeil(double val) => (int)Math.Truncate(val + 0.99999);
+
+        static double MinimumRateFromGivenAndBase(int givenPrice, int buyPrice) => rateMultiplier * (givenPrice - 0.99999) / buyPrice;
+
+        static double MaximumRateFromGivenAndBase(int givenPrice, int buyPrice) => rateMultiplier * (givenPrice + 0.00001) / buyPrice;
+
+        static int GetPrice(double rate, int basePrice) => IntCeil(rate * basePrice / rateMultiplier);
+
+        // This corresponds to the code:
+        //   for (int i = start; i<start + length; i++)
+        //   {
+        //     sellPrices[work++] =
+        //       intceil(randfloat(rateMin / RATE_MULTIPLIER, rateMax / RATE_MULTIPLIER) * basePrice);
+        //   }
+        //
+        // Would modify the predictedPrices array.
+        // If the givenPrices won't match, returns false, otherwise returns true
+        static bool GenerateIndividualRandomPrice(
+          int[] givenPrices, List<(int min, int max)> predictedPrices, int start, int length, double rateMin, double rateMax)
+        {
+            rateMin *= rateMultiplier;
+            rateMax *= rateMultiplier;
+
+            int buyPrice = givenPrices[0];
+
+            for (int i = start; i < start + length; i++)
+            {
+                int minPred = GetPrice(rateMin, buyPrice);
+                int maxPred = GetPrice(rateMax, buyPrice);
+
+                if (i < givenPrices.Length && givenPrices[i] > 0)
+                {
+                    if (givenPrices[i] < minPred - fudgeFactor || givenPrices[i] > maxPred + fudgeFactor)
+                    {
+                        // Given price is out of predicted range, so this is the wrong pattern
+                        return false;
+                    }
+                    minPred = givenPrices[i];
+                    maxPred = givenPrices[i];
+                }
+
+                predictedPrices.Add((minPred, maxPred));
+            }
+            return true;
+        }
+
+        // This corresponds to the code:
+        //   rate = randfloat(start_rateMin, start_rateMax);
+        //   for (int i = start; i<start + length; i++)
+        //   {
+        //     sellPrices[work++] = intceil(rate* basePrice);
+        //     rate -= randfloat(rateDecayMin, rateDecayMax);
+        //   }
+        //
+        // Would modify the predictedPrices array.
+        // If the givenPrices won't match, returns false, otherwise returns true
+        static bool GenerateDecreasingRandomPrice(
+          int[] givenPrices, List<(int min, int max)> predictedPrices, int start, int length, double rateMin,
+          double rateMax, double rateDecayMin, double rateDecayMax)
+        {
+            rateMin *= rateMultiplier;
+            rateMax *= rateMultiplier;
+            rateDecayMin *= rateMultiplier;
+            rateDecayMax *= rateMultiplier;
+
+            int buyPrice = givenPrices[0];
+
+            for (int i = start; i < start + length; i++)
+            {
+                int minPred = GetPrice(rateMin, buyPrice);
+                int maxPred = GetPrice(rateMax, buyPrice);
+                if (i < givenPrices.Length && givenPrices[i] > 0)
+                {
+                    if (givenPrices[i] < minPred - fudgeFactor || givenPrices[i] > maxPred + fudgeFactor)
+                    {
+                        // Given price is out of predicted range, so this is the wrong pattern
+                        return false;
+                    }
+                    if (givenPrices[i] >= minPred || givenPrices[i] <= maxPred)
+                    {
+                        // The value in the FUDGE_FACTOR range is ignored so the rate range would not be empty.
+                        double realRateMin = MinimumRateFromGivenAndBase(givenPrices[i], buyPrice);
+                        double realRateMax = MaximumRateFromGivenAndBase(givenPrices[i], buyPrice);
+                        rateMin = Math.Max(rateMin, realRateMin);
+                        rateMax = Math.Min(rateMax, realRateMax);
+                    }
+                    minPred = givenPrices[i];
+                    maxPred = givenPrices[i];
+                }
+
+                predictedPrices.Add((minPred, maxPred));
+
+                rateMin -= rateDecayMax;
+                rateMax -= rateDecayMin;
+            }
+            return true;
+        }
+
+        // This corresponds to the code:
+        //   rate = randfloat(rateMin, rateMax);
+        //   sellPrices[work++] = intceil(randfloat(rateMin, rate) * basePrice) - 1;
+        //   sellPrices[work++] = intceil(rate* basePrice);
+        //   sellPrices[work++] = intceil(randfloat(rateMin, rate) * basePrice) - 1;
+        //
+        // Would modify the predictedPrices array.
+        // If the givenPrices won't match, returns false, otherwise returns true
+        static bool GeneratePeakPrice(
+            int[] givenPrices, List<(int min, int max)> predictedPrices, int start, double rateMin, double rateMax)
+        {
+            rateMin *= rateMultiplier;
+            rateMax *= rateMultiplier;
+
+            int buyPrice = givenPrices[0];
+
+            // Main spike 1
+            int minPred = GetPrice(rateMin, buyPrice) - 1;
+            int maxPred = GetPrice(rateMax, buyPrice) - 1;
+            if (start < givenPrices.Length && givenPrices[start] > 0)
+            {
+                if (givenPrices[start] < minPred - fudgeFactor || givenPrices[start] > maxPred + fudgeFactor)
+                {
+                    // Given price is out of predicted range, so this is the wrong pattern
+                    return false;
+                }
+                minPred = givenPrices[start];
+                maxPred = givenPrices[start];
+            }
+            predictedPrices.Add((minPred, maxPred));
+
+            // Main spike 2
+            minPred = predictedPrices[start].min;
+            maxPred = IntCeil(2.0 * buyPrice);
+            if (start + 1 < givenPrices.Length && givenPrices[start + 1] > 0)
+            {
+                if (givenPrices[start + 1] < minPred - fudgeFactor || givenPrices[start + 1] > maxPred + fudgeFactor)
+                {
+                    // Given price is out of predicted range, so this is the wrong pattern
+                    return false;
+                }
+                minPred = givenPrices[start + 1];
+                maxPred = givenPrices[start + 1];
+            }
+            predictedPrices.Add((minPred, maxPred));
+
+            // Main spike 3
+            minPred = IntCeil(1.4 * buyPrice) - 1;
+            maxPred = predictedPrices[start + 1].max - 1;
+            if (start + 2 < givenPrices.Length && givenPrices[start + 2] > 0)
+            {
+                if (givenPrices[start + 2] < minPred - fudgeFactor || givenPrices[start + 2] > maxPred + fudgeFactor)
+                {
+                    // Given price is out of predicted range, so this is the wrong pattern
+                    return false;
+                }
+                minPred = givenPrices[start + 2];
+                maxPred = givenPrices[start + 2];
+            }
+            predictedPrices.Add((minPred, maxPred));
+
+            return true;
+        }
+
+        static PredictedPriceSeries? GeneratePatternFluctuatingWithLengths(
+                    int[] givenPrices,
+                    int highPhase1Len,
+                    int decPhase1Len,
+                    int highPhase2Len,
+                    int decPhase2Len,
+                    int highPhase3Len)
+        {
+            int buyPrice = givenPrices[0];
             var predictedPrices = new List<(int min, int max)> { (buyPrice, buyPrice), (buyPrice, buyPrice) };
 
             // High Phase 1
-            for (var i = 2; i < 2 + highPhase1Len; i++)
+            if (!GenerateIndividualRandomPrice(
+                    givenPrices, predictedPrices, 2, highPhase1Len, 0.9, 1.4))
             {
-                var minPred = Math.Floor(0.9 * buyPrice);
-                var maxPred = Math.Ceiling(1.4 * buyPrice);
-                if (i < givenPrices.Length && givenPrices[i] > 0)
-                {
-                    if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[i];
-                    maxPred = givenPrices[i];
-                }
-
-                predictedPrices.Add(((int)minPred, (int)maxPred));
+                return null;
             }
 
             // Dec Phase 1
-            double minRate = 6000;
-            double maxRate = 8000;
-            for (var i = 2 + highPhase1Len; i < 2 + highPhase1Len + decPhase1Len; i++)
+            if (!GenerateDecreasingRandomPrice(
+                    givenPrices, predictedPrices, 2 + highPhase1Len, decPhase1Len,
+                    0.6, 0.8, 0.04, 0.1))
             {
-                var minPred = Math.Floor(minRate * buyPrice / 10000.0);
-                var maxPred = Math.Ceiling(maxRate * buyPrice / 10000.0);
-
-
-                if (i < givenPrices.Length && givenPrices[i] > 0)
-                {
-                    if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[i];
-                    maxPred = givenPrices[i];
-                    minRate = MinimumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                    maxRate = MaximumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                }
-
-                predictedPrices.Add(((int)minPred, (int)maxPred));
-
-                minRate -= 1000;
-                maxRate -= 400;
+                return null;
             }
 
             // High Phase 2
-            for (var i = 2 + highPhase1Len + decPhase1Len; i < 2 + highPhase1Len + decPhase1Len + highPhase2Len; i++)
+            if (!GenerateIndividualRandomPrice(givenPrices, predictedPrices,
+                2 + highPhase1Len + decPhase1Len, highPhase2Len, 0.9, 1.4))
             {
-                var minPred = Math.Floor(0.9 * buyPrice);
-                var maxPred = Math.Ceiling(1.4 * buyPrice);
-                if (i < givenPrices.Length && givenPrices[i] > 0)
-                {
-                    if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[i];
-                    maxPred = givenPrices[i];
-                }
-
-                predictedPrices.Add(((int)minPred, (int)maxPred));
+                return null;
             }
 
             // Dec Phase 2
-            minRate = 6000;
-            maxRate = 8000;
-            for (var i = 2 + highPhase1Len + decPhase1Len + highPhase2Len; i < 2 + highPhase1Len + decPhase1Len + highPhase2Len + decPhase2Len; i++)
+            if (!GenerateDecreasingRandomPrice(
+                    givenPrices, predictedPrices,
+                    2 + highPhase1Len + decPhase1Len + highPhase2Len,
+                    decPhase2Len, 0.6, 0.8, 0.04, 0.1))
             {
-                var minPred = Math.Floor(minRate * buyPrice / 10000);
-                var maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
-
-
-                if (i < givenPrices.Length && givenPrices[i] > 0)
-                {
-                    if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[i];
-                    maxPred = givenPrices[i];
-                    minRate = MinimumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                    maxRate = MaximumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                }
-
-                predictedPrices.Add(((int)minPred, (int)maxPred));
-
-                minRate -= 1000;
-                maxRate -= 400;
+                return null;
             }
 
             // High Phase 3
@@ -120,28 +270,19 @@ namespace TurnipTracker.Model
             {
                 throw new ApplicationException("Phase lengths don't add up");
             }
-            for (var i = 2 + highPhase1Len + decPhase1Len + highPhase2Len + decPhase2Len; i < 14; i++)
+
+            int prevLength = 2 + highPhase1Len + decPhase1Len + highPhase2Len + decPhase2Len;
+            if (!GenerateIndividualRandomPrice(
+                     givenPrices, predictedPrices, prevLength, 14 - prevLength, 0.9,
+                    1.4))
             {
-                var minPred = Math.Floor(0.9 * buyPrice);
-                var maxPred = Math.Ceiling(1.4 * buyPrice);
-                if (i < givenPrices.Length && givenPrices[i] > 0)
-                {
-                    if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[i];
-                    maxPred = givenPrices[i];
-                }
-
-                predictedPrices.Add(((int)minPred, (int)maxPred));
-
+                return null;
             }
-            return new PredictedPriceSeries("Fluctuating", 0, predictedPrices);
+
+            return new PredictedPriceSeries("Fluctuating", PredictionPattern.Fluctuating, predictedPrices);
         }
 
-        static IEnumerable<PredictedPriceSeries> GeneratePattern0(int[] givenPrices)
+        static IEnumerable<PredictedPriceSeries> GeneratePatternFluctuating(int[] givenPrices)
         {
             for (var decPhase1Len = 2; decPhase1Len < 4; decPhase1Len++)
             {
@@ -149,7 +290,7 @@ namespace TurnipTracker.Model
                 {
                     for (var highPhase3Len = 0; highPhase3Len < (7 - highPhase1Len - 1 + 1); highPhase3Len++)
                     {
-                        var series = GeneratePattern0WithLengths(givenPrices, highPhase1Len, decPhase1Len, 7 - highPhase1Len - highPhase3Len, 5 - decPhase1Len, highPhase3Len);
+                        var series = GeneratePatternFluctuatingWithLengths(givenPrices, highPhase1Len, decPhase1Len, 7 - highPhase1Len - highPhase3Len, 5 - decPhase1Len, highPhase3Len);
                         if (series != null)
                             yield return series;
                     }
@@ -157,253 +298,103 @@ namespace TurnipTracker.Model
             }
         }
 
-        static PredictedPriceSeries? GeneratePattern1WithPeak(
+        static PredictedPriceSeries? GeneratePatternLargeSpikeWithPeak(
            int[] givenPrices,
            int peakStart)
         {
-            var buyPrice = givenPrices[0];
+
+            int buyPrice = givenPrices[0];
             var predictedPrices = new List<(int min, int max)> { (buyPrice, buyPrice), (buyPrice, buyPrice) };
 
-            double minRate = 8500;
-            double maxRate = 9000;
-
-            for (var i = 2; i < peakStart; i++)
+            if (!GenerateDecreasingRandomPrice(
+                    givenPrices, predictedPrices, 2, peakStart - 2, 0.85, 0.9, 0.03, 0.05))
             {
-                var minPred = Math.Floor(minRate * buyPrice / 10000.0);
-                var maxPred = Math.Ceiling(maxRate * buyPrice / 10000.0);
-
-
-                if (i < givenPrices.Length && givenPrices[i] > 0)
-                {
-                    if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[i];
-                    maxPred = givenPrices[i];
-                    minRate = MinimumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                    maxRate = MaximumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                }
-
-                predictedPrices.Add(((int)minPred, (int)maxPred));
-
-                minRate -= 500;
-                maxRate -= 300;
+                return null;
             }
 
             // Now each day is independent of next
             var minRandoms = new double[] { 0.9, 1.4, 2.0, 1.4, 0.9, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4 };
             var maxRandoms = new double[] { 1.4, 2.0, 6.0, 2.0, 1.4, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9 };
-            for (var i = peakStart; i < 14; i++)
+            for (int i = peakStart; i < 14; i++)
             {
-                var minPred = Math.Floor(minRandoms[i - peakStart] * buyPrice);
-                var maxPred = Math.Ceiling(maxRandoms[i - peakStart] * buyPrice);
-
-                if (i < givenPrices.Length && givenPrices[i] > 0)
+                if (!GenerateIndividualRandomPrice(
+                        givenPrices, predictedPrices, i, 1, minRandoms[i - peakStart], maxRandoms[i - peakStart]))
                 {
-                    if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[i];
-                    maxPred = givenPrices[i];
+                    return null;
                 }
-
-                predictedPrices.Add(((int)minPred, (int)maxPred));
-
             }
             return new PredictedPriceSeries("Large spike", PredictionPattern.LargeSpike, predictedPrices);
         }
 
-        static IEnumerable<PredictedPriceSeries> GeneratePattern1(int[] givenPrices)
+        static IEnumerable<PredictedPriceSeries> GeneratePatternLargeSpike(int[] givenPrices)
         {
             for (var peakStart = 3; peakStart < 10; peakStart++)
             {
-                var series = GeneratePattern1WithPeak(givenPrices, peakStart);
+                var series = GeneratePatternLargeSpikeWithPeak(givenPrices, peakStart);
                 if (series != null)
                     yield return series;
             }
         }
 
-        static IEnumerable<PredictedPriceSeries> GeneratePattern2(int[] givenPrices)
+        static IEnumerable<PredictedPriceSeries> GeneratePatternDecreasing(int[] givenPrices)
         {
             var buyPrice = givenPrices[0];
             var predictedPrices = new List<(int min, int max)> { (buyPrice, buyPrice), (buyPrice, buyPrice) };
 
-            double minRate = 8500;
-            double maxRate = 9000;
-            for (var i = 2; i < 14; i++)
+            if (!GenerateDecreasingRandomPrice(
+                    givenPrices, predictedPrices, 2, 14 - 2, 0.85, 0.9, 0.03, 0.05))
             {
-                var minPred = Math.Floor(minRate * buyPrice / 10000);
-                var maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
-
-
-                if (i < givenPrices.Length && givenPrices[i] > 0)
-                {
-                    if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        yield break;
-                    }
-                    minPred = givenPrices[i];
-                    maxPred = givenPrices[i];
-                    minRate = MinimumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                    maxRate = MaximumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                }
-
-                predictedPrices.Add(((int)minPred, (int)maxPred));
-
-                minRate -= 500;
-                maxRate -= 300;
+                yield break;
             }
+
             yield return new PredictedPriceSeries("Decreasingg", PredictionPattern.Decreasing, predictedPrices);
         }
 
-        static PredictedPriceSeries? GeneratePattern3WithPeak(
+        static PredictedPriceSeries? GeneratePatternSmallSpikeWithPeak(
             int[] givenPrices,
             int peakStart)
         {
             var buyPrice = givenPrices[0];
             var predictedPrices = new List<(int min, int max)> { (buyPrice, buyPrice), (buyPrice, buyPrice) };
 
-            double minRate = 4000;
-            double maxRate = 9000;
-
-            for (var i = 2; i < peakStart; i++)
+            if (!GenerateDecreasingRandomPrice(
+                    givenPrices, predictedPrices, 2, peakStart - 2, 0.4, 0.9, 0.03,
+                    0.05))
             {
-                var minPred = Math.Floor(minRate * buyPrice / 10000);
-                var maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
-
-
-                if (i < givenPrices.Length && givenPrices[i] > 0)
-                {
-                    if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[i];
-                    maxPred = givenPrices[i];
-                    minRate = MinimumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                    maxRate = MaximumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                }
-
-                predictedPrices.Add(((int)minPred, (int)maxPred));
-
-                minRate -= 500;
-                maxRate -= 300;
+                return null;
             }
 
             // The peak
-
-            for (var i = peakStart; i < peakStart + 2; i++)
+            if (!GenerateIndividualRandomPrice(
+                    givenPrices, predictedPrices, peakStart, 2, 0.9, 1.4))
             {
-                var minPred = Math.Floor(0.9 * buyPrice);
-                var maxPred = Math.Ceiling(1.4 * buyPrice);
-                if (i < givenPrices.Length && givenPrices[i] > 0)
-                {
-                    if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[i];
-                    maxPred = givenPrices[i];
-                }
-                predictedPrices.Add(((int)minPred, (int)maxPred));
+                return null;
             }
 
-            // Main spike 1
+            if (!GeneratePeakPrice(
+                    givenPrices, predictedPrices, peakStart + 2, 1.4, 2.0))
             {
-                var minPred = Math.Floor(1.4 * buyPrice) - 1;
-                var maxPred = Math.Ceiling(2.0 * buyPrice) - 1;
-                if (peakStart + 2 < givenPrices.Length && givenPrices[peakStart + 2] > 0)
-                {
-                    if (givenPrices[peakStart + 2] < minPred || givenPrices[peakStart + 2] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[peakStart + 2];
-                    maxPred = givenPrices[peakStart + 2];
-                }
-                predictedPrices.Add(((int)minPred, (int)maxPred));
+                return null;
             }
 
-            // Main spike 2
+            if (peakStart + 5 < 14)
             {
-                double minPred = predictedPrices[peakStart + 2].min;
-                var maxPred = Math.Ceiling(2.0 * buyPrice);
-                if (peakStart + 3 < givenPrices.Length && givenPrices[peakStart + 3] > 0)
+                if (!GenerateDecreasingRandomPrice(
+                        givenPrices, predictedPrices, peakStart + 5,
+                        14 - (peakStart + 5), 0.4, 0.9, 0.03, 0.05))
                 {
-                    if (givenPrices[peakStart + 3] < minPred || givenPrices[peakStart + 3] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[peakStart + 3];
-                    maxPred = givenPrices[peakStart + 3];
-                }
-                predictedPrices.Add(((int)minPred, (int)maxPred));
-            }
-
-            // Main spike 3
-            {
-                var minPred = Math.Floor(1.4 * buyPrice) - 1;
-                double maxPred = predictedPrices[peakStart + 3].max - 1;
-                if (peakStart + 4 < givenPrices.Length && givenPrices[peakStart + 4] > 0)
-                {
-                    if (givenPrices[peakStart + 4] < minPred || givenPrices[peakStart + 4] > maxPred)
-                    {
-                        // Given price is out of predicted range, so this is the wrong pattern
-                        return null;
-                    }
-                    minPred = givenPrices[peakStart + 4];
-                    maxPred = givenPrices[peakStart + 4];
-                }
-                predictedPrices.Add(((int)minPred, (int)maxPred));
-
-                if (peakStart + 5 < 14)
-                {
-                    minRate = 4000;
-                    maxRate = 9000;
-
-                    for (var i = peakStart + 5; i < 14; i++)
-                    {
-                        minPred = Math.Floor(minRate * buyPrice / 10000);
-                        maxPred = Math.Ceiling(maxRate * buyPrice / 10000);
-
-
-                        if (i < givenPrices.Length && givenPrices[i] > 0)
-                        {
-                            if (givenPrices[i] < minPred || givenPrices[i] > maxPred)
-                            {
-                                // Given price is out of predicted range, so this is the wrong pattern
-                                return null;
-                            }
-                            minPred = givenPrices[i];
-                            maxPred = givenPrices[i];
-                            minRate = MinimumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                            maxRate = MaximumRateFromGivenAndBase(givenPrices[i], buyPrice);
-                        }
-                        predictedPrices.Add(((int)minPred, (int)maxPred));
-
-                        minRate -= 500;
-                        maxRate -= 300;
-                    }
+                    return null;
                 }
             }
 
             return new PredictedPriceSeries("Small spike", PredictionPattern.SmallSpike, predictedPrices);
         }
 
-        static IEnumerable<PredictedPriceSeries> GeneratePattern3(int[] givenPrices)
+        static IEnumerable<PredictedPriceSeries> GeneratePatternSmallSpike(int[] givenPrices)
         {
             for (var peakStart = 2; peakStart < 10; peakStart++)
             {
-                var series = GeneratePattern3WithPeak(givenPrices, peakStart);
+                var series = GeneratePatternSmallSpikeWithPeak(givenPrices, peakStart);
                 if (series != null)
                     yield return series;
             }
@@ -429,21 +420,43 @@ namespace TurnipTracker.Model
             }
             static IEnumerable<PredictedPriceSeries> Enumerate(int[] sellPrices)
             {
-                foreach (var series in GeneratePattern0(sellPrices))
+                foreach (var series in GeneratePatternFluctuating(sellPrices))
                     yield return series;
-                foreach (var series in GeneratePattern1(sellPrices))
+                foreach (var series in GeneratePatternLargeSpike(sellPrices))
                     yield return series;
-                foreach (var series in GeneratePattern2(sellPrices))
+                foreach (var series in GeneratePatternDecreasing(sellPrices))
                     yield return series;
-                foreach (var series in GeneratePattern3(sellPrices))
+                foreach (var series in GeneratePatternSmallSpike(sellPrices))
                     yield return series;
             }
             return possibilities;
         }
 
-        public static List<PredictedPriceSeries> AnalyzePossibilities(int[] sellPrices)
+        static double RowProbability(PredictedPriceSeries possibility, PredictionPattern previousPattern)
+            => probabilityMatrix[previousPattern][possibility.PatternNumber] / patternCounts[possibility.PatternNumber];
+
+        static List<PredictedPriceSeries> GetProbabilities(List<PredictedPriceSeries> possibilities, PredictionPattern previousPattern)
         {
+            if (previousPattern == PredictionPattern.IDontKnow || previousPattern == PredictionPattern.All)
+            {
+                return possibilities;
+            }
+
+            var maxPercent = possibilities.Select((poss) => RowProbability(poss, previousPattern)).Sum();
+
+            for (int i = 0; i < possibilities.Count; i++)
+            {
+                possibilities[i].Probability = RowProbability(possibilities[i], previousPattern) / maxPercent;
+            }
+            return possibilities;
+        }
+
+        public static List<PredictedPriceSeries> AnalyzePossibilities(int[] sellPrices, PredictionPattern previousPattern)
+        {
+            if (sellPrices == null) throw new ArgumentNullException(nameof(sellPrices));
+
             var generatedPossibilities = GeneratePossibilities(sellPrices);
+            GetProbabilities(generatedPossibilities, previousPattern);
 
             var dailyMinMax = GetDailyMinMax(generatedPossibilities);
             generatedPossibilities.Add(dailyMinMax);
@@ -453,6 +466,8 @@ namespace TurnipTracker.Model
 
         public static PredictedPriceSeries GetDailyMinMax(int[] sellPrices)
         {
+            if (sellPrices == null) throw new ArgumentNullException(nameof(sellPrices));
+
             var generatedPossibilities = GeneratePossibilities(sellPrices);
             var dailyMinMax = GetDailyMinMax(generatedPossibilities);
             return dailyMinMax;
