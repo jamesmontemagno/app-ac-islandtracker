@@ -4,6 +4,7 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
+using TurnipTracker.Services;
 using TurnipTracker.View;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -38,7 +39,11 @@ namespace TurnipTracker
         protected override async void OnAppLinkRequestReceived(Uri uri)
         {
             base.OnAppLinkRequestReceived(uri);
-            
+
+            var key = await SettingsService.GetPublicKey();
+            if (uri.PathAndQuery.Contains(key))
+                return;
+
             await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
            
         }

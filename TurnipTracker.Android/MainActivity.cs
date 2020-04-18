@@ -42,7 +42,7 @@ namespace TurnipTracker.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        protected override async void OnNewIntent(Intent intent)
+        protected override void OnNewIntent(Intent intent)
         {
             base.OnNewIntent(intent);
 
@@ -53,8 +53,8 @@ namespace TurnipTracker.Droid
                 if (!string.IsNullOrWhiteSpace(uriString) &&
                     uriString.StartsWith("acislandtracker:"))
                 {
-                    var uri = new Uri(uriString);
-                    await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
+                    var url = new Uri(uriString);
+                    Xamarin.Forms.Application.Current.SendOnAppLinkRequestReceived(url);
                 }
             }
 

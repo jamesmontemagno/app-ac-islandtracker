@@ -66,6 +66,11 @@ namespace TurnipTracker.ViewModel
                 var uri = new Uri(uriString);
                 if (uri != null && uri.Host == "friends" && uri.Scheme == "acislandtracker")
                 {
+
+                    var key = await SettingsService.GetPublicKey();
+                    if (uriString.Contains(key))
+                        return false;
+
                     await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
                     return true;
                 }
