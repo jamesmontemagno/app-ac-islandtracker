@@ -7,16 +7,10 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Content;
+using Xamarin.Forms;
 
 namespace TurnipTracker.Droid
 {
-    /*
-     * <intent-filter>
-        <action android:name="android.intent.action.SEND" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <data android:mimeType="text/plain" />
-    </intent-filter>
-     */
     [Activity(Label = "Island Tracker", Icon = "@mipmap/icon", RoundIcon ="@mipmap/icon",
         Theme = "@style/MainTheme", MainLauncher = true,
         LaunchMode = LaunchMode.SingleTask,
@@ -52,26 +46,18 @@ namespace TurnipTracker.Droid
         {
             base.OnNewIntent(intent);
 
-            Android.Net.Uri uri = null;
             if(intent.Action == Intent.ActionSend &&
                 intent.Type == "text/plain")
             {
                 var uriString = intent.GetStringExtra(Intent.ExtraText);
-                if (!string.IsNullOrWhiteSpace(uriString))
-                    uri = Android.Net.Uri.Parse(uriString);
-            }
-            else if(intent.Action == Intent.ActionView && intent.Data != null)
-            {
-                uri = intent.Data;
+                if (!string.IsNullOrWhiteSpace(uriString) &&
+                    uriString.StartsWith("acislandtracker:"))
+                {
+                    var uri = new Uri(uriString);
+                    await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
+                }
             }
 
-            if(uri != null && uri.Scheme == "acislandtracker" && uri.Host == "invite")
-            {
-                var id = uri.GetQueryParameter("id");
-                var name = uri.GetQueryParameter("name");
-                if (!string.IsNullOrWhiteSpace(id))
-                    await App.Current.MainPage.DisplayAlert($"Add Friend", $"Would you like to add {name} as a friend?", "Yes", "No");
-            }
         }
 
         public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)

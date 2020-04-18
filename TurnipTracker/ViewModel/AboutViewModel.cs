@@ -11,6 +11,17 @@ using Newtonsoft.Json;
 using TurnipTracker.Services;
 using Xamarin.Essentials;
 
+// On April 17th 2020
+// MattLeibow gifted 10 subscriptions to everyone!
+// h0usebesuch subscribed for 11th month!
+// LuciousAdorno subscribed for the first month at Tier 1!!
+// mikeholloway24 cheered 100 bits!
+// AdenEarnshaw cheered 200 bits
+// AncientCoder Gifted a tier 1 to MattLeibow
+// sparkie108 cheered 100 bits!
+// h0usebesuch cheered 100 bits!
+// reillydom subscribed with Twitch Prime for the first time
+
 namespace TurnipTracker.ViewModel
 {
     public class AboutViewModel : BaseViewModel
@@ -88,10 +99,6 @@ namespace TurnipTracker.ViewModel
 
         async Task SendEmail()
         {
-#if DEBUG
-            await App.Current.MainPage.Navigation.PushModalAsync(new View.AcceptFriendRequestPage());
-            return;
-#endif
             var message = new EmailMessage
             {
                 Subject = "Island Tracker Issue",

@@ -1,7 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             x:Class="TurnipTracker.View.AcceptFriendRequestPage">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+             x:Class="TurnipTracker.View.AcceptFriendRequestPage"
+             Shell.PresentationMode="ModalAnimated"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource NavigationPrimary}"
+             x:DataType="viewmodel:AcceptFriendRequestViewModel">
+    <ContentPage.BindingContext>
+        <viewmodel:AcceptFriendRequestViewModel/>
+    </ContentPage.BindingContext>
     <ScrollView>
         <Grid RowSpacing="12"
               Padding="{OnPlatform Android='0,12,0,0', iOS='0,24,0,0'}"
@@ -16,13 +24,14 @@
         <pancake:PancakeView CornerRadius="36,36,0,0"
                                  Grid.Row="1"
                                  Elevation="8"
-                                 Padding="12,12,12,0"
+                                 Padding="12,12,12,12"
                                  BackgroundColor="{StaticResource AcrylicSurface}">
             <StackLayout Spacing="4" Padding="12">
+                <StackLayout VerticalOptions="CenterAndExpand"
+                             IsVisible="{Binding IsBusy}">
 
-                <StackLayout VerticalOptions="CenterAndExpand">
-                    <Label Text="&#xf021;"
-                        FontSize="48"
+                    <Label Text="{StaticResource IconRefresh}"
+                        FontSize="72"
                         FontFamily="FA-S"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
@@ -31,42 +40,93 @@
                     <Label 
                         TextColor="{StaticResource TextPrimaryColor}"
                         Text="Processing Friend Request..."
+                        FontSize="Medium"
                         HorizontalOptions="Center"/>
                 </StackLayout>
                 
+                <StackLayout VerticalOptions="CenterAndExpand"
+                             IsVisible="{Binding Error}">
+                    <Label 
+                        TextColor="{StaticResource TextPrimaryColor}"
+                        Text="{StaticResource IconWarning}"
+                        FontSize="72"
+                        FontFamily="FA-S"
+                        HorizontalOptions="Center"/>
+                     <Label 
+                        TextColor="{StaticResource TextPrimaryColor}"
+                        FontSize="Medium"
+                        Text="Unable to process request, check internet and try again."
+                        HorizontalOptions="Center"/>
+                    <Button Style="{StaticResource ButtonRoundedCorners}"
+                            Margin="0,24,0,0"
+                            Text="Retry"
+                            Command="{Binding RequestFriendCommand}"
+                            Padding="12,0"/>
+                </StackLayout>
 
-                <Button Visual="Material"
-                        IsVisible="false"
-                        Margin="0,24,0,0"
-                        VerticalOptions="CenterAndExpand"
-                        BorderColor="{StaticResource NavigationPrimary}"
-                        BorderWidth="2"
-                        CornerRadius="22"
-                        HeightRequest="44"
-                        Text="Retry"
-                        TextColor="{StaticResource NavigationPrimary}"
-                        Padding="12,0"
-                        BackgroundColor="{StaticResource AcrylicSurface}"
-                        HorizontalOptions="FillAndExpand"/>
+                <StackLayout VerticalOptions="CenterAndExpand"
+                             IsVisible="{Binding Submitted}">
+                    <Label 
+                        TextColor="{StaticResource TextPrimaryColor}"
+                        Text="{StaticResource IconThumbsUp}"
+                        FontSize="72"
+                        FontFamily="FA-R"
+                        HorizontalOptions="Center"/>
+                    <Label 
+                        TextColor="{StaticResource TextPrimaryColor}"
+                        FontSize="Medium"
+                        Text="Friend request processed successful. You will see your friend as soon as they accept the friend request on their app."
+                        HorizontalOptions="Center"/>
+                </StackLayout>
 
-                <Button Text="Stop/Start"
-                        Clicked="Button_Clicked"/>
+                <Grid VerticalOptions="CenterAndExpand"
+                             IsVisible="{Binding NeedsVerification}"
+                      ColumnSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".4*"/>
+                        <ColumnDefinition Width=".6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        TextColor="{StaticResource TextPrimaryColor}"
+                        Text="{StaticResource IconFriendAdd}"
+                        FontSize="72"
+                        FontFamily="FA-S"
+                        HorizontalOptions="Center"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2"/>
+                    <Label 
+                        TextColor="{StaticResource TextPrimaryColor}"
+                        Text="{Binding Name, StringFormat='Do you want to add {0} as a friend?'}"
+                        HorizontalOptions="Center"
+                        FontSize="Medium"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Margin="0,0,0,12"/>
+                    <Button Style="{StaticResource ButtonRoundedCorners}"
+                        Text="No"
+                        BorderColor="Red"
+                        TextColor="Red"
+                        Grid.Row="2"
+                        Command="{Binding CloseCommand}"/>
+                    <Button Style="{StaticResource ButtonRoundedCorners}"
+                        Text="Yes, Add Friend"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Command="{Binding RequestFriendCommand}"/>
+                </Grid>
 
-                <Button Visual="Material"
+                <Button Style="{StaticResource ButtonRoundedCorners}"
+                        IsEnabled="{Binding IsNotBusy}"
+                        IsVisible="{Binding ShowClose}"
                         Margin="0,24,0,0"
                         VerticalOptions="End"
-                        BorderColor="{StaticResource NavigationPrimary}"
-                        BorderWidth="2"
-                        CornerRadius="22"
-                        HeightRequest="44"
                         Text="Close"
-                        TextColor="{StaticResource NavigationPrimary}"
-                        Padding="12,0"
-                        BackgroundColor="{StaticResource AcrylicSurface}"
-                        HorizontalOptions="FillAndExpand"
-                        x:Name="ButtonClose"
-                        Clicked="ButtonClose_Clicked"/>
-
+                        Command="{Binding CloseCommand}"/>
             </StackLayout>
 
         </pancake:PancakeView>

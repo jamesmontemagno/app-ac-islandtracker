@@ -30,26 +30,26 @@
     <!-- Your Pages -->
     
     <TabBar x:Name="TabBar">
-        <Tab Title="Profile">
+        <Tab Title="Profile" Route="profile">
             <Tab.Icon>
                 <FontImageSource Glyph="{StaticResource IconProfile}" FontFamily="FA-S" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate view:ProfilePage}"/>
         </Tab>
-        <Tab Title="Tracking">
+        <Tab Title="Tracking" Route="tracking">
             <Tab.Icon>
                 <FontImageSource FontFamily="FA-S" Glyph="{StaticResource IconTracking}"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate view:TrackingPage}"/>
         </Tab>
-        <Tab Title="Friends">
+        <Tab Title="Friends" Route="friends">
             <Tab.Icon>
                 <FontImageSource FontFamily="FA-S" Glyph="{StaticResource IconFriends}"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate view:FriendsPage}"/>
         </Tab>
 
-        <Tab Title="About">
+        <Tab Title="About" Route="about">
             <Tab.Icon>
                 <FontImageSource FontFamily="FA-S" Glyph="{StaticResource IconAbout}"/>
             </Tab.Icon>

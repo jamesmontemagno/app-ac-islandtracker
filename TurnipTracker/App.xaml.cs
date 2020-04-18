@@ -35,6 +35,14 @@ namespace TurnipTracker
         const string AppCenterUWP = "AC_UWP";
         const string SyncFusionKey = "AC_SYNC";
 
+        protected override async void OnAppLinkRequestReceived(Uri uri)
+        {
+            base.OnAppLinkRequestReceived(uri);
+            
+            await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
+           
+        }
+
         protected override void OnStart()
         {
 

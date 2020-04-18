@@ -22,6 +22,10 @@
             <x:String x:Key="IconGitHub">&#xf09b;</x:String>
             <x:String x:Key="IconTwitter">&#xf099;</x:String>
             <x:String x:Key="IconSave">&#xf0c7;</x:String>
+            <x:String x:Key="IconRefresh">&#xf021;</x:String>
+            <x:String x:Key="IconThumbsUp">&#xf164;</x:String>
+            <x:String x:Key="IconWarning">&#xf071;</x:String>
+            <x:String x:Key="IconFriendAdd">&#xf234;</x:String>
 
             <Color x:Key="NavigationPrimary">#2196F3</Color>
             <Color x:Key="AcrylicSurface">#E6E6E6</Color>

@@ -20,5 +20,6 @@ namespace TurnipTracker.View
 
             base.OnAppearing();
         }
+
     }
 }

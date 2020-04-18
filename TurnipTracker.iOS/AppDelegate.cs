@@ -46,23 +46,14 @@ namespace TurnipTracker.iOS
 
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
-            //if (Xamarin.Essentials.Platform.OpenUrl(app, url, options))
-            //    return true;
-
-            
-            if(url != null && url.Host == "invite" &&
-                url.Scheme == "acislandtracker")
+            Xamarin.Forms.Application.Current.SendOnAppLinkRequestReceived(new Uri(url.AbsoluteString));
+            /*var myApp = App.Current as TurnipTracker.App;
+            if (null != myApp && null != url)
             {
-                var component = new NSUrlComponents(url.AbsoluteString);
-                var id = component.QueryItems.FirstOrDefault(i => i.Name == "id")?.Value;
-                var name = component.QueryItems.FirstOrDefault(i => i.Name == "name")?.Value;
+                myApp.OnAppLinkRequestReceived(new Uri(url.AbsoluteString));
+            }*/
+            return true;
 
-                if (!string.IsNullOrWhiteSpace(id))
-                    App.Current.MainPage.DisplayAlert($"Add Friend", $"Would you like to add {name} as a friend?", "Yes", "No").ContinueWith(t => { }); ;
-                return true;
-            }
-
-            return base.OpenUrl(app, url, options);
         }
 
 
