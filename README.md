@@ -1,5 +1,7 @@
 # Island Tracker for Animal Crossing
  Animal Crossing Turnip Tracking Mobile App
+ 
+ ![](turniptracker.gif)
 
 
 ## Build Status
