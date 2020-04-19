@@ -10,6 +10,8 @@ namespace TurnipTracker.Model
         public PredictionPattern PatternNumber { get; }
         public List<(int min, int max)> Prices { get; }
 
+        public double? Probability { get; set; }
+
         public PredictedPriceSeries(string patternDesc, PredictionPattern patternNumber, List<(int min, int max)> prices)
         {
             this.PatternDesc = patternDesc;
