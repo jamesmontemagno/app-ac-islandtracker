@@ -35,4 +35,7 @@
   <ItemGroup>
     <SharedImage Include="Resources\Images\dispatch.png" BaseSize="300,300" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TurnipTracker.Shared\TurnipTracker.Shared.csproj" />
+  </ItemGroup>
 </Project>

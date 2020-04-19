@@ -10,115 +10,137 @@
         <viewmodel:ProfileViewModel/>
     </ContentView.BindingContext>
 
-    <Grid RowSpacing="12"
-              Padding="{OnPlatform Android='0,12,0,0', iOS='0,24,0,0'}"
-              BackgroundColor="{StaticResource NavigationPrimary}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Label HorizontalOptions="Center" Text="Profile"
-                   TextColor="White" FontSize="44"
-                   FontFamily="AnimalCrossing"/>
-        <pancake:PancakeView CornerRadius="36,36,0,0"
-                                 Grid.Row="1"
-                                 Elevation="8"
-                                 Padding="12,12,12,0"
-                                 BackgroundColor="{StaticResource AcrylicSurface}">
-            <StackLayout Spacing="4" Padding="12">
-                <Label 
-                       TextColor="{StaticResource TextPrimaryColor}"
-                       FontSize="Large"
-                       Text="Name"
-                       Margin="24,0,0,0"
+    <ScrollView>
+        <Grid RowSpacing="12"
+                  Padding="{OnPlatform Android='0,12,0,0', iOS='0,24,0,0'}"
+                  BackgroundColor="{StaticResource NavigationPrimary}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label HorizontalOptions="Center" Text="Profile"
+                       TextColor="White" FontSize="44"
                        FontFamily="AnimalCrossing"/>
-                 <sharpnado:MaterialFrame
-                                    Style="{StaticResource AcrylicFrame}"
-                                    Padding="{OnPlatform Android='12,0', iOS='12'}"
-                                    HorizontalOptions="FillAndExpand">
-                           <maskededit:SfMaskedEdit BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
+            <pancake:PancakeView CornerRadius="36,36,0,0"
+                                     Grid.Row="1"
+                                     Elevation="8"
+                                     Padding="12,12,12,0"
+                                     BackgroundColor="{StaticResource AcrylicSurface}">
+                <StackLayout Spacing="4" Padding="12">
+                    
+                    <Label 
+                            TextColor="{StaticResource TextPrimaryColor}"
+                            FontSize="Large"
+                            Text="Name"
+                            Margin="24,0,0,0"
+                            FontFamily="AnimalCrossing"/>
+                        <sharpnado:MaterialFrame
+                                        Style="{StaticResource AcrylicFrame}"
+                                        Padding="{OnPlatform Android='12,0', iOS='12'}"
+                                        HorizontalOptions="FillAndExpand">
+                                <maskededit:SfMaskedEdit BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
+                                                        TextColor="{StaticResource TextPrimaryColor}"
+                                                        Value="{Binding Profile.Name}"
+                                                        FontSize="24"/>
+                    </sharpnado:MaterialFrame>
+                    <Label 
+                            TextColor="{StaticResource TextPrimaryColor}"
+                            FontSize="Large"
+                            Text="Emoji Status"
+                            Margin="24,12,0,0"
+                            FontFamily="AnimalCrossing"/>
+                        <sharpnado:MaterialFrame
+                                        Style="{StaticResource AcrylicFrame}"
+                                        Padding="{OnPlatform Android='12,0', iOS='12'}"
+                                        HorizontalOptions="FillAndExpand">
+                                <maskededit:SfMaskedEdit BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
+                                                        TextColor="{StaticResource TextPrimaryColor}"
+                                                        Value="{Binding Profile.Status}"
+                                                        FontSize="24"/>
+                    </sharpnado:MaterialFrame>
+
+                    <Label FontFamily="AnimalCrossing"
+                           TextColor="{StaticResource TextPrimaryColor}"
+                           FontSize="Large"
+                           Text="Island Name"
+                           Margin="24,12,0,0"/>
+                     <sharpnado:MaterialFrame
+                                        Style="{StaticResource AcrylicFrame}"
+                                        Padding="{OnPlatform Android='12,0', iOS='12'}"
+                                        HorizontalOptions="FillAndExpand">
+                               <maskededit:SfMaskedEdit BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
+                                                        TextColor="{StaticResource TextPrimaryColor}"
+                                                        Value="{Binding Profile.IslandName}"
+                                                        FontSize="24"/>
+                    </sharpnado:MaterialFrame>
+                    <Label FontFamily="AnimalCrossing"
+                           TextColor="{StaticResource TextPrimaryColor}"
+                           FontSize="Large"
+                           Text="Fruit"
+                           Margin="24,12,0,0"/>
+                     <sharpnado:MaterialFrame
+                                        Style="{StaticResource AcrylicFrame}"
+                                        Padding="12,0"
+                                        HorizontalOptions="FillAndExpand">
+                               <combobox:SfComboBox HeightRequest="60"
+                                                    VerticalOptions="Start"
+                                                    BackgroundColor="Transparent"
+                                                    BorderColor="Transparent"
                                                     TextColor="{StaticResource TextPrimaryColor}"
-                                                    Value="{Binding Profile.Name}"
-                                                    FontSize="24"/>
-                </sharpnado:MaterialFrame>
-                <Label FontFamily="AnimalCrossing"
-                       TextColor="{StaticResource TextPrimaryColor}"
-                       FontSize="Large"
-                       Text="Island Name"
-                       Margin="24,12,0,0"/>
-                 <sharpnado:MaterialFrame
-                                    Style="{StaticResource AcrylicFrame}"
-                                    Padding="{OnPlatform Android='12,0', iOS='12'}"
-                                    HorizontalOptions="FillAndExpand">
-                           <maskededit:SfMaskedEdit BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
-                                                    TextColor="{StaticResource TextPrimaryColor}"
-                                                    Value="{Binding Profile.IslandName}"
-                                                    FontSize="24"/>
-                </sharpnado:MaterialFrame>
-                <Label FontFamily="AnimalCrossing"
-                       TextColor="{StaticResource TextPrimaryColor}"
-                       FontSize="Large"
-                       Text="Fruit"
-                       Margin="24,12,0,0"/>
-                 <sharpnado:MaterialFrame
-                                    Style="{StaticResource AcrylicFrame}"
-                                    Padding="12,0"
-                                    HorizontalOptions="FillAndExpand">
-                           <combobox:SfComboBox HeightRequest="60"
-                                                VerticalOptions="Start"
-                                                BackgroundColor="Transparent"
-                                                BorderColor="Transparent"
-                                                TextColor="{StaticResource TextPrimaryColor}"
-                                                SelectedIndex="{Binding Profile.Fruit, Mode=TwoWay}"
-                                                TextSize="24"
-                                                DropDownTextSize="24"
-                                                DropDownItemHeight="50">
-                                <combobox:SfComboBox.ComboBoxSource>
-                                    <ListCollection:List x:TypeArguments="x:String">
-                                        <x:String>🍎 Apple</x:String>
-                                        <x:String>🍒 Cherry</x:String>
-                                        <x:String>🍊 Orange</x:String>
-                                        <x:String>🍑 Peach</x:String>
-                                        <x:String>🍐 Pear</x:String>
-                                    </ListCollection:List>
-                                </combobox:SfComboBox.ComboBoxSource>
-                            </combobox:SfComboBox>
-                </sharpnado:MaterialFrame>
-                <Label FontFamily="AnimalCrossing"
-                       TextColor="{StaticResource TextPrimaryColor}"
-                       FontSize="Large"
-                       Text="Time Zone"
-                       Margin="24,12,0,0"/>
-                 <sharpnado:MaterialFrame
-                                    Style="{StaticResource AcrylicFrame}"
-                                    Padding="12"
-                                    HeightRequest="28"
-                                    HorizontalOptions="FillAndExpand">
+                                                    SelectedIndex="{Binding Profile.Fruit, Mode=TwoWay}"
+                                                    TextSize="24"
+                                                    DropDownTextSize="24"
+                                                    DropDownItemHeight="50">
+                                    <combobox:SfComboBox.ComboBoxSource>
+                                        <ListCollection:List x:TypeArguments="x:String">
+                                            <x:String>🍎 Apple</x:String>
+                                            <x:String>🍒 Cherry</x:String>
+                                            <x:String>🍊 Orange</x:String>
+                                            <x:String>🍑 Peach</x:String>
+                                            <x:String>🍐 Pear</x:String>
+                                        </ListCollection:List>
+                                    </combobox:SfComboBox.ComboBoxSource>
+                                </combobox:SfComboBox>
+                    </sharpnado:MaterialFrame>
+                    <Label FontFamily="AnimalCrossing"
+                           TextColor="{StaticResource TextPrimaryColor}"
+                           FontSize="Large"
+                           Text="Time Zone"
+                           Margin="24,12,0,0"/>
+                     <sharpnado:MaterialFrame
+                                        Style="{StaticResource AcrylicFrame}"
+                                        Padding="12"
+                                        HeightRequest="28"
+                                        HorizontalOptions="FillAndExpand">
                            
-                </sharpnado:MaterialFrame>
+                    </sharpnado:MaterialFrame>
 
-                 <Label Text="Saved!"
-                        VerticalOptions="CenterAndExpand"
-                       TextColor="{StaticResource TextPrimaryColor}"
-                       HorizontalOptions="Center"
-                       x:Name="LabelSaved"
-                        Opacity="0"/>
-                <sharpnado:MaterialFrame Style="{StaticResource AcrylicFAB}">
-                                <effectsview:SfEffectsView
-                                    Padding="24,12"
-                                    CornerRadius="33"
-                                    x:Name="ButtonSave"
-                                    TouchUp="ButtonSave_TouchUp">
-                                    <Label Text="{StaticResource IconSave}"
-                                           Style="{StaticResource SocialLabel}"
-                                           FontSize="24"
-                                           FontFamily="FA-S"/>
-                                </effectsview:SfEffectsView>
-                            </sharpnado:MaterialFrame>
-            </StackLayout>
+                     <Label Text="Saved!"
+                            VerticalOptions="CenterAndExpand"
+                           TextColor="{StaticResource TextPrimaryColor}"
+                           HorizontalOptions="Center"
+                           x:Name="LabelSaved"
+                            Opacity="0"/>
+                    
+                </StackLayout>
             
-        </pancake:PancakeView>
+            </pancake:PancakeView>
 
-
-    </Grid>
+            <sharpnado:MaterialFrame
+                Grid.RowSpan="2"
+                Style="{StaticResource AcrylicFAB}"
+                Margin="24">
+                <effectsview:SfEffectsView
+                    Padding="24,12"
+                    CornerRadius="33"
+                    x:Name="ButtonSave"
+                    TouchUp="ButtonSave_TouchUp">
+                    <Label Text="{StaticResource IconSave}"
+                            Style="{StaticResource SocialLabel}"
+                            FontSize="24"
+                            FontFamily="FA-S"/>
+                </effectsview:SfEffectsView>
+            </sharpnado:MaterialFrame>
+        </Grid>
+    </ScrollView>
 </ContentView>

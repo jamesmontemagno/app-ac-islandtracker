@@ -41,7 +41,7 @@ namespace TurnipTracker.Services
 
             if (string.IsNullOrWhiteSpace(val))
             {
-                val = Guid.NewGuid().ToString() + Guid.NewGuid().ToString();
+                val = Guid.NewGuid().ToString();
                 await SecureStorage.SetAsync(key, val);
             }
 

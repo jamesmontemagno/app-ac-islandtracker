@@ -29,7 +29,11 @@ namespace TurnipTracker.Services
             lock (locker)
             {
                 var profile = barrel.Get<Profile>("profile");
-                return profile ?? new Profile();
+                return profile ?? new Profile
+                {
+                    Fruit = (int)Model.Fruit.Apple,
+                    Status = "😍"
+                };
             }
         }
 

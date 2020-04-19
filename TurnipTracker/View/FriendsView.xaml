@@ -141,7 +141,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                         <SwipeView IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsNotBusy}" BackgroundColor="Transparent">
-                            <SwipeView.LeftItems>
+                            <!--<SwipeView.LeftItems>
                                 <SwipeItems>
                                     <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}"
                                                      AutomationProperties.IsInAccessibleTree="True"
@@ -168,7 +168,7 @@
                                          </Grid>
                                     </SwipeItemView>
                                 </SwipeItems>
-                            </SwipeView.LeftItems>
+                            </SwipeView.LeftItems>-->
                             <SwipeView.RightItems>
                                 <SwipeItems>
                                     <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}"
@@ -201,7 +201,9 @@
                                 <shimmer:SfShimmer VerticalOptions="FillAndExpand"
                                                    IsActive ="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsBusy}"
                                                    Type="Article"
-                                                   Padding="12">
+                                                   Padding="12"
+                                                   InputTransparent="False"
+                                                   CascadeInputTransparent="False">
                                     <shimmer:SfShimmer.Content>
                                          <sharpnado:MaterialFrame
                                             Style="{StaticResource AcrylicFrame}"
