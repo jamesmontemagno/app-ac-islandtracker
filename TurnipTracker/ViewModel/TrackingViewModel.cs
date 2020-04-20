@@ -99,7 +99,7 @@ namespace TurnipTracker.ViewModel
                 {
                     var diffAM = SelectedDay.PriceAM.Value - actualBuy;
                     if (diffAM == 0)
-                        SelectedDay.DifferenceAM = "↔ 0";
+                        SelectedDay.DifferenceAM = "↔️ 0";
                     else
                         SelectedDay.DifferenceAM = diffAM < 0 ? $"↘️ {diffAM}" : $"↗️ +{diffAM}";
                 }
@@ -112,7 +112,7 @@ namespace TurnipTracker.ViewModel
                 {
                     var diffPM = SelectedDay.PricePM.Value - actualBuy;
                     if (diffPM == 0)
-                        SelectedDay.DifferencePM = "↔ 0";
+                        SelectedDay.DifferencePM = "↔️ 0";
                     else
                         SelectedDay.DifferencePM = diffPM < 0 ? $"↘️ {diffPM}" : $"↗️ +{diffPM}";
                 }
