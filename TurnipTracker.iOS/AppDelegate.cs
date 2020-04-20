@@ -38,6 +38,8 @@ namespace TurnipTracker.iOS
 
             SfShimmerRenderer.Init();
             Syncfusion.XForms.iOS.EffectsView.SfEffectsViewRenderer.Init();
+            Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
+            Syncfusion.XForms.iOS.Expander.SfExpanderRenderer.Init();
             SharpnadoInitializer.Initialize(enableInternalLogger: true);
             LoadApplication(new App());
 

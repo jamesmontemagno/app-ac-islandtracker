@@ -9,7 +9,7 @@ namespace TurnipTracker.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string diff)
-                return diff.Contains("+") ? Color.Green : Color.Red;
+                return diff.Contains("+") ? Color.Green : (diff.Contains("-") ? Color.Red : Color.Black);
 
             return Color.Gray;
         }

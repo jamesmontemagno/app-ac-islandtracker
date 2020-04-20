@@ -1,0 +1,247 @@
+{
+  "Name": "New Horizons Palette",
+  "Description": null,
+  "Creator": "sokea",
+  "Swatches": [
+    {
+      "Name": null,
+      "ColorA": "FFF5F7E9",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 105
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFB7B398",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 92
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFCFAF8E",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 91
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFFFF09C",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 104
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFFFEB54",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 104
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFFCAF4E",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 95
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFBCF8CB",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 69
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FF66B888",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 69
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFA4D740",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 69
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFB1F5FB",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 68
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FF71B6F7",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 68
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFDBB4F8",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 107
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FF9379C2",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 107
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFFBACC7",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 106
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFF28B73",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 95
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFEE6668",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 106
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFC93335",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 65
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FFAD7A3E",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 91
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FF744436",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 91
+        }
+      ]
+    },
+    {
+      "Name": null,
+      "ColorA": "FF39383D",
+      "ColorB": "00000000",
+      "ColorC": "00000000",
+      "Tags": [
+        {
+          "Category": 65,
+          "Value": 93
+        }
+      ]
+    }
+  ]
+}

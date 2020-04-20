@@ -37,6 +37,14 @@ namespace TurnipTracker.Model
             set => SetProperty(ref buyPrice, value, onChanged: SaveCurrentWeekAction);
         }
 
+        int? actualPurchasePrice;
+
+        public int? ActualPurchasePrice
+        {
+            get => actualPurchasePrice;
+            set => SetProperty(ref actualPurchasePrice, value, onChanged: SaveCurrentWeekAction);
+        }
+
         int? priceAM;
 
         public int? PriceAM

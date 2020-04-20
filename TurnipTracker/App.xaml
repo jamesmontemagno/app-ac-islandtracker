@@ -11,7 +11,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <x:String x:Key="IconProfile">&#xf2bd;</x:String>
-            <x:String x:Key="IconTracking">&#xf080;</x:String>
+            <x:String x:Key="IconTracking">&#xf653;</x:String>
             <x:String x:Key="IconFriends">&#xf0c0;</x:String>
             <x:String x:Key="IconAbout">&#xf129;</x:String>
             <x:String x:Key="IconFavorite">&#xf005;</x:String>
@@ -27,8 +27,14 @@
             <x:String x:Key="IconWarning">&#xf071;</x:String>
             <x:String x:Key="IconFriendAdd">&#xf234;</x:String>
 
-            <Color x:Key="NavigationPrimary">#2196F3</Color>
+            <x:String x:Key="IconGraph">&#xf1fe;</x:String>
+
+            <Color x:Key="NavigationPrimary">#71B6F7</Color>
             <Color x:Key="AcrylicSurface">#E6E6E6</Color>
+
+            <Color x:Key="GraphMax">#FFF09C</Color>
+            <Color x:Key="GraphMin">#EE6668</Color>
+            <Color x:Key="GraphBuy">#F5F7E9</Color>
 
             <Color x:Key="AcrylicFrameBackgroundColor">#F1F1F1</Color>
 

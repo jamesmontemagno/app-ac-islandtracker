@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MvvmHelpers;
+using Syncfusion.SfChart.XForms;
 using TurnipTracker.Model;
 using TurnipTracker.Services;
 using Xamarin.Essentials;
@@ -13,6 +14,10 @@ namespace TurnipTracker.ViewModel
 
         public List<Day> Days { get; }
 
+        public List<ChartDataPoint> ChartDataMin { get; }
+        public List<ChartDataPoint> ChartDataMax { get; }
+        public List<ChartDataPoint> ChartDataPrice { get; }
+
         public Command<Day> DaySelectedCommand { get; }
 
         public TrackingViewModel()
@@ -21,7 +26,11 @@ namespace TurnipTracker.ViewModel
                 return;
 
 
-            
+            ChartDataMin = new List<ChartDataPoint>();
+            ChartDataMax = new List<ChartDataPoint>();
+            ChartDataPrice = new List<ChartDataPoint>();
+
+
             Days = DataService.GetCurrentWeek();
             foreach (var day in Days)
                 day.SaveCurrentWeekAction = SaveCurrentWeek;
@@ -87,12 +96,16 @@ namespace TurnipTracker.ViewModel
             PredictionUpdater.Update(Days);
 
             var sunday = Days[0];
-            if (sunday.BuyPrice.HasValue && SelectedDay != sunday)
+            if ((sunday.BuyPrice.HasValue || sunday.ActualPurchasePrice.HasValue) && SelectedDay != sunday)
             {
+                var actualBuy = sunday.ActualPurchasePrice.HasValue ? sunday.ActualPurchasePrice.Value : sunday.BuyPrice.Value;
                 if (SelectedDay.PriceAM.HasValue)
                 {
-                    var diffAM = SelectedDay.PriceAM.Value - sunday.BuyPrice.Value;
-                    SelectedDay.DifferenceAM = diffAM < 0 ? $"↘️ {diffAM}" : $"↗️ +{diffAM}";
+                    var diffAM = SelectedDay.PriceAM.Value - actualBuy;
+                    if (diffAM == 0)
+                        SelectedDay.DifferenceAM = "↔ 0";
+                    else
+                        SelectedDay.DifferenceAM = diffAM < 0 ? $"↘️ {diffAM}" : $"↗️ +{diffAM}";
                 }
                 else
                 {
@@ -101,8 +114,11 @@ namespace TurnipTracker.ViewModel
 
                 if (SelectedDay.PricePM.HasValue)
                 {
-                    var diffPM = SelectedDay.PricePM.Value - sunday.BuyPrice.Value;
-                    SelectedDay.DifferencePM = diffPM < 0 ? $"↘️ {diffPM}" : $"↗️ +{diffPM}";
+                    var diffPM = SelectedDay.PricePM.Value - actualBuy;
+                    if (diffPM == 0)
+                        SelectedDay.DifferencePM = "↔ 0";
+                    else
+                        SelectedDay.DifferencePM = diffPM < 0 ? $"↘️ {diffPM}" : $"↗️ +{diffPM}";
                 }
                 else
                 {
@@ -112,10 +128,22 @@ namespace TurnipTracker.ViewModel
 
             var low = 0;
             var high = 0;
-            foreach(var day in Days)
+            ChartDataPrice.Clear();
+            ChartDataMin.Clear();
+            ChartDataMax.Clear();
+            foreach (var day in Days)
             {
+
                 if (day == sunday)
+                {
+
+                    var val = day.BuyPrice.HasValue ? day.BuyPrice.Value : 0;
+                    ChartDataPrice.Add(new ChartDataPoint("S", val));
+                    ChartDataMin.Add(new ChartDataPoint("S", val));
+                    ChartDataMax.Add(new ChartDataPoint("S", val));
                     continue;
+                }
+                
 
                 if (!day.PriceAM.HasValue)
                 {
@@ -124,6 +152,15 @@ namespace TurnipTracker.ViewModel
 
                     if (day.PredictionAMMax > high)
                         high = day.PredictionAMMax;
+
+                    ChartDataMin.Add(new ChartDataPoint($"{day.DayShort} A", day.PredictionAMMin));
+                    ChartDataMax.Add(new ChartDataPoint($"{day.DayShort} A", day.PredictionAMMax));
+                }
+                else
+                {
+                    ChartDataPrice.Add(new ChartDataPoint($"{day.DayShort} A", day.PriceAM.Value));
+                    ChartDataMin.Add(new ChartDataPoint($"{day.DayShort} A", day.PriceAM.Value));
+                    ChartDataMax.Add(new ChartDataPoint($"{day.DayShort} A", day.PriceAM.Value));
                 }
 
                 if (!day.PricePM.HasValue)
@@ -133,11 +170,24 @@ namespace TurnipTracker.ViewModel
 
                     if (day.PredictionPMMax > high)
                         high = day.PredictionPMMax;
+
+                    ChartDataMin.Add(new ChartDataPoint($"{day.DayShort} P", day.PredictionPMMin));
+                    ChartDataMax.Add(new ChartDataPoint($"{day.DayShort} P", day.PredictionPMMax));
+                }
+                else
+                {
+                    ChartDataPrice.Add(new ChartDataPoint($"{day.DayShort} P", day.PricePM.Value));
+                    ChartDataMin.Add(new ChartDataPoint($"{day.DayShort} P", day.PricePM.Value));
+                    ChartDataMax.Add(new ChartDataPoint($"{day.DayShort} P", day.PricePM.Value));
                 }
             }
 
             Min = low;
             Max = high;
+
+            OnPropertyChanged(nameof(ChartDataPrice));
+            OnPropertyChanged(nameof(ChartDataMin));
+            OnPropertyChanged(nameof(ChartDataMax));
         }
     }
 }

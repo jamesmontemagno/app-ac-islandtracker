@@ -18,6 +18,8 @@ namespace TurnipTracker.Shared
         public int AMPrice { get; set; }
         public int PMPrice { get; set; }
 
+        public int BuyPrice { get; set; }
+
         //could be smallint
         public int DayOfYear { get; set; }
         public int Year { get; set; }
