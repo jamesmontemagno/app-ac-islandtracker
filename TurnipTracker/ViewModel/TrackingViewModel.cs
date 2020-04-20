@@ -14,9 +14,7 @@ namespace TurnipTracker.ViewModel
 
         public List<Day> Days { get; }
 
-        public List<ChartDataPoint> ChartDataMin { get; }
-        public List<ChartDataPoint> ChartDataMax { get; }
-        public List<ChartDataPoint> ChartDataPrice { get; }
+        public ObservableRangeCollection<ChartDataModel> ChartData { get; }
 
         public Command<Day> DaySelectedCommand { get; }
 
@@ -26,9 +24,7 @@ namespace TurnipTracker.ViewModel
                 return;
 
 
-            ChartDataMin = new List<ChartDataPoint>();
-            ChartDataMax = new List<ChartDataPoint>();
-            ChartDataPrice = new List<ChartDataPoint>();
+            ChartData = new ObservableRangeCollection<ChartDataModel>();
 
 
             Days = DataService.GetCurrentWeek();
@@ -128,9 +124,7 @@ namespace TurnipTracker.ViewModel
 
             var low = 0;
             var high = 0;
-            ChartDataPrice.Clear();
-            ChartDataMin.Clear();
-            ChartDataMax.Clear();
+            var chartData = new List<ChartDataModel>();
             foreach (var day in Days)
             {
 
@@ -138,9 +132,7 @@ namespace TurnipTracker.ViewModel
                 {
 
                     var val = day.BuyPrice.HasValue ? day.BuyPrice.Value : 0;
-                    ChartDataPrice.Add(new ChartDataPoint("S", val));
-                    ChartDataMin.Add(new ChartDataPoint("S", val));
-                    ChartDataMax.Add(new ChartDataPoint("S", val));
+                    chartData.Add(new ChartDataModel("S", day.DayLong, val));
                     continue;
                 }
                 
@@ -153,14 +145,11 @@ namespace TurnipTracker.ViewModel
                     if (day.PredictionAMMax > high)
                         high = day.PredictionAMMax;
 
-                    ChartDataMin.Add(new ChartDataPoint($"{day.DayShort} A", day.PredictionAMMin));
-                    ChartDataMax.Add(new ChartDataPoint($"{day.DayShort} A", day.PredictionAMMax));
+                    chartData.Add(new ChartDataModel($"{day.DayShort} A", $"{day.DayLong} AM", day.PredictionAMMax, day.PredictionAMMin));
                 }
                 else
                 {
-                    ChartDataPrice.Add(new ChartDataPoint($"{day.DayShort} A", day.PriceAM.Value));
-                    ChartDataMin.Add(new ChartDataPoint($"{day.DayShort} A", day.PriceAM.Value));
-                    ChartDataMax.Add(new ChartDataPoint($"{day.DayShort} A", day.PriceAM.Value));
+                    chartData.Add(new ChartDataModel($"{day.DayShort} A", $"{day.DayLong} AM", day.PriceAM.Value));
                 }
 
                 if (!day.PricePM.HasValue)
@@ -171,23 +160,18 @@ namespace TurnipTracker.ViewModel
                     if (day.PredictionPMMax > high)
                         high = day.PredictionPMMax;
 
-                    ChartDataMin.Add(new ChartDataPoint($"{day.DayShort} P", day.PredictionPMMin));
-                    ChartDataMax.Add(new ChartDataPoint($"{day.DayShort} P", day.PredictionPMMax));
+                    chartData.Add(new ChartDataModel($"{day.DayShort} P", $"{day.DayLong} PM", day.PredictionPMMax, day.PredictionPMMin));
                 }
                 else
                 {
-                    ChartDataPrice.Add(new ChartDataPoint($"{day.DayShort} P", day.PricePM.Value));
-                    ChartDataMin.Add(new ChartDataPoint($"{day.DayShort} P", day.PricePM.Value));
-                    ChartDataMax.Add(new ChartDataPoint($"{day.DayShort} P", day.PricePM.Value));
+                    chartData.Add(new ChartDataModel($"{day.DayShort} P", $"{day.DayLong} PM", day.PricePM.Value));
                 }
             }
 
             Min = low;
             Max = high;
 
-            OnPropertyChanged(nameof(ChartDataPrice));
-            OnPropertyChanged(nameof(ChartDataMin));
-            OnPropertyChanged(nameof(ChartDataMax));
+            ChartData.ReplaceRange(chartData);
         }
     }
 }

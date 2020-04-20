@@ -41,9 +41,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <expander:SfExpander HeaderBackgroundColor="Transparent"
-                                 IconColor="White"
-                                 IsExpanded="True">
+            <expander:SfExpander
+                HeaderBackgroundColor="Transparent"
+                IconColor="White"
+                Expanded="SfExpander_Expanded"
+                Collapsed="SfExpander_Expanded"
+                x:Name="ChartExpander">
                 <expander:SfExpander.Header>
                     <Grid>
                         <Label
@@ -56,18 +59,160 @@
                     </Grid>
                 </expander:SfExpander.Header>
                 <expander:SfExpander.Content>
-                    <Grid>
-                        <StackLayout x:Name="stack1">
+                    <chart:SfChart
+                        x:Name="Chart"
+                        BackgroundColor="Transparent"
+                        HeightRequest="300"
+                        HorizontalOptions="FillAndExpand">
+                        <!--<chart:SfChart.Title>
+                                <chart:ChartTitle TextColor="White"
+                                                  Text="Turnip Weekly Guaranteed Min/Potential Max"
+                                                  BackgroundColor="Transparent"
+                                                  BorderWidth="0"/>
+                            </chart:SfChart.Title>-->
+                        <chart:SfChart.ChartBehaviors>
+                            <chart:ChartTooltipBehavior BackgroundColor="#404041" />
+                        </chart:SfChart.ChartBehaviors>
+                        <chart:SfChart.PrimaryAxis>
+                            <chart:CategoryAxis EdgeLabelsDrawingMode="Shift" ShowMajorGridLines="False">
+                                <chart:CategoryAxis.LabelStyle>
+                                    <chart:ChartAxisLabelStyle Margin="0,10,0,0" TextColor="White" />
+                                </chart:CategoryAxis.LabelStyle>
+                                <chart:CategoryAxis.AxisLineStyle>
+                                    <chart:ChartLineStyle StrokeColor="White" StrokeWidth="4" />
+                                </chart:CategoryAxis.AxisLineStyle>
+                                <chart:CategoryAxis.MajorTickStyle>
+                                    <chart:ChartAxisTickStyle StrokeColor="White" TickSize="10" />
+                                </chart:CategoryAxis.MajorTickStyle>
+                            </chart:CategoryAxis>
+                        </chart:SfChart.PrimaryAxis>
+                        <chart:SfChart.SecondaryAxis>
+                            <chart:NumericalAxis
+                                EnableAutoIntervalOnZooming="True"
+                                Minimum="0"
+                                RangePadding="Round"
+                                ShowMajorGridLines="false"
+                                ShowMinorGridLines="false">
+                                <chart:NumericalAxis.LabelStyle>
+                                    <chart:ChartAxisLabelStyle
+                                        x:Name="secondaryAxisLabelStyle"
+                                        BackgroundColor="Transparent"
+                                        TextColor="White" />
+                                </chart:NumericalAxis.LabelStyle>
+                                <chart:NumericalAxis.AxisLineStyle>
+                                    <chart:ChartLineStyle StrokeColor="White" StrokeWidth="4" />
+                                </chart:NumericalAxis.AxisLineStyle>
+                                <chart:NumericalAxis.MajorTickStyle>
+                                    <chart:ChartAxisTickStyle StrokeColor="White" TickSize="10" />
+                                </chart:NumericalAxis.MajorTickStyle>
+                            </chart:NumericalAxis>
+                        </chart:SfChart.SecondaryAxis>
+                        <chart:SfChart.Legend>
+                            <chart:ChartLegend
+                                DockPosition="Bottom"
+                                IconHeight="14"
+                                IconWidth="14"
+                                IsIconVisible="true"
+                                ToggleSeriesVisibility="False">
+                                <chart:ChartLegend.LabelStyle>
+                                    <chart:ChartLegendLabelStyle TextColor="White" />
+                                </chart:ChartLegend.LabelStyle>
+                            </chart:ChartLegend>
+                        </chart:SfChart.Legend>
+                        <chart:SfChart.ColorModel>
+                            <chart:ChartColorModel Palette="Custom">
+                                <chart:ChartColorModel.CustomGradientColors>
+                                    <chart:ChartGradientColor StartPoint="0.5,1" EndPoint="0.5,0">
+                                        <chart:ChartGradientColor.GradientStops>
+                                            <chart:ChartGradientStop Offset="0" Color="{StaticResource GraphGradiantStart}" />
+                                            <chart:ChartGradientStop Offset="1" Color="{StaticResource GraphGradiantEnd}" />
+                                        </chart:ChartGradientColor.GradientStops>
+                                    </chart:ChartGradientColor>
+                                </chart:ChartColorModel.CustomGradientColors>
+                            </chart:ChartColorModel>
+                        </chart:SfChart.ColorModel>
+                        <chart:SfChart.Series>
+                            <chart:SplineRangeAreaSeries
+                                SplineType="Natural"
+                                EnableAnimation="true"
+                                EnableDataPointSelection="true"
+                                EnableTooltip="true"
+                                ItemsSource="{Binding ChartData}"
+                                Label="Turnip Guaranteed Min/Potential Max"
+                                Low="Low"
+                                High="High"
+                                XBindingPath="Name"
+                                StrokeColor="{StaticResource GraphGradiantStart}"
+                                StrokeWidth="2">
+                                <chart:SplineRangeAreaSeries.TooltipTemplate>
+                                    <DataTemplate x:DataType="model:ChartDataModel">
+                                        <StackLayout Orientation="Vertical">
+                                            <Label
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Day}"
+                                                FontSize="Small"
+                                                TextColor="White" />
+                                            <StackLayout IsVisible="{Binding Prediction}">
+                                                <Label
+                                                    Text="{Binding High, StringFormat='Potential Max: {0}'}"
+                                                    TextColor="White"
+                                                    FontSize="Micro"/>
+                                                <Label
+                                                    Text="{Binding Low, StringFormat='Gauranteed Min: {0}'}"
+                                                    TextColor="White" 
+                                                    FontSize="Micro"/>
+                                            </StackLayout>
+                                            <Label Text="{Binding PurchasePrice, StringFormat='Buy Price: {0}'}"
+                                                   TextColor="White"
+                                                   FontSize="Micro"
+                                                   IsVisible="{Binding Purchased}"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </chart:SplineRangeAreaSeries.TooltipTemplate>
+                                <!--<chart:RangeAreaSeries.ColorModel>
+                                    <chart:ChartColorModel Palette="Custom">
+                                        <chart:ChartColorModel.CustomGradientColors>
+                                            <chart:ChartGradientColor StartPoint="0.5,1" EndPoint="0.5,0">
+                                                <chart:ChartGradientColor.GradientStops>
+                                                    <chart:ChartGradientStop Color="{StaticResource GraphGradiantStart}" Offset= "0"/>
+                                                    <chart:ChartGradientStop Color="{StaticResource GraphGradiantEnd}" Offset= "1"/>
+                                                </chart:ChartGradientColor.GradientStops>
+                                            </chart:ChartGradientColor>
+                                        </chart:ChartColorModel.CustomGradientColors>
+                                    </chart:ChartColorModel>
+                                </chart:RangeAreaSeries.ColorModel>-->
+                            </chart:SplineRangeAreaSeries>
+                            <!--<chart:LineSeries
+                                        Color="{StaticResource GraphMax}"
+                                        EnableAnimation="true"
+                                        EnableTooltip="true"
+                                        ItemsSource="{Binding ChartDataPrice}"
+                                        Label="Buy Price"
+                                        LegendIcon="Circle"
+                                        StrokeWidth="3">
+                                <chart:LineSeries.DataMarker>
+                                    <chart:ChartDataMarker
+                                                MarkerColor="{StaticResource NavigationPrimary}"
+                                                MarkerBorderWidth="2"
+                                                MarkerBorderColor="{StaticResource GraphMax}"
+                                                MarkerHeight="10"
+                                                MarkerWidth="10"
+                                                ShowLabel="false"
+                                                ShowMarker="true" />
+                                </chart:LineSeries.DataMarker>
+                            </chart:LineSeries>-->
+                        </chart:SfChart.Series>
+                    </chart:SfChart>
+                    <!--<StackLayout x:Name="stack1" IsVisible="False">
                             <chart:SfChart
-                                x:Name="Chart"
                                 BackgroundColor="Transparent"
                                 SeriesSelectionColor="White"
-                                AreaBorderColor="White"                               
+                                AreaBorderColor="White"
                                 HeightRequest="300"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand">
                                 <chart:SfChart.ChartBehaviors>
-                                    <chart:ChartTooltipBehavior 
+                                    <chart:ChartTooltipBehavior
                                         BackgroundColor="#404041" />
                                 </chart:SfChart.ChartBehaviors>
                                 <chart:SfChart.PrimaryAxis>
@@ -89,7 +234,8 @@
                                 <chart:SfChart.SecondaryAxis>
                                     <chart:NumericalAxis
                                         x:Name="naxis"
-                                        Interval="25"
+                                        EnableAutoIntervalOnZooming="True"
+                                        Interval="50"
                                         Minimum="0">
                                         <chart:NumericalAxis.LabelStyle>
                                             <chart:ChartAxisLabelStyle TextColor="White" />
@@ -118,7 +264,7 @@
                                 <chart:SfChart.ColorModel>
                                     <chart:ChartColorModel Palette="Custom" />
                                 </chart:SfChart.ColorModel>
-                                <chart:SfChart.Series>                                  
+                                <chart:SfChart.Series>
                                     <chart:LineSeries
                                         x:Name="lineSeries2"
                                         EnableAnimation="true"
@@ -130,9 +276,11 @@
                                         StrokeWidth="3">
                                         <chart:LineSeries.DataMarker>
                                             <chart:ChartDataMarker
-                                                MarkerColor="{Binding ChartDataMin}"
-                                                MarkerHeight="8"
-                                                MarkerWidth="8"
+                                                MarkerColor="{StaticResource NavigationPrimary}"
+                                                MarkerBorderWidth="2"
+                                                MarkerBorderColor="{StaticResource GraphMin}"
+                                                MarkerHeight="10"
+                                                MarkerWidth="10"
                                                 ShowLabel="false"
                                                 ShowMarker="true" />
                                         </chart:LineSeries.DataMarker>
@@ -148,9 +296,11 @@
                                         StrokeWidth="3">
                                         <chart:LineSeries.DataMarker>
                                             <chart:ChartDataMarker
-                                                MarkerColor="{StaticResource GraphMax}"
-                                                MarkerHeight="8"
-                                                MarkerWidth="8"
+                                                MarkerColor="{StaticResource NavigationPrimary}"
+                                                MarkerBorderWidth="2"
+                                                MarkerBorderColor="{StaticResource GraphMax}"
+                                                MarkerHeight="10"
+                                                MarkerWidth="10"
                                                 ShowLabel="false"
                                                 ShowMarker="true" />
                                         </chart:LineSeries.DataMarker>
@@ -166,17 +316,18 @@
                                         StrokeWidth="3">
                                         <chart:LineSeries.DataMarker>
                                             <chart:ChartDataMarker
-                                                MarkerColor="{StaticResource GraphBuy}"
-                                                MarkerHeight="8"
-                                                MarkerWidth="8"
+                                                MarkerColor="{StaticResource NavigationPrimary}"
+                                                MarkerBorderWidth="2"
+                                                MarkerBorderColor="{StaticResource GraphBuy}"
+                                                MarkerHeight="10"
+                                                MarkerWidth="10"
                                                 ShowLabel="false"
                                                 ShowMarker="true" />
                                         </chart:LineSeries.DataMarker>
                                     </chart:LineSeries>
                                 </chart:SfChart.Series>
                             </chart:SfChart>
-                        </StackLayout>
-                    </Grid>
+                        </StackLayout>-->
                 </expander:SfExpander.Content>
             </expander:SfExpander>
 
