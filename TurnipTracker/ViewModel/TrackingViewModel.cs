@@ -27,7 +27,7 @@ namespace TurnipTracker.ViewModel
             ChartData = new ObservableRangeCollection<ChartDataModel>();
 
 
-            Days = DataService.GetCurrentWeek();
+            Days = App.DataService.GetCurrentWeek();
             foreach (var day in Days)
                 day.SaveCurrentWeekAction = SaveCurrentWeek;
 
@@ -71,21 +71,64 @@ namespace TurnipTracker.ViewModel
         }
 
 
-        void OnDaySelected(Day day)
-        {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                SelectedDay = day;
-            });
-        }
+        void OnDaySelected(Day day) => MainThread.BeginInvokeOnMainThread(() =>
+                                     {
+                                         SelectedDay = day;
+                                     });
 
         public void SaveCurrentWeek()
         {
-            DataService.SaveCurrentWeek(Days);
+            App.DataService.SaveCurrentWeek(Days);
             UpdatePredications();
         }
 
+        bool isGraphExpanded;
+        public bool IsGraphExpanded
+        {
+            get => isGraphExpanded;
+            set
+            {
+                isGraphExpanded = value;
+                if (isGraphExpanded)
+                    UpdateGraph();
+            }
+        }
 
+        public void UpdateGraph()
+        {
+            var chartData = new List<ChartDataModel>();
+            var sunday = Days[0];
+            foreach (var day in Days)
+            {
+
+                if (day == sunday)                {
+
+                    var val = day.BuyPrice ?? 0;
+                    chartData.Add(new ChartDataModel("S", day.DayLong, val));
+                    continue;
+                }
+
+                if (!day.PriceAM.HasValue)
+                {
+                    chartData.Add(new ChartDataModel($"{day.DayShort} A", $"{day.DayLong} AM", day.PredictionAMMax, day.PredictionAMMin));
+                }
+                else
+                {
+                    chartData.Add(new ChartDataModel($"{day.DayShort} A", $"{day.DayLong} AM", day.PriceAM.Value));
+                }
+
+                if (!day.PricePM.HasValue)
+                {
+                    chartData.Add(new ChartDataModel($"{day.DayShort} P", $"{day.DayLong} PM", day.PredictionPMMax, day.PredictionPMMin));
+                }
+                else
+                {
+                    chartData.Add(new ChartDataModel($"{day.DayShort} P", $"{day.DayLong} PM", day.PricePM.Value));
+                }
+            }
+
+            ChartData.ReplaceRange(chartData);
+        }
 
         public void UpdatePredications()
         {
@@ -124,15 +167,13 @@ namespace TurnipTracker.ViewModel
 
             var low = 0;
             var high = 0;
-            var chartData = new List<ChartDataModel>();
             foreach (var day in Days)
             {
 
                 if (day == sunday)
                 {
 
-                    var val = day.BuyPrice.HasValue ? day.BuyPrice.Value : 0;
-                    chartData.Add(new ChartDataModel("S", day.DayLong, val));
+                    var val = day.BuyPrice ?? 0;
                     continue;
                 }
                 
@@ -144,12 +185,6 @@ namespace TurnipTracker.ViewModel
 
                     if (day.PredictionAMMax > high)
                         high = day.PredictionAMMax;
-
-                    chartData.Add(new ChartDataModel($"{day.DayShort} A", $"{day.DayLong} AM", day.PredictionAMMax, day.PredictionAMMin));
-                }
-                else
-                {
-                    chartData.Add(new ChartDataModel($"{day.DayShort} A", $"{day.DayLong} AM", day.PriceAM.Value));
                 }
 
                 if (!day.PricePM.HasValue)
@@ -160,18 +195,15 @@ namespace TurnipTracker.ViewModel
                     if (day.PredictionPMMax > high)
                         high = day.PredictionPMMax;
 
-                    chartData.Add(new ChartDataModel($"{day.DayShort} P", $"{day.DayLong} PM", day.PredictionPMMax, day.PredictionPMMin));
-                }
-                else
-                {
-                    chartData.Add(new ChartDataModel($"{day.DayShort} P", $"{day.DayLong} PM", day.PricePM.Value));
                 }
             }
 
             Min = low;
             Max = high;
 
-            ChartData.ReplaceRange(chartData);
+
+            if (IsGraphExpanded)
+                UpdateGraph();
         }
     }
 }

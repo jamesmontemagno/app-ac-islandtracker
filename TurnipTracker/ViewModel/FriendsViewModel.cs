@@ -23,7 +23,7 @@ namespace TurnipTracker.ViewModel
 
         async Task SendFriendRequest()
         {
-            var name = DataService.GetProfile().Name;
+            var name = App.DataService.GetProfile().Name;
             if(string.IsNullOrWhiteSpace(name))
             {
                 await App.Current.MainPage.DisplayAlert("Update Profile", "Please update profile before sending a friend request", "OK");

@@ -72,19 +72,30 @@ namespace TurnipTracker.ViewModel
             
 
             IsBusy = true;
+            try
+            {
 
-            await Task.Delay(2000);
 
-            Submitted = true;
+                await Task.Delay(2000);
 
-            ShowClose = true;
+                Submitted = true;
+                ShowClose = true;
+            }
+            catch(Exception ex)
+            {
 
-            IsBusy = false;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+
+
         }
 
         async Task Close()
         {
-            await Shell.Current.GoToAsync("//friends");
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

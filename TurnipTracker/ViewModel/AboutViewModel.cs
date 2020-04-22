@@ -109,7 +109,7 @@ namespace TurnipTracker.ViewModel
             if (AttachDetails)
             {
                 var fn = "Attachment.json";
-                var days = DataService.GetCurrentWeek();
+                var days = App.DataService.GetCurrentWeek();
                 var json = JsonConvert.SerializeObject(days);
                 var file = Path.Combine(FileSystem.CacheDirectory, fn);
                 File.WriteAllText(file, json);

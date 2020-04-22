@@ -17,7 +17,7 @@ namespace TurnipTracker.ViewModel
             if (Xamarin.Forms.DesignMode.IsDesignModeEnabled)
                 return;
 
-            Profile = DataService.GetProfile();
+            Profile = App.DataService.GetProfile();
             Profile.SaveProfileAction = SaveProfile;
             Fruits = new ObservableRangeCollection<FruitItem>
             {
@@ -31,7 +31,7 @@ namespace TurnipTracker.ViewModel
 
         void SaveProfile()
         {
-            DataService.SaveProfile(Profile);
+            App.DataService.SaveProfile(Profile);
         }
     }
 }

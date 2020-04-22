@@ -57,5 +57,7 @@ namespace TurnipTracker.Model
             get => fruit;
             set => SetProperty(ref fruit, value, onChanged: SaveProfileAction);
         }
+
+        public string TimeZone { get; set; }
     }
 }

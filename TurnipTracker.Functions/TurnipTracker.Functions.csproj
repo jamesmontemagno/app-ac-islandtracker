@@ -24,7 +24,6 @@
   <ItemGroup>
     <Folder Include="FriendRequests\" />
     <Folder Include="Profile\" />
-    <Folder Include="Turnips\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TurnipTracker.Shared\TurnipTracker.Shared.csproj">

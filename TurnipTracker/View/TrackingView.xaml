@@ -46,7 +46,8 @@
                 Collapsed="SfExpander_Expanded"
                 Expanded="SfExpander_Expanded"
                 HeaderBackgroundColor="Transparent"
-                IconColor="White">
+                IconColor="White"
+                IsExpanded="{Binding IsGraphExpanded}">
                 <expander:SfExpander.Header>
                     <Grid>
                         <Label

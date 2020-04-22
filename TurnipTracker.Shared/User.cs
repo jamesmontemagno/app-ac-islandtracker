@@ -24,5 +24,7 @@ namespace TurnipTracker.Shared
         //could be smallint
         public int DayOfYear { get; set; }
         public int Year { get; set; }
+
+        public string PublicKey { get; set; }
     }
 }

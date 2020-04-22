@@ -6,6 +6,7 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 using TurnipTracker.Services;
 using TurnipTracker.View;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,6 +15,8 @@ namespace TurnipTracker
     public partial class App : Application
     {
 
+        static DataService dataService;
+        public static DataService DataService => dataService ??= DependencyService.Get<DataService>();
         public App()
         {
 #if !DEBUG
@@ -28,8 +31,24 @@ namespace TurnipTracker
                     "SwipeView_Experimental"
                 });
 
+            
+
             MainPage = new AppShell();
         }
+
+#if DEBUG
+        static string ip = DeviceInfo.Platform == DevicePlatform.Android ? "10.0.2.2" : "localhost";
+        public static string BaseUrl = $"http://{ip}:7071";
+#else
+        const string BaseUrl = "http://localhost:7071";
+#endif
+
+        public const string GetFriendsKey = "AC_GetFriendsKey";
+        public const string GetFriendRequestsKey = "AC_GetFriendRequestsKey";
+        public const string PostApproveFriendRequestKey = "AC_PostApproveFriendRequestKey";
+        public const string PostRemoveFriendKey = "AC_PostRemoveFriendKey";
+        public const string PostSubmitFriendRequestKey = "AC_PostSubmitFriendRequestKey";
+        public const string PostUpdateProfileKey = "AC_PostUpdateProfileKey";
 
         const string AppCenteriOS = "AC_IOS";
         const string AppCenterAndroid = "AC_ANDROID";

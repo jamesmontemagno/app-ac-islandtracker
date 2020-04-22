@@ -10,9 +10,9 @@ using Newtonsoft.Json;
 
 namespace TurnipTracker.Functions
 {
-    public static class GetFriendsPrices
+    public static class GetFriends
     {
-        [FunctionName("GetFriendsPrices")]
+        [FunctionName("GetFriends")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
@@ -21,11 +21,11 @@ namespace TurnipTracker.Functions
 
             string name = req.Query["name"];
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             name = name ?? data?.name;
 
-            string responseMessage = string.IsNullOrEmpty(name)
+            var responseMessage = string.IsNullOrEmpty(name)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
                 : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
