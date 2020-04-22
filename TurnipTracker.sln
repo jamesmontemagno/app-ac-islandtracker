@@ -18,11 +18,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C240B325-A62E-4588-8688-DFCE92561BCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurnipTracker.Shared", "TurnipTracker.Shared\TurnipTracker.Shared.csproj", "{1BC0C5E2-1B1A-4D63-B618-49412C4B229D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurnipTracker.Shared", "TurnipTracker.Shared\TurnipTracker.Shared.csproj", "{1BC0C5E2-1B1A-4D63-B618-49412C4B229D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{8AB1DF27-32AB-47E5-B4C0-A267A5A4C3EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurnipTracker.Functions", "TurnipTracker.Functions\TurnipTracker.Functions.csproj", "{63728E00-491A-46FF-B163-7E5C9911F944}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurnipTracker.Functions", "TurnipTracker.Functions\TurnipTracker.Functions.csproj", "{63728E00-491A-46FF-B163-7E5C9911F944}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -167,11 +167,11 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {53A1AC26-27CA-45E3-9252-C042ED034434}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1BC0C5E2-1B1A-4D63-B618-49412C4B229D} = {C240B325-A62E-4588-8688-DFCE92561BCF}
 		{63728E00-491A-46FF-B163-7E5C9911F944} = {8AB1DF27-32AB-47E5-B4C0-A267A5A4C3EB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53A1AC26-27CA-45E3-9252-C042ED034434}
 	EndGlobalSection
 EndGlobal

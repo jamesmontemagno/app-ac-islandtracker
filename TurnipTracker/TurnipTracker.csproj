@@ -7,19 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Resizetizer.NT" Version="0.1.0-preview8" />
-    <PackageReference Include="Syncfusion.Xamarin.Expander" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="18.1.0.44" />
+    <PackageReference Include="NodaTime" Version="3.0.0-beta01" />
+    <PackageReference Include="Resizetizer.NT" Version="0.1.0" />
+    <PackageReference Include="Syncfusion.Xamarin.Expander" Version="18.1.0.45" />
+    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="18.1.0.45" />
     <PackageReference Include="Xamarin.Forms" Version="4.6.0.616-pre4" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.3" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.1-beta" />
     <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.4.1-beta" />
     <PackageReference Include="Xamarin.Forms.Visual.Material" Version="4.6.0.616-pre4" />
     <PackageReference Include="Sharpnado.Presentation.Forms" Version="1.5.1" />
-    <PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit" Version="18.1.0.44" />
+    <PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox" Version="18.1.0.45" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.45" />
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.1.0.45" />
+    <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit" Version="18.1.0.45" />
     <PackageReference Include="MonkeyCache.FileStore" Version="1.4.0-beta" />
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="3.1.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.1.0" />
@@ -34,7 +35,14 @@
     <EmbeddedResource Include="Resources\Fonts\fa-solid-900.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <SharedImage Include="Resources\Images\dispatch.png" BaseSize="300,300" />
+    <SharedImage Include="Resources\Images\dispatch.png" BaseSize="125,125" />
+    <SharedImage Include="Resources\Images\apple.png" BaseSize="44,44" />
+    <SharedImage Include="Resources\Images\cherry.png" BaseSize="44,44" />
+    <SharedImage Include="Resources\Images\orange.png" BaseSize="44,44" />
+    <SharedImage Include="Resources\Images\peach.png" BaseSize="44,44" />
+    <SharedImage Include="Resources\Images\pear.png" BaseSize="44,44" />
+    <SharedImage Include="Resources\Images\turnip.png" BaseSize="44,44" />
+    <SharedImage Include="Resources\Images\bells.png" BaseSize="44,44" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TurnipTracker.Shared\TurnipTracker.Shared.csproj" />

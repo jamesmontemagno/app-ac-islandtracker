@@ -42,11 +42,11 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <expander:SfExpander
-                HeaderBackgroundColor="Transparent"
-                IconColor="White"
-                Expanded="SfExpander_Expanded"
+                x:Name="ChartExpander"
                 Collapsed="SfExpander_Expanded"
-                x:Name="ChartExpander">
+                Expanded="SfExpander_Expanded"
+                HeaderBackgroundColor="Transparent"
+                IconColor="White">
                 <expander:SfExpander.Header>
                     <Grid>
                         <Label
@@ -64,12 +64,6 @@
                         BackgroundColor="Transparent"
                         HeightRequest="300"
                         HorizontalOptions="FillAndExpand">
-                        <!--<chart:SfChart.Title>
-                                <chart:ChartTitle TextColor="White"
-                                                  Text="Turnip Weekly Guaranteed Min/Potential Max"
-                                                  BackgroundColor="Transparent"
-                                                  BorderWidth="0"/>
-                            </chart:SfChart.Title>-->
                         <chart:SfChart.ChartBehaviors>
                             <chart:ChartTooltipBehavior BackgroundColor="#404041" />
                         </chart:SfChart.ChartBehaviors>
@@ -133,201 +127,46 @@
                         </chart:SfChart.ColorModel>
                         <chart:SfChart.Series>
                             <chart:SplineRangeAreaSeries
-                                SplineType="Natural"
                                 EnableAnimation="true"
                                 EnableDataPointSelection="true"
                                 EnableTooltip="true"
+                                High="High"
                                 ItemsSource="{Binding ChartData}"
                                 Label="Turnip Guaranteed Min/Potential Max"
                                 Low="Low"
-                                High="High"
-                                XBindingPath="Name"
+                                SplineType="Natural"
                                 StrokeColor="{StaticResource GraphGradiantStart}"
-                                StrokeWidth="2">
+                                StrokeWidth="2"
+                                XBindingPath="Name">
                                 <chart:SplineRangeAreaSeries.TooltipTemplate>
                                     <DataTemplate x:DataType="model:ChartDataModel">
                                         <StackLayout Orientation="Vertical">
                                             <Label
+                                                FontSize="Small"
                                                 HorizontalOptions="Center"
                                                 Text="{Binding Day}"
-                                                FontSize="Small"
                                                 TextColor="White" />
                                             <StackLayout IsVisible="{Binding Prediction}">
                                                 <Label
+                                                    FontSize="Micro"
                                                     Text="{Binding High, StringFormat='Potential Max: {0}'}"
-                                                    TextColor="White"
-                                                    FontSize="Micro"/>
+                                                    TextColor="White" />
                                                 <Label
+                                                    FontSize="Micro"
                                                     Text="{Binding Low, StringFormat='Gauranteed Min: {0}'}"
-                                                    TextColor="White" 
-                                                    FontSize="Micro"/>
+                                                    TextColor="White" />
                                             </StackLayout>
-                                            <Label Text="{Binding PurchasePrice, StringFormat='Buy Price: {0}'}"
-                                                   TextColor="White"
-                                                   FontSize="Micro"
-                                                   IsVisible="{Binding Purchased}"/>
+                                            <Label
+                                                FontSize="Micro"
+                                                IsVisible="{Binding Purchased}"
+                                                Text="{Binding PurchasePrice, StringFormat='Buy Price: {0}'}"
+                                                TextColor="White" />
                                         </StackLayout>
                                     </DataTemplate>
                                 </chart:SplineRangeAreaSeries.TooltipTemplate>
-                                <!--<chart:RangeAreaSeries.ColorModel>
-                                    <chart:ChartColorModel Palette="Custom">
-                                        <chart:ChartColorModel.CustomGradientColors>
-                                            <chart:ChartGradientColor StartPoint="0.5,1" EndPoint="0.5,0">
-                                                <chart:ChartGradientColor.GradientStops>
-                                                    <chart:ChartGradientStop Color="{StaticResource GraphGradiantStart}" Offset= "0"/>
-                                                    <chart:ChartGradientStop Color="{StaticResource GraphGradiantEnd}" Offset= "1"/>
-                                                </chart:ChartGradientColor.GradientStops>
-                                            </chart:ChartGradientColor>
-                                        </chart:ChartColorModel.CustomGradientColors>
-                                    </chart:ChartColorModel>
-                                </chart:RangeAreaSeries.ColorModel>-->
                             </chart:SplineRangeAreaSeries>
-                            <!--<chart:LineSeries
-                                        Color="{StaticResource GraphMax}"
-                                        EnableAnimation="true"
-                                        EnableTooltip="true"
-                                        ItemsSource="{Binding ChartDataPrice}"
-                                        Label="Buy Price"
-                                        LegendIcon="Circle"
-                                        StrokeWidth="3">
-                                <chart:LineSeries.DataMarker>
-                                    <chart:ChartDataMarker
-                                                MarkerColor="{StaticResource NavigationPrimary}"
-                                                MarkerBorderWidth="2"
-                                                MarkerBorderColor="{StaticResource GraphMax}"
-                                                MarkerHeight="10"
-                                                MarkerWidth="10"
-                                                ShowLabel="false"
-                                                ShowMarker="true" />
-                                </chart:LineSeries.DataMarker>
-                            </chart:LineSeries>-->
                         </chart:SfChart.Series>
                     </chart:SfChart>
-                    <!--<StackLayout x:Name="stack1" IsVisible="False">
-                            <chart:SfChart
-                                BackgroundColor="Transparent"
-                                SeriesSelectionColor="White"
-                                AreaBorderColor="White"
-                                HeightRequest="300"
-                                HorizontalOptions="FillAndExpand"
-                                VerticalOptions="FillAndExpand">
-                                <chart:SfChart.ChartBehaviors>
-                                    <chart:ChartTooltipBehavior
-                                        BackgroundColor="#404041" />
-                                </chart:SfChart.ChartBehaviors>
-                                <chart:SfChart.PrimaryAxis>
-                                    <chart:CategoryAxis
-                                        AxisLineOffset="0"
-                                        PlotOffset="0"
-                                        ShowMajorGridLines="True">
-                                        <chart:CategoryAxis.LabelStyle>
-                                            <chart:ChartAxisLabelStyle TextColor="White"/>
-                                        </chart:CategoryAxis.LabelStyle>
-                                        <chart:CategoryAxis.AxisLineStyle>
-                                            <chart:ChartLineStyle StrokeColor="White" StrokeWidth="4" />
-                                        </chart:CategoryAxis.AxisLineStyle>
-                                        <chart:CategoryAxis.MajorTickStyle>
-                                            <chart:ChartAxisTickStyle StrokeColor="White" TickSize="4" />
-                                        </chart:CategoryAxis.MajorTickStyle>
-                                    </chart:CategoryAxis>
-                                </chart:SfChart.PrimaryAxis>
-                                <chart:SfChart.SecondaryAxis>
-                                    <chart:NumericalAxis
-                                        x:Name="naxis"
-                                        EnableAutoIntervalOnZooming="True"
-                                        Interval="50"
-                                        Minimum="0">
-                                        <chart:NumericalAxis.LabelStyle>
-                                            <chart:ChartAxisLabelStyle TextColor="White" />
-                                        </chart:NumericalAxis.LabelStyle>
-                                        <chart:NumericalAxis.AxisLineStyle>
-                                            <chart:ChartLineStyle StrokeColor="White" StrokeWidth="4" />
-                                        </chart:NumericalAxis.AxisLineStyle>
-                                        <chart:NumericalAxis.MajorTickStyle>
-                                            <chart:ChartAxisTickStyle StrokeColor="White" TickSize="4" />
-                                        </chart:NumericalAxis.MajorTickStyle>
-                                    </chart:NumericalAxis>
-                                </chart:SfChart.SecondaryAxis>
-                                <chart:SfChart.Legend>
-                                    <chart:ChartLegend
-                                        x:Name="chartLegend"
-                                        DockPosition="Top"
-                                        StrokeColor="White"
-                                        IconHeight="10"
-                                        IconWidth="10"
-                                        ToggleSeriesVisibility="True">
-                                        <chart:ChartLegend.LabelStyle>
-                                            <chart:ChartLegendLabelStyle TextColor="White"/>
-                                        </chart:ChartLegend.LabelStyle>
-                                    </chart:ChartLegend>
-                                </chart:SfChart.Legend>
-                                <chart:SfChart.ColorModel>
-                                    <chart:ChartColorModel Palette="Custom" />
-                                </chart:SfChart.ColorModel>
-                                <chart:SfChart.Series>
-                                    <chart:LineSeries
-                                        x:Name="lineSeries2"
-                                        EnableAnimation="true"
-                                        EnableTooltip="true"
-                                        ItemsSource="{Binding ChartDataMin}"
-                                        Color="{StaticResource GraphMin}"
-                                        Label="Guranteed Min"
-                                        LegendIcon="Circle"
-                                        StrokeWidth="3">
-                                        <chart:LineSeries.DataMarker>
-                                            <chart:ChartDataMarker
-                                                MarkerColor="{StaticResource NavigationPrimary}"
-                                                MarkerBorderWidth="2"
-                                                MarkerBorderColor="{StaticResource GraphMin}"
-                                                MarkerHeight="10"
-                                                MarkerWidth="10"
-                                                ShowLabel="false"
-                                                ShowMarker="true" />
-                                        </chart:LineSeries.DataMarker>
-                                    </chart:LineSeries>
-                                    <chart:LineSeries
-                                        x:Name="lineSeries3"
-                                        EnableAnimation="true"
-                                        EnableTooltip="true"
-                                        ItemsSource="{Binding ChartDataMax}"
-                                        Label="Potential Max"
-                                        Color="{StaticResource GraphMax}"
-                                        LegendIcon="Circle"
-                                        StrokeWidth="3">
-                                        <chart:LineSeries.DataMarker>
-                                            <chart:ChartDataMarker
-                                                MarkerColor="{StaticResource NavigationPrimary}"
-                                                MarkerBorderWidth="2"
-                                                MarkerBorderColor="{StaticResource GraphMax}"
-                                                MarkerHeight="10"
-                                                MarkerWidth="10"
-                                                ShowLabel="false"
-                                                ShowMarker="true" />
-                                        </chart:LineSeries.DataMarker>
-                                    </chart:LineSeries>
-                                    <chart:LineSeries
-                                        x:Name="lineSeries1"
-                                        Color="{StaticResource GraphBuy}"
-                                        EnableAnimation="true"
-                                        EnableTooltip="true"
-                                        ItemsSource="{Binding ChartDataPrice}"
-                                        Label="Buy Price"
-                                        LegendIcon="Circle"
-                                        StrokeWidth="3">
-                                        <chart:LineSeries.DataMarker>
-                                            <chart:ChartDataMarker
-                                                MarkerColor="{StaticResource NavigationPrimary}"
-                                                MarkerBorderWidth="2"
-                                                MarkerBorderColor="{StaticResource GraphBuy}"
-                                                MarkerHeight="10"
-                                                MarkerWidth="10"
-                                                ShowLabel="false"
-                                                ShowMarker="true" />
-                                        </chart:LineSeries.DataMarker>
-                                    </chart:LineSeries>
-                                </chart:SfChart.Series>
-                            </chart:SfChart>
-                        </StackLayout>-->
                 </expander:SfExpander.Content>
             </expander:SfExpander>
 
@@ -408,7 +247,9 @@
                                     Hint="Daisy Mae's Price"
                                     VerticalOptions="Center">
                                     <inputLayout:SfTextInputLayout.TrailingView>
-                                        <Label FontSize="Medium" Text="🔔" />
+                                        <StackLayout>
+                                            <Image Source="bells.png" WidthRequest="24" HeightRequest="24"/>
+                                        </StackLayout>
                                     </inputLayout:SfTextInputLayout.TrailingView>
                                     <sfntb:SfNumericTextBox
                                         AllowNull="True"
@@ -471,7 +312,9 @@
                                     Hint="Turnip Price"
                                     VerticalOptions="Center">
                                     <inputLayout:SfTextInputLayout.TrailingView>
-                                        <Label FontSize="Medium" Text="🔔" />
+                                        <StackLayout>
+                                            <Image Source="bells.png" WidthRequest="24" HeightRequest="24"/>
+                                        </StackLayout>
                                     </inputLayout:SfTextInputLayout.TrailingView>
                                     <sfntb:SfNumericTextBox
                                         AllowNull="True"
@@ -566,7 +409,9 @@
                                     Hint="AM Price"
                                     VerticalOptions="Center">
                                     <inputLayout:SfTextInputLayout.TrailingView>
-                                        <Label FontSize="Medium" Text="🔔" />
+                                        <StackLayout>
+                                            <Image Source="bells.png" WidthRequest="24" HeightRequest="24"/>
+                                        </StackLayout>
                                     </inputLayout:SfTextInputLayout.TrailingView>
                                     <sfntb:SfNumericTextBox
                                         AllowNull="True"
@@ -629,7 +474,9 @@
                                     Hint="PM Price"
                                     VerticalOptions="Center">
                                     <inputLayout:SfTextInputLayout.TrailingView>
-                                        <Label FontSize="Medium" Text="🔔" />
+                                        <StackLayout>
+                                            <Image Source="bells.png" WidthRequest="24" HeightRequest="24"/>
+                                        </StackLayout>
                                     </inputLayout:SfTextInputLayout.TrailingView>
                                     <sfntb:SfNumericTextBox
                                         AllowNull="True"

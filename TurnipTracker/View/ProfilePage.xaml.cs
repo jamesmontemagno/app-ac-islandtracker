@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using TurnipTracker.ViewModel;
 using Xamarin.Forms;
 
 namespace TurnipTracker.View
@@ -10,6 +10,7 @@ namespace TurnipTracker.View
         public ProfilePage()
         {
             InitializeComponent();
+            BindingContext = new ProfileViewModel();
         }
     }
 }

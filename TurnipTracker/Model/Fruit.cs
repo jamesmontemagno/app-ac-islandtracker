@@ -9,4 +9,10 @@ namespace TurnipTracker.Model
         Peach,
         Pear
     }
+
+    public class FruitItem
+    {
+        public string Name { get; set; }
+        public string Icon { get; set; }
+    }
 }

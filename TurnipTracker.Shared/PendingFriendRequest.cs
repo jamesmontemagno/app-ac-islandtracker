@@ -9,7 +9,7 @@ namespace TurnipTracker.Shared
     {
         public string Name { get; set; }
         public string IslandName { get; set; }
-        public Guid RequesterPublicKey { get; set; }
+        public string RequesterPublicKey { get; set; }
 
         public DateTime CreationDate { get; set; }
     }

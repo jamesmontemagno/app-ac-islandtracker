@@ -1,11 +1,26 @@
 ﻿using System;
+using Microsoft.Azure.Cosmos.Table;
+
 namespace TurnipTracker.Shared
 {
     /// <summary>
     /// This is information that will be pulled down for friends list
     /// </summary>
-    public class UserProfile
+    public class UserEntity : TableEntity
     {
+        public UserEntity(string publicKey, string privateKey)
+        {
+            PartitionKey = publicKey;
+            RowKey = privateKey;
+        }
+
+        // Index column
+        // PartitionKey
+        public string PublicKey => PartitionKey;
+
+        // Primary Key
+        // RowKey
+        public string PrivateKey => RowKey;
         public string Name { get; set; }
         public string IslandName { get; set; }
 
@@ -23,19 +38,5 @@ namespace TurnipTracker.Shared
         //could be smallint
         public int DayOfYear { get; set; }
         public int Year { get; set; }
-    }
-
-    /// <summary>
-    /// This is private information only for updating a user information
-    /// </summary>
-    public class User : UserProfile
-    {
-        // Index column
-        // PartitionKey
-        public string PublicKey { get; set; }
-
-        // Primary Key
-        // RowKey
-        public string PrivateKey { get; set; }
     }
 }
