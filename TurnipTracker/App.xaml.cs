@@ -14,9 +14,6 @@ namespace TurnipTracker
 {
     public partial class App : Application
     {
-
-        static DataService dataService;
-        public static DataService DataService => dataService ??= DependencyService.Get<DataService>();
         public App()
         {
 #if !DEBUG
@@ -46,9 +43,11 @@ namespace TurnipTracker
         public const string GetFriendsKey = "AC_GetFriendsKey";
         public const string GetFriendRequestsKey = "AC_GetFriendRequestsKey";
         public const string PostApproveFriendRequestKey = "AC_PostApproveFriendRequestKey";
-        public const string PostRemoveFriendKey = "AC_PostRemoveFriendKey";
+        public const string DeleteRemoveFriendKey = "AC_DeleteRemoveFriendKey";
         public const string PostSubmitFriendRequestKey = "AC_PostSubmitFriendRequestKey";
-        public const string PostUpdateProfileKey = "AC_PostUpdateProfileKey";
+        public const string PutUpdateProfileKey = "AC_PutUpdateProfileKey";
+        public const string PutUpdateTurnipPricesKey = "AC_PutUpdateTurnipPricesKey";
+        public const string PostCreateProfileKey = "AC_PostCreateProfileKey";
 
         const string AppCenteriOS = "AC_IOS";
         const string AppCenterAndroid = "AC_ANDROID";

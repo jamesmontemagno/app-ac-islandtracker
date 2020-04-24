@@ -10,11 +10,11 @@ using Newtonsoft.Json;
 
 namespace TurnipTracker.Functions
 {
-    public static class SubmitFriendRequest
+    public static class UpdateTurnipPrices
     {
-        [FunctionName("SubmitFriendRequest")]
+        [FunctionName("UpdateTurnipPrices")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "put", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");

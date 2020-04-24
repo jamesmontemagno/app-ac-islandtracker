@@ -1,10 +1,14 @@
 ﻿using System;
-using Microsoft.Azure.Cosmos.Table;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace TurnipTracker.Shared
 {
     public class FriendEntity : TableEntity
     {
+        public FriendEntity()
+        {
+
+        }
         public FriendEntity(string requesterPublicKey, string requesteePublicKey)
         {
             PartitionKey = requesterPublicKey;

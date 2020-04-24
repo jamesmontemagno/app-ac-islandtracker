@@ -98,36 +98,58 @@ namespace TurnipTracker.Services
             }
         }
 
-
-        public async Task UpdateProfileAsync(Profile profile, Day day)
+        public async Task UpsertUserProfile(Profile profile)
         {
             profile ??= GetProfile();
-            day ??= GetCurrentWeek()[(int)DateTime.Now.DayOfWeek];
             var user = new User
-            {
-                AMPrice = day.PriceAM.HasValue ? day.PriceAM.Value : 0,
-                PMPrice = day.PricePM.HasValue ? day.PricePM.Value : 0,
-                BuyPrice = day.BuyPrice.HasValue ? day.BuyPrice.Value : 0,
-                DayOfYear = DateTime.Now.DayOfYear,
+            { 
                 Fruit = profile.Fruit,
                 IslandName = profile.IslandName,
                 Name = profile.Name,
                 Status = profile.Status,
-                TimeZone = profile.TimeZone,
-                Year = DateTime.Now.Year
+                TimeZone = profile.TimeZone
+            };            
+
+            if (SettingsService.HasRegistered)
+            {
+                var content = JsonConvert.SerializeObject(user);
+                await PutAsync($"api/UpdateProfile?code={App.PutUpdateProfileKey}", content);
+            }
+            else
+            {
+                user.PublicKey = await SettingsService.GetPublicKey();
+                var content = JsonConvert.SerializeObject(user);
+                await PutAsync($"api/CreateProfile?code={App.PutUpdateProfileKey}", content);
+                SettingsService.HasRegistered = true;
+            }
+        }
+
+        public Task CreateUserProfile(Day day)
+        {
+            day ??= GetCurrentWeek()[(int)DateTime.Now.DayOfWeek];
+            var turnipUpdate = new TurnipUpdate
+            {
+                AMPrice = day.PriceAM ?? 0,
+                PMPrice = day.PricePM ?? 0,
+                BuyPrice = day.BuyPrice ?? 0,
+                Year = DateTime.Now.Year,
+                DayOfYear = DateTime.Now.DayOfYear
             };
 
-            user.PublicKey = await SettingsService.GetPublicKey();
-            var content = JsonConvert.SerializeObject(user);
+            var content = JsonConvert.SerializeObject(turnipUpdate);
 
-            await PostAsync($"api/UpdateProfile?code={App.PostUpdateProfileKey}", content);
+            
+            return PutAsync($"api/UpdateTurnipPrices?code={App.PutUpdateTurnipPricesKey}", content);
         }
 
         public Task SubmitFriendRequestAsync(string requesterKey) =>
             PostAsync($"api/SubmitFriendRequest?code={App.PostSubmitFriendRequestKey}", requesterKey);
 
-        public Task RemoveFriendAsync(string friendToRemoveKey) =>
-            PostAsync($"api/RemoveFriend?code={App.PostRemoveFriendKey}", friendToRemoveKey);
+        public async Task RemoveFriendAsync(string friendToRemoveKey)
+        {
+            var publicKey = await SettingsService.GetPublicKey();
+            await DeleteAsync($"api/RemoveFriend/{publicKey}/{friendToRemoveKey}?code={App.DeleteRemoveFriendKey}");
+        }
 
         public Task ApproveFriendRequestAsync(string friendToApproveKey) =>
             PostAsync($"api/ApproveFriendRequest?code={App.PostApproveFriendRequestKey}", friendToApproveKey);
@@ -146,14 +168,51 @@ namespace TurnipTracker.Services
             }
         }
 
-
-        async Task PostAsync(string url, string content)
+        async Task SetHeader()
         {
             if (client.DefaultRequestHeaders.Authorization == null)
             {
-                var bearer = await SettingsService.GetPrivateKey();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
+                var key = await SettingsService.GetPrivateKey();
+                var encoding = Encoding.GetEncoding("iso-8859-1");
+                var authenticationBytes = encoding.GetBytes(key);
+                var token = Convert.ToBase64String(authenticationBytes);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
+        }
+
+        async Task DeleteAsync(string url)
+        {
+            await SetHeader();
+
+            using var response = await client.DeleteAsync(url);
+
+            using var responseContent = response.Content;
+            var responseString = await responseContent.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpResponseException(response.StatusCode, responseString);
+            }
+        }
+
+        async Task PutAsync(string url, string content)
+        {
+            await SetHeader();
+
+            using var response = await client.PutAsync(url, new StringContent(content, Encoding.UTF8, "application/json"));
+
+            using var responseContent = response.Content;
+            var responseString = await responseContent.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpResponseException(response.StatusCode, responseString);
+            }
+        }
+
+        async Task PostAsync(string url, string content)
+        {
+            await SetHeader();
 
             using var response = await client.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json"));
 
@@ -168,11 +227,7 @@ namespace TurnipTracker.Services
 
         async Task<T> PostAsync<T>(string url, string content)
         {
-            if (client.DefaultRequestHeaders.Authorization == null)
-            {
-                var bearer = await SettingsService.GetPrivateKey();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
-            }
+            await SetHeader();
 
             using var response = await client.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json"));
 
@@ -200,11 +255,7 @@ namespace TurnipTracker.Services
             {
                 if (string.IsNullOrWhiteSpace(json))
                 {
-                    if (client.DefaultRequestHeaders.Authorization == null)
-                    {
-                        var bearer = await SettingsService.GetPrivateKey();
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
-                    }
+                    await SetHeader();
 
                     json = await client.GetStringAsync(url);
                     Barrel.Current.Add(key, json, TimeSpan.FromMinutes(mins));

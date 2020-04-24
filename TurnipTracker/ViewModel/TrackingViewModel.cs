@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace TurnipTracker.ViewModel
 {
-    public class TrackingViewModel : BaseViewModel
+    public class TrackingViewModel : ViewModelBase
     {
 
         public List<Day> Days { get; }
@@ -27,7 +27,7 @@ namespace TurnipTracker.ViewModel
             ChartData = new ObservableRangeCollection<ChartDataModel>();
 
 
-            Days = App.DataService.GetCurrentWeek();
+            Days = DataService.GetCurrentWeek();
             foreach (var day in Days)
                 day.SaveCurrentWeekAction = SaveCurrentWeek;
 
@@ -78,7 +78,7 @@ namespace TurnipTracker.ViewModel
 
         public void SaveCurrentWeek()
         {
-            App.DataService.SaveCurrentWeek(Days);
+            DataService.SaveCurrentWeek(Days);
             UpdatePredications();
         }
 

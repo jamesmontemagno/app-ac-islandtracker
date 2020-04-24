@@ -40,6 +40,8 @@
 
             <Color x:Key="AcrylicFrameBackgroundColor">#F1F1F1</Color>
 
+            <Color x:Key="LoadingBackgroundColor">#95E6E6E6</Color>
+
             <Color x:Key="AccentColor">#00E000</Color>
 
             <Color x:Key="TextPrimaryColor">#6F6F6F</Color>
@@ -53,6 +55,14 @@
                 <Setter Property="LightThemeBackgroundColor" Value="{StaticResource AcrylicFrameBackgroundColor}"/>
             </Style>
 
+            <Style x:Key="AcrylicButton" TargetType="sharpnado:MaterialFrame" BasedOn="{StaticResource AcrylicFrame}">
+                <Setter Property="CornerRadius" Value="27"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HeightRequest" Value="54"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+            
             <Style x:Key="AcrylicFAB" TargetType="sharpnado:MaterialFrame" BasedOn="{StaticResource AcrylicFrame}">
                 <Setter Property="CornerRadius" Value="27"/>
                 <Setter Property="Margin" Value="0"/>

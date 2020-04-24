@@ -47,5 +47,11 @@ namespace TurnipTracker.Services
 
             return val;
         }
+
+        public static bool HasRegistered
+        {
+            get => Preferences.Get(nameof(HasRegistered), false);
+            set => Preferences.Set(nameof(HasRegistered), value);
+        }
     }
 }

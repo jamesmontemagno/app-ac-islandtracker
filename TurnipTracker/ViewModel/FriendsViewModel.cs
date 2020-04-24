@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace TurnipTracker.ViewModel
 {
-    public class FriendsViewModel : BaseViewModel
+    public class FriendsViewModel : ViewModelBase
     {
         public FriendsViewModel()
         {
@@ -23,7 +23,7 @@ namespace TurnipTracker.ViewModel
 
         async Task SendFriendRequest()
         {
-            var name = App.DataService.GetProfile().Name;
+            var name = DataService.GetProfile().Name;
             if(string.IsNullOrWhiteSpace(name))
             {
                 await App.Current.MainPage.DisplayAlert("Update Profile", "Please update profile before sending a friend request", "OK");

@@ -24,7 +24,7 @@ using Xamarin.Essentials;
 
 namespace TurnipTracker.ViewModel
 {
-    public class AboutViewModel : BaseViewModel
+    public class AboutViewModel : ViewModelBase
     {
         public AsyncCommand SendEmailCommand { get; }
         public AsyncCommand SubscribeCommand { get; }
@@ -109,7 +109,7 @@ namespace TurnipTracker.ViewModel
             if (AttachDetails)
             {
                 var fn = "Attachment.json";
-                var days = App.DataService.GetCurrentWeek();
+                var days = DataService.GetCurrentWeek();
                 var json = JsonConvert.SerializeObject(days);
                 var file = Path.Combine(FileSystem.CacheDirectory, fn);
                 File.WriteAllText(file, json);

@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Azure.Cosmos.Table;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace TurnipTracker.Shared
 {
@@ -8,6 +8,10 @@ namespace TurnipTracker.Shared
     /// </summary>
     public class UserEntity : TableEntity
     {
+        public UserEntity()
+        {
+
+        }
         public UserEntity(string publicKey, string privateKey)
         {
             PartitionKey = publicKey;
