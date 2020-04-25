@@ -12,7 +12,7 @@ using Xamarin.Forms;
 namespace TurnipTracker.Droid
 {
     [Activity(Label = "Island Tracker", Icon = "@mipmap/icon", RoundIcon ="@mipmap/icon",
-        Theme = "@style/MainTheme", MainLauncher = true,
+        Theme = "@style/MainTheme", MainLauncher = false,
         LaunchMode = LaunchMode.SingleTask,
         ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode)]
     [IntentFilter(new[] { Android.Content.Intent.ActionSend },
