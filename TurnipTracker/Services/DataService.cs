@@ -142,24 +142,45 @@ namespace TurnipTracker.Services
             return PutAsync($"api/UpdateTurnipPrices?code={App.PutUpdateTurnipPricesKey}", content);
         }
 
-        public Task SubmitFriendRequestAsync(string requesterKey) =>
-            PostAsync($"api/SubmitFriendRequest?code={App.PostSubmitFriendRequestKey}", requesterKey);
+        public async Task SubmitFriendRequestAsync(string requesterKey)
+        {
+            var publicKey = await SettingsService.GetPublicKey();
+            var content = JsonConvert.SerializeObject(new FriendRequest { MyPublicKey = publicKey, FriendPublicKey = requesterKey });
+
+
+            await PostAsync($"api/SubmitFriendRequest?code={App.PostSubmitFriendRequestKey}", content);
+        }
 
         public async Task RemoveFriendAsync(string friendToRemoveKey)
         {
             var publicKey = await SettingsService.GetPublicKey();
-            await DeleteAsync($"api/RemoveFriend/{publicKey}/{friendToRemoveKey}?code={App.DeleteRemoveFriendKey}");
+            var content = JsonConvert.SerializeObject(new Friend { MyPublicKey = publicKey, FriendPublicKey = friendToRemoveKey });
+            await DeleteAsync($"api/RemoveFriend?code={App.DeleteRemoveFriendKey}", content);
         }
 
-        public Task ApproveFriendRequestAsync(string friendToApproveKey) =>
-            PostAsync($"api/ApproveFriendRequest?code={App.PostApproveFriendRequestKey}", friendToApproveKey);
+        public async Task ApproveFriendRequestAsync(string friendToApproveKey)
+        {
+            var publicKey = await SettingsService.GetPublicKey();
+            var content = JsonConvert.SerializeObject(new FriendRequest { MyPublicKey = publicKey, FriendPublicKey = friendToApproveKey });
+            await PostAsync($"api/ApproveFriendRequest?code={App.PostApproveFriendRequestKey}", content);
+        }
 
-        public Task<IEnumerable<User>> GetFriendsAsync(bool forceRefresh = false) =>
-            GetAsync<IEnumerable<User>>($"api/GetFriends?code={App.GetFriendsKey}", "get_friends", 5, forceRefresh); 
+        public async Task<IEnumerable<FriendStatus>> GetFriendsAsync(bool forceRefresh = false)
+        {
+            var publicKey = await SettingsService.GetPublicKey();
+            var content = JsonConvert.SerializeObject(new MyFriendsRequest { MyPublicKey = publicKey });
 
-        public Task<IEnumerable<PendingFriendRequest>> GetFriendRequestsAsync(bool forceRefresh = false) =>
-            GetAsync<IEnumerable<PendingFriendRequest>>($"api/GetFriendRequests?code={App.GetFriendRequestsKey}", "get_friend_requests", 5, forceRefresh);
+            return await GetAsync<IEnumerable<FriendStatus>>($"api/GetFriends?code={App.GetFriendsKey}", "get_friends", 5, forceRefresh, content);
+        }
 
+        public async Task<IEnumerable<PendingFriendRequest>> GetFriendRequestsAsync(bool forceRefresh = false)
+        {
+            var publicKey = await SettingsService.GetPublicKey();
+            var content = JsonConvert.SerializeObject(new MyPendingFriendRequest { MyPublicKey = publicKey });
+
+
+            return await GetAsync<IEnumerable<PendingFriendRequest>>($"api/GetFriendRequests?code={App.GetFriendRequestsKey}", "get_friend_requests", 5, forceRefresh, content);
+        }
         public void SaveCurrentWeek(List<Day> days)
         {
             lock(locker)
@@ -180,11 +201,17 @@ namespace TurnipTracker.Services
             }
         }
 
-        async Task DeleteAsync(string url)
+        async Task DeleteAsync(string url, string content)
         {
             await SetHeader();
 
-            using var response = await client.DeleteAsync(url);
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(url),
+                Content = new StringContent(content, Encoding.UTF8, "application/json")
+            };
+            using var response = await client.SendAsync(request);
 
             using var responseContent = response.Content;
             var responseString = await responseContent.ReadAsStringAsync();
@@ -242,7 +269,7 @@ namespace TurnipTracker.Services
             return JsonConvert.DeserializeObject<T>(responseString);
         }
 
-        async Task<T> GetAsync<T>(string url, string key, int mins = 7, bool forceRefresh = false)
+        async Task<T> GetAsync<T>(string url, string key, int mins = 7, bool forceRefresh = false, string content = null)
         {
             var json = string.Empty;
 
@@ -257,7 +284,25 @@ namespace TurnipTracker.Services
                 {
                     await SetHeader();
 
-                    json = await client.GetStringAsync(url);
+                    if(content == null)
+                        json = await client.GetStringAsync(url);
+                    else
+                    {
+                        var request = new HttpRequestMessage
+                        {
+                            Method = HttpMethod.Get,
+                            RequestUri = new Uri(url),
+                            Content = new StringContent(content, Encoding.UTF8, "application/json")
+                        };
+                        using var response = await client.SendAsync(request);
+                        using var responseContent = response.Content;
+                        json = await responseContent.ReadAsStringAsync();
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            throw new HttpResponseException(response.StatusCode, json);
+                        }
+                    }    
                     Barrel.Current.Add(key, json, TimeSpan.FromMinutes(mins));
                 }
                 return JsonConvert.DeserializeObject<T>(json);

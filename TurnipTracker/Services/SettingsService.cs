@@ -53,5 +53,11 @@ namespace TurnipTracker.Services
             get => Preferences.Get(nameof(HasRegistered), false);
             set => Preferences.Set(nameof(HasRegistered), value);
         }
+
+        public static bool FirstFriendRequest
+        {
+            get => Preferences.Get(nameof(FirstFriendRequest), true);
+            set => Preferences.Set(nameof(FirstFriendRequest), value);
+        }
     }
 }

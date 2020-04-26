@@ -1,147 +1,164 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
-             xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms" 
-             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
-             xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms" 
-             xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
-             x:Class="TurnipTracker.View.FriendsView"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             BackgroundColor="{StaticResource NavigationPrimary}">
-     <ContentView.BindingContext>
-        <viewmodel:FriendsViewModel/>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="TurnipTracker.View.FriendsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
+    xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
+    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+    BackgroundColor="{StaticResource NavigationPrimary}">
+    <ContentView.BindingContext>
+        <viewmodel:FriendsViewModel />
     </ContentView.BindingContext>
-        <CollectionView
-                  SelectionMode="None"
-                  VerticalOptions="FillAndExpand"
-                 BackgroundColor="{StaticResource AcrylicSurface}">
-            <CollectionView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Heather</x:String>
-                    <x:String>Jesse</x:String>
-                    <x:String>Samantha</x:String>
-                    <x:String>Michael</x:String>
-                    <x:String>Christina</x:String>
-                    <x:String>Nana</x:String>
-                </x:Array>
-            </CollectionView.ItemsSource>
-            <CollectionView.Header>
-                <Grid BackgroundColor="{StaticResource NavigationPrimary}">
-                    <pancake:PancakeView CornerRadius="36,36,0,0"
-                            Margin="{OnPlatform Android='0,12,0,0', iOS='0,12,0,0'}"
-                        HasShadow="{OnPlatform Android=True, iOS=False}"
-                        VerticalOptions="FillAndExpand"
-                        BackgroundColor="{StaticResource AcrylicSurface}">
-                        <Grid Padding="12,12,12,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <sharpnado:MaterialFrame
-                                    Style="{StaticResource AcrylicFrame}"
-                                    Margin="4,12"
-                                    Padding="0"
-                                    HorizontalOptions="FillAndExpand"
-                                    AutomationProperties.IsInAccessibleTree="True"
-                                    AutomationProperties.HelpText="Button - Inbox for friend requests">
-                                <effectsview:SfEffectsView
-                                    Padding="18,12,12,12"
-                                    CornerRadius="10">
+    <CollectionView
+        BackgroundColor="{StaticResource AcrylicSurface}"
+        ItemsSource="{Binding Friends}"
+        SelectionMode="None"
+        VerticalOptions="FillAndExpand">
+        <CollectionView.Header>
+            <Grid BackgroundColor="{StaticResource NavigationPrimary}">
+                <pancake:PancakeView
+                    Margin="{OnPlatform Android='0,12,0,0',
+                                        iOS='0,12,0,0'}"
+                    BackgroundColor="{StaticResource AcrylicSurface}"
+                    CornerRadius="36,36,0,0"
+                    HasShadow="{OnPlatform Android=True,
+                                           iOS=False}"
+                    VerticalOptions="FillAndExpand">
+                    <Grid Padding="12,12,12,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <sharpnado:MaterialFrame
+                            Margin="4,12"
+                            Padding="0"
+                            AutomationProperties.HelpText="Button - Inbox for friend requests"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            HorizontalOptions="FillAndExpand"
+                            Style="{StaticResource AcrylicFrame}">
+                            <effectsview:SfEffectsView Padding="18,12,12,12" CornerRadius="10">
                                 <Grid ColumnSpacing="12">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{StaticResource IconInbox}"
-                                       FontFamily="FA-S"
-                                       FontSize="24"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       TextColor="{StaticResource TextPrimaryColor}"/>
-                                    <Label Text="Requests"
-                                           FontSize="Medium"
-                                           VerticalOptions="Center"
-                                           Grid.Column="1"
-                                           TextColor="{StaticResource TextPrimaryColor}"/>
-                                    <pancake:PancakeView Padding="0"
-                                           Grid.Column="2"
-                                           HorizontalOptions="End"
-                                           Elevation="2"
-                                           Visual="Material"
-                                           BackgroundColor="White"
-                                           VerticalOptions="Center"
-                                           HeightRequest="40"
-                                           WidthRequest="40"
-                                           CornerRadius="20">
-                                        <Label Text="1"
-                                               HorizontalOptions="Center"
-                                               VerticalOptions="Center"
-                                               FontSize="Small"
-                                               TextColor="{StaticResource TextPrimaryColor}"/>
+                                    <Label
+                                        FontFamily="FA-S"
+                                        FontSize="24"
+                                        HorizontalOptions="Center"
+                                        Text="{StaticResource IconInbox}"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="Medium"
+                                        Text="Requests"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center" />
+                                    <pancake:PancakeView
+                                        Grid.Column="2"
+                                        Padding="0"
+                                        BackgroundColor="White"
+                                        CornerRadius="20"
+                                        Elevation="2"
+                                        HeightRequest="40"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center"
+                                        Visual="Material"
+                                        WidthRequest="40">
+                                        <Label
+                                            FontSize="Small"
+                                            HorizontalOptions="Center"
+                                            Text="1"
+                                            TextColor="{StaticResource TextPrimaryColor}"
+                                            VerticalOptions="Center" />
                                     </pancake:PancakeView>
                                 </Grid>
-                                </effectsview:SfEffectsView>
-                            </sharpnado:MaterialFrame>
-                
-                            <sharpnado:MaterialFrame 
-                                    Style="{StaticResource AcrylicFrame}"
-                                    Margin="4,12"
-                                    Padding="0"
-                                    Grid.Column="1"
-                                    AutomationProperties.IsInAccessibleTree="True"
-                                    AutomationProperties.HelpText="Button - Send Friend Request">
-                                <effectsview:SfEffectsView
-                                    Padding="24,12"
-                                    CornerRadius="10"
-                                    TouchUpCommand="{Binding SendFriendRequestCommand}">
-                                    <Label Text="{StaticResource IconSend}"
-                                           FontSize="24"
-                                           FontFamily="FA-S"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center"
-                                           TextColor="{StaticResource TextPrimaryColor}"/>
-                                </effectsview:SfEffectsView>
-                            </sharpnado:MaterialFrame>
-                              <sharpnado:MaterialFrame 
-                                    Style="{StaticResource AcrylicFrame}"
-                                    Margin="4,12"
-                                    Padding="0"
-                                    Grid.Column="2"
-                                    AutomationProperties.IsInAccessibleTree="True"
-                                    AutomationProperties.HelpText="Button - Refresh Friend Information">
-                                <effectsview:SfEffectsView
-                                    Padding="24,12"
-                                    CornerRadius="10"
-                                    TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=RefreshCommand}">
-                                    <Label Text="&#xf021;"
-                                           FontSize="24"
-                                           FontFamily="FA-S"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center"
-                                           TextColor="{StaticResource TextPrimaryColor}"/>
-                                </effectsview:SfEffectsView>
-                            </sharpnado:MaterialFrame>
-                            <Label Grid.Row="1" Grid.ColumnSpan="3"
-                                   Text="Friends"
-                                   FontFamily="AnimalCrossing"
-                                   Margin="4,0"
-                                   FontSize="36"
-                                   TextColor="{StaticResource TextPrimaryColor}"/>
-                        </Grid>
-                    </pancake:PancakeView>
-                </Grid>
-            </CollectionView.Header>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                        <SwipeView IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsNotBusy}" BackgroundColor="Transparent">
-                            <!--<SwipeView.LeftItems>
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+
+                        <sharpnado:MaterialFrame
+                            Grid.Column="1"
+                            Margin="4,12"
+                            Padding="0"
+                            AutomationProperties.HelpText="Button - Send Friend Request"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            Style="{StaticResource AcrylicFrame}">
+                            <effectsview:SfEffectsView
+                                Padding="24,12"
+                                CornerRadius="10"
+                                TouchUpCommand="{Binding SendFriendRequestCommand}">
+                                <Label
+                                    FontFamily="FA-S"
+                                    FontSize="24"
+                                    HorizontalOptions="Center"
+                                    Text="{StaticResource IconSend}"
+                                    TextColor="{StaticResource TextPrimaryColor}"
+                                    VerticalOptions="Center" />
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+                        <sharpnado:MaterialFrame
+                            Grid.Column="2"
+                            Margin="4,12"
+                            Padding="0"
+                            AutomationProperties.HelpText="Button - Refresh Friend Information"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            Style="{StaticResource AcrylicFrame}">
+                            <effectsview:SfEffectsView
+                                Padding="24,12"
+                                CornerRadius="10"
+                                TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=RefreshCommand}">
+                                <Label
+                                    FontFamily="FA-S"
+                                    FontSize="24"
+                                    HorizontalOptions="Center"
+                                    Text="&#xf021;"
+                                    TextColor="{StaticResource TextPrimaryColor}"
+                                    VerticalOptions="Center" />
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+                        <Label
+                            Grid.Row="1"
+                            Grid.ColumnSpan="3"
+                            Margin="4,0"
+                            FontFamily="AnimalCrossing"
+                            FontSize="36"
+                            Text="Friends"
+                            TextColor="{StaticResource TextPrimaryColor}" />
+                    </Grid>
+                </pancake:PancakeView>
+            </Grid>
+        </CollectionView.Header>
+        <CollectionView.EmptyView>
+            <StackLayout HorizontalOptions="Center"
+                         VerticalOptions="Center">                
+                <Label 
+                        TextColor="{StaticResource TextPrimaryColor}"
+                        Text="{StaticResource IconFriendAdd}"
+                        FontSize="72"
+                        FontFamily="FA-S"
+                        HorizontalOptions="Center"/>
+                <Label 
+                        TextColor="{StaticResource TextPrimaryColor}"
+                        Text="No friends yet, send a friend request to start sharing turnip prices."
+                        HorizontalOptions="Center"
+                        FontSize="Medium"/>
+            </StackLayout>
+        </CollectionView.EmptyView>
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <SwipeView BackgroundColor="Transparent" IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsNotBusy}">
+                    <!--<SwipeView.LeftItems>
                                 <SwipeItems>
                                     <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}"
                                                      AutomationProperties.IsInAccessibleTree="True"
@@ -169,94 +186,99 @@
                                     </SwipeItemView>
                                 </SwipeItems>
                             </SwipeView.LeftItems>-->
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}"
-                                                 AutomationProperties.IsInAccessibleTree="True"
-                                                 AutomationProperties.HelpText="Button - Remove Friend">
-                                        <Grid Padding="12">
-                                            <sharpnado:MaterialFrame 
-                                                    Style="{StaticResource AcrylicFrame}"
-                                                    Padding="0">
-                                                <effectsview:SfEffectsView
-                                                    Padding="24,12"
-                                                    CornerRadius="10">
-                                                    <StackLayout VerticalOptions="Center">
-                                                        <Label Text="{StaticResource IconTrash}"
-                                                               FontSize="24"
-                                                               FontFamily="FA-R"
-                                                               HorizontalOptions="Center"
-                                                               TextColor="{StaticResource TextPrimaryColor}"/>
-                                                        <Label Text="Remove"
-                                                               HorizontalOptions="Center"
-                                                               TextColor="{StaticResource TextPrimaryColor}"/>
-                                                    </StackLayout>
-                                                </effectsview:SfEffectsView>
-                                            </sharpnado:MaterialFrame>
-                                        </Grid>
-                                    </SwipeItemView>
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                            <Grid Padding="0" BackgroundColor="Transparent" >
-                                <shimmer:SfShimmer VerticalOptions="FillAndExpand"
-                                                   IsActive ="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsBusy}"
-                                                   Type="Article"
-                                                   Padding="12"
-                                                   InputTransparent="False"
-                                                   CascadeInputTransparent="False">
-                                    <shimmer:SfShimmer.Content>
-                                         <sharpnado:MaterialFrame
-                                            Style="{StaticResource AcrylicFrame}"
-                                            Padding="18">
-                                             <Grid ColumnSpacing="12"
-                                                   RowSpacing="4">
-                                                 <Grid.RowDefinitions>
-                                                     <RowDefinition Height="Auto"/>
-                                                     <RowDefinition Height="Auto"/>
-                                                     <RowDefinition Height="Auto"/>
-                                                 </Grid.RowDefinitions>
-                                                 <Grid.ColumnDefinitions>
-                                                     <ColumnDefinition Width="Auto"/>
-                                                     <ColumnDefinition Width="*"/>
-                                                     <ColumnDefinition Width="Auto"/>
-                                                 </Grid.ColumnDefinitions>
-                                                 <Label Text="🍎" Grid.RowSpan="3"
-                                                        FontSize="24"/>
-                                                 <Label Text="{Binding .}"
-                                                        FontSize="Large"
-                                                        Grid.Column="1"
-                                                        TextColor="{StaticResource TextPrimaryColor}"/>
-                                                 <Label Text="Town Name"
-                                                        FontSize="Small"
-                                                        Grid.Column="1"
-                                                        Grid.Row="1"
-                                                        TextColor="{StaticResource TextPrimaryColor}"/>
-                                                 <Label Text="1:00 PM"
-                                                        FontSize="Small"
-                                                        Grid.Column="1"
-                                                        Grid.Row="2"
-                                                        TextColor="{StaticResource TextPrimaryColor}"/>
+                    <SwipeView.RightItems>
+                        <SwipeItems>
+                            <SwipeItemView
+                                AutomationProperties.HelpText="Button - Remove Friend"
+                                AutomationProperties.IsInAccessibleTree="True"
+                                BackgroundColor="{StaticResource AcrylicSurface}">
+                                <Grid Padding="12">
+                                    <sharpnado:MaterialFrame Padding="0" Style="{StaticResource AcrylicFrame}">
+                                        <effectsview:SfEffectsView Padding="24,12" CornerRadius="10">
+                                            <StackLayout VerticalOptions="Center">
+                                                <Label
+                                                    FontFamily="FA-R"
+                                                    FontSize="24"
+                                                    HorizontalOptions="Center"
+                                                    Text="{StaticResource IconTrash}"
+                                                    TextColor="{StaticResource TextPrimaryColor}" />
+                                                <Label
+                                                    HorizontalOptions="Center"
+                                                    Text="Remove"
+                                                    TextColor="{StaticResource TextPrimaryColor}" />
+                                            </StackLayout>
+                                        </effectsview:SfEffectsView>
+                                    </sharpnado:MaterialFrame>
+                                </Grid>
+                            </SwipeItemView>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <Grid Padding="0" BackgroundColor="Transparent">
+                        <shimmer:SfShimmer
+                            Padding="12"
+                            CascadeInputTransparent="False"
+                            InputTransparent="False"
+                            IsActive="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsBusy}"
+                            Type="Article"
+                            VerticalOptions="FillAndExpand">
+                            <shimmer:SfShimmer.Content>
+                                <sharpnado:MaterialFrame Padding="18" Style="{StaticResource AcrylicFrame}">
+                                    <Grid ColumnSpacing="12" RowSpacing="4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.RowSpan="3"
+                                            FontSize="24"
+                                            Text="🍎" />
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="Large"
+                                            Text="{Binding .}"
+                                            TextColor="{StaticResource TextPrimaryColor}" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            FontSize="Small"
+                                            Text="Town Name"
+                                            TextColor="{StaticResource TextPrimaryColor}" />
+                                        <Label
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            FontSize="Small"
+                                            Text="1:00 PM"
+                                            TextColor="{StaticResource TextPrimaryColor}" />
 
-                                                 <StackLayout Grid.RowSpan="3"
-                                                              Grid.Column="2"
-                                                              VerticalOptions="Center">
-                                 
-                                                     <Label Text="AM: 100 🔔"
-                                                            FontSize="Large"
-                                                            TextColor="{StaticResource TextPrimaryColor}"/>
-                                 
-                                                     <Label Text="PM: 100 🔔"
-                                                            FontSize="Large"
-                                                            TextColor="{StaticResource TextPrimaryColor}"/>
-                                                 </StackLayout>
+                                        <StackLayout
+                                            Grid.RowSpan="3"
+                                            Grid.Column="2"
+                                            VerticalOptions="Center">
 
-                                             </Grid>
-                                        </sharpnado:MaterialFrame>
-                                    </shimmer:SfShimmer.Content>
-                                </shimmer:SfShimmer>
-                            </Grid>
-                        </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                                            <Label
+                                                FontSize="Large"
+                                                Text="AM: 100 🔔"
+                                                TextColor="{StaticResource TextPrimaryColor}" />
+
+                                            <Label
+                                                FontSize="Large"
+                                                Text="PM: 100 🔔"
+                                                TextColor="{StaticResource TextPrimaryColor}" />
+                                        </StackLayout>
+
+                                    </Grid>
+                                </sharpnado:MaterialFrame>
+                            </shimmer:SfShimmer.Content>
+                        </shimmer:SfShimmer>
+                    </Grid>
+                </SwipeView>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentView>
