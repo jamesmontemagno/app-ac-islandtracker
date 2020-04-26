@@ -11,6 +11,6 @@ namespace TurnipTracker.Shared
         public string IslandName { get; set; }
         public string RequesterPublicKey { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDateUTC { get; set; }
     }
 }

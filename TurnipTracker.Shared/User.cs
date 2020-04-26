@@ -30,6 +30,9 @@ namespace TurnipTracker.Shared
         //could be smallint
         public int DayOfYear { get; set; }
         public int Year { get; set; }
+        public string PublicKey { get; set; }
+
+        public DateTime TurnipUpdateTimeUTC { get; set; }
 
     }
 
@@ -50,7 +53,8 @@ namespace TurnipTracker.Shared
         public int BuyPrice { get; set; }
 
         //could be smallint
-        public int DayOfYear { get; set; }
-        public int Year { get; set; }
+        public int TurnipUpdateDayOfYear { get; set; }
+        public int TurnipUpdateYear { get; set; }
+        public DateTime TurnipUpdateTimeUTC { get; set; }
     }
 }

@@ -55,18 +55,16 @@ namespace TurnipTracker.Functions
             UserEntity userEntity = null;
             try
             {
-                var publicKeyFilter = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, user.PublicKey);
-                var privateKeyFilter = TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, privateKey);
-
-                var rangeQuery = new TableQuery<UserEntity>().Where(
-                    TableQuery.CombineFilters(publicKeyFilter, TableOperators.And,privateKeyFilter));
-                userEntity = (await cloudTable.ExecuteQuerySegmentedAsync(rangeQuery, null)).FirstOrDefault();
+                userEntity = await Utils.FindUserEntity(cloudTable, privateKey, user.PublicKey);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //user does not exist? correct error?
                 return new InternalServerErrorResult();
             }
+
+            if (userEntity == null)
+                return new BadRequestResult();
 
 
             userEntity.Name = user.Name;
@@ -77,13 +75,7 @@ namespace TurnipTracker.Functions
 
             try
             {
-                // Create the InsertOrReplace table operation
-                var insertOperation = TableOperation.Merge(userEntity);
-
-                // Execute the operation.
-                var result = await cloudTable.ExecuteAsync(insertOperation);
-                var insertedCustomer = result.Result as UserEntity;
-
+                await Utils.MergeUserEntity(cloudTable, userEntity);
             }
             catch (Exception ex)
             {
@@ -92,5 +84,7 @@ namespace TurnipTracker.Functions
 
             return new OkObjectResult("User Updated");
         }
+
+
     }
 }

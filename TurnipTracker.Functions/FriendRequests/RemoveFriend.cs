@@ -7,29 +7,85 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.WindowsAzure.Storage.Table;
+using System.Web.Http;
+using TurnipTracker.Shared;
+using TurnipTracker.Functions.Helpers;
 
 namespace TurnipTracker.Functions
 {
     public static class RemoveFriend
     {
-        [FunctionName("RemoveFriend")]
+        [FunctionName(nameof(RemoveFriend))]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequest req,
+            [Table("Friend")] CloudTable friendTable,
+            [Table("User")] CloudTable userTable,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation($"C# HTTP trigger {nameof(RemoveFriend)} function processed a request.");
 
-            string name = req.Query["name"];
 
-            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            var privateKey = Utils.ParseToken(req);
+            if (privateKey == null)
+                return new UnauthorizedResult();
 
-            var responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            Friend friend = null;
 
-            return new OkObjectResult(responseMessage);
+            try
+            {
+                var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                friend = JsonConvert.DeserializeObject<Friend>(requestBody);
+            }
+            catch (Exception ex)
+            {
+                log.LogInformation("Unable to deserialize user: " + ex.Message);
+
+            }
+
+            if (friend == null ||
+                string.IsNullOrWhiteSpace(friend.MyPublicKey) ||
+                string.IsNullOrWhiteSpace(friend.FriendPublicKey))
+            {
+                return new BadRequestResult();
+            }
+
+            try
+            {
+                var user = await Utils.FindUserEntity(userTable, privateKey, friend.MyPublicKey);
+                if(user == null)
+                    return new BadRequestResult();
+            }
+            catch (Exception ex)
+            {
+                log.LogInformation("User doesn't exist: " + ex.Message);
+                return new BadRequestResult();
+            }
+
+
+            try
+            {
+                var requester = friend.MyPublicKey;
+                var requestee = friend.FriendPublicKey;
+
+                
+                var removeOperation1 = TableOperation.Delete(new FriendRequestEntity(requester, requestee));
+                var removeOperation2 = TableOperation.Delete(new FriendRequestEntity(requestee, requester));
+                var batch2 = new TableBatchOperation();
+                batch2.Add(removeOperation1);
+                batch2.Add(removeOperation2);
+
+                // Execute the operation.
+                var result = await friendTable.ExecuteBatchAsync(batch2);
+                if (result == null || result.Count != 2)
+                    return new InternalServerErrorResult();
+            }
+            catch (Exception ex)
+            {
+                return new InternalServerErrorResult();
+            }
+
+            return new OkObjectResult("Friend Request Created");
         }
     }
 }

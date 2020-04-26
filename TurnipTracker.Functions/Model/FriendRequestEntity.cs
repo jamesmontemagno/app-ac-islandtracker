@@ -32,6 +32,5 @@ namespace TurnipTracker.Shared
         /// RowKey
         public string RequesteePublicKey => RowKey;
 
-        public DateTime CreationDateUTC { get; set; }
     }
 }
