@@ -158,6 +158,13 @@ namespace TurnipTracker.Services
             await DeleteAsync($"api/RemoveFriend?code={App.DeleteRemoveFriendKey}", content);
         }
 
+        public async Task RemoveFriendRequestAsync(string friendRequestToRemoveKey)
+        {
+            var publicKey = await SettingsService.GetPublicKey();
+            var content = JsonConvert.SerializeObject(new FriendRequest { MyPublicKey = publicKey, FriendPublicKey = friendRequestToRemoveKey });
+            await PostAsync($"api/RejectFriendRequest?code={App.PostRemoveFriendRequestKey}", content);
+        }
+
         public async Task ApproveFriendRequestAsync(string friendToApproveKey)
         {
             var publicKey = await SettingsService.GetPublicKey();

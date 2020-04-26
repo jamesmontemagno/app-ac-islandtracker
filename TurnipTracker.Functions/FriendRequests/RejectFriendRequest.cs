@@ -12,19 +12,18 @@ using System.Web.Http;
 using TurnipTracker.Shared;
 using TurnipTracker.Functions.Helpers;
 
-namespace TurnipTracker.Functions
+namespace TurnipTracker.Functions.FriendRequests
 {
-    public static class ApproveFriendRequest
+    public static class RejectFriendRequest
     {
-        [FunctionName(nameof(ApproveFriendRequest))]
+        [FunctionName(nameof(RejectFriendRequest))]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             [Table("FriendRequest")] CloudTable friendRequestTable,
-            [Table("Friend")] CloudTable friendTable,
             [Table("User")] CloudTable userTable,
             ILogger log)
         {
-            log.LogInformation($"C# HTTP trigger {nameof(ApproveFriendRequest)} function processed a request.");
+            log.LogInformation($"C# HTTP trigger {nameof(RejectFriendRequest)} function processed a request.");
 
 
             var privateKey = Utils.ParseToken(req);
@@ -69,52 +68,27 @@ namespace TurnipTracker.Functions
                 var myPublicKey = friendRequest.MyPublicKey;
                 var friendPublicKey = friendRequest.FriendPublicKey;
 
-
-                // Create the InsertOrReplace table operation
-                var insertOperation1 = TableOperation.InsertOrMerge(new FriendEntity
-                {
-                    PartitionKey = myPublicKey,
-                    RowKey = friendPublicKey
-                });
-                // Execute the operation.
-                var result = await friendTable.ExecuteAsync(insertOperation1);
-                if (result == null)
-                    return new InternalServerErrorResult();
-
-                // Create the InsertOrReplace table operation
-                var insertOperation2 = TableOperation.InsertOrMerge(new FriendEntity
-                {
-                    PartitionKey = friendPublicKey,
-                    RowKey = myPublicKey
-                });
-
-                // Execute the operation.
-                result = await friendTable.ExecuteAsync(insertOperation2);
-                if (result == null)
-                    return new InternalServerErrorResult();
-
-
                 var removeOperation1 = TableOperation.Delete(new FriendRequestEntity
                 {
                     PartitionKey = myPublicKey,
                     RowKey = friendPublicKey,
                     ETag = "*"
                 });
-                
+
 
                 // Execute the operation.
-                result = await friendRequestTable.ExecuteAsync(removeOperation1);
+                var result = await friendRequestTable.ExecuteAsync(removeOperation1);
                 if (result == null)
                     return new InternalServerErrorResult();
 
             }
             catch (Exception ex)
             {
-                log.LogInformation($"Error {nameof(ApproveFriendRequest)} - Error: " + ex.Message);
+                log.LogInformation($"Error {nameof(RejectFriendRequest)} - Error: " + ex.Message);
                 return new InternalServerErrorResult();
             }
 
-            return new OkObjectResult("Friend Request Approved");
+            return new OkObjectResult("Friend Request Removed");
         }
     }
 }

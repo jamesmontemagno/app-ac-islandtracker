@@ -20,6 +20,7 @@ sed -i '' "s/AC_PostSubmitFriendRequestKey/$AC_PostSubmitFriendRequestKey/g" $BU
 sed -i '' "s/AC_PutUpdateProfileKey/$AC_PutUpdateProfileKey/g" $BUILD_REPOSITORY_LOCALPATH/TurnipTracker/App.xaml.cs
 sed -i '' "s/AC_PutUpdateTurnipPricesKey/$AC_PutUpdateTurnipPricesKey/g" $BUILD_REPOSITORY_LOCALPATH/TurnipTracker/App.xaml.cs
 sed -i '' "s/AC_PostCreateProfileKey/$AC_PostCreateProfileKey/g" $BUILD_REPOSITORY_LOCALPATH/TurnipTracker/App.xaml.cs
+sed -i '' "s/AC_PostRemoveFriendRequestKey/$AC_PostRemoveFriendRequestKey/g" $BUILD_REPOSITORY_LOCALPATH/TurnipTracker/App.xaml.cs
 
 
 

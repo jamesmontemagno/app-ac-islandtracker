@@ -42,6 +42,7 @@ namespace TurnipTracker
 
         public const string GetFriendsKey = "AC_GetFriendsKey";
         public const string GetFriendRequestsKey = "AC_GetFriendRequestsKey";
+        public const string PostRemoveFriendRequestKey = "AC_PostRemoveFriendRequestKey";
         public const string PostApproveFriendRequestKey = "AC_PostApproveFriendRequestKey";
         public const string DeleteRemoveFriendKey = "AC_DeleteRemoveFriendKey";
         public const string PostSubmitFriendRequestKey = "AC_PostSubmitFriendRequestKey";
