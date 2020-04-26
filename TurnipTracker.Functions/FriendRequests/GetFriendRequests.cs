@@ -82,7 +82,7 @@ namespace TurnipTracker.Functions
                 var tasks = new List<Task<TableQuerySegment<UserEntity>>>();
                 foreach (var f in existingFriendRequests)
                 {
-                    tasks.Add(Utils.FindFriendTask(userTable, f.RequesteePublicKey));
+                    tasks.Add(Utils.FindFriendTask(userTable, f.RequesterPublicKey));
                 }
 
                 await Task.WhenAll(tasks);
@@ -106,6 +106,7 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
+                log.LogInformation($"Error {nameof(GetFriendRequests)} - Error: " + ex.Message);
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
 

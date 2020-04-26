@@ -45,15 +45,15 @@ namespace TurnipTracker.Functions
             }
 
             if (friendRequest == null ||
-                string.IsNullOrWhiteSpace(friendRequest.RequesteePublicKey) ||
-                string.IsNullOrWhiteSpace(friendRequest.RequesterPublicKey))
+                string.IsNullOrWhiteSpace(friendRequest.MyPublicKey) ||
+                string.IsNullOrWhiteSpace(friendRequest.FriendPublicKey))
             {
                 return new BadRequestResult();
             }
 
             try
             {
-                var user = await Utils.FindUserEntity(userTable, privateKey, friendRequest.RequesterPublicKey);
+                var user = await Utils.FindUserEntity(userTable, privateKey, friendRequest.MyPublicKey);
                 if (user == null)
                     return new BadRequestResult();
             }
@@ -65,38 +65,26 @@ namespace TurnipTracker.Functions
 
             try
             {
-                var requester = friendRequest.RequesterPublicKey;
-                var requestee = friendRequest.RequesteePublicKey;
+                var requester = friendRequest.MyPublicKey;
+                var requestee = friendRequest.FriendPublicKey;
                 if (await Utils.HasFriend(friendTable, requester, requestee))
                     return new BadRequestResult();
 
-                var batch = new TableBatchOperation();
-
                 // Create the InsertOrReplace table operation
                 var insertOperation = TableOperation.InsertOrMerge(new FriendRequestEntity
-                {
-                    PartitionKey = requester,
-                    RowKey = requestee
-                });
-
-                batch.Add(insertOperation);
-              
-                // Create the InsertOrReplace table operation
-                var insertOperation2 = TableOperation.InsertOrMerge(new FriendRequestEntity
                 {
                     PartitionKey = requestee,
                     RowKey = requester
                 });
 
-                batch.Add(insertOperation2);
-                // Execute the operation.
-                var result = await friendRequestTable.ExecuteBatchAsync(batch);
-                if (result == null || result.Count != 2)
+                var result = await friendRequestTable.ExecuteAsync(insertOperation);
+                if (result == null)
                     return new InternalServerErrorResult();
 
             }
             catch (Exception ex)
             {
+                log.LogInformation($"Error {nameof(SubmitFriendRequest)} - Error: " + ex.Message);
                 return new InternalServerErrorResult();
             }
 

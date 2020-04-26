@@ -69,23 +69,32 @@ namespace TurnipTracker.Functions
                 var requestee = friend.FriendPublicKey;
 
                 
-                var removeOperation1 = TableOperation.Delete(new FriendRequestEntity(requester, requestee));
-                var removeOperation2 = TableOperation.Delete(new FriendRequestEntity(requestee, requester));
-                var batch2 = new TableBatchOperation();
-                batch2.Add(removeOperation1);
-                batch2.Add(removeOperation2);
+                var removeOperation1 = TableOperation.Delete(new FriendRequestEntity(requester, requestee)
+                {
+                    ETag = "*"
+                });
+                var removeOperation2 = TableOperation.Delete(new FriendRequestEntity(requestee, requester)
+                {
+                    ETag = "*"
+                });
+
 
                 // Execute the operation.
-                var result = await friendTable.ExecuteBatchAsync(batch2);
-                if (result == null || result.Count != 2)
+                var result = await friendTable.ExecuteAsync(removeOperation1);
+                if (result == null)
+                    return new InternalServerErrorResult();
+
+                result = await friendTable.ExecuteAsync(removeOperation2);
+                if (result == null)
                     return new InternalServerErrorResult();
             }
             catch (Exception ex)
             {
+                log.LogInformation($"Error {nameof(RemoveFriend)} - Error: " + ex.Message);
                 return new InternalServerErrorResult();
             }
 
-            return new OkObjectResult("Friend Request Created");
+            return new OkObjectResult("Friendship ended");
         }
     }
 }

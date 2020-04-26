@@ -110,6 +110,7 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
+                log.LogInformation($"Error {nameof(GetFriends)} - Error: " + ex.Message);
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
 

@@ -45,15 +45,15 @@ namespace TurnipTracker.Functions
             }
 
             if (friendRequest == null ||
-                string.IsNullOrWhiteSpace(friendRequest.RequesteePublicKey) ||
-                string.IsNullOrWhiteSpace(friendRequest.RequesterPublicKey))
+                string.IsNullOrWhiteSpace(friendRequest.MyPublicKey) ||
+                string.IsNullOrWhiteSpace(friendRequest.FriendPublicKey))
             {
                 return new BadRequestResult();
             }
 
             try
             {
-                var user = await Utils.FindUserEntity(userTable, privateKey, friendRequest.RequesterPublicKey);
+                var user = await Utils.FindUserEntity(userTable, privateKey, friendRequest.MyPublicKey);
                 if (user == null)
                     return new BadRequestResult();
             }
@@ -66,51 +66,55 @@ namespace TurnipTracker.Functions
 
             try
             {
-                var requester = friendRequest.RequesterPublicKey;
-                var requestee = friendRequest.RequesteePublicKey;
+                var myPublicKey = friendRequest.MyPublicKey;
+                var friendPublicKey = friendRequest.FriendPublicKey;
 
-                var batch = new TableBatchOperation();
 
                 // Create the InsertOrReplace table operation
-                var insertOperation = TableOperation.InsertOrMerge(new FriendEntity
+                var insertOperation1 = TableOperation.InsertOrMerge(new FriendEntity
                 {
-                    PartitionKey = requester,
-                    RowKey = requestee
+                    PartitionKey = myPublicKey,
+                    RowKey = friendPublicKey
                 });
-
-                batch.Add(insertOperation);
+                // Execute the operation.
+                var result = await friendTable.ExecuteAsync(insertOperation1);
+                if (result == null)
+                    return new InternalServerErrorResult();
 
                 // Create the InsertOrReplace table operation
                 var insertOperation2 = TableOperation.InsertOrMerge(new FriendEntity
                 {
-                    PartitionKey = requestee,
-                    RowKey = requester
+                    PartitionKey = friendPublicKey,
+                    RowKey = myPublicKey
                 });
 
-                batch.Add(insertOperation2);
                 // Execute the operation.
-                var result = await friendTable.ExecuteBatchAsync(batch);
-                if (result == null || result.Count != 2)
+                result = await friendTable.ExecuteAsync(insertOperation2);
+                if (result == null)
                     return new InternalServerErrorResult();
 
 
-                var removeOperation1 = TableOperation.Delete(new FriendRequestEntity(requester, requestee));
-                var removeOperation2 = TableOperation.Delete(new FriendRequestEntity(requestee, requester));
-                var batch2 = new TableBatchOperation();
-                batch2.Add(removeOperation1);
-                batch2.Add(removeOperation2);
+                var removeOperation1 = TableOperation.Delete(new FriendRequestEntity
+                {
+                    PartitionKey = myPublicKey,
+                    RowKey = friendPublicKey,
+                    ETag = "*"
+                });
+                
 
                 // Execute the operation.
-                result = await friendRequestTable.ExecuteBatchAsync(batch2);
-                if (result == null || result.Count != 2)
+                result = await friendRequestTable.ExecuteAsync(removeOperation1);
+                if (result == null)
                     return new InternalServerErrorResult();
+
             }
             catch (Exception ex)
             {
+                log.LogInformation($"Error {nameof(ApproveFriendRequest)} - Error: " + ex.Message);
                 return new InternalServerErrorResult();
             }
 
-            return new OkObjectResult("Friend Request Created");
+            return new OkObjectResult("Friend Request Approved");
         }
     }
 }

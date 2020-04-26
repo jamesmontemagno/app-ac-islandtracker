@@ -59,6 +59,7 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
+                log.LogInformation($" User doesn't exist - Error {nameof(UpdateProfile)} - Error: " + ex.Message);
                 //user does not exist? correct error?
                 return new InternalServerErrorResult();
             }
@@ -79,6 +80,7 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
+                log.LogInformation($"Error {nameof(UpdateProfile)} - Error: " + ex.Message);
                 return new InternalServerErrorResult();
             }
 

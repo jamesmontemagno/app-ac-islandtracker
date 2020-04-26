@@ -15,8 +15,8 @@ namespace TurnipTracker.Shared
         }
         public FriendRequestEntity(string requesterPublicKey, string requesteePublicKey)
         {
-            PartitionKey = requesterPublicKey;
-            RowKey = requesteePublicKey;
+            PartitionKey = requesteePublicKey;
+            RowKey = requesterPublicKey;
         }
 
         /// <summary>
@@ -24,13 +24,13 @@ namespace TurnipTracker.Shared
         /// friends and the Requestee need to accept it
         /// </summary>
         /// PartitionKey
-        public string RequesterPublicKey => PartitionKey;
+        public string ApproverPublicKey => PartitionKey;
 
         /// <summary>
         /// This is the person that shared the code, and has to do final approval
         /// </summary>
         /// RowKey
-        public string RequesteePublicKey => RowKey;
+        public string RequesterPublicKey => RowKey;
 
     }
 }

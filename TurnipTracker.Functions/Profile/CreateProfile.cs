@@ -58,6 +58,7 @@ namespace TurnipTracker.Functions
                 Fruit = user.Fruit,
                 TimeZone = user.TimeZone,
                 Status = user.Status ?? string.Empty,
+                TurnipUpdateTimeUTC = DateTime.UtcNow
             };
 
             try
@@ -72,6 +73,7 @@ namespace TurnipTracker.Functions
             }
             catch(Exception ex)
             {
+                log.LogInformation($"Error {nameof(CreateProfile)} - Error: " + ex.Message);
                 return new InternalServerErrorResult();
             }
 

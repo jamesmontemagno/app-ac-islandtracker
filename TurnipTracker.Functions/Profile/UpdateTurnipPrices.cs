@@ -55,6 +55,7 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
+                log.LogInformation($"User doesn't exist - Error {nameof(UpdateTurnipPrices)} - Error: " + ex.Message);
                 //user does not exist? correct error?
                 return new InternalServerErrorResult();
             }
