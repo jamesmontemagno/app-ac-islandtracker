@@ -9,15 +9,15 @@ namespace TurnipTracker.Services
     public static class SettingsService
     {
 #if DEBUG
-        static string publicCache = "be179afb-8233-46f2-8a44-eecdc7f514da";
-        static string privateCache = "e6bd6522-2f85-41b0-8bdd-abec010ece1f";
+        static string publicCache = "1e179afb-8233-46f2-8a44-eecdc7f514da";
+        static string privateCache = "16bd6522-2f85-41b0-8bdd-abec010ece1f";
 #else
         static string publicCache = string.Empty;
         static string privateCache = string.Empty;
 #endif
 
-        const string publicKey = "user_public_key";
-        const string privateKey = "user_private_key";
+        const string publicKey = "user_public_key_stable";
+        const string privateKey = "user_private_key_stable";
 
         public static async Task<string> GetPublicKey()
         {
@@ -58,6 +58,19 @@ namespace TurnipTracker.Services
         {
             get => Preferences.Get(nameof(FirstFriendRequest), true);
             set => Preferences.Set(nameof(FirstFriendRequest), value);
+        }
+
+
+        public static DateTime LastFriendsUpdate
+        {
+            get => Preferences.Get(nameof(LastFriendsUpdate), DateTime.MinValue);
+            set => Preferences.Set(nameof(LastFriendsUpdate), value);
+        }
+
+        public static DateTime LastFriendRequestsUpdate
+        {
+            get => Preferences.Get(nameof(LastFriendRequestsUpdate), DateTime.MinValue);
+            set => Preferences.Set(nameof(LastFriendRequestsUpdate), value);
         }
     }
 }

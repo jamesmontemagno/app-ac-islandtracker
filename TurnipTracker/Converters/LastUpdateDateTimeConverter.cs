@@ -13,6 +13,8 @@ namespace TurnipTracker.Converters
                 return false;
             if (value is FriendStatus status)
             {
+                if (status.TurnipUpdateYear == 0 || status.TurnipUpdateDayOfYear == 0)
+                    return string.Empty;
                 var dt = new DateTime(status.TurnipUpdateYear, 1, 1).AddDays(status.TurnipUpdateDayOfYear - 1);
 
                 var island = dt.ToShortDateString();

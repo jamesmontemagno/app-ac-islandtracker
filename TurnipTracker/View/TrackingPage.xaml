@@ -1,13 +1,613 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:view="clr-namespace:TurnipTracker.View"
-             x:Class="TurnipTracker.View.TrackingPage"
-             Shell.NavBarIsVisible="False"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             ios:Page.UseSafeArea="True"
-             BackgroundColor="{StaticResource NavigationPrimary}">
-    <ContentPage.Content>
-        <view:TrackingView/>
-    </ContentPage.Content>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="TurnipTracker.View.TrackingPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+    xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+    xmlns:converters="clr-namespace:TurnipTracker.Converters"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
+    xmlns:expander="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:TurnipTracker.Model"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:sfntb="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
+    xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
+    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+    ios:Page.UseSafeArea="True"
+    x:DataType="viewmodel:TrackingViewModel"
+    BackgroundColor="{StaticResource NavigationPrimary}"
+    Shell.NavBarIsVisible="False"
+    mc:Ignorable="d">
+    <d:ContentPage.BindingContext>
+        <viewmodel:TrackingViewModel />
+    </d:ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DifferenceColorConverter x:Key="DifferenceColorConverter" />
+            <converters:StringEmptyConverter x:Key="StringEmptyConverter" />
+            <converters:SelectedDayColorConverter x:Key="SelectedDayColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid
+            Padding="{OnPlatform Android='0,12,0,0',
+                                 iOS='0,24,0,0'}"
+            BackgroundColor="{StaticResource NavigationPrimary}"
+            RowSpacing="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <expander:SfExpander
+                x:Name="ChartExpander"
+                Collapsed="SfExpander_Expanded"
+                Expanded="SfExpander_Expanded"
+                HeaderBackgroundColor="Transparent"
+                IconColor="White"
+                IsExpanded="{Binding IsGraphExpanded}">
+                <expander:SfExpander.Header>
+                    <Grid>
+                        <Label
+                            Margin="42,0,0,0"
+                            FontFamily="AnimalCrossing"
+                            FontSize="44"
+                            HorizontalOptions="Center"
+                            Text="{Binding SelectedDay.DayLong}"
+                            TextColor="White" />
+                    </Grid>
+                </expander:SfExpander.Header>
+                <expander:SfExpander.Content>
+                    <chart:SfChart
+                        x:Name="Chart"
+                        BackgroundColor="Transparent"
+                        HeightRequest="300"
+                        HorizontalOptions="FillAndExpand">
+                        <chart:SfChart.ChartBehaviors>
+                            <chart:ChartTooltipBehavior BackgroundColor="#404041" />
+                        </chart:SfChart.ChartBehaviors>
+                        <chart:SfChart.PrimaryAxis>
+                            <chart:CategoryAxis EdgeLabelsDrawingMode="Shift" ShowMajorGridLines="False">
+                                <chart:CategoryAxis.LabelStyle>
+                                    <chart:ChartAxisLabelStyle Margin="0,10,0,0" TextColor="White" />
+                                </chart:CategoryAxis.LabelStyle>
+                                <chart:CategoryAxis.AxisLineStyle>
+                                    <chart:ChartLineStyle StrokeColor="White" StrokeWidth="4" />
+                                </chart:CategoryAxis.AxisLineStyle>
+                                <chart:CategoryAxis.MajorTickStyle>
+                                    <chart:ChartAxisTickStyle StrokeColor="White" TickSize="10" />
+                                </chart:CategoryAxis.MajorTickStyle>
+                            </chart:CategoryAxis>
+                        </chart:SfChart.PrimaryAxis>
+                        <chart:SfChart.SecondaryAxis>
+                            <chart:NumericalAxis
+                                EnableAutoIntervalOnZooming="True"
+                                Minimum="0"
+                                RangePadding="Round"
+                                ShowMajorGridLines="false"
+                                ShowMinorGridLines="false">
+                                <chart:NumericalAxis.LabelStyle>
+                                    <chart:ChartAxisLabelStyle
+                                        x:Name="secondaryAxisLabelStyle"
+                                        BackgroundColor="Transparent"
+                                        TextColor="White" />
+                                </chart:NumericalAxis.LabelStyle>
+                                <chart:NumericalAxis.AxisLineStyle>
+                                    <chart:ChartLineStyle StrokeColor="White" StrokeWidth="4" />
+                                </chart:NumericalAxis.AxisLineStyle>
+                                <chart:NumericalAxis.MajorTickStyle>
+                                    <chart:ChartAxisTickStyle StrokeColor="White" TickSize="10" />
+                                </chart:NumericalAxis.MajorTickStyle>
+                            </chart:NumericalAxis>
+                        </chart:SfChart.SecondaryAxis>
+                        <chart:SfChart.Legend>
+                            <chart:ChartLegend
+                                DockPosition="Bottom"
+                                IconHeight="14"
+                                IconWidth="14"
+                                IsIconVisible="true"
+                                ToggleSeriesVisibility="False">
+                                <chart:ChartLegend.LabelStyle>
+                                    <chart:ChartLegendLabelStyle TextColor="White" />
+                                </chart:ChartLegend.LabelStyle>
+                            </chart:ChartLegend>
+                        </chart:SfChart.Legend>
+                        <chart:SfChart.ColorModel>
+                            <chart:ChartColorModel Palette="Custom">
+                                <chart:ChartColorModel.CustomGradientColors>
+                                    <chart:ChartGradientColor StartPoint="0.5,1" EndPoint="0.5,0">
+                                        <chart:ChartGradientColor.GradientStops>
+                                            <chart:ChartGradientStop Offset="0" Color="{StaticResource GraphGradiantStart}" />
+                                            <chart:ChartGradientStop Offset="1" Color="{StaticResource GraphGradiantEnd}" />
+                                        </chart:ChartGradientColor.GradientStops>
+                                    </chart:ChartGradientColor>
+                                </chart:ChartColorModel.CustomGradientColors>
+                            </chart:ChartColorModel>
+                        </chart:SfChart.ColorModel>
+                        <chart:SfChart.Series>
+                            <chart:SplineRangeAreaSeries
+                                EnableAnimation="true"
+                                EnableDataPointSelection="true"
+                                EnableTooltip="true"
+                                High="High"
+                                ItemsSource="{Binding ChartData}"
+                                Label="Turnip Guaranteed Min/Potential Max"
+                                Low="Low"
+                                SplineType="Natural"
+                                StrokeColor="{StaticResource GraphGradiantStart}"
+                                StrokeWidth="2"
+                                XBindingPath="Name">
+                                <chart:SplineRangeAreaSeries.TooltipTemplate>
+                                    <DataTemplate x:DataType="model:ChartDataModel">
+                                        <StackLayout Orientation="Vertical">
+                                            <Label
+                                                FontSize="Small"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Day}"
+                                                TextColor="White" />
+                                            <StackLayout IsVisible="{Binding Prediction}">
+                                                <Label
+                                                    FontSize="Micro"
+                                                    Text="{Binding High, StringFormat='Potential Max: {0}'}"
+                                                    TextColor="White" />
+                                                <Label
+                                                    FontSize="Micro"
+                                                    Text="{Binding Low, StringFormat='Gauranteed Min: {0}'}"
+                                                    TextColor="White" />
+                                            </StackLayout>
+                                            <Label
+                                                FontSize="Micro"
+                                                IsVisible="{Binding Purchased}"
+                                                Text="{Binding PurchasePrice, StringFormat='Buy Price: {0}'}"
+                                                TextColor="White" />
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </chart:SplineRangeAreaSeries.TooltipTemplate>
+                            </chart:SplineRangeAreaSeries>
+                        </chart:SfChart.Series>
+                    </chart:SfChart>
+                </expander:SfExpander.Content>
+            </expander:SfExpander>
+
+            <pancake:PancakeView
+                Grid.Row="1"
+                Padding="0,12,0,0"
+                BackgroundColor="{StaticResource AcrylicSurface}"
+                CornerRadius="36,36,0,0"
+                Elevation="8">
+                <StackLayout Padding="12,0" Spacing="0">
+                    <StackLayout
+                        x:Name="CollectionViewDay"
+                        Margin="0,24,0,0"
+                        BindableLayout.ItemsSource="{Binding Days}"
+                        HorizontalOptions="Center"
+                        Orientation="Horizontal"
+                        VerticalOptions="Center">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="model:Day">
+                                <Grid Padding="0" WidthRequest="50">
+                                    <sharpnado:MaterialFrame Style="{StaticResource AcrylicFABSmall}">
+                                        <effectsview:SfEffectsView
+                                            AutomationProperties.IsInAccessibleTree="True"
+                                            AutomationProperties.Name="{Binding DayLong, StringFormat='Button to change to {0}'}"
+                                            CornerRadius="{OnPlatform iOS=21}"
+                                            TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TrackingViewModel}}, Path=DaySelectedCommand}"
+                                            TouchUpCommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}">
+                                            <Label
+                                                HorizontalOptions="Center"
+                                                Text="{Binding DayShort}"
+                                                TextColor="{Binding IsSelectedDay, Converter={StaticResource SelectedDayColorConverter}}"
+                                                VerticalOptions="Center" />
+                                        </effectsview:SfEffectsView>
+                                    </sharpnado:MaterialFrame>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                    <Grid
+                        Margin="0,24,0,0"
+                        IsVisible="{Binding SelectedDay.IsSunday}"
+                        RowSpacing="12"
+                        VerticalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <sharpnado:MaterialFrame
+                            Grid.Row="0"
+                            Margin="4"
+                            Style="{StaticResource AcrylicFrame}">
+                            <Grid ColumnSpacing="0" RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.ColumnSpan="2"
+                                    Margin="0,0,0,4"
+                                    FontFamily="AnimalCrossing"
+                                    FontSize="Medium"
+                                    Text="Turnip buying on your island"
+                                    TextColor="{StaticResource TextPrimaryColor}" />
+                                <inputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0,0,0,-12"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource NavigationPrimary}"
+                                    Hint="Daisy Mae's Price"
+                                    VerticalOptions="Center">
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <StackLayout>
+                                            <Image
+                                                HeightRequest="24"
+                                                Source="bells.png"
+                                                WidthRequest="24" />
+                                        </StackLayout>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                    <sfntb:SfNumericTextBox
+                                        AllowNull="True"
+                                        Maximum="10000"
+                                        MaximumNumberDecimalDigits="0"
+                                        ParserMode="Double"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        ValueChangeMode="OnKeyFocus"
+                                        Visual="Material"
+                                        Value="{Binding SelectedDay.BuyPrice}" />
+                                </inputLayout:SfTextInputLayout>
+                                <CheckBox
+                                    Grid.Row="2"
+                                    Margin="-4,0,0,0"
+                                    IsChecked="{Binding SelectedDay.FirstPurchase}"
+                                    VerticalOptions="Center"
+                                    Visual="Material"
+                                    Color="{StaticResource NavigationPrimary}" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Margin="-8,2,0,0"
+                                    FontFamily="AnimalCrossing"
+                                    FontSize="Medium"
+                                    Text="First Time Buying Turnips?"
+                                    TextColor="{StaticResource TextPrimaryColor}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Row="3"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0"
+                                    FontSize="Micro"
+                                    HorizontalOptions="Center"
+                                    Text="Available from 5AM to Noon"
+                                    TextColor="{StaticResource TextPrimaryColor}" />
+                            </Grid>
+                        </sharpnado:MaterialFrame>
+
+                        <sharpnado:MaterialFrame
+                            Grid.Row="1"
+                            Margin="4"
+                            Style="{StaticResource AcrylicFrame}">
+                            <Grid ColumnSpacing="0" RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                    Margin="0,0,0,4"
+                                    FontFamily="AnimalCrossing"
+                                    FontSize="Medium"
+                                    Text="Actual purchase price"
+                                    TextColor="{StaticResource TextPrimaryColor}" />
+                                <inputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Margin="0,0,0,0"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource NavigationPrimary}"
+                                    Hint="Turnip Price"
+                                    VerticalOptions="Center">
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <StackLayout>
+                                            <Image
+                                                HeightRequest="24"
+                                                Source="bells.png"
+                                                WidthRequest="24" />
+                                        </StackLayout>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                    <sfntb:SfNumericTextBox
+                                        AllowNull="True"
+                                        Maximum="10000"
+                                        MaximumNumberDecimalDigits="0"
+                                        ParserMode="Double"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        ValueChangeMode="OnKeyFocus"
+                                        Visual="Material"
+                                        Value="{Binding SelectedDay.ActualPurchasePrice}" />
+                                </inputLayout:SfTextInputLayout>
+                                <Label
+                                    Grid.Row="2"
+                                    Margin="0"
+                                    FontSize="Micro"
+                                    HorizontalOptions="Center"
+                                    Text="Only if you purchased your turnips on a friend's island."
+                                    TextColor="{StaticResource TextPrimaryColor}" />
+                            </Grid>
+                        </sharpnado:MaterialFrame>
+
+                        <sharpnado:MaterialFrame
+                            Grid.Row="2"
+                            Margin="0,0,0,8"
+                            HorizontalOptions="End"
+                            IsVisible="{Binding IsToday}"
+                            Style="{StaticResource AcrylicButton}">
+                            <effectsview:SfEffectsView
+                                Padding="18,0"
+                                CornerRadius="27"
+                                IsEnabled="{Binding IsNotBusy}"
+                                TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
+                                <Label
+                                    FontSize="20"
+                                    Text="Sync"
+                                    TextColor="{StaticResource TextPrimaryColor}"
+                                    VerticalOptions="Center" />
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+                    </Grid>
+                    <!--<BoxView HorizontalOptions="FillAndExpand"
+                                     BackgroundColor="LightGray"
+                                     Grid.Row="1" Grid.ColumnSpan="2"/>
+                            <Label Grid.Row="2" Grid.ColumnSpan="2"
+                                Text="Last Weeks Pattern"
+                                FontFamily="AnimalCrossing"
+                                VerticalOptions="Center"
+                                FontSize="Large"/>
+                            <inputLayout:SfTextInputLayout
+                                    Margin="0,0,0,-12"
+                                    FocusedColor="{StaticResource NavigationPrimary}"
+                                    Hint="Last Week's Pattern"
+                                    Grid.Row="2" Grid.ColumnSpan="2"
+                                    ContainerType="Outlined">
+                                <combobox:SfComboBox HeightRequest="50"
+                                                     VerticalOptions="Start"
+                                                     SelectedIndex="{Binding SelectedDay.LastWeekPattern, Mode=TwoWay}">
+                                    <combobox:SfComboBox.ComboBoxSource>
+                                        <ListCollection:List x:TypeArguments="x:String">
+                                            <x:String>I Don't Know</x:String>
+                                            <x:String>Fluctuating</x:String>
+                                            <x:String>Small Spike</x:String>
+                                            <x:String>Large Spike</x:String>
+                                            <x:String>Decreasing</x:String>
+                                        </ListCollection:List>
+                                    </combobox:SfComboBox.ComboBoxSource>
+                                </combobox:SfComboBox>
+                            </inputLayout:SfTextInputLayout>-->
+                    <!--  Sell Days  -->
+                    <Grid
+                        Margin="0,24,0,0"
+                        IsVisible="{Binding SelectedDay.IsNotSunday}"
+                        RowSpacing="12"
+                        VerticalOptions="FillAndExpand">
+                        <!--    -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <sharpnado:MaterialFrame
+                            Grid.ColumnSpan="2"
+                            Margin="4"
+                            BindingContext="{Binding SelectedDay}"
+                            Style="{StaticResource AcrylicFrame}">
+                            <Grid x:DataType="model:Day" RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".65*" />
+                                    <ColumnDefinition Width=".35*" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    FontFamily="AnimalCrossing"
+                                    FontSize="Large"
+                                    Text="Morning"
+                                    TextColor="{StaticResource TextPrimaryColor}" />
+                                <inputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Margin="0,0,0,-12"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource NavigationPrimary}"
+                                    Hint="AM Price"
+                                    VerticalOptions="Center">
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <StackLayout>
+                                            <Image
+                                                HeightRequest="24"
+                                                Source="bells.png"
+                                                WidthRequest="24" />
+                                        </StackLayout>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                    <sfntb:SfNumericTextBox
+                                        AllowNull="True"
+                                        Maximum="10000"
+                                        MaximumNumberDecimalDigits="0"
+                                        ParserMode="Double"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        ValueChangeMode="OnKeyFocus"
+                                        Visual="Material"
+                                        Value="{Binding PriceAM}" />
+                                </inputLayout:SfTextInputLayout>
+
+
+                                <StackLayout
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontSize="Medium"
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding DifferenceAM, Converter={StaticResource StringEmptyConverter}}"
+                                        Text="{Binding DifferenceAM}"
+                                        TextColor="{Binding DifferenceAM, Converter={StaticResource DifferenceColorConverter}}" />
+
+                                    <Label
+                                        FontSize="Medium"
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding PredictionAM, Converter={StaticResource StringEmptyConverter}}"
+                                        Text="{Binding PredictionAM}"
+                                        TextColor="{StaticResource TextPrimaryColor}" />
+                                </StackLayout>
+                            </Grid>
+                        </sharpnado:MaterialFrame>
+                        <sharpnado:MaterialFrame
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            Margin="4"
+                            BindingContext="{Binding SelectedDay}"
+                            Style="{StaticResource AcrylicFrame}">
+                            <Grid x:DataType="model:Day" RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".65*" />
+                                    <ColumnDefinition Width=".35*" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    FontFamily="AnimalCrossing"
+                                    FontSize="Large"
+                                    Text="Afternoon"
+                                    TextColor="{StaticResource TextPrimaryColor}" />
+                                <inputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Margin="0,0,0,-12"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource NavigationPrimary}"
+                                    Hint="PM Price"
+                                    VerticalOptions="Center">
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <StackLayout>
+                                            <Image
+                                                HeightRequest="24"
+                                                Source="bells.png"
+                                                WidthRequest="24" />
+                                        </StackLayout>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                    <sfntb:SfNumericTextBox
+                                        AllowNull="True"
+                                        Maximum="10000"
+                                        MaximumNumberDecimalDigits="0"
+                                        ParserMode="Double"
+                                        TextColor="{x:StaticResource TextPrimaryColor}"
+                                        ValueChangeMode="OnKeyFocus"
+                                        Visual="Material"
+                                        Value="{Binding PricePM}" />
+                                </inputLayout:SfTextInputLayout>
+
+
+                                <StackLayout
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontSize="Medium"
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding DifferencePM, Converter={StaticResource StringEmptyConverter}}"
+                                        Text="{Binding DifferencePM}"
+                                        TextColor="{Binding DifferencePM, Converter={StaticResource DifferenceColorConverter}}" />
+
+                                    <Label
+                                        FontSize="Medium"
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding PredictionPM, Converter={StaticResource StringEmptyConverter}}"
+                                        Text="{Binding PredictionPM}"
+                                        TextColor="{StaticResource TextPrimaryColor}" />
+                                </StackLayout>
+                            </Grid>
+                        </sharpnado:MaterialFrame>
+
+                        <sharpnado:MaterialFrame
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            Margin="12,0,0,0"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding IsToday}"
+                            Style="{StaticResource AcrylicButton}"
+                            VerticalOptions="Center">
+                            <effectsview:SfEffectsView
+                                Padding="18,0"
+                                CornerRadius="27"
+                                IsEnabled="{Binding IsNotBusy}"
+                                TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
+                                <Label
+                                    FontSize="20"
+                                    Text="Sync"
+                                    TextColor="{StaticResource TextPrimaryColor}"
+                                    VerticalOptions="Center" />
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+                        <Label
+                            Grid.Row="3"
+                            Margin="0,0,0,8"
+                            FontFamily="AnimalCrossing"
+                            FontSize="Micro"
+                            HorizontalOptions="Center"
+                            Text="{Binding Min, StringFormat='Guaranteed Weekly Min: {0}'}"
+                            TextColor="{StaticResource TextPrimaryColor}"
+                            VerticalOptions="End" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Margin="0,0,0,8"
+                            FontFamily="AnimalCrossing"
+                            FontSize="Micro"
+                            HorizontalOptions="Center"
+                            Text="{Binding Max, StringFormat='Potential Weekly Max: {0}'}"
+                            TextColor="{StaticResource TextPrimaryColor}"
+                            VerticalOptions="End" />
+                    </Grid>
+
+                </StackLayout>
+
+            </pancake:PancakeView>
+            <pancake:PancakeView
+                Grid.RowSpan="2"
+                Padding="36,12"
+                BackgroundColor="{StaticResource AcrylicSurface}"
+                CornerRadius="56,0,0,56"
+                Elevation="8"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center">
+                <busyindicator:SfBusyIndicator
+                    Title="Syncing prices..."
+                    AnimationType="Box"
+                    EnableAnimation="{Binding IsBusy}"
+                    TextColor="{StaticResource TextPrimaryColor}"
+                    ViewBoxHeight="100"
+                    ViewBoxWidth="100"
+                    Duration=".2" />
+            </pancake:PancakeView>
+        </Grid>
+    </ScrollView>
 </ContentPage>

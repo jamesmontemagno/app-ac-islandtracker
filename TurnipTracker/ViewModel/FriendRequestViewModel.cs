@@ -5,18 +5,37 @@ using System.Threading.Tasks;
 using TurnipTracker.Services;
 using TurnipTracker.Shared;
 using MvvmHelpers;
+using System.Collections.Generic;
 
 namespace TurnipTracker.ViewModel
 {
     public class FriendRequestViewModel : ViewModelBase
     {
         public ObservableRangeCollection<PendingFriendRequest> FriendRequests { get; }
+
+        bool forceRefresh = true;
+
+        public bool ShowNoFriends => FriendRequests.Count == 0;
+        public string LastUpdate
+        {
+            get
+            {
+                var time = SettingsService.LastFriendRequestsUpdate;
+                if (time == DateTime.MinValue)
+                    return string.Empty;
+                var local = time.ToLocalTime();
+                return $"Last update: {local.ToShortDateString()} at {local.ToShortTimeString()}";
+            }
+        }
         public FriendRequestViewModel()
         {
             FriendRequests = new ObservableRangeCollection<PendingFriendRequest>();
             RefreshCommand = new AsyncCommand(RefreshAsync);
             DenyFriendRequestCommand = new AsyncCommand<PendingFriendRequest>(DenyFriendRequest);
             ApproveFriendRequestCommand = new AsyncCommand<PendingFriendRequest>(ApproveFriendRequest);
+            var cache = DataService.GetCache<IEnumerable<PendingFriendRequest>>("get_friend_requests");
+            if (cache != null)
+                FriendRequests.ReplaceRange(cache);
         }
 
         public AsyncCommand<PendingFriendRequest> ApproveFriendRequestCommand { get; }
@@ -39,6 +58,8 @@ namespace TurnipTracker.ViewModel
 
                 await DataService.ApproveFriendRequestAsync(pendingFriendRequest.RequesterPublicKey);
                 FriendRequests.Remove(pendingFriendRequest);
+                DataService.ClearCache(DataService.FriendRequestKey);
+                forceRefresh = true;
             }
             catch (Exception ex)
             {
@@ -49,6 +70,8 @@ namespace TurnipTracker.ViewModel
             {
                 IsBusy = false;
             }
+
+            OnPropertyChanged(nameof(ShowNoFriends));
         }
 
         public AsyncCommand RefreshCommand { get; set; }
@@ -62,10 +85,17 @@ namespace TurnipTracker.ViewModel
             try
             {
                 if (fake)
+                {
                     FriendRequests.Add(new PendingFriendRequest());
 
-                var requests = await DataService.GetFriendRequestsAsync();
+                    OnPropertyChanged(nameof(ShowNoFriends));
+                }
+
+                var requests = await DataService.GetFriendRequestsAsync(forceRefresh);
+                forceRefresh = false;
                 FriendRequests.ReplaceRange(requests);
+                SettingsService.LastFriendRequestsUpdate = DateTime.UtcNow;
+                OnPropertyChanged(nameof(LastUpdate));
             }
             catch (Exception ex)
             {
@@ -80,6 +110,7 @@ namespace TurnipTracker.ViewModel
             {
                 IsBusy = false;
             }
+            OnPropertyChanged(nameof(ShowNoFriends));
         }
 
         public AsyncCommand<PendingFriendRequest> DenyFriendRequestCommand { get; set; }
@@ -100,6 +131,9 @@ namespace TurnipTracker.ViewModel
 
                 await DataService.RemoveFriendRequestAsync(pendingFriendRequest.RequesterPublicKey);
                 FriendRequests.Remove(pendingFriendRequest);
+                forceRefresh = true;
+                DataService.ClearCache(DataService.FriendRequestKey);
+                OnPropertyChanged(nameof(ShowNoFriends));
             }
             catch (Exception ex)
             {

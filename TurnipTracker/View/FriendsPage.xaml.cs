@@ -11,12 +11,13 @@ namespace TurnipTracker.View
         public FriendsPage()
         {
             InitializeComponent();
+            BindingContext = new FriendsViewModel();
         }
 
         protected override async void OnAppearing()
         {
           
-            await ((FriendsViewModel)this.BindingContext).RegisterFriendClipboardCommand.ExecuteAsync();
+            await ((FriendsViewModel)BindingContext).RegisterFriendClipboardCommand.ExecuteAsync();
 
             base.OnAppearing();
         }

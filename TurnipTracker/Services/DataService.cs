@@ -174,18 +174,35 @@ namespace TurnipTracker.Services
             await PostAsync($"api/ApproveFriendRequest?code={App.PostApproveFriendRequestKey}", content);
         }
 
+        public const string FriendKey = "get_friends";
+        public const string FriendRequestKey = "get_friend_requests";
+
+        public void ClearCache(string key) =>
+            Barrel.Current.Empty(key);
+
+        public T GetCache<T>(string key)
+        {
+            if (!Barrel.Current.Exists(key))
+                return default;
+
+            var json = Barrel.Current.Get<string>(key);
+            
+            return JsonConvert.DeserializeObject<T>(json);
+
+        }
+
         public async Task<IEnumerable<FriendStatus>> GetFriendsAsync(bool forceRefresh = false)
         {
             var publicKey = await SettingsService.GetPublicKey();
 
-            return await GetAsync<IEnumerable<FriendStatus>>($"api/GetFriends/{publicKey}?code={App.GetFriendsKey}", "get_friends", 5, forceRefresh);
+            return await GetAsync<IEnumerable<FriendStatus>>($"api/GetFriends/{publicKey}?code={App.GetFriendsKey}", FriendKey, 1, forceRefresh);
         }
 
         public async Task<IEnumerable<PendingFriendRequest>> GetFriendRequestsAsync(bool forceRefresh = false)
         {
             var publicKey = await SettingsService.GetPublicKey();
 
-            return await GetAsync<IEnumerable<PendingFriendRequest>>($"api/GetFriendRequests/{publicKey}?code={App.GetFriendRequestsKey}", "get_friend_requests", 5, forceRefresh);
+            return await GetAsync<IEnumerable<PendingFriendRequest>>($"api/GetFriendRequests/{publicKey}?code={App.GetFriendRequestsKey}", FriendRequestKey, 1, forceRefresh);
         }
         public void SaveCurrentWeek(List<Day> days)
         {
@@ -269,7 +286,7 @@ namespace TurnipTracker.Services
             return JsonConvert.DeserializeObject<T>(responseString);
         }
 
-        async Task<T> GetAsync<T>(string url, string key, int mins = 7, bool forceRefresh = false)
+        async Task<T> GetAsync<T>(string url, string key, int mins = 1, bool forceRefresh = false)
         {
             var json = string.Empty;
 

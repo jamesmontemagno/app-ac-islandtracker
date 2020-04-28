@@ -37,7 +37,7 @@ namespace TurnipTracker
         static string ip = DeviceInfo.Platform == DevicePlatform.Android ? "10.0.2.2" : "localhost";
         public static string BaseUrl = $"http://{ip}:7071";
 #else
-        const string BaseUrl = "AC_BASEURL";
+        public const string BaseUrl = "AC_BASEURL";
 #endif
 
         public const string GetFriendsKey = "AC_GetFriendsKey";
