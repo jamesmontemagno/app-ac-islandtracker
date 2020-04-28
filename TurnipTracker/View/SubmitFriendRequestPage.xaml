@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
-             x:Class="TurnipTracker.View.AcceptFriendRequestPage"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+             xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+             x:Class="TurnipTracker.View.SubmitFriendRequestPage"
              Shell.PresentationMode="ModalAnimated"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource NavigationPrimary}"
-             x:DataType="viewmodel:AcceptFriendRequestViewModel">
+             x:DataType="viewmodel:SubmitFriendRequestViewModel">
     <ContentPage.BindingContext>
-        <viewmodel:AcceptFriendRequestViewModel/>
+        <viewmodel:SubmitFriendRequestViewModel/>
     </ContentPage.BindingContext>
     <ScrollView>
         <Grid RowSpacing="12"

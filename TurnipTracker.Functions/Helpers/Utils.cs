@@ -20,10 +20,14 @@ namespace TurnipTracker.Functions.Helpers
             if (!string.IsNullOrWhiteSpace(authHeader))
             {
                 var encoding = Encoding.GetEncoding("iso-8859-1");
-#if DEBUG
-                return authHeader;
-#endif
-                return encoding.GetString(Convert.FromBase64String(authHeader));
+//#if DEBUG
+                //return authHeader;
+//#endif
+                var s = encoding.GetString(Convert.FromBase64String(authHeader));
+                if (!Guid.TryParse(s, out _))
+                    return null;
+
+                return s;
             }
 
             return null;

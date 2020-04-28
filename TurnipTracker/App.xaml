@@ -26,6 +26,8 @@
             <x:String x:Key="IconThumbsUp">&#xf164;</x:String>
             <x:String x:Key="IconWarning">&#xf071;</x:String>
             <x:String x:Key="IconFriendAdd">&#xf234;</x:String>
+            <x:String x:Key="IconApprove">&#xf4fc;</x:String>
+            <x:String x:Key="IconDeny">&#xf00d;</x:String>
 
             <x:String x:Key="IconGraph">&#xf1fe;</x:String>
 

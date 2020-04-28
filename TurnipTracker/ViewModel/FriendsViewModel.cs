@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AppCenter.Crashes;
@@ -22,6 +23,7 @@ namespace TurnipTracker.ViewModel
             RefreshCommand = new AsyncCommand(RefreshAsync);
             SendFriendRequestCommand = new AsyncCommand(SendFriendRequest);
             RemoveFriendCommand = new AsyncCommand<FriendStatus>(RemoveFriend);
+            GoToFriendRequestCommand = new AsyncCommand(GoToFriendRequest);
         }
 
         public AsyncCommand SendFriendRequestCommand { get; set; }
@@ -41,6 +43,9 @@ namespace TurnipTracker.ViewModel
                 return;
             }
 
+            if (!(await CheckConnectivity("Check connectivity", "Unable to update profile, please check internet and try again")))
+                return;
+
             var key = await SettingsService.GetPublicKey();
             var message = $"acislandtracker://friends/invite?id={key}&name={Uri.EscapeDataString(name)}";
 
@@ -53,6 +58,19 @@ namespace TurnipTracker.ViewModel
                 Text = message
             });
 #endif
+        }
+
+        public AsyncCommand GoToFriendRequestCommand { get; }
+
+        async Task GoToFriendRequest()
+        {
+            if (!SettingsService.HasRegistered)
+            {
+                await App.Current.MainPage.DisplayAlert("Register First", "Please register your account on the profile tab.", "OK");
+                return;
+            }
+
+            await Shell.Current.GoToAsync("//friends/friendrequests");
         }
 
         public AsyncCommand<string> RegisterFriendCommand { get; }
@@ -103,6 +121,12 @@ namespace TurnipTracker.ViewModel
             if (IsBusy)
                 return;
 
+            if (!SettingsService.HasRegistered)
+            {
+                await App.Current.MainPage.DisplayAlert("Register First", "Please register your account on the profile tab.", "OK");
+                return;
+            }
+
             IsBusy = true;
             var fake = Friends.Count == 0;
             try
@@ -111,7 +135,7 @@ namespace TurnipTracker.ViewModel
                     Friends.Add(new FriendStatus());
 
                 var statuses = await DataService.GetFriendsAsync();
-                Friends.ReplaceRange(statuses);
+                Friends.ReplaceRange(statuses.OrderByDescending(s=>s.TurnipUpdateDayOfYear));
             }
             catch (Exception ex)
             {
@@ -132,6 +156,9 @@ namespace TurnipTracker.ViewModel
         async Task RemoveFriend(FriendStatus friendStatus)
         {
             if (IsBusy)
+                return;
+
+            if (!(await CheckConnectivity("Check connectivity", "Unable to update profile, please check internet and try again")))
                 return;
 
             if (!await DisplayAlert("Remove friend?", $"Are you sure you want to remove {friendStatus.Name}?", "Yes, remove", "Cancel"))

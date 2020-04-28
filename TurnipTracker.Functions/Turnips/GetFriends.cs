@@ -22,7 +22,8 @@ namespace TurnipTracker.Functions
     {
         [FunctionName(nameof(GetFriends))]
         public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetFriends/{myPublicKey}")] HttpRequest req,
+            string myPublicKey,
             [Table("Friend")] CloudTable friendTable,
             [Table("User")] CloudTable userTable,
             ILogger log)
@@ -34,28 +35,14 @@ namespace TurnipTracker.Functions
             if (privateKey == null)
                 return new HttpResponseMessage(HttpStatusCode.Unauthorized);
 
-            MyFriendsRequest friendRequest = null;
-
-            try
-            {
-                var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                friendRequest = JsonConvert.DeserializeObject<MyFriendsRequest>(requestBody);
-            }
-            catch (Exception ex)
-            {
-                log.LogInformation("Unable to deserialize user: " + ex.Message);
-
-            }
-
-            if (friendRequest == null ||
-                string.IsNullOrWhiteSpace(friendRequest.MyPublicKey))
+            if (string.IsNullOrWhiteSpace(myPublicKey))
             {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
 
             try
             {
-                var user = await Utils.FindUserEntity(userTable, privateKey, friendRequest.MyPublicKey);
+                var user = await Utils.FindUserEntity(userTable, privateKey, myPublicKey);
                 if (user == null)
                     return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
@@ -70,7 +57,7 @@ namespace TurnipTracker.Functions
             try
             {
                 var publicKeyFilter = TableQuery.GenerateFilterCondition("PartitionKey",
-                    QueryComparisons.Equal, friendRequest.MyPublicKey);
+                    QueryComparisons.Equal, myPublicKey);
 
                 var rangeQuery = new TableQuery<FriendEntity>().Where(publicKeyFilter);
 

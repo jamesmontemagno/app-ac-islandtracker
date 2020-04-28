@@ -18,7 +18,7 @@ namespace TurnipTracker.Functions.FriendRequests
     {
         [FunctionName(nameof(RejectFriendRequest))]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             [Table("FriendRequest")] CloudTable friendRequestTable,
             [Table("User")] CloudTable userTable,
             ILogger log)

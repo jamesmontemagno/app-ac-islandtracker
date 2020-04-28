@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Crashes;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
+using TurnipTracker.Services;
 using Xamarin.Forms;
 
 namespace TurnipTracker.ViewModel
 {
     [QueryProperty("Name", "name")]
     [QueryProperty("Id", "id")]
-    public class AcceptFriendRequestViewModel : BaseViewModel
+    public class SubmitFriendRequestViewModel : ViewModelBase
     {
         public AsyncCommand RequestFriendCommand { get; }
         public AsyncCommand CloseCommand { get; }
-        public AcceptFriendRequestViewModel()
+        public SubmitFriendRequestViewModel()
         {
             RequestFriendCommand = new AsyncCommand(RequestFriend);
             CloseCommand = new AsyncCommand(Close);
@@ -66,6 +68,12 @@ namespace TurnipTracker.ViewModel
             if (IsBusy)
                 return;
 
+            if (!SettingsService.HasRegistered)
+            {
+                await App.Current.MainPage.DisplayAlert("Register First", "Please register your account on the profile tab.", "OK");
+                return;
+            }
+
             NeedsVerification = false;
 
 
@@ -74,16 +82,15 @@ namespace TurnipTracker.ViewModel
             IsBusy = true;
             try
             {
-
-
-                await Task.Delay(2000);
+                await DataService.SubmitFriendRequestAsync(Id);
 
                 Submitted = true;
                 ShowClose = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
+                await DisplayAlert("Uh oh, turbulence", "Looks like something went wrong. Check internet and try again.");
+                Crashes.TrackError(ex);
             }
             finally
             {

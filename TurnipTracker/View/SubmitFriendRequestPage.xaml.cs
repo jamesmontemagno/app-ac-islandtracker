@@ -8,13 +8,13 @@ using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace TurnipTracker.View
 {
-    public partial class AcceptFriendRequestPage : ContentPage
+    public partial class SubmitFriendRequestPage : ContentPage
     {
         readonly Animation rotation;
-        AcceptFriendRequestViewModel vm;
-        AcceptFriendRequestViewModel VM => vm ??= (BindingContext as AcceptFriendRequestViewModel);
+        SubmitFriendRequestViewModel vm;
+        SubmitFriendRequestViewModel VM => vm ??= (BindingContext as SubmitFriendRequestViewModel);
 
-        public AcceptFriendRequestPage()
+        public SubmitFriendRequestPage()
         {
             InitializeComponent();
             rotation = new Animation(v => LabelRotateIcon.Rotation = v, 0, 360);
@@ -58,7 +58,7 @@ namespace TurnipTracker.View
 
         async void ButtonClose_Clicked(System.Object sender, System.EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

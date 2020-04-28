@@ -46,6 +46,18 @@ namespace TurnipTracker.ViewModel
             if (IsBusy)
                 return;
 
+            if (string.IsNullOrWhiteSpace(Profile.Name))
+            {
+                await DisplayAlert("Update Profile", "Please enter your name.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Profile.IslandName))
+            {
+                await DisplayAlert("Update Profile", "Please enter your island name.");
+                return;
+            }
+
             if (!(await CheckConnectivity("Check connectivity", "Unable to update profile, please check internet and try again")))
                 return;
 

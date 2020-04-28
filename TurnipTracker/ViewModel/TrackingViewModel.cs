@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AppCenter.Crashes;
 using MvvmHelpers;
-using Syncfusion.SfChart.XForms;
+using MvvmHelpers.Commands;
 using TurnipTracker.Model;
 using TurnipTracker.Services;
 using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace TurnipTracker.ViewModel
 {
     public class TrackingViewModel : ViewModelBase
     {
 
+        public AsyncCommand UpdateTurnipPricesCommand { get; }
         public List<Day> Days { get; }
 
         public ObservableRangeCollection<ChartDataModel> ChartData { get; }
@@ -36,6 +38,7 @@ namespace TurnipTracker.ViewModel
             SelectedDay = Days[(int)DateTime.Now.DayOfWeek];
 
             DaySelectedCommand = new Command<Day>(OnDaySelected);
+            UpdateTurnipPricesCommand = new AsyncCommand(UpdateTurnipPrices);
         }
 
         Day selectedDay;
@@ -53,8 +56,11 @@ namespace TurnipTracker.ViewModel
 
                 SetProperty(ref selectedDay, value, onChanged: UpdatePredications);
                 selectedDay.IsSelectedDay = true;
+                OnPropertyChanged(nameof(IsToday));
             }
         }
+
+        public bool IsToday => Days.IndexOf(SelectedDay) == (int)DateTime.Now.DayOfWeek;
 
         int min = 0;
         public int Min
@@ -204,6 +210,44 @@ namespace TurnipTracker.ViewModel
 
             if (IsGraphExpanded)
                 UpdateGraph();
+        }
+
+        async Task UpdateTurnipPrices()
+        {
+            if (IsBusy)
+                return;
+
+            if (!IsToday)
+                return;
+
+            if (!SettingsService.HasRegistered)
+            {
+                await App.Current.MainPage.DisplayAlert("Register First", "Please register your account on the profile tab.", "OK");
+                return;
+            }
+
+            if (!(await CheckConnectivity("Check connectivity", "Unable to update prices, please check internet and try again")))
+                return;
+
+            var sync = await DisplayAlert("Sync prices?", "Are you sure you want to sync your prices to the cloud?", "Yes, sync", "Cancel");
+            if (!sync)
+                return;
+
+            try
+            {
+                IsBusy = true;
+                await DataService.UpdateTurnipPrices(SelectedDay);
+                await DisplayAlert("Turnip prices synced", "You are all set!");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Sync Error", ex.Message);
+                Crashes.TrackError(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

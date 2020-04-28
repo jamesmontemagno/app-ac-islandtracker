@@ -173,7 +173,7 @@
 
             <pancake:PancakeView
                 Grid.Row="1"
-                Padding="0,12,0,8"
+                Padding="0,12,0,0"
                 BackgroundColor="{StaticResource AcrylicSurface}"
                 CornerRadius="36,36,0,0"
                 Elevation="8">
@@ -215,6 +215,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <sharpnado:MaterialFrame
@@ -336,6 +337,24 @@
                                     TextColor="{StaticResource TextPrimaryColor}" />
                             </Grid>
                         </sharpnado:MaterialFrame>
+
+                        <sharpnado:MaterialFrame Margin="0,0,0,8"
+                                                 Grid.Row="2"
+                                                 HorizontalOptions="End"
+                                                 IsVisible="{Binding IsToday}"
+                                                 Style="{StaticResource AcrylicButton}">
+                            <effectsview:SfEffectsView
+                                    Padding="18,0"
+                                    CornerRadius="27"
+                                    IsEnabled="{Binding IsNotBusy}"
+                                    TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
+                                <Label
+                                        FontSize="20"
+                                        Text="Sync"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center" />
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
                     </Grid>
                     <!--<BoxView HorizontalOptions="FillAndExpand"
                                      BackgroundColor="LightGray"
@@ -376,7 +395,6 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -513,32 +531,44 @@
                             </Grid>
                         </sharpnado:MaterialFrame>
 
+                        <sharpnado:MaterialFrame Margin="12,0,0,0"
+                                                 Grid.Row="2"
+                                                 Grid.ColumnSpan="2"
+                                                 HorizontalOptions="Center"
+                                                 VerticalOptions="Center"
+                                                 IsVisible="{Binding IsToday}"
+                                                 Style="{StaticResource AcrylicButton}">
+                            <effectsview:SfEffectsView
+                                    Padding="18,0"
+                                    CornerRadius="27"
+                                    IsEnabled="{Binding IsNotBusy}"
+                                    TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
+                                <Label
+                                        FontSize="20"
+                                        Text="Sync"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center" />
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
                         <Label
-                            Grid.Row="4"
-                            Margin="0,-6,0,0"
-                            FontFamily="AnimalCrossing"
-                            FontSize="Medium"
-                            HorizontalOptions="Center"
-                            IsVisible="False"
-                            Text="Prediction: Small Spike"
-                            VerticalOptions="EndAndExpand" />
-                        <Label
-                            Grid.Row="5"
+                            Grid.Row="3"
                             FontFamily="AnimalCrossing"
                             FontSize="Micro"
                             HorizontalOptions="Center"
                             Text="{Binding Min, StringFormat='Guaranteed Weekly Min: {0}'}"
                             TextColor="{StaticResource TextPrimaryColor}"
-                            VerticalOptions="End" />
+                            VerticalOptions="End"
+                            Margin="0,0,0,8"/>
                         <Label
-                            Grid.Row="5"
+                            Grid.Row="3"
                             Grid.Column="1"
                             FontFamily="AnimalCrossing"
                             FontSize="Micro"
                             HorizontalOptions="Center"
                             Text="{Binding Max, StringFormat='Potential Weekly Max: {0}'}"
                             TextColor="{StaticResource TextPrimaryColor}"
-                            VerticalOptions="End" />
+                            VerticalOptions="End"
+                            Margin="0,0,0,8"/>
                     </Grid>
 
                 </StackLayout>

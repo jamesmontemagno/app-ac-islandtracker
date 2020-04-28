@@ -47,7 +47,7 @@ namespace TurnipTracker.Functions
                 string.IsNullOrWhiteSpace(user.PublicKey) ||
                 string.IsNullOrWhiteSpace(user.Name) ||
                 string.IsNullOrWhiteSpace(user.IslandName) ||
-                string.IsNullOrWhiteSpace(user.TimeZone))
+                user.TimeZone == null)
             {
                 return new BadRequestResult();
             }

@@ -99,10 +99,11 @@ namespace TurnipTracker.ViewModel
 
         async Task SendEmail()
         {
+            var key = await SettingsService.GetPublicKey();
             var message = new EmailMessage
             {
-                Subject = "Island Tracker Issue",
-                Body = "Describe issue here",
+                Subject = $"Island Tracker Issue. Public Key: {key}",
+                Body = "Describe issue here.",
                To = new List<string> { "refractoredllc@gmail.com"}
             };
 

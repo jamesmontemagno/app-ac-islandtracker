@@ -1,15 +1,171 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             x:Class="TurnipTracker.View.FriendRequestPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+<ContentPage
+    x:Class="TurnipTracker.View.FriendRequestPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:shared="clr-namespace:TurnipTracker.Shared;assembly=TurnipTracker.Shared"
+    xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
+    xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
+    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+    x:DataType="viewmodel:FriendRequestViewModel"
+    Shell.NavBarIsVisible="False"
+    Shell.PresentationMode="ModalAnimated"
+    mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <viewmodel:FriendRequestViewModel />
+    </ContentPage.BindingContext>
+    <Grid
+        Padding="{OnPlatform Android='0,12,0,0',
+                             iOS='0,24,0,0'}"
+        BackgroundColor="{StaticResource NavigationPrimary}"
+        RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label
+            Grid.ColumnSpan="2"
+            FontFamily="AnimalCrossing"
+            FontSize="44"
+            HorizontalOptions="Center"
+            Text="Friend Requests"
+            TextColor="White" />
+        <pancake:PancakeView
+            Grid.ColumnSpan="2"
+            AutomationProperties.HelpText="Button - Close Page"
+            AutomationProperties.IsInAccessibleTree="True"
+            HorizontalOptions="End"
+            Style="{StaticResource SocialPancake}">
+            <effectsview:SfEffectsView CornerRadius="20" TouchUp="SfEffectsView_TouchUp">
+                <Label
+                    FontFamily="FA-S"
+                    Style="{StaticResource SocialLabel}"
+                    Text="{StaticResource IconDeny}" />
+            </effectsview:SfEffectsView>
+        </pancake:PancakeView>
+        <pancake:PancakeView
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Padding="12,12,12,0"
+            BackgroundColor="{StaticResource AcrylicSurface}"
+            CornerRadius="36,36,0,0"
+            Elevation="8">
+            <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+                <CollectionView
+                    BackgroundColor="{StaticResource AcrylicSurface}"
+                    ItemsSource="{Binding FriendRequests}"
+                    SelectionMode="None"
+                    VerticalOptions="FillAndExpand">
+                    <CollectionView.EmptyView>
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                         VerticalOptions="CenterAndExpand"
+                         Padding="12">
+                            <StackLayout VerticalOptions="CenterAndExpand">
+                                <Label 
+                            TextColor="{StaticResource TextPrimaryColor}"
+                            Text="{StaticResource IconFriendAdd}"
+                            HorizontalOptions="Center"
+                            FontSize="72"
+                            FontFamily="FA-S"/>
+                                <Label 
+                            TextColor="{StaticResource TextPrimaryColor}"   
+                            Text="No friend requests yet, send a friend request to start sharing turnip prices."
+                            HorizontalOptions="Center"
+                            FontSize="Medium"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="shared:PendingFriendRequest">
+
+                            <Grid Padding="0" BackgroundColor="Transparent">
+                                <shimmer:SfShimmer
+                                    Padding="12"
+                                    CascadeInputTransparent="False"
+                                    InputTransparent="False"
+                                    IsActive="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendRequestViewModel}}, Path=IsBusy}"
+                                    Type="Article"
+                                    VerticalOptions="FillAndExpand">
+                                    <shimmer:SfShimmer.Content>
+                                        <sharpnado:MaterialFrame Padding="18" Style="{StaticResource AcrylicFrame}">
+                                            <Grid ColumnSpacing="12" RowSpacing="4">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <Label
+                                                    Grid.Column="0"
+                                                    FontSize="Large"
+                                                    Text="{Binding Name}"
+                                                    TextColor="{StaticResource TextPrimaryColor}"
+                                                    VerticalOptions="EndAndExpand" />
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    FontSize="Small"
+                                                    Text="{Binding IslandName}"
+                                                    TextColor="{StaticResource TextPrimaryColor}"
+                                                    VerticalOptions="StartAndExpand" />
+
+
+                                                <StackLayout
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="1"
+                                                    Spacing="18"
+                                                    VerticalOptions="Center">
+
+                                                    <pancake:PancakeView
+                                                        AutomationProperties.HelpText="Button - Accept Friend Request"
+                                                        AutomationProperties.IsInAccessibleTree="True"
+                                                        Style="{StaticResource SocialPancake}">
+                                                        <effectsview:SfEffectsView
+                                                            CornerRadius="20"
+                                                            TouchDownCommandParameter="{Binding .}"
+                                                            TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendRequestViewModel}}, Path=ApproveFriendRequestCommand}">
+                                                            <Label
+                                                                FontFamily="FA-S"
+                                                                Style="{StaticResource SocialLabel}"
+                                                                Text="{StaticResource IconApprove}" />
+                                                        </effectsview:SfEffectsView>
+                                                    </pancake:PancakeView>
+
+                                                    <pancake:PancakeView
+                                                        AutomationProperties.HelpText="Button - Deny Friend Request"
+                                                        AutomationProperties.IsInAccessibleTree="True"
+                                                        Style="{StaticResource SocialPancake}">
+                                                        <effectsview:SfEffectsView
+                                                            CornerRadius="20"
+                                                            TouchDownCommandParameter="{Binding .}"
+                                                            TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendRequestViewModel}}, Path=DenyFriendRequestCommand}">
+                                                            <Label
+                                                                FontFamily="FA-S"
+                                                                Style="{StaticResource SocialLabel}"
+                                                                Text="{StaticResource IconDeny}" />
+                                                        </effectsview:SfEffectsView>
+                                                    </pancake:PancakeView>
+                                                </StackLayout>
+
+                                            </Grid>
+                                        </sharpnado:MaterialFrame>
+                                    </shimmer:SfShimmer.Content>
+                                </shimmer:SfShimmer>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </pancake:PancakeView>
+    </Grid>
 </ContentPage>

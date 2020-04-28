@@ -12,7 +12,8 @@ namespace TurnipTracker
             InitializeComponent();
             TabBar.CurrentItem = TabBar.Items[1];
 
-            Routing.RegisterRoute("invite", typeof(AcceptFriendRequestPage));
+            Routing.RegisterRoute("invite", typeof(SubmitFriendRequestPage));
+            Routing.RegisterRoute("friendrequests", typeof(FriendRequestPage));
         }
     }
 }

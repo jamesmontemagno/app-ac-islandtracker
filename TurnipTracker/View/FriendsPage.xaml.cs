@@ -16,7 +16,7 @@ namespace TurnipTracker.View
         protected override async void OnAppearing()
         {
           
-            await ((FriendsViewModel)this.Content.BindingContext).RegisterFriendClipboardCommand.ExecuteAsync();
+            await ((FriendsViewModel)this.BindingContext).RegisterFriendClipboardCommand.ExecuteAsync();
 
             base.OnAppearing();
         }

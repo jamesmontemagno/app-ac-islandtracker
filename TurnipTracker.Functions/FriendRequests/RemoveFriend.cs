@@ -18,7 +18,9 @@ namespace TurnipTracker.Functions
     {
         [FunctionName(nameof(RemoveFriend))]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "RemoveFriend/{myPublicKey}/{friendPublicKey}")] HttpRequest req,
+            string myPublicKey,
+            string friendPublicKey,
             [Table("Friend")] CloudTable friendTable,
             [Table("User")] CloudTable userTable,
             ILogger log)
@@ -30,29 +32,16 @@ namespace TurnipTracker.Functions
             if (privateKey == null)
                 return new UnauthorizedResult();
 
-            Friend friend = null;
 
-            try
-            {
-                var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                friend = JsonConvert.DeserializeObject<Friend>(requestBody);
-            }
-            catch (Exception ex)
-            {
-                log.LogInformation("Unable to deserialize user: " + ex.Message);
-
-            }
-
-            if (friend == null ||
-                string.IsNullOrWhiteSpace(friend.MyPublicKey) ||
-                string.IsNullOrWhiteSpace(friend.FriendPublicKey))
+            if (string.IsNullOrWhiteSpace(myPublicKey) ||
+                string.IsNullOrWhiteSpace(friendPublicKey))
             {
                 return new BadRequestResult();
             }
 
             try
             {
-                var user = await Utils.FindUserEntity(userTable, privateKey, friend.MyPublicKey);
+                var user = await Utils.FindUserEntity(userTable, privateKey, myPublicKey);
                 if(user == null)
                     return new BadRequestResult();
             }
@@ -65,8 +54,8 @@ namespace TurnipTracker.Functions
 
             try
             {
-                var requester = friend.MyPublicKey;
-                var requestee = friend.FriendPublicKey;
+                var requester = myPublicKey;
+                var requestee = friendPublicKey;
 
                 
                 var removeOperation1 = TableOperation.Delete(new FriendRequestEntity(requester, requestee)

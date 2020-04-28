@@ -30,7 +30,7 @@ using Android.App;
 [assembly: UsesPermission(Android.Manifest.Permission.WriteExternalStorage)]
 
 #if DEBUG
-[assembly: Application(Debuggable=true)]
+[assembly: Application(Debuggable=true, NetworkSecurityConfig = "@xml/network_security_config")]
 #else
 [assembly: Application(Debuggable=false)]
 #endif
