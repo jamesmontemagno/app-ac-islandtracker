@@ -103,6 +103,13 @@
                 <Setter Property="CornerRadius" Value="20"/>
             </Style>
 
+            <Style x:Key="BadgePancake" TargetType="pancake:PancakeView">
+                <Setter Property="Padding" Value="8,0"/>
+                <Setter Property="Elevation" Value="2"/>
+                <Setter Property="Visual" Value="Material"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource NavigationPrimary}"/>
+            </Style>
+
             <Style x:Key="SocialLabel" TargetType="Label">
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>

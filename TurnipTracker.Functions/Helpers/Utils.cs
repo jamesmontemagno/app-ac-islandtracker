@@ -46,6 +46,17 @@ namespace TurnipTracker.Functions.Helpers
             return (await FindFriendTask(cloudTable, friendPublicKey)).FirstOrDefault();
         }
 
+        public static async Task<UserEntity> FindUserEntitySlim(CloudTable cloudTable, string privateKey, string publicKey)
+        {
+            var publicKeyFilter = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, publicKey);
+            var privateKeyFilter = TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, privateKey);
+
+            var rangeQuery = new TableQuery<UserEntity>()
+                .Where(TableQuery.CombineFilters(publicKeyFilter, TableOperators.And, privateKeyFilter))
+                .Select(new List<string> { "PartitionKey", "RowKey", "Timestamp" }); 
+            return (await cloudTable.ExecuteQuerySegmentedAsync(rangeQuery, null)).FirstOrDefault();
+        }
+
         public static async Task<UserEntity> FindUserEntity(CloudTable cloudTable, string privateKey, string publicKey)
         {
             var publicKeyFilter = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, publicKey);

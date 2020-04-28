@@ -37,6 +37,7 @@ namespace TurnipTracker.iOS
             SfTextInputLayoutRenderer.Init();
 
             SfShimmerRenderer.Init();
+
             new Syncfusion.SfBusyIndicator.XForms.iOS.SfBusyIndicatorRenderer();
             Syncfusion.XForms.iOS.EffectsView.SfEffectsViewRenderer.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();

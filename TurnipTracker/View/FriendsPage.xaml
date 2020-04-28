@@ -4,21 +4,21 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:TurnipTracker.Converters"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:shared="clr-namespace:TurnipTracker.Shared;assembly=TurnipTracker.Shared"
     xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
     xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
     xmlns:view="clr-namespace:TurnipTracker.View"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
     xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
     ios:Page.UseSafeArea="True"
     x:DataType="viewmodel:FriendsViewModel"
     BackgroundColor="{StaticResource NavigationPrimary}"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    mc:Ignorable="d">
     <d:ContentPage.BindingContext>
         <viewmodel:FriendsViewModel />
     </d:ContentPage.BindingContext>
@@ -27,6 +27,7 @@
             <converters:FruitImageConverter x:Key="FruitImageConverter" />
             <converters:EmptyBellConverter x:Key="EmptyBellConverter" />
             <converters:LastUpdateDateTimeConverter x:Key="LastUpdateDateTimeConverter" />
+            <converters:StringEmptyConverter x:Key="StringEmptyConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
@@ -55,6 +56,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
+
                             <sharpnado:MaterialFrame
                                 Margin="4,12"
                                 Padding="0"
@@ -71,6 +73,7 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <Label
                                             FontFamily="FA-S"
@@ -85,24 +88,15 @@
                                             Text="Requests"
                                             TextColor="{StaticResource TextPrimaryColor}"
                                             VerticalOptions="Center" />
-                                        <!--<pancake:PancakeView
-                                        Grid.Column="2"
-                                        Padding="0"
-                                        BackgroundColor="White"
-                                        CornerRadius="20"
-                                        Elevation="2"
-                                        HeightRequest="40"
-                                        HorizontalOptions="End"
-                                        VerticalOptions="Center"
-                                        Visual="Material"
-                                        WidthRequest="40">
-                                        <Label
-                                            FontSize="Small"
-                                            HorizontalOptions="Center"
-                                            Text="1"
-                                            TextColor="{StaticResource TextPrimaryColor}"
-                                            VerticalOptions="Center" />
-                                    </pancake:PancakeView>-->
+                                        <pancake:PancakeView Grid.Column="3"
+                                                             Style="{StaticResource BadgePancake}"
+                                                             IsVisible="{Binding RequestCount, Converter={StaticResource StringEmptyConverter}}"
+                                                             CornerRadius="4">
+                                            <Label Text="{Binding RequestCount}" 
+                                                             VerticalOptions="Center"
+                                                             HorizontalOptions="Center"
+                                                   TextColor="White" FontSize="Small"/>
+                                        </pancake:PancakeView>
                                     </Grid>
                                 </effectsview:SfEffectsView>
                             </sharpnado:MaterialFrame>
@@ -257,7 +251,7 @@
                                             <Label
                                                 Grid.Row="1"
                                                 Grid.Column="1"
-                                                FontSize="Small"
+                                                FontSize="Medium"
                                                 Text="{Binding IslandName}"
                                                 TextColor="{StaticResource TextPrimaryColor}" />
                                             <Label
@@ -269,7 +263,7 @@
                                             <Label
                                                 Grid.Row="3"
                                                 Grid.Column="1"
-                                                FontSize="Small"
+                                                FontSize="Micro"
                                                 Text="{Binding ., Converter={StaticResource LastUpdateDateTimeConverter}}"
                                                 TextColor="{StaticResource TextPrimaryColor}" />
 
@@ -307,7 +301,10 @@
             </CollectionView.ItemTemplate>
             <CollectionView.Footer>
                 <StackLayout HorizontalOptions="Center">
-                    <Label Text="{Binding LastUpdate}"  TextColor="{StaticResource TextPrimaryColor}" HorizontalOptions="Center"/>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="{Binding LastUpdate}"
+                        TextColor="{StaticResource TextPrimaryColor}" />
                 </StackLayout>
             </CollectionView.Footer>
         </CollectionView>
@@ -327,7 +324,7 @@
                     FontSize="Medium"
                     HorizontalOptions="Center"
                     Text="No friends yet, send a friend request to start sharing turnip prices."
-                    TextColor="{StaticResource TextPrimaryColor}" />               
+                    TextColor="{StaticResource TextPrimaryColor}" />
             </StackLayout>
         </StackLayout>
     </Grid>

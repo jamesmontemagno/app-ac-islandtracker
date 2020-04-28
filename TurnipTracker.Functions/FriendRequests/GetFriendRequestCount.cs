@@ -19,18 +19,17 @@ using System.Linq;
 
 namespace TurnipTracker.Functions
 {
-    public static class GetFriendRequests
+    public static class GetFriendRequestCount
     {
-        [FunctionName(nameof(GetFriendRequests))]
+        [FunctionName(nameof(GetFriendRequestCount))]
         public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetFriendRequests/{myPublicKey}")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetFriendRequestCount/{myPublicKey}")] HttpRequest req,
             string myPublicKey,
             [Table("FriendRequest")] CloudTable friendRequestTable,
-            [Table("Friend")] CloudTable friendTable,
             [Table("User")] CloudTable userTable,
             ILogger log)
         {
-            log.LogInformation($"C# HTTP trigger {nameof(SubmitFriendRequest)} function processed a request.");
+            log.LogInformation($"C# HTTP trigger {nameof(GetFriendRequestCount)} function processed a request.");
 
 
             var privateKey = Utils.ParseToken(req);
@@ -55,40 +54,17 @@ namespace TurnipTracker.Functions
             }
 
 
-            var requests = new List<PendingFriendRequest>();
+            var requests = new FriendRequestCount();
             try
             {
                 var publicKeyFilter = TableQuery.GenerateFilterCondition("PartitionKey", 
                     QueryComparisons.Equal, myPublicKey);
 
-                var rangeQuery = new TableQuery<FriendRequestEntity>().Where(publicKeyFilter);
+                var rangeQuery = new TableQuery<FriendRequestEntity>().Where(publicKeyFilter).Select(new List<string> { "PartitionKey", "RowKey", "Timestamp" });
 
                 var existingFriendRequests = await friendRequestTable.ExecuteQuerySegmentedAsync(rangeQuery, null);
 
-                // spin off tasks for finding all friends
-                var tasks = new List<Task<TableQuerySegment<UserEntity>>>();
-                foreach (var f in existingFriendRequests)
-                {
-                    tasks.Add(Utils.FindFriendTask(userTable, f.RequesterPublicKey));
-                }
-
-                await Task.WhenAll(tasks);
-
-                for (var i = 0; i < tasks.Count; i++)
-                {
-                    var t = tasks[i];
-                    var friend = t.Result?.Results?.FirstOrDefault();
-                    if (friend == null)
-                        if (friend == null)
-                        continue;
-                    requests.Add(new PendingFriendRequest
-                    {
-                        CreationDateUTC = existingFriendRequests.ElementAt(i).Timestamp.UtcDateTime,
-                        IslandName = friend.IslandName,
-                        Name = friend.Name,
-                        RequesterPublicKey = friend.PublicKey
-                    });
-                }
+                requests.Count =  existingFriendRequests.Count();
 
             }
             catch (Exception ex)

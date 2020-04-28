@@ -4,6 +4,10 @@ using System.Text;
 
 namespace TurnipTracker.Shared
 {
+    public class FriendRequestCount
+    {
+        public int Count { get; set; }
+    }
     public class FriendRequest
     {
         public string MyPublicKey { get; set; }

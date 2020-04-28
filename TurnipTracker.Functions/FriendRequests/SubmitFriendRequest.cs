@@ -53,7 +53,7 @@ namespace TurnipTracker.Functions
 
             try
             {
-                var user = await Utils.FindUserEntity(userTable, privateKey, friendRequest.MyPublicKey);
+                var user = await Utils.FindUserEntitySlim(userTable, privateKey, friendRequest.MyPublicKey);
                 if (user == null)
                     return new BadRequestResult();
             }

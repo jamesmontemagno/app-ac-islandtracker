@@ -60,6 +60,8 @@ namespace TurnipTracker.ViewModel
                 FriendRequests.Remove(pendingFriendRequest);
                 DataService.ClearCache(DataService.FriendRequestKey);
                 forceRefresh = true;
+
+                SettingsService.FriendRequestCount = FriendRequests.Count == 0 ? string.Empty : FriendRequests.Count.ToString();
             }
             catch (Exception ex)
             {
@@ -96,6 +98,7 @@ namespace TurnipTracker.ViewModel
                 FriendRequests.ReplaceRange(requests);
                 SettingsService.LastFriendRequestsUpdate = DateTime.UtcNow;
                 OnPropertyChanged(nameof(LastUpdate));
+                SettingsService.FriendRequestCount = FriendRequests.Count == 0 ? string.Empty : FriendRequests.Count.ToString();
             }
             catch (Exception ex)
             {
@@ -134,6 +137,7 @@ namespace TurnipTracker.ViewModel
                 forceRefresh = true;
                 DataService.ClearCache(DataService.FriendRequestKey);
                 OnPropertyChanged(nameof(ShowNoFriends));
+                SettingsService.FriendRequestCount = FriendRequests.Count == 0 ? string.Empty : FriendRequests.Count.ToString();
             }
             catch (Exception ex)
             {

@@ -19,6 +19,29 @@ namespace TurnipTracker.ViewModel
         public ObservableRangeCollection<FriendStatus> Friends { get; }
         public bool ShowNoFriends => Friends.Count == 0;
 
+        public FriendsViewModel()
+        {
+            Friends = new ObservableRangeCollection<FriendStatus>();
+            RegisterFriendClipboardCommand = new AsyncCommand(RegisterFriendClipboard);
+            RegisterFriendCommand = new AsyncCommand<string>(RegisterFriend);
+            RefreshCommand = new AsyncCommand(RefreshAsync);
+            SendFriendRequestCommand = new AsyncCommand<Xamarin.Forms.View>(SendFriendRequest);
+            RemoveFriendCommand = new AsyncCommand<FriendStatus>(RemoveFriend);
+            GoToFriendRequestCommand = new AsyncCommand(GoToFriendRequest);
+            var cache = DataService.GetCache<IEnumerable<FriendStatus>>(DataService.FriendKey);
+            if(cache != null)
+                Friends.ReplaceRange(cache.OrderByDescending(s => s.TurnipUpdateTimeUTC));
+
+            
+        }
+
+        string requestCount = string.Empty;
+        public string RequestCount
+        {
+            get => requestCount;
+            set => SetProperty(ref requestCount, value);
+        }
+
         bool forceRefresh = false;
 
         public string LastUpdate
@@ -32,20 +55,7 @@ namespace TurnipTracker.ViewModel
                 return $"Last update: {local.ToShortDateString()} at {local.ToShortTimeString()}";
             }
         }
-        
-        public FriendsViewModel()
-        {
-            Friends = new ObservableRangeCollection<FriendStatus>();
-            RegisterFriendClipboardCommand = new AsyncCommand(RegisterFriendClipboard);
-            RegisterFriendCommand = new AsyncCommand<string>(RegisterFriend);
-            RefreshCommand = new AsyncCommand(RefreshAsync);
-            SendFriendRequestCommand = new AsyncCommand<Xamarin.Forms.View>(SendFriendRequest);
-            RemoveFriendCommand = new AsyncCommand<FriendStatus>(RemoveFriend);
-            GoToFriendRequestCommand = new AsyncCommand(GoToFriendRequest);
-            var cache = DataService.GetCache<IEnumerable<FriendStatus>>("get_friends");
-            if(cache != null)
-                Friends.ReplaceRange(cache.OrderByDescending(s => s.TurnipUpdateTimeUTC));
-        }
+
 
         public AsyncCommand<Xamarin.Forms.View> SendFriendRequestCommand { get; set; }
 
@@ -157,7 +167,7 @@ namespace TurnipTracker.ViewModel
 
             if (!SettingsService.HasRegistered)
             {
-                await App.Current.MainPage.DisplayAlert("Register First", "Please register your account on the profile tab.", "OK");
+                await DisplayAlert("Register First", "Please register your account on the profile tab.");
                 return;
             }
 
@@ -171,11 +181,26 @@ namespace TurnipTracker.ViewModel
                     OnPropertyChanged(nameof(ShowNoFriends));
                 }
 
-                var statuses = await DataService.GetFriendsAsync(forceRefresh);
+                var friendsTask = DataService.GetFriendsAsync(forceRefresh);
+                var countTask = DataService.GetFriendRequestCountAsync();
+                await Task.WhenAll(friendsTask, countTask);
+                if (friendsTask.IsFaulted && friendsTask.Exception != null)
+                    throw friendsTask.Exception;
+
+                var statuses = friendsTask.Result;
                 forceRefresh = false;
                 Friends.ReplaceRange(statuses.OrderByDescending(s=>s.TurnipUpdateTimeUTC));
                 SettingsService.LastFriendsUpdate = DateTime.UtcNow;
                 OnPropertyChanged(nameof(LastUpdate));
+
+                if (!countTask.IsFaulted)
+                    RequestCount = countTask.Result.Count == 0 ? string.Empty : countTask.Result.Count.ToString();
+                else
+                    RequestCount = string.Empty;
+
+
+                SettingsService.FriendRequestCount = RequestCount;
+
             }
             catch (Exception ex)
             {

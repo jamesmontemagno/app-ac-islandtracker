@@ -72,5 +72,11 @@ namespace TurnipTracker.Services
             get => Preferences.Get(nameof(LastFriendRequestsUpdate), DateTime.MinValue);
             set => Preferences.Set(nameof(LastFriendRequestsUpdate), value);
         }
+
+        public static string FriendRequestCount
+        {
+            get => Preferences.Get(nameof(FriendRequestCount), string.Empty);
+            set => Preferences.Set(nameof(FriendRequestCount), value);
+        }
     }
 }

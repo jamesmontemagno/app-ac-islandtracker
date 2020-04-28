@@ -176,6 +176,7 @@ namespace TurnipTracker.Services
 
         public const string FriendKey = "get_friends";
         public const string FriendRequestKey = "get_friend_requests";
+        public const string FriendRequestCountKey = "get_friend_requests_count";
 
         public void ClearCache(string key) =>
             Barrel.Current.Empty(key);
@@ -189,6 +190,13 @@ namespace TurnipTracker.Services
             
             return JsonConvert.DeserializeObject<T>(json);
 
+        }
+
+        public async Task<FriendRequestCount> GetFriendRequestCountAsync(bool forceRefresh = false)
+        {
+            var publicKey = await SettingsService.GetPublicKey();
+
+            return await GetAsync<FriendRequestCount>($"api/GetFriendRequestCount/{publicKey}?code={App.GetFriendRequestCountKey}", FriendRequestCountKey, 1, forceRefresh);
         }
 
         public async Task<IEnumerable<FriendStatus>> GetFriendsAsync(bool forceRefresh = false)
