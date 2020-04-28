@@ -306,7 +306,7 @@
             </CollectionView.ItemTemplate>
             <CollectionView.Footer>
                 <StackLayout HorizontalOptions="Center">
-                    <Label Text="{Binding LastUpdate}" HorizontalOptions="Center"/>
+                    <Label Text="{Binding LastUpdate}"  TextColor="{StaticResource TextPrimaryColor}" HorizontalOptions="Center"/>
                 </StackLayout>
             </CollectionView.Footer>
         </CollectionView>
