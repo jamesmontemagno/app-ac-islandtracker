@@ -19,7 +19,7 @@ namespace TurnipTracker.View
 
         async void ButonAddJames_Clicked(object sender, EventArgs e)
         {
-            var key = string.Empty;
+            var key = "dadc5a94-6a46-4832-9297-9652a22dbb73";
             var message = $"acislandtracker://friends/invite?id={key}&name=James";
 
             await Launcher.OpenAsync(message);
