@@ -194,7 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TurnipTracker\TurnipTracker.csproj">
-      <Project>{E6B3451A-0A65-46D0-8CED-6A9C229BFC80}</Project>
+      <Project>{1D021C29-37D7-4817-B67E-D27A9232989C}</Project>
       <Name>TurnipTracker</Name>
     </ProjectReference>
   </ItemGroup>

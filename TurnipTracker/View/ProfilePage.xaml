@@ -146,12 +146,12 @@
                                                      iOS='12'}"
                                 HorizontalOptions="FillAndExpand"
                                 Style="{StaticResource AcrylicFrame}">
-                                <maskededit:SfMaskedEdit
-                                    BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
+                                <Entry
+                                    BackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                     FontSize="24"
                                     IsEnabled="{Binding IsNotBusy}"
                                     TextColor="{StaticResource TextPrimaryColor}"
-                                    Value="{Binding Profile.Status}" />
+                                    Text="{Binding Profile.Status}" />
                             </sharpnado:MaterialFrame>
                             <sharpnado:MaterialFrame Margin="12,0,0,0" Style="{StaticResource AcrylicButton}">
                                 <effectsview:SfEffectsView

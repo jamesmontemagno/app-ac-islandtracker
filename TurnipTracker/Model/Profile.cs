@@ -15,11 +15,15 @@ namespace TurnipTracker.Model
             get => name;
             set
             {
-                if(value.Length > 15)
+                var force = false;
+                if (value.Length > 15)
                 {
                     value = value.Substring(0, 15);
+                    force = true;
                 }
                 SetProperty(ref name, value, onChanged: SaveProfileAction);
+                if (force)
+                    OnPropertyChanged();
             }
         }
 
@@ -29,11 +33,15 @@ namespace TurnipTracker.Model
             get => islandName;
             set
             {
+                var force = false;
                 if (value.Length > 15)
                 {
                     value = value.Substring(0, 15);
+                    force = true;
                 }
                 SetProperty(ref islandName, value, onChanged: SaveProfileAction);
+                if (force)
+                    OnPropertyChanged();
             }
         }
 
@@ -43,11 +51,15 @@ namespace TurnipTracker.Model
             get => status;
             set
             {
+                var force = false;
                 if (value.Length > 4)
                 {
                     value = value.Substring(0, 4);
+                    force = true;
                 }
                 SetProperty(ref status, value, onChanged: SaveProfileAction);
+                if (force)
+                    OnPropertyChanged();
             }
         }
 

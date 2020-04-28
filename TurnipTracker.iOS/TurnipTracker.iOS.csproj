@@ -212,8 +212,15 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\TurnipTracker\TurnipTracker.csproj">
-      <Project>{E6B3451A-0A65-46D0-8CED-6A9C229BFC80}</Project>
+      <Project>{1D021C29-37D7-4817-B67E-D27A9232989C}</Project>
       <Name>TurnipTracker</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TurnipTracker.Shared\TurnipTracker.Shared.csproj">
+      <Project>{1BC0C5E2-1B1A-4D63-B618-49412C4B229D}</Project>
+      <Name>TurnipTracker.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_splash_logo.png" />
   </ItemGroup>
 </Project>

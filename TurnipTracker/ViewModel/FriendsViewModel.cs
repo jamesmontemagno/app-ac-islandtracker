@@ -10,6 +10,7 @@ using TurnipTracker.Services;
 using TurnipTracker.Shared;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using TurnipTracker.Helpers;
 
 namespace TurnipTracker.ViewModel
 {
@@ -38,17 +39,17 @@ namespace TurnipTracker.ViewModel
             RegisterFriendClipboardCommand = new AsyncCommand(RegisterFriendClipboard);
             RegisterFriendCommand = new AsyncCommand<string>(RegisterFriend);
             RefreshCommand = new AsyncCommand(RefreshAsync);
-            SendFriendRequestCommand = new AsyncCommand(SendFriendRequest);
+            SendFriendRequestCommand = new AsyncCommand<Xamarin.Forms.View>(SendFriendRequest);
             RemoveFriendCommand = new AsyncCommand<FriendStatus>(RemoveFriend);
             GoToFriendRequestCommand = new AsyncCommand(GoToFriendRequest);
             var cache = DataService.GetCache<IEnumerable<FriendStatus>>("get_friends");
             if(cache != null)
-                Friends.ReplaceRange(cache.OrderByDescending(s => s.TurnipUpdateDayOfYear));
+                Friends.ReplaceRange(cache.OrderByDescending(s => s.TurnipUpdateTimeUTC));
         }
 
-        public AsyncCommand SendFriendRequestCommand { get; set; }
+        public AsyncCommand<Xamarin.Forms.View> SendFriendRequestCommand { get; set; }
 
-        async Task SendFriendRequest()
+        async Task SendFriendRequest(Xamarin.Forms.View element)
         {
             if(!SettingsService.HasRegistered)
             {
@@ -76,13 +77,15 @@ namespace TurnipTracker.ViewModel
             var key = await SettingsService.GetPublicKey();
             var message = $"acislandtracker://friends/invite?id={key}&name={Uri.EscapeDataString(name)}";
 
-//#if DEBUG
-//            await Launcher.OpenAsync(message);
-//#else
+            //#if DEBUG
+            //            await Launcher.OpenAsync(message);
+            //#else
+            var bounds = element.GetAbsoluteBounds();
             await Share.RequestAsync(new ShareTextRequest
             {
                 Title = "Island Tracker Invite",
-                Text = message
+                Text = message,
+                PresentationSourceBounds = bounds.ToSystemRectangle()
             });
 //#endif
         }
@@ -166,7 +169,7 @@ namespace TurnipTracker.ViewModel
 
                 var statuses = await DataService.GetFriendsAsync(forceRefresh);
                 forceRefresh = false;
-                Friends.ReplaceRange(statuses.OrderByDescending(s=>s.TurnipUpdateDayOfYear));
+                Friends.ReplaceRange(statuses.OrderByDescending(s=>s.TurnipUpdateTimeUTC));
                 SettingsService.LastFriendsUpdate = DateTime.UtcNow;
                 OnPropertyChanged(nameof(LastUpdate));
             }

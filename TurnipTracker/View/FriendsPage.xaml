@@ -117,7 +117,8 @@
                                 <effectsview:SfEffectsView
                                     Padding="24,12"
                                     CornerRadius="10"
-                                    TouchUpCommand="{Binding SendFriendRequestCommand}">
+                                    TouchUpCommand="{Binding SendFriendRequestCommand}"
+                                    TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
                                     <Label
                                         FontFamily="FA-S"
                                         FontSize="24"
