@@ -125,7 +125,11 @@ namespace TurnipTracker.ViewModel
                 if (string.IsNullOrWhiteSpace(uriString))
                     return false;
 
-                var uri = new Uri(uriString);
+                var created = Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out var uri);
+
+                if (!created)
+                    return false;
+
                 if (uri != null && uri.Host == "friends" && uri.Scheme == "acislandtracker")
                 {
 
