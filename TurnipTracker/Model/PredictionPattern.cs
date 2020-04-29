@@ -8,6 +8,6 @@ namespace TurnipTracker.Model
         SmallSpike,
         LargeSpike,
         Decreasing,
-        All
+        All,
     }
 }
