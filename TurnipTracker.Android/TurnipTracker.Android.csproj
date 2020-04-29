@@ -100,7 +100,7 @@
     <PackageReference Include="Syncfusion.Xamarin.SfChart">
       <Version>18.1.0.46</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.616-pre4" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.726" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.1" />
     <PackageReference Include="Refractored.MvvmHelpers">
       <Version>1.6.1-beta</Version>
@@ -109,7 +109,7 @@
       <Version>1.4.2-beta</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.Visual.Material">
-      <Version>4.6.0.616-pre4</Version>
+      <Version>4.6.0.726</Version>
     </PackageReference>
     <PackageReference Include="Sharpnado.Presentation.Forms">
       <Version>1.5.1</Version>
