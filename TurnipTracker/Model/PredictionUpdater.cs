@@ -2,31 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 
-#nullable enable
 namespace TurnipTracker.Model
 {
     public static class PredictionUpdater
     {
-        internal static (int minSell, int maxSell) Update(List<Day> days)
+        internal static void Update(List<Day> days)
         {
             var sellPrices = GetPricesFromDays(days);
-            var firstBuy = sellPrices[0] == 0;
-            var dailyMinMax = GetDailyMinMax(sellPrices, firstBuy);
+            var dailyMinMax = Predictor.GetDailyMinMax(sellPrices);
             for (var i = 0; i < days.Count; i++)
             {
                 var day = days[i];
                 if (!day.PriceAM.HasValue)
                 {
                     var (min, max) = dailyMinMax.GetMinMax(i, isPM: false);
-                    if(min == 999 && max == 0)
-                    {
-                        min = 0;
-                        max = 999;
-                    }
                     if (min == max)
                         day.PredictionAM = $"🔮 {min}";
-                    else if (min == 999 || max == 0 || min == 0 || max == 999)
-                        day.PredictionAM = string.Empty;
                     else
                         day.PredictionAM = $"🔮 {min}-{max}";
 
@@ -43,18 +34,10 @@ namespace TurnipTracker.Model
                 if (!day.PricePM.HasValue)
                 {
                     var (min, max) = dailyMinMax.GetMinMax(i, isPM: true);
-                    if (min == 999 && max == 0)
-                    {
-                        min = 0;
-                        max = 999;
-                    }
                     if (min == max)
                         day.PredictionPM = $"🔮 {min}";
-                    else if (min == 999 || max == 0 || min == 0 || max == 999)
-                        day.PredictionAM = string.Empty;
                     else
                         day.PredictionPM = $"🔮 {min}-{max}";
-
                     day.PredictionPMMin = min;
                     day.PredictionPMMax = max;
                 }
@@ -65,28 +48,6 @@ namespace TurnipTracker.Model
                     day.PredictionAMMax = 0;
                 }
             }
-            return (dailyMinMax.WeekGuaranteedMinimum, dailyMinMax.WeekMax);
-        }
-
-        static PredictedPriceSeries GetDailyMinMax(int[] sellPrices, bool firstBuy)
-        {
-            if (sellPrices == null) 
-                throw new ArgumentNullException(nameof(sellPrices));
-
-            var predictor = new Predictor(sellPrices, firstBuy, PredictionPattern.IDontKnow);
-            var generatedPossibilities = predictor.AnalyzePossibilities();
-            var dailyMinMax = GetDailyMinMax(generatedPossibilities);
-            return dailyMinMax;
-        }
-
-        static PredictedPriceSeries GetDailyMinMax(List<PredictedPriceSeries> allSeries)
-        {
-            foreach (var series in allSeries)
-            {
-                if (series.PatternNumber == PredictionPattern.All)
-                    return series;
-            }
-            throw new ApplicationException("No All Patterns series found");
         }
 
         static int[] GetPricesFromDays(List<Day> days)
