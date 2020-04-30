@@ -1137,8 +1137,8 @@ namespace TurnipTracker.Model
             }
 
             var allSeries = new PredictedPriceSeries("All patterns", PredictionPattern.All, global_min_max, 0);
-            allSeries.WeekGuaranteedMinimum = generated_possibilities.Select(poss => poss.WeekGuaranteedMinimum).Min();
-            allSeries.WeekMax = generated_possibilities.Select(poss => poss.WeekMax).Max();
+            allSeries.WeekGuaranteedMinimum = generated_possibilities.Count == 0 ? 0 : generated_possibilities.Select(poss => poss.WeekGuaranteedMinimum).Min();
+            allSeries.WeekMax = generated_possibilities.Count == 0 ? 0 : generated_possibilities.Select(poss => poss.WeekMax).Max();
             allSeries.Probability = 1;
             allSeries.CategoryTotalProbability = 1;
             generated_possibilities.Insert(0, allSeries);
