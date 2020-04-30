@@ -926,7 +926,7 @@ namespace TurnipTracker.Model
             if (probability == 0)
                 yield break;
 
-            yield return new PredictedPriceSeries("Decreasingg", PredictionPattern.Decreasing, predictedPrices, probability);
+            yield return new PredictedPriceSeries("Decreasing", PredictionPattern.Decreasing, predictedPrices, probability);
         }
 
         PredictedPriceSeries? GeneratePatternSmallSpikeWithPeak(
