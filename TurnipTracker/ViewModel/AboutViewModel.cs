@@ -8,6 +8,7 @@ using System.Windows.Input;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
 using Newtonsoft.Json;
+using TurnipTracker.Model;
 using TurnipTracker.Services;
 using Xamarin.Essentials;
 
@@ -30,6 +31,8 @@ namespace TurnipTracker.ViewModel
         public AsyncCommand SubscribeCommand { get; }
         public AsyncCommand<string> OpenBrowserCommand { get; }
 
+        public List<AttributionItem> Attributions { get; }
+
 
         List<(string Title, string Key, string Platforms)> podcasts;
         public AboutViewModel()
@@ -37,6 +40,21 @@ namespace TurnipTracker.ViewModel
             SubscribeCommand = new AsyncCommand(Subscribe);
             SendEmailCommand = new AsyncCommand(SendEmail);
             OpenBrowserCommand = new AsyncCommand<string>(OpenBrowser);
+
+            Attributions = new List<AttributionItem>
+            {
+                new AttributionItem { Tag = "ac-nh-turnip-prices", Text = "Mike Bryant - Turnip predictor algorithm"},
+                new AttributionItem { Tag = "prophet", Text = "Mike Bryant - Turnip Prophet"},
+                new AttributionItem { Tag = "ninji", Text = "Ninji - original ACNH code port"},
+                new AttributionItem { Tag = "sparkie108", Text="Steve aka sparkie108 for porting code"},
+                new AttributionItem { Tag = "mvvm-helpers", Text ="Mvvm Helpers"},
+                new AttributionItem { Tag = "monkey-cache", Text = "Monkey Cache"},
+                new AttributionItem { Tag = "pancake", Text="PancakeView"},
+                new AttributionItem { Tag = "sharpnado", Text = "Sharpnado"},
+                new AttributionItem { Tag = "syncfusion", Text = "Syncfusion for Xamarin"},
+                new AttributionItem { Tag = "essentials", Text = "Xamarin.Essentials"},
+                new AttributionItem { Tag = "forms", Text = "Xamarin.Forms"}
+            };
             podcasts = new List<(string Title, string Key, string Platforms)>
             {
                 ("Apple Podcasts", "dispatch_apple", DevicePlatform.iOS.ToString()),
@@ -78,6 +96,17 @@ namespace TurnipTracker.ViewModel
         {
             var url = type switch
             {
+                "ac-nh-turnip-prices" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/ac-nh-turnip-prices.txt",
+                "prophet" => "https://turnipprophet.io/",
+                "ninji" => "https://twitter.com/_Ninji/status/1244818665851289602?s=20",
+                "sparkie108" => "https://github.com/sparkie108",
+                "mvvm-helpers" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/mvvm-helpers.txt",
+                "monkey-cache" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/monkey-cache.txt",
+                "pancake" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/pancakeview.txt",
+                "sharpnado" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/sharpnado.txt",
+                "syncfusion" => "https://www.syncfusion.com/xamarin-ui-controls",
+                "essentials" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/xamarin-essentials.txt",
+                "forms" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/xamarin-forms.txt",
                 "github" => "https://www.github.com/jamesmontemagno",
                 "twitter" => "https://www.twitter.com/jamesmontemagno",
                 "dispatch_apple" => "https://itunes.apple.com/us/podcast/nintendo-dispatch/id1378538583?mt=2&ls=1",

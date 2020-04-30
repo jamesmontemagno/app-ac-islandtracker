@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using TurnipTracker.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
@@ -26,6 +26,12 @@ namespace TurnipTracker.View
             safeInsets.Bottom = 0;
             Padding = safeInsets;
             base.OnSizeAllocated(width, height);
+        }
+
+        protected override void OnAppearing()
+        {
+            ((FriendRequestViewModel)BindingContext).RefreshCommand.ExecuteAsync().ContinueWith((r) => { });
+            base.OnAppearing();
         }
 
         protected override bool OnBackButtonPressed()

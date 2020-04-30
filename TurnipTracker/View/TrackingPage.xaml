@@ -30,6 +30,7 @@
             <converters:DifferenceColorConverter x:Key="DifferenceColorConverter" />
             <converters:StringEmptyConverter x:Key="StringEmptyConverter" />
             <converters:SelectedDayColorConverter x:Key="SelectedDayColorConverter" />
+            <converters:EmptyBellConverter x:Key="EmptyBellConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -572,6 +573,7 @@
                             FontFamily="AnimalCrossing"
                             FontSize="Micro"
                             HorizontalOptions="Center"
+                            IsVisible="{Binding Min, Converter={StaticResource EmptyBellConverter}}"
                             Text="{Binding Min, StringFormat='Guaranteed Weekly Min: {0}'}"
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="End" />
@@ -582,6 +584,7 @@
                             FontFamily="AnimalCrossing"
                             FontSize="Micro"
                             HorizontalOptions="Center"
+                            IsVisible="{Binding Max, Converter={StaticResource EmptyBellConverter}}"
                             Text="{Binding Max, StringFormat='Potential Weekly Max: {0}'}"
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="End" />

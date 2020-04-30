@@ -10,6 +10,7 @@
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
     xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
+    xmlns:model="clr-namespace:TurnipTracker.Model"
     xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
     ios:Page.UseSafeArea="True"
     x:DataType="viewmodel:AboutViewModel"
@@ -182,6 +183,29 @@
                                 </pancake:PancakeView>
                             </StackLayout>
                         </Grid>
+                    </sharpnado:MaterialFrame>
+
+                    <Label
+                        Margin="0,24,0,0"
+                        FontFamily="AnimalCrossing"
+                        FontSize="Large"
+                        Text="Made possible by:"
+                        TextColor="{StaticResource TextPrimaryColor}" />
+                    <sharpnado:MaterialFrame
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <StackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Attributions}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="model:AttributionItem">
+                                    <Label Text="{Binding Text}" FontSize="Medium" TextColor="{StaticResource TextPrimaryColor}">
+                                        <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AboutViewModel}}, Path=OpenBrowserCommand}"
+                                                              CommandParameter="{Binding Tag}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
                     </sharpnado:MaterialFrame>
                 </StackLayout>
             </pancake:PancakeView>

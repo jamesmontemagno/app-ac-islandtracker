@@ -85,6 +85,12 @@ namespace TurnipTracker.ViewModel
         public void SaveCurrentWeek()
         {
             DataService.SaveCurrentWeek(Days);
+            // skip if still entring AM
+            if (SelectedDay.PriceAM.HasValue && SelectedDay.PriceAM.Value < 10)
+                return;
+            if (SelectedDay.PricePM.HasValue && SelectedDay.PricePM.Value < 10)
+                return;
+
             UpdatePredications();
         }
 
@@ -139,7 +145,7 @@ namespace TurnipTracker.ViewModel
 
         public void UpdatePredications()
         {
-            var (minSell, maxSell) = PredictionUpdater.Update(Days);
+            
 
             var sunday = Days[0];
             if ((sunday.BuyPrice.HasValue || sunday.ActualPurchasePrice.HasValue) && SelectedDay != sunday)
@@ -171,9 +177,17 @@ namespace TurnipTracker.ViewModel
                     SelectedDay.DifferencePM = string.Empty;
                 }
             }
-
-            Min = minSell;
-            Max = maxSell;
+            try
+            {
+                var (minSell, maxSell) = PredictionUpdater.Update(Days);
+                Min = minSell;
+                Max = maxSell;
+            }
+            catch(Exception ex)
+            {
+                Min = 0;
+                Max = 0;
+            }
 
             if (IsGraphExpanded)
                 UpdateGraph();

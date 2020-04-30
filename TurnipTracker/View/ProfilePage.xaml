@@ -15,7 +15,7 @@
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
     xmlns:view="clr-namespace:TurnipTracker.View"
-    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel" xmlns:controls="clr-namespace:TurnipTracker.Controls"
     ios:Page.UseSafeArea="True"
     x:DataType="viewmodel:ProfileViewModel"
     BackgroundColor="{StaticResource NavigationPrimary}"
@@ -98,6 +98,7 @@
                             HorizontalOptions="FillAndExpand"
                             Style="{StaticResource AcrylicFrame}">
                             <combobox:SfComboBox
+                                x:Name="ComboBoxFruit"
                                 BackgroundColor="Transparent"
                                 BorderColor="Transparent"
                                 DropDownItemHeight="50"
@@ -126,10 +127,12 @@
                             FontFamily="AnimalCrossing"
                             FontSize="Medium"
                             Text="Time Zone"
+                            IsVisible="False"
                             TextColor="{StaticResource TextPrimaryColor}" />
                         <sharpnado:MaterialFrame
                             Padding="12"
                             HeightRequest="28"
+                            IsVisible="False"
                             HorizontalOptions="FillAndExpand"
                             Style="{StaticResource AcrylicFrame}"
                             VerticalOptions="Start" />
@@ -146,7 +149,7 @@
                                                      iOS='12'}"
                                 HorizontalOptions="FillAndExpand"
                                 Style="{StaticResource AcrylicFrame}">
-                                <Entry
+                                <controls:BorderlessEntry
                                     BackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                     FontSize="24"
                                     IsEnabled="{Binding IsNotBusy}"

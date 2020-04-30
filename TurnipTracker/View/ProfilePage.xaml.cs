@@ -7,10 +7,18 @@ namespace TurnipTracker.View
 {
     public partial class ProfilePage : ContentPage
     {
+        ProfileViewModel vm;
         public ProfilePage()
         {
             InitializeComponent();
-            BindingContext = new ProfileViewModel();
+            BindingContext = vm = new ProfileViewModel();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            ComboBoxFruit.SelectedItem = ComboBoxFruit.ComboBoxSource[vm.Profile.Fruit];
         }
     }
 }

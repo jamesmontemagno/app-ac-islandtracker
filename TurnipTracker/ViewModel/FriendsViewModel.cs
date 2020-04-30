@@ -52,7 +52,7 @@ namespace TurnipTracker.ViewModel
                 if (time == DateTime.MinValue)
                     return string.Empty;
                 var local = time.ToLocalTime();
-                return $"Last update: {local.ToShortDateString()} at {local.ToShortTimeString()}";
+                return $"Last friend sync: {local.ToShortDateString()} at {local.ToShortTimeString()}";
             }
         }
 
@@ -116,16 +116,19 @@ namespace TurnipTracker.ViewModel
         public AsyncCommand<string> RegisterFriendCommand { get; }
         public AsyncCommand RegisterFriendClipboardCommand { get; }
 
-        async Task RegisterFriendClipboard()
+        public async Task<bool> RegisterFriendClipboard()
         {
             if (!Clipboard.HasText)
-                return;
+                return false;
 
             var clip = await Clipboard.GetTextAsync();
             if(await RegisterFriend(clip))
             {
                 await Clipboard.SetTextAsync(string.Empty);
+                return true;
             }
+
+            return false;
         }
 
         async Task<bool> RegisterFriend(string uriString)

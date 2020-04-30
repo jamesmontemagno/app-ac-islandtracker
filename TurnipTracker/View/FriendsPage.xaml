@@ -67,7 +67,8 @@
                                 <effectsview:SfEffectsView
                                     Padding="18,12,12,12"
                                     CornerRadius="10"
-                                    TouchUpCommand="{Binding GoToFriendRequestCommand}">
+                                    TouchUpCommand="{Binding GoToFriendRequestCommand}"
+                                    IsEnabled="{Binding IsNotBusy}">
                                     <Grid ColumnSpacing="12">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
@@ -112,6 +113,7 @@
                                     Padding="24,12"
                                     CornerRadius="10"
                                     TouchUpCommand="{Binding SendFriendRequestCommand}"
+                                    IsEnabled="{Binding IsNotBusy}"
                                     TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
                                     <Label
                                         FontFamily="FA-S"
@@ -132,6 +134,7 @@
                                 <effectsview:SfEffectsView
                                     Padding="24,12"
                                     CornerRadius="10"
+                                    IsEnabled="{Binding IsNotBusy}"
                                     TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=RefreshCommand}">
                                     <Label
                                         FontFamily="FA-S"
@@ -303,6 +306,8 @@
                 <StackLayout HorizontalOptions="Center">
                     <Label
                         HorizontalOptions="Center"
+                        FontSize="Micro"
+                        FontFamily="AnimalCrossing"
                         Text="{Binding LastUpdate}"
                         TextColor="{StaticResource TextPrimaryColor}" />
                 </StackLayout>

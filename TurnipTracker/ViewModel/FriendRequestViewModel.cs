@@ -33,9 +33,9 @@ namespace TurnipTracker.ViewModel
             RefreshCommand = new AsyncCommand(RefreshAsync);
             DenyFriendRequestCommand = new AsyncCommand<PendingFriendRequest>(DenyFriendRequest);
             ApproveFriendRequestCommand = new AsyncCommand<PendingFriendRequest>(ApproveFriendRequest);
-            var cache = DataService.GetCache<IEnumerable<PendingFriendRequest>>("get_friend_requests");
-            if (cache != null)
-                FriendRequests.ReplaceRange(cache);
+            //var cache = DataService.GetCache<IEnumerable<PendingFriendRequest>>("get_friend_requests");
+            //if (cache != null)
+            //    FriendRequests.ReplaceRange(cache);
         }
 
         public AsyncCommand<PendingFriendRequest> ApproveFriendRequestCommand { get; }

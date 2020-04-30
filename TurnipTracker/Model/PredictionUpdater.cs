@@ -18,8 +18,15 @@ namespace TurnipTracker.Model
                 if (!day.PriceAM.HasValue)
                 {
                     var (min, max) = dailyMinMax.GetMinMax(i, isPM: false);
+                    if(min == 999 && max == 0)
+                    {
+                        min = 0;
+                        max = 999;
+                    }
                     if (min == max)
                         day.PredictionAM = $"🔮 {min}";
+                    else if (min == 999 || max == 0 || min == 0 || max == 999)
+                        day.PredictionAM = string.Empty;
                     else
                         day.PredictionAM = $"🔮 {min}-{max}";
 
@@ -36,10 +43,18 @@ namespace TurnipTracker.Model
                 if (!day.PricePM.HasValue)
                 {
                     var (min, max) = dailyMinMax.GetMinMax(i, isPM: true);
+                    if (min == 999 && max == 0)
+                    {
+                        min = 0;
+                        max = 999;
+                    }
                     if (min == max)
                         day.PredictionPM = $"🔮 {min}";
+                    else if (min == 999 || max == 0 || min == 0 || max == 999)
+                        day.PredictionAM = string.Empty;
                     else
                         day.PredictionPM = $"🔮 {min}-{max}";
+
                     day.PredictionPMMin = min;
                     day.PredictionPMMax = max;
                 }
@@ -55,7 +70,8 @@ namespace TurnipTracker.Model
 
         static PredictedPriceSeries GetDailyMinMax(int[] sellPrices, bool firstBuy)
         {
-            if (sellPrices == null) throw new ArgumentNullException(nameof(sellPrices));
+            if (sellPrices == null) 
+                throw new ArgumentNullException(nameof(sellPrices));
 
             var predictor = new Predictor(sellPrices, firstBuy, PredictionPattern.IDontKnow);
             var generatedPossibilities = predictor.AnalyzePossibilities();
