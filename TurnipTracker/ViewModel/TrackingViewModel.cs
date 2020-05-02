@@ -85,12 +85,6 @@ namespace TurnipTracker.ViewModel
         public void SaveCurrentWeek()
         {
             DataService.SaveCurrentWeek(Days);
-            // skip if still entring AM
-            if (SelectedDay.PriceAM.HasValue && SelectedDay.PriceAM.Value < 10)
-                return;
-            if (SelectedDay.PricePM.HasValue && SelectedDay.PricePM.Value < 10)
-                return;
-
             UpdatePredications();
         }
 
