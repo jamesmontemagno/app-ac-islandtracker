@@ -67,6 +67,17 @@ namespace TurnipTracker.Functions.Helpers
             return (await cloudTable.ExecuteQuerySegmentedAsync(rangeQuery, null)).FirstOrDefault();
         }
 
+        public static async Task<bool> ReachedMaxFriends(CloudTable couldTable, string publicKey)
+        {
+            var publicKeyFilter = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, publicKey);
+
+            var rangeQuery = new TableQuery<FriendEntity>().Where(publicKeyFilter);
+            var friends = await couldTable.ExecuteQuerySegmentedAsync(rangeQuery, null);
+            var count = friends.Count();
+            var max = int.Parse(Environment.GetEnvironmentVariable("MAX_FRIENDS"));
+            return count >= max;
+        }
+
         public static async Task<bool> HasFriend(CloudTable cloudTable, string requesterKey, string requesteeKey)
         {
             var publicKeyFilter = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, requesterKey);

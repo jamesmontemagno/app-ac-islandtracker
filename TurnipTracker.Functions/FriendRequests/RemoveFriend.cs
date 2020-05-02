@@ -36,19 +36,19 @@ namespace TurnipTracker.Functions
             if (string.IsNullOrWhiteSpace(myPublicKey) ||
                 string.IsNullOrWhiteSpace(friendPublicKey))
             {
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Invalid data to process request");
             }
 
             try
             {
                 var user = await Utils.FindUserEntitySlim(userTable, privateKey, myPublicKey);
                 if(user == null)
-                    return new BadRequestResult();
+                    return new BadRequestErrorMessageResult("Unable to locate your user account.");
             }
             catch (Exception ex)
             {
                 log.LogInformation("User doesn't exist: " + ex.Message);
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Unable to locate your user account.");
             }
 
 

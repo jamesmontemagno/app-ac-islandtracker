@@ -11,6 +11,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 using TurnipTracker.Shared;
 using System.Web.Http;
 using TurnipTracker.Functions.Helpers;
+using System.Linq;
 
 namespace TurnipTracker.Functions
 {
@@ -48,19 +49,32 @@ namespace TurnipTracker.Functions
                 string.IsNullOrWhiteSpace(friendRequest.MyPublicKey) ||
                 string.IsNullOrWhiteSpace(friendRequest.FriendPublicKey))
             {
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Invalid data to process request");
+            }
+
+            try
+            {
+                if(await Utils.ReachedMaxFriends(friendTable, friendRequest.MyPublicKey))
+                {
+                    return new BadRequestErrorMessageResult("You have reached the max friend count at this time.");
+                }
+            }
+            catch (Exception ex)
+            {
+                log.LogInformation("Unable to count existing friends: " + ex.Message);
+                return new InternalServerErrorResult();
             }
 
             try
             {
                 var user = await Utils.FindUserEntitySlim(userTable, privateKey, friendRequest.MyPublicKey);
                 if (user == null)
-                    return new BadRequestResult();
+                    return new BadRequestErrorMessageResult("Unable to locate your user account.");
             }
             catch (Exception ex)
             {
                 log.LogInformation("User doesn't exist: " + ex.Message);
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Unable to locate your user account.");
             }
 
             try
@@ -68,7 +82,7 @@ namespace TurnipTracker.Functions
                 var requester = friendRequest.MyPublicKey;
                 var requestee = friendRequest.FriendPublicKey;
                 if (await Utils.HasFriend(friendTable, requester, requestee))
-                    return new BadRequestResult();
+                    return new BadRequestErrorMessageResult("You are already friends!");
 
                 // Create the InsertOrReplace table operation
                 var insertOperation = TableOperation.InsertOrMerge(new FriendRequestEntity

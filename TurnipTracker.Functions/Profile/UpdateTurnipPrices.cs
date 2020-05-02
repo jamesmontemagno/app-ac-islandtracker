@@ -45,7 +45,7 @@ namespace TurnipTracker.Functions
 
             if (turnipUpdate == null || string.IsNullOrWhiteSpace(turnipUpdate.PublicKey))
             {
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Invalid data to process request");
             }
 
             UserEntity userEntity = null;
@@ -57,11 +57,11 @@ namespace TurnipTracker.Functions
             {
                 log.LogInformation($"User doesn't exist - Error {nameof(UpdateTurnipPrices)} - Error: " + ex.Message);
                 //user does not exist? correct error?
-                return new InternalServerErrorResult();
+                return new BadRequestErrorMessageResult("Unable to locate your user account.");
             }
 
             if(userEntity == null)
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Unable to locate your user account.");
 
             userEntity.AMPrice = turnipUpdate.AMPrice;
             userEntity.PMPrice = turnipUpdate.PMPrice;
@@ -76,6 +76,7 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
+                log.LogError("Unable to merge user entity: " + ex.Message);
                 return new InternalServerErrorResult();
             }
 

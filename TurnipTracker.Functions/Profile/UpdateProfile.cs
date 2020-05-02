@@ -39,7 +39,7 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
-                log.LogInformation("Unable to deserialize user: " + ex.Message);
+                log.LogWarning("Unable to deserialize user: " + ex.Message);
 
             }
 
@@ -49,7 +49,7 @@ namespace TurnipTracker.Functions
                 string.IsNullOrWhiteSpace(user.IslandName) ||
                 user.TimeZone == null)
             {
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Invalid data to process request");
             }
 
             UserEntity userEntity = null;
@@ -59,13 +59,13 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
-                log.LogInformation($" User doesn't exist - Error {nameof(UpdateProfile)} - Error: " + ex.Message);
+                log.LogError($" User doesn't exist - Error {nameof(UpdateProfile)} - Error: " + ex.Message);
                 //user does not exist? correct error?
-                return new InternalServerErrorResult();
+                return new BadRequestErrorMessageResult("Unable to locate your user account.");
             }
 
             if (userEntity == null)
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Unable to locate your user account.");
 
 
             userEntity.Name = user.Name;
@@ -80,7 +80,7 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
-                log.LogInformation($"Error {nameof(UpdateProfile)} - Error: " + ex.Message);
+                log.LogError($"Error {nameof(UpdateProfile)} - Error: " + ex.Message);
                 return new InternalServerErrorResult();
             }
 

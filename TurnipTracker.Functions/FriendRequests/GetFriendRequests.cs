@@ -35,23 +35,35 @@ namespace TurnipTracker.Functions
 
             var privateKey = Utils.ParseToken(req);
             if (privateKey == null)
-                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized)
+                {
+                    Content = new StringContent("You are not authorized to make this request.")
+                };
 
             if (string.IsNullOrWhiteSpace(myPublicKey))
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("Invalid data to process request")
+                };
             }
 
             try
             {
                 var user = await Utils.FindUserEntitySlim(userTable, privateKey, myPublicKey);
                 if (user == null)
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                    return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                    {
+                        Content = new StringContent("Unable to locate your user account.")
+                    };
             }
             catch (Exception ex)
             {
-                log.LogInformation("User doesn't exist: " + ex.Message);
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                log.LogError("User doesn't exist: " + ex.Message);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("Unable to locate your user account.")
+                };
             }
 
 
@@ -93,8 +105,11 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
-                log.LogInformation($"Error {nameof(GetFriendRequests)} - Error: " + ex.Message);
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                log.LogError($"Error {nameof(GetFriendRequests)} - Error: " + ex.Message);
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent("Unable to process friend information.")
+                };
             }
 
             var json = JsonConvert.SerializeObject(requests);

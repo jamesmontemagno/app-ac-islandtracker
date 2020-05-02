@@ -39,7 +39,7 @@ namespace TurnipTracker.Functions.FriendRequests
             }
             catch (Exception ex)
             {
-                log.LogInformation("Unable to deserialize friend request: " + ex.Message);
+                log.LogError("Unable to deserialize friend request: " + ex.Message);
 
             }
 
@@ -47,19 +47,19 @@ namespace TurnipTracker.Functions.FriendRequests
                 string.IsNullOrWhiteSpace(friendRequest.MyPublicKey) ||
                 string.IsNullOrWhiteSpace(friendRequest.FriendPublicKey))
             {
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Invalid data to process request");
             }
 
             try
             {
                 var user = await Utils.FindUserEntitySlim(userTable, privateKey, friendRequest.MyPublicKey);
                 if (user == null)
-                    return new BadRequestResult();
+                    return new BadRequestErrorMessageResult("Unable to locate your user account.");
             }
             catch (Exception ex)
             {
                 log.LogInformation("User doesn't exist: " + ex.Message);
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Unable to locate your user account.");
             }
 
 

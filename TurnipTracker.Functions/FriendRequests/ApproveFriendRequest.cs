@@ -40,27 +40,40 @@ namespace TurnipTracker.Functions
             }
             catch (Exception ex)
             {
-                log.LogInformation("Unable to deserialize friend request: " + ex.Message);
-
+                log.LogError("Unable to deserialize friend request: " + ex.Message);
             }
 
             if (friendRequest == null ||
                 string.IsNullOrWhiteSpace(friendRequest.MyPublicKey) ||
                 string.IsNullOrWhiteSpace(friendRequest.FriendPublicKey))
             {
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Invalid data to process request");
+            }
+
+
+            try
+            {
+                if (await Utils.ReachedMaxFriends(friendTable, friendRequest.MyPublicKey))
+                {
+                    return new BadRequestErrorMessageResult("You have reached the max friend count at this time.");
+                }
+            }
+            catch (Exception ex)
+            {
+                log.LogInformation("Unable to count existing friends: " + ex.Message);
+                return new InternalServerErrorResult();
             }
 
             try
             {
                 var user = await Utils.FindUserEntitySlim(userTable, privateKey, friendRequest.MyPublicKey);
                 if (user == null)
-                    return new BadRequestResult();
+                    return new BadRequestErrorMessageResult("Unable to locate your user account.");
             }
             catch (Exception ex)
             {
-                log.LogInformation("User doesn't exist: " + ex.Message);
-                return new BadRequestResult();
+                log.LogError("User doesn't exist: " + ex.Message);
+                return new BadRequestErrorMessageResult("Unable to locate your user account.");
             }
 
 
@@ -79,7 +92,10 @@ namespace TurnipTracker.Functions
                 // Execute the operation.
                 var result = await friendTable.ExecuteAsync(insertOperation1);
                 if (result == null)
+                {
+                    log.LogWarning("Insertion 1 of friend failed");
                     return new InternalServerErrorResult();
+                }
 
                 // Create the InsertOrReplace table operation
                 var insertOperation2 = TableOperation.InsertOrMerge(new FriendEntity
@@ -91,7 +107,10 @@ namespace TurnipTracker.Functions
                 // Execute the operation.
                 result = await friendTable.ExecuteAsync(insertOperation2);
                 if (result == null)
+                {
+                    log.LogWarning("Insertion 2 of friend failed");
                     return new InternalServerErrorResult();
+                }
 
 
                 var removeOperation1 = TableOperation.Delete(new FriendRequestEntity
@@ -105,12 +124,15 @@ namespace TurnipTracker.Functions
                 // Execute the operation.
                 result = await friendRequestTable.ExecuteAsync(removeOperation1);
                 if (result == null)
+                {
+                    log.LogWarning("Failed to remove friend request.");
                     return new InternalServerErrorResult();
+                }
 
             }
             catch (Exception ex)
             {
-                log.LogInformation($"Error {nameof(ApproveFriendRequest)} - Error: " + ex.Message);
+                log.LogError($"Error {nameof(ApproveFriendRequest)} - Error: " + ex.Message);
                 return new InternalServerErrorResult();
             }
 

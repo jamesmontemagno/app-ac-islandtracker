@@ -38,8 +38,7 @@ namespace TurnipTracker.Functions
             }
             catch(Exception ex)
             {
-                log.LogInformation("Unable to deserialize user: " + ex.Message);
-
+                log.LogWarning("Unable to deserialize user: " + ex.Message);
             }
 
             if (user == null || 
@@ -48,7 +47,7 @@ namespace TurnipTracker.Functions
                 string.IsNullOrWhiteSpace(user.IslandName) ||
                 user.TimeZone == null)
             {
-                return new BadRequestResult();
+                return new BadRequestErrorMessageResult("Invalid data to process request");
             }
 
             var userEntity = new UserEntity(user.PublicKey, privateKey)
@@ -73,7 +72,7 @@ namespace TurnipTracker.Functions
             }
             catch(Exception ex)
             {
-                log.LogInformation($"Error {nameof(CreateProfile)} - Error: " + ex.Message);
+                log.LogError($"Error {nameof(CreateProfile)} - Error: " + ex.Message);
                 return new InternalServerErrorResult();
             }
 

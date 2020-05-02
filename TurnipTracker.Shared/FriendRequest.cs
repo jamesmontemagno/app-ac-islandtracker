@@ -12,6 +12,7 @@ namespace TurnipTracker.Shared
     {
         public string MyPublicKey { get; set; }
         public string FriendPublicKey { get; set; }
+        public bool ProUser { get; set; }
     }
 
     public class MyPendingFriendRequest

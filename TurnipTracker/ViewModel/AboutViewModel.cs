@@ -47,9 +47,13 @@ namespace TurnipTracker.ViewModel
                 new AttributionItem { Tag = "prophet", Text = "Mike Bryant - Turnip Prophet"},
                 new AttributionItem { Tag = "ninji", Text = "Ninji - original ACNH code port"},
                 new AttributionItem { Tag = "sparkie108", Text="Steve aka sparkie108 for porting code"},
+                new AttributionItem { Tag = "ardonpixels", Text="Icon and Artwork by Ardon Pixels"},
+                new AttributionItem { Tag = "omaimakhan", Text = "Custom Font by Omaima Khan"},
+                new AttributionItem { Tag = "fontawesome", Text = "Icon fonts by Font Awesome"},
                 new AttributionItem { Tag = "mvvm-helpers", Text ="Mvvm Helpers"},
                 new AttributionItem { Tag = "monkey-cache", Text = "Monkey Cache"},
                 new AttributionItem { Tag = "pancake", Text="PancakeView"},
+                new AttributionItem { Tag = "resizetizernt", Text = "Resizetizer.NT"},
                 new AttributionItem { Tag = "sharpnado", Text = "Sharpnado"},
                 new AttributionItem { Tag = "syncfusion", Text = "Syncfusion for Xamarin"},
                 new AttributionItem { Tag = "essentials", Text = "Xamarin.Essentials"},
@@ -96,10 +100,15 @@ namespace TurnipTracker.ViewModel
         {
             var url = type switch
             {
+                "coffee" => "https://www.buymeacoffee.com/jamesmontemagno",
+                "resizetizernt" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/resizetizernt.txt",
+                "fontawesome" => "https://fontawesome.com/",
+                "omaimakhan" => "https://www.fiverr.com/omaimakhan",
                 "ac-nh-turnip-prices" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/ac-nh-turnip-prices.txt",
                 "prophet" => "https://turnipprophet.io/",
                 "ninji" => "https://twitter.com/_Ninji/status/1244818665851289602?s=20",
                 "sparkie108" => "https://github.com/sparkie108",
+                "ardonpixels" => "https://linktr.ee/ardonpixels",
                 "mvvm-helpers" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/mvvm-helpers.txt",
                 "monkey-cache" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/monkey-cache.txt",
                 "pancake" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/pancakeview.txt",
@@ -128,26 +137,33 @@ namespace TurnipTracker.ViewModel
 
         async Task SendEmail()
         {
-            var key = await SettingsService.GetPublicKey();
-            var message = new EmailMessage
+            try
             {
-                Subject = $"Island Tracker Issue. Public Key: {key}",
-                Body = "Describe issue here.",
-               To = new List<string> { "refractoredllc@gmail.com"}
-            };
+                var key = await SettingsService.GetPublicKey();
+                var message = new EmailMessage
+                {
+                    Subject = $"Island Tracker Issue. Public Key: {key}",
+                    Body = "Describe issue here.",
+                   To = new List<string> { "acislandtracker@gmail.com"}
+                };
 
-            if (AttachDetails)
-            {
-                var fn = "Attachment.json";
-                var days = DataService.GetCurrentWeek();
-                var json = JsonConvert.SerializeObject(days);
-                var file = Path.Combine(FileSystem.CacheDirectory, fn);
-                File.WriteAllText(file, json);
+                if (AttachDetails)
+                {
+                    var fn = "Attachment.json";
+                    var days = DataService.GetCurrentWeek();
+                    var json = JsonConvert.SerializeObject(days);
+                    var file = Path.Combine(FileSystem.CacheDirectory, fn);
+                    File.WriteAllText(file, json);
 
-                message.Attachments.Add(new EmailAttachment(file));
+                    message.Attachments.Add(new EmailAttachment(file));
+                }
+
+                await Email.ComposeAsync(message);
             }
-
-            await Email.ComposeAsync(message);
+            catch (Exception ex)
+            {
+                await DisplayAlert("Unable to send email", "Email acislandtracker@gmail.com directly.");
+            }
         }
     }
 }

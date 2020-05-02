@@ -127,6 +127,8 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Label
                                 Margin="0,0,0,0"
@@ -182,6 +184,28 @@
                                     </effectsview:SfEffectsView>
                                 </pancake:PancakeView>
                             </StackLayout>
+                            <Label
+                                Margin="0,0,0,0"
+                                Grid.Row="2"
+                                FontSize="Small"
+                                Text="Buy me a coffee:"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                            <pancake:PancakeView
+                                    Grid.Row="3"
+                                    AutomationProperties.HelpText="Button - James' buy me a coffee"
+                                    AutomationProperties.IsInAccessibleTree="True"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource SocialPancake}">
+                                <effectsview:SfEffectsView
+                                        CornerRadius="20"
+                                        TouchUpCommand="{Binding OpenBrowserCommand}"
+                                        TouchUpCommandParameter="coffee">
+                                    <Label
+                                            FontFamily="FA-S"
+                                            Style="{StaticResource SocialLabel}"
+                                            Text="{StaticResource IconCoffee}" />
+                                </effectsview:SfEffectsView>
+                            </pancake:PancakeView>
                         </Grid>
                     </sharpnado:MaterialFrame>
 
