@@ -263,12 +263,12 @@
                                                 FontSize="Small"
                                                 Text="{Binding Status}"
                                                 TextColor="{StaticResource TextPrimaryColor}" />
-                                            <!--<Label
+                                            <Label
                                                 Grid.Row="3"
                                                 Grid.Column="1"
                                                 FontSize="Micro"
                                                 Text="{Binding ., Converter={StaticResource LastUpdateDateTimeConverter}}"
-                                                TextColor="{StaticResource TextPrimaryColor}" />-->
+                                                TextColor="{StaticResource TextPrimaryColor}" />
 
                                             <StackLayout
                                                 Grid.RowSpan="4"
