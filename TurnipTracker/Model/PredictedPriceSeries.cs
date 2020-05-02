@@ -17,7 +17,7 @@ namespace TurnipTracker.Model
 
         public double CategoryTotalProbability { get; set; }
 
-        public PredictedPriceSeries(string patternDesc, PredictionPattern patternNumber, List<(int min, int max)> prices, double probability)
+        public PredictedPriceSeries(string patternDesc, PredictionPattern patternNumber, List<(int min, int max)> prices, double probability = 0)
         {
             PatternDesc = patternDesc;
             PatternNumber = patternNumber;

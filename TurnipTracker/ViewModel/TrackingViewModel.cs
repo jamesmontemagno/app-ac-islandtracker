@@ -85,12 +85,6 @@ namespace TurnipTracker.ViewModel
         public void SaveCurrentWeek()
         {
             DataService.SaveCurrentWeek(Days);
-            // skip if still entring AM
-            if (SelectedDay.PriceAM.HasValue && SelectedDay.PriceAM.Value < 10)
-                return;
-            if (SelectedDay.PricePM.HasValue && SelectedDay.PricePM.Value < 10)
-                return;
-
             UpdatePredications();
         }
 
@@ -145,7 +139,7 @@ namespace TurnipTracker.ViewModel
 
         public void UpdatePredications()
         {
-            
+            PredictionUpdater.Update(Days);
 
             var sunday = Days[0];
             if ((sunday.BuyPrice.HasValue || sunday.ActualPurchasePrice.HasValue) && SelectedDay != sunday)
@@ -177,17 +171,43 @@ namespace TurnipTracker.ViewModel
                     SelectedDay.DifferencePM = string.Empty;
                 }
             }
-            try
+
+            var low = 0;
+            var high = 0;
+            foreach (var day in Days)
             {
-                var (minSell, maxSell) = PredictionUpdater.Update(Days);
-                Min = minSell;
-                Max = maxSell;
+
+                if (day == sunday)
+                {
+
+                    var val = day.BuyPrice ?? 0;
+                    continue;
+                }
+
+
+                if (!day.PriceAM.HasValue)
+                {
+                    if (day.PredictionAMMin > low)
+                        low = day.PredictionAMMin;
+
+                    if (day.PredictionAMMax > high)
+                        high = day.PredictionAMMax;
+                }
+
+                if (!day.PricePM.HasValue)
+                {
+                    if (day.PredictionPMMin > low)
+                        low = day.PredictionPMMin;
+
+                    if (day.PredictionPMMax > high)
+                        high = day.PredictionPMMax;
+
+                }
             }
-            catch(Exception ex)
-            {
-                Min = 0;
-                Max = 0;
-            }
+
+            Min = low;
+            Max = high;
+
 
             if (IsGraphExpanded)
                 UpdateGraph();
