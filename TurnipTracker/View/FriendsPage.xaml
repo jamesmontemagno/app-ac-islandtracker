@@ -303,7 +303,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.Footer>
-                <StackLayout HorizontalOptions="Center">
+                <StackLayout HorizontalOptions="Center" Padding="12,4">
                     <Label
                         HorizontalOptions="Center"
                         FontSize="Micro"

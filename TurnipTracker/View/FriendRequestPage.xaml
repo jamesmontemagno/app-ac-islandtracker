@@ -126,11 +126,11 @@
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-                    <CollectionView.Footer>
+                    <!--<CollectionView.Footer>
                         <StackLayout HorizontalOptions="Center">
                             <Label Text="{Binding LastUpdate}" TextColor="{StaticResource TextPrimaryColor}" HorizontalOptions="Center"/>
                         </StackLayout>
-                    </CollectionView.Footer>
+                    </CollectionView.Footer>-->
                 </CollectionView>
             </RefreshView>
         </pancake:PancakeView>
