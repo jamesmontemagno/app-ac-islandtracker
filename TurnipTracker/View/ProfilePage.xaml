@@ -172,10 +172,11 @@
                             </sharpnado:MaterialFrame>
                         </StackLayout>
                         <Label
-                            x:Name="LabelSaved"
                             HorizontalOptions="Center"
+                            IsVisible="{Binding NeedsProfile}"
+                            FontSize="Micro"
                             Opacity="0"
-                            Text="Saved!"
+                            Text="Fill in info and press Sync to create your profile."
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="CenterAndExpand" />
 

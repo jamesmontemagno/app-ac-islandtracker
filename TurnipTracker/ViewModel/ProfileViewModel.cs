@@ -17,6 +17,8 @@ namespace TurnipTracker.ViewModel
         public AsyncCommand UpsertProfileCommand { get; }
         public Profile Profile { get; }
         public ObservableRangeCollection<FruitItem> Fruits { get; }
+
+        public bool NeedsProfile => !SettingsService.HasRegistered;
         public ProfileViewModel()
         {
             if (Xamarin.Forms.DesignMode.IsDesignModeEnabled)
@@ -61,7 +63,9 @@ namespace TurnipTracker.ViewModel
             if (!(await CheckConnectivity("Check connectivity", "Unable to update profile, please check internet and try again")))
                 return;
 
-            var sync = await DisplayAlert("Sync profile?", "Are you sure you want to sync your profile to the cloud?", "Yes, sync", "Cancel");
+            var createSync = SettingsService.HasRegistered ? "Sync" : "Create";
+
+            var sync = await DisplayAlert($"{createSync} profile?", "Are you sure you want to sync your profile to the cloud?", $"Yes, {createSync}", "Cancel");
             if (!sync)
                 return;
 
@@ -70,6 +74,8 @@ namespace TurnipTracker.ViewModel
                 IsBusy = true;
                 await DataService.UpsertUserProfile(Profile);
                 await DisplayAlert("Profile synced", "You are all set!");
+
+                OnPropertyChanged(nameof(NeedsProfile));
             }
             catch (Exception ex)
             {

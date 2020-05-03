@@ -40,7 +40,7 @@
                         TextColor="{StaticResource TextPrimaryColor}"/>
                     <Label 
                         TextColor="{StaticResource TextPrimaryColor}"
-                        Text="Processing Friend Request..."
+                        Text="Sending Friend Request..."
                         FontSize="Medium"
                         HorizontalOptions="Center"/>
                 </StackLayout>
@@ -76,7 +76,7 @@
                     <Label 
                         TextColor="{StaticResource TextPrimaryColor}"
                         FontSize="Medium"
-                        Text="Friend request processed successful. You will see your friend as soon as they accept the friend request on their app."
+                        Text="Friend request sent successful. You will see your friend as soon as they accept the friend request on their app."
                         HorizontalOptions="Center"/>
                 </StackLayout>
 
