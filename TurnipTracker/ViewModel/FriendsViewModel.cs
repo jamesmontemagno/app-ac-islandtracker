@@ -140,7 +140,7 @@ namespace TurnipTracker.ViewModel
                 if (string.IsNullOrWhiteSpace(uriString))
                     return false;
 
-                var created = Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out var uri);
+                var created = Uri.TryCreate(uriString, UriKind.Absolute, out var uri);
 
                 if (!created)
                     return false;
