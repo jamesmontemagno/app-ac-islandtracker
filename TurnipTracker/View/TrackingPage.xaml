@@ -368,7 +368,8 @@
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>
 
-                        <Grid Grid.Row="3" IsVisible="{Binding IsToday}">
+                        <Grid Grid.Row="3" IsVisible="{Binding IsToday}"
+                              Padding="4">
                             <Label
                                 FontFamily="AnimalCrossing"
                                 FontSize="Micro"

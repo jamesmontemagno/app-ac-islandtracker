@@ -43,5 +43,6 @@ namespace TurnipTracker.Shared
         public int TurnipUpdateDayOfYear { get; set; }
         public int TurnipUpdateYear { get; set; }
         public DateTime TurnipUpdateTimeUTC { get; set; }
+        public string FriendCode { get; set; }
     }
 }

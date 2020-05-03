@@ -14,6 +14,7 @@ namespace TurnipTracker.Shared
         public int Fruit { get; set; }
         public string TimeZone { get; set; }
         public string Status { get; set; }
+        public string FriendCode { get; set; }
         public string PublicKey { get; set; }
     }
 
@@ -56,5 +57,6 @@ namespace TurnipTracker.Shared
         public int TurnipUpdateDayOfYear { get; set; }
         public int TurnipUpdateYear { get; set; }
         public DateTime TurnipUpdateTimeUTC { get; set; }
+        public string FriendCode { get; set; }
     }
 }

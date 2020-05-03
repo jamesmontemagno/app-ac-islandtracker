@@ -25,7 +25,7 @@
             FontFamily="AnimalCrossing"
             FontSize="44"
             HorizontalOptions="Center"
-            Text="Utilities"
+            Text="Compute"
             TextColor="White" />
         <pancake:PancakeView
             Grid.Row="1"
@@ -39,7 +39,7 @@
                     Margin="24,0,0,4"
                     FontFamily="AnimalCrossing"
                     FontSize="Large"
-                    Text="Turnip Calculators"
+                    Text="Turnip Calculations"
                     TextColor="{StaticResource TextPrimaryColor}" />
                 <sharpnado:MaterialFrame
                     Padding="0"

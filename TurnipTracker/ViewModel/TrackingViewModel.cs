@@ -245,6 +245,8 @@ namespace TurnipTracker.ViewModel
                 IsBusy = true;
                 await DataService.UpdateTurnipPrices(SelectedDay);
                 await DisplayAlert("Turnip prices synced", "You are all set!");
+                NeedsSync = false;
+                OnPropertyChanged(nameof(NeedsSync));
             }
             catch (Exception ex)
             {

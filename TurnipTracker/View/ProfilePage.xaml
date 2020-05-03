@@ -6,6 +6,7 @@
     xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
     xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
     xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:controls="clr-namespace:TurnipTracker.Controls"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
@@ -15,7 +16,7 @@
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
     xmlns:view="clr-namespace:TurnipTracker.View"
-    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel" xmlns:controls="clr-namespace:TurnipTracker.Controls"
+    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
     ios:Page.UseSafeArea="True"
     x:DataType="viewmodel:ProfileViewModel"
     BackgroundColor="{StaticResource NavigationPrimary}"
@@ -54,7 +55,7 @@
                             Margin="24,0,0,0"
                             FontFamily="AnimalCrossing"
                             FontSize="Medium"
-                            Text="Name"
+                            Text="Name*"
                             TextColor="{StaticResource TextPrimaryColor}" />
                         <sharpnado:MaterialFrame
                             Padding="{OnPlatform Android='12,0',
@@ -73,7 +74,7 @@
                             Margin="24,12,0,0"
                             FontFamily="AnimalCrossing"
                             FontSize="Medium"
-                            Text="Island Name"
+                            Text="Island Name*"
                             TextColor="{StaticResource TextPrimaryColor}" />
                         <sharpnado:MaterialFrame
                             Padding="{OnPlatform Android='12,0',
@@ -121,21 +122,29 @@
                             </combobox:SfComboBox>
                         </sharpnado:MaterialFrame>
 
-
                         <Label
                             Margin="24,12,0,0"
                             FontFamily="AnimalCrossing"
                             FontSize="Medium"
-                            Text="Time Zone"
-                            IsVisible="False"
+                            Text="Switch Friend Code"
                             TextColor="{StaticResource TextPrimaryColor}" />
+
                         <sharpnado:MaterialFrame
-                            Padding="12"
-                            HeightRequest="28"
-                            IsVisible="False"
+                            Padding="{OnPlatform Android='12,0',
+                                                 iOS='12'}"
                             HorizontalOptions="FillAndExpand"
-                            Style="{StaticResource AcrylicFrame}"
-                            VerticalOptions="Start" />
+                            Style="{StaticResource AcrylicFrame}">
+                            <maskededit:SfMaskedEdit
+                                BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
+                                FontSize="24"
+                                IsEnabled="{Binding IsNotBusy}"
+                                Mask="SW-0000-0000-0000"
+                                Keyboard="Numeric"
+                                TextColor="{StaticResource TextPrimaryColor}"
+                                VerticalOptions="Center"
+                                Value="{Binding Profile.FriendCode}" />
+                        </sharpnado:MaterialFrame>
+
                         <Label
                             Margin="24,12,0,0"
                             FontFamily="AnimalCrossing"
@@ -153,8 +162,8 @@
                                     BackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                     FontSize="24"
                                     IsEnabled="{Binding IsNotBusy}"
-                                    TextColor="{StaticResource TextPrimaryColor}"
-                                    Text="{Binding Profile.Status}" />
+                                    Text="{Binding Profile.Status}"
+                                    TextColor="{StaticResource TextPrimaryColor}" />
                             </sharpnado:MaterialFrame>
                             <sharpnado:MaterialFrame Margin="12,0,0,0" Style="{StaticResource AcrylicButton}">
                                 <effectsview:SfEffectsView
@@ -172,9 +181,9 @@
                             </sharpnado:MaterialFrame>
                         </StackLayout>
                         <Label
+                            FontSize="Micro"
                             HorizontalOptions="Center"
                             IsVisible="{Binding NeedsProfile}"
-                            FontSize="Micro"
                             Opacity="0"
                             Text="Fill in info and press Sync to create your profile."
                             TextColor="{StaticResource TextPrimaryColor}"
@@ -190,20 +199,20 @@
 
         <pancake:PancakeView
             Padding="36,12"
-            IsVisible="{Binding IsBusy}"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
             BackgroundColor="{StaticResource AcrylicSurface}"
             CornerRadius="56,0,0,56"
-            Elevation="8">
+            Elevation="8"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center">
             <busyindicator:SfBusyIndicator
+                Title="Syncing profile..."
                 AnimationType="Box"
                 EnableAnimation="{Binding IsBusy}"
                 TextColor="{StaticResource TextPrimaryColor}"
                 ViewBoxHeight="100"
                 ViewBoxWidth="100"
-                Duration=".2"
-                Title="Syncing profile..."/>
+                Duration=".2" />
         </pancake:PancakeView>
     </Grid>
 </ContentPage>
