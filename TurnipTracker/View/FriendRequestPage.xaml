@@ -36,7 +36,7 @@
             FontFamily="AnimalCrossing"
             FontSize="38"
             HorizontalOptions="Center"
-            Text="Friend Requests"
+            Text="Requests"
             TextColor="White" />
         <pancake:PancakeView
             Grid.ColumnSpan="2"
@@ -152,12 +152,12 @@
                 <Label
                     FontSize="Medium"
                     HorizontalOptions="Center"
-                    Text="No friend requests yet, send a friend request to start sharing turnip prices."
+                    Text="No new friend requests."
                     TextColor="{StaticResource TextPrimaryColor}" />
                 <sharpnado:MaterialFrame
                     Margin="4,12"
                     Padding="0"
-                    AutomationProperties.HelpText="Button - Refresh Friend Information"
+                    AutomationProperties.HelpText="Button - Refresh Friend Request Information"
                     AutomationProperties.IsInAccessibleTree="True"
                     HorizontalOptions="Center"
                     Style="{StaticResource AcrylicFrame}">

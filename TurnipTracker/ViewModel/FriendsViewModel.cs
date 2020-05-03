@@ -110,6 +110,8 @@ namespace TurnipTracker.ViewModel
                 return;
             }
 
+            forceRefresh = true;
+
             await Shell.Current.GoToAsync("//friends/friendrequests");
         }
 
@@ -185,7 +187,7 @@ namespace TurnipTracker.ViewModel
                 }
 
                 var friendsTask = DataService.GetFriendsAsync(forceRefresh);
-                var countTask = DataService.GetFriendRequestCountAsync();
+                var countTask = DataService.GetFriendRequestCountAsync(forceRefresh);
                 await Task.WhenAll(friendsTask, countTask);
                 if (friendsTask.IsFaulted && friendsTask.Exception != null)
                     throw friendsTask.Exception;

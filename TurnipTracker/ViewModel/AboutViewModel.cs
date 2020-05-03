@@ -100,6 +100,7 @@ namespace TurnipTracker.ViewModel
         {
             var url = type switch
             {
+                "survey" => "https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAINl_EhURU9ZTVRZWVE0WExFMEJXTDhTSlkxQVZRSi4u",
                 "coffee" => "https://www.buymeacoffee.com/jamesmontemagno",
                 "resizetizernt" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/resizetizernt.txt",
                 "fontawesome" => "https://fontawesome.com/",

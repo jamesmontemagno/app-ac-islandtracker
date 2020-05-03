@@ -30,7 +30,7 @@
             <converters:DifferenceColorConverter x:Key="DifferenceColorConverter" />
             <converters:StringEmptyConverter x:Key="StringEmptyConverter" />
             <converters:SelectedDayColorConverter x:Key="SelectedDayColorConverter" />
-            <converters:EmptyBellConverter x:Key="EmptyBellConverter"/>
+            <converters:EmptyBellConverter x:Key="EmptyBellConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -210,6 +210,7 @@
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
 
+                    <!--  Buy Days  -->
                     <Grid
                         Margin="0,24,0,0"
                         IsVisible="{Binding SelectedDay.IsSunday}"
@@ -219,6 +220,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
                         <sharpnado:MaterialFrame
@@ -365,35 +367,18 @@
                                     VerticalOptions="Center" />
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>
-                    </Grid>
-                    <!--<BoxView HorizontalOptions="FillAndExpand"
-                                     BackgroundColor="LightGray"
-                                     Grid.Row="1" Grid.ColumnSpan="2"/>
-                            <Label Grid.Row="2" Grid.ColumnSpan="2"
-                                Text="Last Weeks Pattern"
+
+                        <Grid Grid.Row="3" IsVisible="{Binding IsToday}">
+                            <Label
                                 FontFamily="AnimalCrossing"
-                                VerticalOptions="Center"
-                                FontSize="Large"/>
-                            <inputLayout:SfTextInputLayout
-                                    Margin="0,0,0,-12"
-                                    FocusedColor="{StaticResource NavigationPrimary}"
-                                    Hint="Last Week's Pattern"
-                                    Grid.Row="2" Grid.ColumnSpan="2"
-                                    ContainerType="Outlined">
-                                <combobox:SfComboBox HeightRequest="50"
-                                                     VerticalOptions="Start"
-                                                     SelectedIndex="{Binding SelectedDay.LastWeekPattern, Mode=TwoWay}">
-                                    <combobox:SfComboBox.ComboBoxSource>
-                                        <ListCollection:List x:TypeArguments="x:String">
-                                            <x:String>I Don't Know</x:String>
-                                            <x:String>Fluctuating</x:String>
-                                            <x:String>Small Spike</x:String>
-                                            <x:String>Large Spike</x:String>
-                                            <x:String>Decreasing</x:String>
-                                        </ListCollection:List>
-                                    </combobox:SfComboBox.ComboBoxSource>
-                                </combobox:SfComboBox>
-                            </inputLayout:SfTextInputLayout>-->
+                                FontSize="Micro"
+                                HorizontalOptions="Center"
+                                IsVisible="{Binding NeedsSync}"
+                                Text="Don't forget to sync!"
+                                TextColor="{StaticResource GraphMin}" />
+                        </Grid>
+                    </Grid>
+
                     <!--  Sell Days  -->
                     <Grid
                         Margin="0,24,0,0"
@@ -405,6 +390,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -567,8 +553,17 @@
                                     VerticalOptions="Center" />
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>
+                        <Grid IsVisible="{Binding IsToday}" Grid.Row="3"
+                              Grid.ColumnSpan="2">
+                            <Label IsVisible="{Binding NeedsSync}"
+                                   TextColor="{StaticResource GraphMin}"
+                                   FontSize="Micro"
+                                   FontFamily="AnimalCrossing"
+                                   HorizontalOptions="Center"
+                                   Text="Don't forget to sync!"/>
+                        </Grid>
                         <Label
-                            Grid.Row="3"
+                            Grid.Row="4"
                             Margin="0,0,0,8"
                             FontFamily="AnimalCrossing"
                             FontSize="Micro"
@@ -578,7 +573,7 @@
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="End" />
                         <Label
-                            Grid.Row="3"
+                            Grid.Row="4"
                             Grid.Column="1"
                             Margin="0,0,0,8"
                             FontFamily="AnimalCrossing"

@@ -60,6 +60,7 @@ namespace TurnipTracker.ViewModel
             }
         }
 
+        public bool NeedsSync { get; set; }
         public bool IsToday => Days.IndexOf(SelectedDay) == (int)DateTime.Now.DayOfWeek;
 
         int min = 0;
@@ -84,6 +85,11 @@ namespace TurnipTracker.ViewModel
 
         public void SaveCurrentWeek()
         {
+            if(IsToday && SettingsService.HasRegistered)
+            {
+                NeedsSync = true;
+                OnPropertyChanged(nameof(NeedsSync));
+            }    
             DataService.SaveCurrentWeek(Days);
             UpdatePredications();
         }

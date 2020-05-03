@@ -303,7 +303,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.Footer>
-                <StackLayout HorizontalOptions="Center" Padding="12,4">
+                <StackLayout HorizontalOptions="Center" Padding="36,4">
                     <Label
                         HorizontalOptions="Center"
                         FontSize="Micro"
@@ -328,7 +328,7 @@
                 <Label
                     FontSize="Medium"
                     HorizontalOptions="Center"
-                    Text="No friends yet, send a friend request to start sharing turnip prices."
+                    Text="No friends yet, send a friend request by pressing the arrow above share your invite code with a friend to start sharing turnip prices."
                     TextColor="{StaticResource TextPrimaryColor}" />
             </StackLayout>
         </StackLayout>

@@ -18,6 +18,8 @@ namespace TurnipTracker.View
 
         protected override async void OnAppearing()
         {
+
+#if !DEBUG
             vm.RequestCount = SettingsService.FriendRequestCount;
             if(!(await vm.RegisterFriendClipboard()))
             {
@@ -25,6 +27,7 @@ namespace TurnipTracker.View
                 if (SettingsService.HasRegistered && SettingsService.LastFriendsUpdate < DateTime.UtcNow.AddHours(-1))
                     _ = vm.RefreshCommand.ExecuteAsync().ContinueWith((r) => { });
             }
+#endif
 
             base.OnAppearing();
         }

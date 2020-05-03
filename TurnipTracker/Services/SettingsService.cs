@@ -78,5 +78,11 @@ namespace TurnipTracker.Services
             get => Preferences.Get(nameof(FriendRequestCount), string.Empty);
             set => Preferences.Set(nameof(FriendRequestCount), value);
         }
+
+        public static bool AskForSurvey
+        {
+            get => Preferences.Get(nameof(AskForSurvey), true);
+            set => Preferences.Set(nameof(AskForSurvey), value);
+        }
     }
 }
