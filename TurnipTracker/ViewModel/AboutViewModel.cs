@@ -31,6 +31,8 @@ namespace TurnipTracker.ViewModel
         public AsyncCommand SubscribeCommand { get; }
         public AsyncCommand<string> OpenBrowserCommand { get; }
 
+        public AsyncCommand TransferCommand { get; }
+
         public List<AttributionItem> Attributions { get; }
 
 
@@ -40,6 +42,7 @@ namespace TurnipTracker.ViewModel
             SubscribeCommand = new AsyncCommand(Subscribe);
             SendEmailCommand = new AsyncCommand(SendEmail);
             OpenBrowserCommand = new AsyncCommand<string>(OpenBrowser);
+            TransferCommand = new AsyncCommand(Transfer);
 
             Attributions = new List<AttributionItem>
             {
@@ -164,6 +167,44 @@ namespace TurnipTracker.ViewModel
             catch (Exception ex)
             {
                 await DisplayAlert("Unable to send email", "Email acislandtracker@gmail.com directly.");
+            }
+        }
+
+        int clickCount = 0;
+        async Task Transfer()
+        {
+            clickCount++;
+            if (clickCount < 25)
+                return;
+            clickCount = 0;
+            var choice = await App.Current.MainPage.DisplayActionSheet("Transfer profile?", "Cancel", null, "Transfer to another device", "Transfer to this device");
+
+            if (choice.Contains("another"))
+            {
+                if (await DisplayAlert("Transfer profile out", "This will export your credentials that you can re-import on another device. Your credentials will remain on this device. Do you want to proceed?", "Yes, transfer", "Cancel"))
+                {
+                    var info = await SettingsService.TransferOut();
+                    await Share.RequestAsync(info);
+                }
+            }
+            else if (choice.Contains("this device"))
+            {
+                if (await DisplayAlert("Transfer in profile?", "Warning! This will start a transfer process that will override your existing profile. Ensure that you have exported your existing profile first as you can not go back. Do you still want to proceed?", "Yes, transfer in", "Cancel"))
+                {
+                    var info = await App.Current.MainPage.DisplayPromptAsync("Entry transfer code", "Enter your transfer code that you exported to continue.", "OK", "Cancel");
+
+                    if (string.IsNullOrWhiteSpace(info) || info == "Cancel")
+                        return;
+
+                    if(await SettingsService.TransferIn(info))
+                    {
+                        await DisplayAlert("Success", "Your profile has been updated. Ensure you update information in the app and sync with the cloud.");
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", "Please contact support with your transfer code for help.");
+                    }
+                }
             }
         }
     }

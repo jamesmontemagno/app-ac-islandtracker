@@ -125,7 +125,11 @@
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
                         Text="Created by:"
-                        TextColor="{StaticResource TextPrimaryColor}" />
+                        TextColor="{StaticResource TextPrimaryColor}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TransferCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
                     <sharpnado:MaterialFrame
                         Padding="0"
                         HorizontalOptions="FillAndExpand"
