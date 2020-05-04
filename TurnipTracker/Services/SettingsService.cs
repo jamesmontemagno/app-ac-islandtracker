@@ -79,6 +79,12 @@ namespace TurnipTracker.Services
             return val;
         }
 
+        public static bool FirstRun
+        {
+            get => Preferences.Get(nameof(FirstRun), true);
+            set => Preferences.Set(nameof(FirstRun), value);
+        }
+
         public static bool HasRegistered
         {
             get => Preferences.Get(nameof(HasRegistered), false);

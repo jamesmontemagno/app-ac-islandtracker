@@ -6,6 +6,7 @@ using TurnipTracker.Services;
 using TurnipTracker.Shared;
 using MvvmHelpers;
 using System.Collections.Generic;
+using Microsoft.AppCenter.Analytics;
 
 namespace TurnipTracker.ViewModel
 {
@@ -51,6 +52,11 @@ namespace TurnipTracker.ViewModel
 
             if (!await DisplayAlert("Approve friend request?", $"Are you sure you want to approve {pendingFriendRequest.Name}'s request?", "Yes, approve", "Cancel"))
                 return;
+
+            Analytics.TrackEvent("FriendRequest", new Dictionary<string, string>
+            {
+                ["type"] = "approve"
+            });
 
             IsBusy = true;
             try
@@ -127,6 +133,11 @@ namespace TurnipTracker.ViewModel
 
             if (!await DisplayAlert("Delete friend request?", $"Are you sure you want to deny {pendingFriendRequest.Name}'s request?", "Yes, deny", "Cancel"))
                 return;
+
+            Analytics.TrackEvent("FriendRequest", new Dictionary<string, string>
+            {
+                ["type"] = "deny"
+            });
 
             IsBusy = true;
             try

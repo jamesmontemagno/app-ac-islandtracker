@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TurnipTracker.Services;
 using TurnipTracker.ViewModel;
 using Xamarin.Forms;
 
@@ -14,11 +15,17 @@ namespace TurnipTracker.View
             BindingContext = vm = new ProfileViewModel();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
             ComboBoxFruit.SelectedItem = ComboBoxFruit.ComboBoxSource[vm.Profile.Fruit];
+
+            if(SettingsService.FirstRun)
+            {
+                SettingsService.FirstRun = false;
+                await DisplayAlert("Welcome!", "Get started with Island Tracker by filling in your profile. Then head over to the tracking section to track turnip prices and get predictions. Finally, sync everything to the cloud and share with your friend.", "OK");
+            }
         }
     }
 }
