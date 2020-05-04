@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TurnipTracker.Services;
 using TurnipTracker.View;
 using TurnipTracker.View.Utils;
 using Xamarin.Forms;
@@ -11,7 +12,9 @@ namespace TurnipTracker
         public AppShell()
         {
             InitializeComponent();
-            TabBar.CurrentItem = TabBar.Items[1];
+
+            if(!SettingsService.FirstRun)
+                TabBar.CurrentItem = TabBar.Items[1];
 
             Routing.RegisterRoute("invite", typeof(SubmitFriendRequestPage));
             Routing.RegisterRoute("friendrequests", typeof(FriendRequestPage));

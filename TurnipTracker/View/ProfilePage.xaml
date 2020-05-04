@@ -184,7 +184,6 @@
                             FontSize="Micro"
                             HorizontalOptions="Center"
                             IsVisible="{Binding NeedsProfile}"
-                            Opacity="0"
                             Text="Fill in info and press Sync to create your profile."
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="CenterAndExpand" />
