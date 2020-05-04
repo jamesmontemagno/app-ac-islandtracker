@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.AppCenter.Analytics;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
 using Newtonsoft.Json;
@@ -96,11 +97,21 @@ namespace TurnipTracker.ViewModel
             if (service.Title == null)
                 return;
 
+            Analytics.TrackEvent("PodcastSubscribe", new Dictionary<string, string>
+            {
+                ["service"] = service.Key
+            });
+
             await OpenBrowser(service.Key);
         }
 
         async Task OpenBrowser(string type)
         {
+            Analytics.TrackEvent("OpenBrowser", new Dictionary<string, string>
+            {
+                ["type"] = type
+            });
+
             var url = type switch
             {
                 "survey" => "https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAINl_EhURU9ZTVRZWVE0WExFMEJXTDhTSlkxQVZRSi4u",
@@ -143,6 +154,7 @@ namespace TurnipTracker.ViewModel
         {
             try
             {
+                Analytics.TrackEvent("SendEmail");
                 var key = await SettingsService.GetPublicKey();
                 var message = new EmailMessage
                 {
@@ -179,12 +191,20 @@ namespace TurnipTracker.ViewModel
             clickCount = 0;
             var choice = await App.Current.MainPage.DisplayActionSheet("Transfer profile?", "Cancel", null, "Transfer to another device", "Transfer to this device");
 
+            
+
             if (choice.Contains("another"))
             {
+                
                 if (await DisplayAlert("Transfer profile out", "This will export your credentials that you can re-import on another device. Your credentials will remain on this device. Do you want to proceed?", "Yes, transfer", "Cancel"))
                 {
                     var info = await SettingsService.TransferOut();
                     await Share.RequestAsync(info);
+
+                    Analytics.TrackEvent("Transfer", new Dictionary<string, string>
+                    {
+                        ["type"] = "out"
+                    });
                 }
             }
             else if (choice.Contains("this device"))
@@ -196,7 +216,12 @@ namespace TurnipTracker.ViewModel
                     if (string.IsNullOrWhiteSpace(info) || info == "Cancel")
                         return;
 
-                    if(await SettingsService.TransferIn(info))
+                    Analytics.TrackEvent("Transfer", new Dictionary<string, string>
+                    {
+                        ["type"] = "in"
+                    });
+
+                    if (await SettingsService.TransferIn(info))
                     {
                         await DisplayAlert("Success", "Your profile has been updated. Ensure you update information in the app and sync with the cloud.");
                     }

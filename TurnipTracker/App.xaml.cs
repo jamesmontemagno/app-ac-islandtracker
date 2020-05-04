@@ -65,7 +65,12 @@ namespace TurnipTracker
                 return;
 
             await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
-           
+
+            Analytics.TrackEvent("RegisterFriend", new Dictionary<string, string>
+            {
+                ["type"] = "applink"
+            });
+
         }
 
         protected override void OnStart()

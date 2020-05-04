@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
@@ -239,6 +240,8 @@ namespace TurnipTracker.ViewModel
             var sync = await DisplayAlert("Sync prices?", "Are you sure you want to sync your prices to the cloud?", "Yes, sync", "Cancel");
             if (!sync)
                 return;
+
+            Analytics.TrackEvent("SyncTurnipPrices");
 
             try
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
@@ -68,6 +69,8 @@ namespace TurnipTracker.ViewModel
             var sync = await DisplayAlert($"{createSync} profile?", "Are you sure you want to sync your profile to the cloud?", $"Yes, {createSync}", "Cancel");
             if (!sync)
                 return;
+
+            Analytics.TrackEvent("SyncProfile");
 
             try
             {

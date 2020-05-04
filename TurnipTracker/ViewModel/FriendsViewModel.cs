@@ -11,6 +11,7 @@ using TurnipTracker.Shared;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using TurnipTracker.Helpers;
+using Microsoft.AppCenter.Analytics;
 
 namespace TurnipTracker.ViewModel
 {
@@ -41,6 +42,7 @@ namespace TurnipTracker.ViewModel
         async Task ViewFriendCode(string code)
         {
             await DisplayAlert("Friend Code", code);
+            Analytics.TrackEvent("ViewFriendCode");
         }
 
         string requestCount = string.Empty;
@@ -105,7 +107,9 @@ namespace TurnipTracker.ViewModel
                 Text = message,
                 PresentationSourceBounds = bounds.ToSystemRectangle()
             });
-//#endif
+            //#endif
+
+            Analytics.TrackEvent("SendFriendRequest");
         }
 
         public AsyncCommand GoToFriendRequestCommand { get; }
@@ -119,6 +123,11 @@ namespace TurnipTracker.ViewModel
             }
 
             forceRefresh = true;
+
+            Analytics.TrackEvent("Navigation", new Dictionary<string, string>
+            {
+                ["page"] = "friendrequests"
+            });
 
             await Shell.Current.GoToAsync("//friends/friendrequests");
         }
@@ -134,6 +143,10 @@ namespace TurnipTracker.ViewModel
             var clip = await Clipboard.GetTextAsync();
             if(await RegisterFriend(clip))
             {
+                Analytics.TrackEvent("RegisterFriend", new Dictionary<string, string>
+                {
+                    ["type"] = "clipboard"
+                });
                 await Clipboard.SetTextAsync(string.Empty);
                 return true;
             }
@@ -242,7 +255,9 @@ namespace TurnipTracker.ViewModel
 
             if (!await DisplayAlert("Remove friend?", $"Are you sure you want to remove {friendStatus.Name}?", "Yes, remove", "Cancel"))
                 return;
-            
+
+            Analytics.TrackEvent("RemoveFriend");
+
             IsBusy = true;
             try
             {

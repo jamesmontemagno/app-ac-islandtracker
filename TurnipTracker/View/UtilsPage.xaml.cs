@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AppCenter.Analytics;
 using MvvmHelpers.Commands;
 using Xamarin.Forms;
 
@@ -18,6 +20,10 @@ namespace TurnipTracker.View
 
         async Task Navigate(string page)
         {
+            Analytics.TrackEvent("Navigation", new Dictionary<string, string>
+            {
+                ["page"] = page
+            });
             await Shell.Current.GoToAsync($"//utils/{page}");
         }
     }
