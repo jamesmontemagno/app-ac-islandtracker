@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TurnipTracker.View.UtilsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
+    Shell.NavBarIsVisible="False"
+    mc:Ignorable="d">
+
+
+    <Grid
+        Padding="{OnPlatform Android='0,12,0,0',
+                             iOS='0,24,0,0'}"
+        BackgroundColor="{StaticResource NavigationPrimary}"
+        RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label
+            FontFamily="AnimalCrossing"
+            FontSize="44"
+            HorizontalOptions="Center"
+            Text="Compute"
+            TextColor="White" />
+        <pancake:PancakeView
+            Grid.Row="1"
+            Padding="12,12,12,0"
+            BackgroundColor="{StaticResource AcrylicSurface}"
+            CornerRadius="36,36,0,0"
+            Elevation="8">
+            <StackLayout Padding="12" Spacing="4">
+
+                <Label
+                    Margin="24,0,0,4"
+                    FontFamily="AnimalCrossing"
+                    FontSize="Large"
+                    Text="Turnip Calculations"
+                    TextColor="{StaticResource TextPrimaryColor}" />
+                <sharpnado:MaterialFrame
+                    Padding="0"
+                    HorizontalOptions="FillAndExpand"
+                    Style="{StaticResource AcrylicFrame}">
+                    <effectsview:SfEffectsView Padding="24" CornerRadius="10"
+                                               TouchUpCommand="{Binding NavigateCommand}"
+                                               TouchUpCommandParameter="calc-howmanybells">
+                        <Label
+                            FontFamily="AnimalCrossing"
+                            FontSize="Medium"
+                            Text="How Many Bells Do I Need?"
+                            TextColor="{StaticResource TextPrimaryColor}" />
+                    </effectsview:SfEffectsView>
+                </sharpnado:MaterialFrame>
+
+                <sharpnado:MaterialFrame
+                    Margin="0,12,0,0"
+                    Padding="0"
+                    HorizontalOptions="FillAndExpand"
+                    Style="{StaticResource AcrylicFrame}">
+                    <effectsview:SfEffectsView Padding="24" CornerRadius="10"
+                                               TouchUpCommand="{Binding NavigateCommand}"
+                                               TouchUpCommandParameter="calc-howmanyturnips">
+                        <Label
+                            FontFamily="AnimalCrossing"
+                            FontSize="Medium"
+                            Text="How Many Turnips Can I Buy?"
+                            TextColor="{StaticResource TextPrimaryColor}" />
+                    </effectsview:SfEffectsView>
+                </sharpnado:MaterialFrame>
+
+            </StackLayout>
+
+        </pancake:PancakeView>
+    </Grid>
+</ContentPage>

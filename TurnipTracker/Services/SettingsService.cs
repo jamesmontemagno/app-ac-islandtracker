@@ -35,6 +35,37 @@ namespace TurnipTracker.Services
             return privateCache;
         }
 
+        public static async Task<string> TransferOut()
+        {
+            var key1 = await GetPrivateKey();
+            var key2 = await GetPublicKey();
+            var encoding = Encoding.GetEncoding("iso-8859-1");
+            var authenticationBytes = encoding.GetBytes($"{key1}|{key2}");
+            return Convert.ToBase64String(authenticationBytes);
+        }
+
+        public static async Task<bool> TransferIn(string encodedKeys)
+        {
+            var encoding = Encoding.GetEncoding("iso-8859-1");
+            var s = encoding.GetString(Convert.FromBase64String(encodedKeys));
+
+            var keys = s.Split('|');
+            if (keys.Length != 2)
+                return false;
+
+            var key0 = keys[0];
+            var key1 = keys[1];
+
+            if (!Guid.TryParse(key0, out _) || !Guid.TryParse(key1, out _))
+                return false;
+
+            await SecureStorage.SetAsync(privateKey, key0);
+            privateCache = key0;
+            await SecureStorage.SetAsync(publicKey, key1);
+            publicCache = key1;
+            return true;
+        }
+
         static async Task<string> GetKey(string key)
         {
             var val = await SecureStorage.GetAsync(key);

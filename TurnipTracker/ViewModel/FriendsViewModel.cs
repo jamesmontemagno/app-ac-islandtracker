@@ -19,8 +19,11 @@ namespace TurnipTracker.ViewModel
         public ObservableRangeCollection<FriendStatus> Friends { get; }
         public bool ShowNoFriends => Friends.Count == 0;
 
+        public AsyncCommand<string> ViewFriendCodeCommand { get; }
+
         public FriendsViewModel()
         {
+            ViewFriendCodeCommand = new AsyncCommand<string>(ViewFriendCode);
             Friends = new ObservableRangeCollection<FriendStatus>();
             RegisterFriendClipboardCommand = new AsyncCommand(RegisterFriendClipboard);
             RegisterFriendCommand = new AsyncCommand<string>(RegisterFriend);
@@ -33,6 +36,11 @@ namespace TurnipTracker.ViewModel
                 Friends.ReplaceRange(cache.OrderByDescending(s => s.TurnipUpdateTimeUTC));
 
             
+        }
+
+        async Task ViewFriendCode(string code)
+        {
+            await DisplayAlert("Friend Code", code);
         }
 
         string requestCount = string.Empty;

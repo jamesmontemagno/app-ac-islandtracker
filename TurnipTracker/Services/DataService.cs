@@ -60,7 +60,11 @@ namespace TurnipTracker.Services
                 return profile ?? new Profile
                 {
                     Fruit = (int)Model.Fruit.Apple,
-                    Status = "😍"
+                    Status = "😍",
+                    Name = string.Empty,
+                    FriendCode = string.Empty,
+                    IslandName = string.Empty,
+                    TimeZone = string.Empty
                 };
             }
         }
@@ -69,7 +73,7 @@ namespace TurnipTracker.Services
         {
             lock(locker)
             {
-                barrel.Add<Profile>("profile", profile, TimeSpan.FromDays(1));
+                barrel.Add<Profile>("profile", profile, TimeSpan.FromDays(365));
             }
         }
 
@@ -108,7 +112,8 @@ namespace TurnipTracker.Services
                 IslandName = profile.IslandName,
                 Name = profile.Name,
                 Status = profile.Status ?? string.Empty,
-                TimeZone = profile.TimeZone ?? string.Empty
+                TimeZone = profile.TimeZone ?? string.Empty,
+                FriendCode = profile.FriendCode ?? string.Empty
             };
             user.PublicKey = await SettingsService.GetPublicKey();
             if (SettingsService.HasRegistered)

@@ -28,6 +28,7 @@
             <converters:EmptyBellConverter x:Key="EmptyBellConverter" />
             <converters:LastUpdateDateTimeConverter x:Key="LastUpdateDateTimeConverter" />
             <converters:StringEmptyConverter x:Key="StringEmptyConverter"/>
+            <converters:HasFriendsCodeConverter x:Key="HasFriendsCodeConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
@@ -190,6 +191,7 @@
                             </SwipeView.LeftItems>-->
                         <SwipeView.RightItems>
                             <SwipeItems>
+                               
                                 <SwipeItemView
                                     AutomationProperties.HelpText="Button - Remove Friend"
                                     AutomationProperties.IsInAccessibleTree="True"
@@ -211,6 +213,35 @@
                                                     <Label
                                                         HorizontalOptions="Center"
                                                         Text="Remove"
+                                                        TextColor="{StaticResource TextPrimaryColor}" />
+                                                </StackLayout>
+                                            </effectsview:SfEffectsView>
+                                        </sharpnado:MaterialFrame>
+                                    </Grid>
+                                </SwipeItemView>
+                                <SwipeItemView
+                                    AutomationProperties.HelpText="Button - View Friend Code"
+                                    AutomationProperties.IsInAccessibleTree="True"
+                                    IsVisible="{Binding FriendCode, Converter={StaticResource HasFriendsCodeConverter}}"
+                                    BackgroundColor="{StaticResource AcrylicSurface}"
+                                    Margin="0,0,0,0">
+                                    <Grid Padding="12">
+                                        <sharpnado:MaterialFrame Padding="0" Style="{StaticResource AcrylicFrame}">
+                                            <effectsview:SfEffectsView
+                                                Padding="24,12"
+                                                CornerRadius="10"
+                                                TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=ViewFriendCodeCommand}"
+                                                TouchUpCommandParameter="{Binding FriendCode}">
+                                                <StackLayout VerticalOptions="Center">
+                                                    <Label
+                                                        FontFamily="FA-S"
+                                                        FontSize="24"
+                                                        HorizontalOptions="Center"
+                                                        Text="{StaticResource IconCode}"
+                                                        TextColor="{StaticResource TextPrimaryColor}" />
+                                                    <Label
+                                                        HorizontalOptions="Center"
+                                                        Text="Friend Code"
                                                         TextColor="{StaticResource TextPrimaryColor}" />
                                                 </StackLayout>
                                             </effectsview:SfEffectsView>
@@ -243,9 +274,9 @@
                                             </Grid.ColumnDefinitions>
                                             <Image
                                                 Grid.RowSpan="4"
-                                                HeightRequest="36"
+                                                HeightRequest="28"
                                                 Source="{Binding Fruit, Converter={StaticResource FruitImageConverter}}"
-                                                WidthRequest="36" />
+                                                WidthRequest="28" />
                                             <Label
                                                 Grid.Column="1"
                                                 FontSize="Large"

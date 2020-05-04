@@ -57,7 +57,8 @@ namespace TurnipTracker.Functions
                 Fruit = user.Fruit,
                 TimeZone = user.TimeZone,
                 Status = user.Status ?? string.Empty,
-                TurnipUpdateTimeUTC = DateTime.UtcNow
+                TurnipUpdateTimeUTC = DateTime.UtcNow,
+                FriendCode = user.FriendCode ?? string.Empty
             };
 
             try

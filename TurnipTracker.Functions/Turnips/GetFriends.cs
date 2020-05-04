@@ -102,7 +102,8 @@ namespace TurnipTracker.Functions
                         TimeZone = friend.TimeZone,
                         TurnipUpdateDayOfYear = friend.TurnipUpdateDayOfYear,
                         TurnipUpdateTimeUTC = friend.TurnipUpdateTimeUTC,
-                        TurnipUpdateYear = friend.TurnipUpdateYear
+                        TurnipUpdateYear = friend.TurnipUpdateYear,
+                        FriendCode = friend.FriendCode
                     });
                 }
 

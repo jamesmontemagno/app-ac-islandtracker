@@ -27,6 +27,16 @@ namespace TurnipTracker.Model
             }
         }
 
+        string friendCode = string.Empty;
+        public string FriendCode
+        {
+            get => friendCode;
+            set
+            {                
+                SetProperty(ref friendCode, value, onChanged: SaveProfileAction);
+            }
+        }
+
         string islandName = string.Empty;
         public string IslandName
         {

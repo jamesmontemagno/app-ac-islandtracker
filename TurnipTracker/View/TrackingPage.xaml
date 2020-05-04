@@ -352,7 +352,7 @@
                         <sharpnado:MaterialFrame
                             Grid.Row="2"
                             Margin="0,0,0,8"
-                            HorizontalOptions="End"
+                            HorizontalOptions="Center"
                             IsVisible="{Binding IsToday}"
                             Style="{StaticResource AcrylicButton}">
                             <effectsview:SfEffectsView
@@ -368,7 +368,8 @@
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>
 
-                        <Grid Grid.Row="3" IsVisible="{Binding IsToday}">
+                        <Grid Grid.Row="3" IsVisible="{Binding IsToday}"
+                              Padding="4">
                             <Label
                                 FontFamily="AnimalCrossing"
                                 FontSize="Micro"

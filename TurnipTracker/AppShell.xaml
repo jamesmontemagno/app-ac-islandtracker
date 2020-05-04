@@ -49,6 +49,13 @@
             <ShellContent ContentTemplate="{DataTemplate view:FriendsPage}"/>
         </Tab>
 
+        <Tab Title="Compute" Route="utils">
+            <Tab.Icon>
+                <FontImageSource FontFamily="FA-S" Glyph="{StaticResource IconCompute}"/>
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate view:UtilsPage}"/>
+        </Tab>
+
         <Tab Title="About" Route="about">
             <Tab.Icon>
                 <FontImageSource FontFamily="FA-S" Glyph="{StaticResource IconAbout}"/>

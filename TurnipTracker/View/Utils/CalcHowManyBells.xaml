@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TurnipTracker.View.Utils.CalcHowManyBells"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sfntb="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
+    xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
+    Title="How Many Bells?"
+    mc:Ignorable="d">
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="{StaticResource AcrylicSurface}">
+            <StackLayout Padding="12,14">
+                <Label
+                    Margin="0,0,0,4"
+                    FontFamily="AnimalCrossing"
+                    FontSize="Medium"
+                    Text="This calculator will help you figure out how many bells you need to take out to fill your pockets with turnips."
+                    TextColor="{StaticResource TextPrimaryColor}" />
+                <sharpnado:MaterialFrame
+                    Grid.Row="0"
+                    Margin="4"
+                    Style="{StaticResource AcrylicFrame}">
+                    <StackLayout>
+                        <inputLayout:SfTextInputLayout
+                            Margin="0,0,0,-12"
+                            ContainerType="Outlined"
+                            FocusedColor="{StaticResource NavigationPrimary}"
+                            Hint="Turnip Price"
+                            VerticalOptions="Center">
+                            <inputLayout:SfTextInputLayout.TrailingView>
+                                <StackLayout>
+                                    <Image
+                                        HeightRequest="24"
+                                        Source="bells.png"
+                                        WidthRequest="24" />
+                                </StackLayout>
+                            </inputLayout:SfTextInputLayout.TrailingView>
+                            <sfntb:SfNumericTextBox
+                                AllowNull="True"
+                                Maximum="10000"
+                                MaximumNumberDecimalDigits="0"
+                                ParserMode="Double"
+                                TextColor="{StaticResource TextPrimaryColor}"
+                                ValueChangeMode="OnKeyFocus"
+                                Visual="Material"
+                                x:Name="EntryTurnipPrice"
+                                ValueChanged="ValueChanged"/>
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout
+                            Margin="0,0,0,-12"
+                            ContainerType="Outlined"
+                            FocusedColor="{StaticResource NavigationPrimary}"
+                            Hint="Open Slots"
+                            VerticalOptions="Center">
+                            <sfntb:SfNumericTextBox
+                                AllowNull="True"
+                                Maximum="2000000000"
+                                MaximumNumberDecimalDigits="0"
+                                ParserMode="Double"
+                                TextColor="{StaticResource TextPrimaryColor}"
+                                ValueChangeMode="OnKeyFocus"
+                                Visual="Material"
+                                x:Name="EntryOpenSlots"
+                                ValueChanged="ValueChanged"/>
+                        </inputLayout:SfTextInputLayout>
+
+                        <Label FontSize="Medium"
+                               HorizontalOptions="Center"
+                               TextColor="{StaticResource TextPrimaryColor}"
+                               x:Name="LabelCalculation"
+                               Text="You need x bells"/>
+                    </StackLayout>
+                </sharpnado:MaterialFrame>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

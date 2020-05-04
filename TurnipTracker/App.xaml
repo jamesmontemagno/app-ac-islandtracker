@@ -29,6 +29,9 @@
             <x:String x:Key="IconApprove">&#xf4fc;</x:String>
             <x:String x:Key="IconDeny">&#xf00d;</x:String>
             <x:String x:Key="IconCoffee">&#xf0f4;</x:String>
+            <x:String x:Key="IconWrench">&#xf0ad;</x:String>
+            <x:String x:Key="IconCode">&#xf121;</x:String>
+            <x:String x:Key="IconCompute">&#xf1ec;</x:String>
 
             <x:String x:Key="IconGraph">&#xf1fe;</x:String>
 

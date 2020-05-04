@@ -73,6 +73,7 @@ namespace TurnipTracker.Functions
             userEntity.Fruit = user.Fruit;
             userEntity.TimeZone = user.TimeZone;
             userEntity.Status = user.Status ?? string.Empty;
+            userEntity.FriendCode = user.FriendCode ?? string.Empty;
 
             try
             {
