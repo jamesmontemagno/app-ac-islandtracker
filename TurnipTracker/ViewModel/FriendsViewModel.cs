@@ -228,6 +228,12 @@ namespace TurnipTracker.ViewModel
                 SettingsService.FriendRequestCount = RequestCount;
 
             }
+            catch (HttpResponseException hrex) when (!string.IsNullOrWhiteSpace(hrex.Message))
+            {
+                if (fake)
+                    Friends.Clear();
+                await DisplayAlert("Uh oh, turbulence", hrex.Message);
+            }
             catch (Exception ex)
             {
                 if (fake)
@@ -267,6 +273,10 @@ namespace TurnipTracker.ViewModel
                 forceRefresh = true;
                 OnPropertyChanged(nameof(ShowNoFriends));
                 DataService.ClearCache(DataService.FriendKey);
+            }
+            catch (HttpResponseException hrex) when (!string.IsNullOrWhiteSpace(hrex.Message))
+            {
+                await DisplayAlert("Uh oh, turbulence", hrex.Message);
             }
             catch (Exception ex)
             {
