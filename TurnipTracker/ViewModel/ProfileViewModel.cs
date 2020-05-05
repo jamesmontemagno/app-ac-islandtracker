@@ -64,11 +64,18 @@ namespace TurnipTracker.ViewModel
             if (!(await CheckConnectivity("Check connectivity", "Unable to update profile, please check internet and try again")))
                 return;
 
-            var createSync = SettingsService.HasRegistered ? "Sync" : "Create";
-
-            var sync = await DisplayAlert($"{createSync} profile?", "Are you sure you want to sync your profile to the cloud?", $"Yes, {createSync}", "Cancel");
-            if (!sync)
-                return;
+            if(SettingsService.HasRegistered)
+            {
+                var sync = await DisplayAlert($"Sync profile?", "Are you sure you want to sync your profile to the cloud?", $"Yes, Sync", "Cancel");
+                if (!sync)
+                    return;
+            }
+            else
+            {
+                var sync = await DisplayAlert($"Create profile?", "Are you sure you want to create your profile and sync it to the cloud? By doing so you agree to the Terms and Conditions found on the About page.", $"Yes, Create", "Cancel");
+                if (!sync)
+                    return;
+            }            
 
             Analytics.TrackEvent("SyncProfile");
 
