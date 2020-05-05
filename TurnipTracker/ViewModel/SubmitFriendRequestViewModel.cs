@@ -87,6 +87,10 @@ namespace TurnipTracker.ViewModel
                 Submitted = true;
                 ShowClose = true;
             }
+            catch (HttpResponseException hrex) when (!string.IsNullOrWhiteSpace(hrex.Message))
+            {
+                await DisplayAlert("Uh oh, turbulence", hrex.Message);
+            }
             catch (Exception ex)
             {
                 await DisplayAlert("Uh oh, turbulence", "Looks like something went wrong. Check internet and try again.");

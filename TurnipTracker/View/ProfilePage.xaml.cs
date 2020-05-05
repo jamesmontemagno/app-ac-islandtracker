@@ -24,7 +24,7 @@ namespace TurnipTracker.View
             if(SettingsService.FirstRun)
             {
                 SettingsService.FirstRun = false;
-                await DisplayAlert("Welcome!", "Get started with Island Tracker by filling in your profile. Then head over to the tracking section to track turnip prices and get predictions. Finally, sync everything to the cloud and share with your friend.", "OK");
+                await DisplayAlert("Welcome!", "Get started with Island Tracker by filling in your profile. Then head over to the tracking section to track turnip prices and get predictions. Finally, sync everything to the cloud and share with your friends.", "OK");
             }
         }
     }

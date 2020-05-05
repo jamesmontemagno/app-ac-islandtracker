@@ -248,6 +248,8 @@ namespace TurnipTracker.Services
 
             if (!response.IsSuccessStatusCode)
             {
+                if (responseString?.StartsWith("{\"Message") ?? false)
+                    responseString = JsonConvert.DeserializeObject<HttpMessage>(responseString)?.Message ?? responseString;
                 throw new HttpResponseException(response.StatusCode, responseString);
             }
         }
@@ -263,6 +265,8 @@ namespace TurnipTracker.Services
 
             if (!response.IsSuccessStatusCode)
             {
+                if (responseString?.StartsWith("{\"Message") ?? false)
+                    responseString = JsonConvert.DeserializeObject<HttpMessage>(responseString)?.Message ?? responseString;
                 throw new HttpResponseException(response.StatusCode, responseString);
             }
         }
@@ -278,6 +282,8 @@ namespace TurnipTracker.Services
 
             if (!response.IsSuccessStatusCode)
             {
+                if (responseString?.StartsWith("{\"Message") ?? false)
+                    responseString = JsonConvert.DeserializeObject<HttpMessage>(responseString)?.Message ?? responseString;
                 throw new HttpResponseException(response.StatusCode, responseString);
             }
         }
@@ -293,6 +299,8 @@ namespace TurnipTracker.Services
 
             if (!response.IsSuccessStatusCode)
             {
+                if (responseString?.StartsWith("{\"Message") ?? false)
+                    responseString = JsonConvert.DeserializeObject<HttpMessage>(responseString)?.Message ?? responseString;
                 throw new HttpResponseException(response.StatusCode, responseString);
             }
 

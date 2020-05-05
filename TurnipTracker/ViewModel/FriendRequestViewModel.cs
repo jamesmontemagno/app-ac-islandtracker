@@ -69,6 +69,10 @@ namespace TurnipTracker.ViewModel
 
                 SettingsService.FriendRequestCount = FriendRequests.Count == 0 ? string.Empty : FriendRequests.Count.ToString();
             }
+            catch (HttpResponseException hrex) when (!string.IsNullOrWhiteSpace(hrex.Message))
+            {
+                await DisplayAlert("Uh oh, turbulence", hrex.Message);
+            }
             catch (Exception ex)
             {
                 await DisplayAlert("Uh oh, turbulence", "Looks like something went wrong. Check internet and try again.");
@@ -105,6 +109,12 @@ namespace TurnipTracker.ViewModel
                 SettingsService.LastFriendRequestsUpdate = DateTime.UtcNow;
                 OnPropertyChanged(nameof(LastUpdate));
                 SettingsService.FriendRequestCount = FriendRequests.Count == 0 ? string.Empty : FriendRequests.Count.ToString();
+            }
+            catch (HttpResponseException hrex) when (!string.IsNullOrWhiteSpace(hrex.Message))
+            {
+                if (fake)
+                    FriendRequests.Clear();
+                await DisplayAlert("Uh oh, turbulence", hrex.Message);
             }
             catch (Exception ex)
             {
@@ -149,6 +159,10 @@ namespace TurnipTracker.ViewModel
                 DataService.ClearCache(DataService.FriendRequestKey);
                 OnPropertyChanged(nameof(ShowNoFriends));
                 SettingsService.FriendRequestCount = FriendRequests.Count == 0 ? string.Empty : FriendRequests.Count.ToString();
+            }
+            catch (HttpResponseException hrex) when (!string.IsNullOrWhiteSpace(hrex.Message))
+            {
+                await DisplayAlert("Uh oh, turbulence", hrex.Message);
             }
             catch (Exception ex)
             {
