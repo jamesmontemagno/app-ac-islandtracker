@@ -12,13 +12,15 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using TurnipTracker.Helpers;
 using Microsoft.AppCenter.Analytics;
+using TurnipTracker.Model;
 
 namespace TurnipTracker.ViewModel
 {
     public class FriendsViewModel : ViewModelBase
     {
         public ObservableRangeCollection<FriendStatus> Friends { get; }
-        public bool ShowNoFriends => Friends.Count == 0;
+        public ObservableRangeCollection<FriendGroup> FriendsGrouped { get; }
+        public bool ShowNoFriends => FriendsGrouped.Count == 0;
 
         public AsyncCommand<string> ViewFriendCodeCommand { get; }
 
@@ -26,6 +28,7 @@ namespace TurnipTracker.ViewModel
         {
             ViewFriendCodeCommand = new AsyncCommand<string>(ViewFriendCode);
             Friends = new ObservableRangeCollection<FriendStatus>();
+            FriendsGrouped = new ObservableRangeCollection<FriendGroup>();
             RegisterFriendClipboardCommand = new AsyncCommand(RegisterFriendClipboard);
             RegisterFriendCommand = new AsyncCommand<string>(RegisterFriend);
             RefreshCommand = new AsyncCommand(RefreshAsync);
@@ -33,8 +36,11 @@ namespace TurnipTracker.ViewModel
             RemoveFriendCommand = new AsyncCommand<FriendStatus>(RemoveFriend);
             GoToFriendRequestCommand = new AsyncCommand(GoToFriendRequest);
             var cache = DataService.GetCache<IEnumerable<FriendStatus>>(DataService.FriendKey);
-            if(cache != null)
+            if (cache != null)
+            {
                 Friends.ReplaceRange(cache.OrderByDescending(s => s.TurnipUpdateTimeUTC));
+                UpdateFriendsGroups();
+            }
 
             
         }
@@ -203,7 +209,10 @@ namespace TurnipTracker.ViewModel
             {
                 if (fake)
                 {
-                    Friends.Add(new FriendStatus());
+                    FriendsGrouped.Add(new FriendGroup("Updating...", new List<FriendStatus>
+                    {
+                        new FriendStatus()
+                    }));
                     OnPropertyChanged(nameof(ShowNoFriends));
                 }
 
@@ -215,7 +224,11 @@ namespace TurnipTracker.ViewModel
 
                 var statuses = friendsTask.Result;
                 forceRefresh = false;
-                Friends.ReplaceRange(statuses.OrderByDescending(s=>s.TurnipUpdateTimeUTC));
+                await Task.Delay(5000);
+                Friends.ReplaceRange(statuses.OrderByDescending(s => s.TurnipUpdateTimeUTC));
+
+                UpdateFriendsGroups();
+
                 SettingsService.LastFriendsUpdate = DateTime.UtcNow;
                 OnPropertyChanged(nameof(LastUpdate));
 
@@ -231,13 +244,13 @@ namespace TurnipTracker.ViewModel
             catch (HttpResponseException hrex) when (!string.IsNullOrWhiteSpace(hrex.Message))
             {
                 if (fake)
-                    Friends.Clear();
+                    FriendsGrouped.Clear();
                 await DisplayAlert("Uh oh, turbulence", hrex.Message);
             }
             catch (Exception ex)
             {
                 if (fake)
-                    Friends.Clear();
+                    FriendsGrouped.Clear();
 
                 await DisplayAlert("Uh oh, turbulence", "Looks like something went wrong. Check internet and try again.");
 
@@ -248,6 +261,18 @@ namespace TurnipTracker.ViewModel
                 IsBusy = false;
             }
             OnPropertyChanged(nameof(ShowNoFriends));
+        }
+
+        void UpdateFriendsGroups()
+        {
+            var today = Friends.Where(f => f.TurnipUpdateTimeUTC.ToLocalTime().DayOfYear == DateTime.Now.DayOfYear).ToList();
+            var older = Friends.Where(f => f.TurnipUpdateTimeUTC.ToLocalTime().DayOfYear != DateTime.Now.DayOfYear).ToList();
+
+            FriendsGrouped.Clear();
+            if (today.Count > 0)
+                FriendsGrouped.Add(new FriendGroup("Updated Today", today));
+            if (older.Count > 0)
+                FriendsGrouped.Add(new FriendGroup("Older Updates", older));
         }
 
         public AsyncCommand<FriendStatus> RemoveFriendCommand { get; set; }
@@ -271,6 +296,7 @@ namespace TurnipTracker.ViewModel
                 await DataService.RemoveFriendAsync(friendStatus.PublicKey);
                 Friends.Remove(friendStatus);
                 forceRefresh = true;
+                UpdateFriendsGroups();
                 OnPropertyChanged(nameof(ShowNoFriends));
                 DataService.ClearCache(DataService.FriendKey);
             }

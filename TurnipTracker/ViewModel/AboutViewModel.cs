@@ -33,6 +33,7 @@ namespace TurnipTracker.ViewModel
         public AsyncCommand<string> OpenBrowserCommand { get; }
 
         public AsyncCommand TransferCommand { get; }
+        public AsyncCommand DeleteAccountCommand { get; }
 
         public List<AttributionItem> Attributions { get; }
 
@@ -42,6 +43,7 @@ namespace TurnipTracker.ViewModel
         {
             SubscribeCommand = new AsyncCommand(Subscribe);
             SendEmailCommand = new AsyncCommand(SendEmail);
+            DeleteAccountCommand = new AsyncCommand(DeleteAccount);
             OpenBrowserCommand = new AsyncCommand<string>(OpenBrowser);
             TransferCommand = new AsyncCommand(Transfer);
 
@@ -114,6 +116,8 @@ namespace TurnipTracker.ViewModel
 
             var url = type switch
             {
+                "terms" => "https://refractored.ghost.io/terms/",
+                "privacy" => "https://refractored.ghost.io/about/",
                 "survey" => "https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAINl_EhURU9ZTVRZWVE0WExFMEJXTDhTSlkxQVZRSi4u",
                 "coffee" => "https://www.buymeacoffee.com/jamesmontemagno",
                 "resizetizernt" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/resizetizernt.txt",
@@ -147,6 +151,27 @@ namespace TurnipTracker.ViewModel
             };
 
             await Browser.OpenAsync(url);
+        }
+
+        async Task DeleteAccount()
+        {
+            try
+            {
+                Analytics.TrackEvent("DeleteAccount");
+                var info = await SettingsService.TransferOut();
+                var message = new EmailMessage
+                {
+                    Subject = $"Delete Island Tracker Account",
+                    Body = info,
+                    To = new List<string> { "acislandtracker@gmail.com" }
+                };
+
+                await Email.ComposeAsync(message);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Unable to send email", "Email acislandtracker@gmail.com directly.");
+            }
         }
 
 

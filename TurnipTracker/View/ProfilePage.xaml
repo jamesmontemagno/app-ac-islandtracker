@@ -55,7 +55,7 @@
                             Margin="24,0,0,0"
                             FontFamily="AnimalCrossing"
                             FontSize="Medium"
-                            Text="Name*"
+                            Text="Nickname*"
                             TextColor="{StaticResource TextPrimaryColor}" />
                         <sharpnado:MaterialFrame
                             Padding="{OnPlatform Android='12,0',

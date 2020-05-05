@@ -14,6 +14,7 @@
     xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
     xmlns:view="clr-namespace:TurnipTracker.View"
     xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+    xmlns:model="clr-namespace:TurnipTracker.Model"
     ios:Page.UseSafeArea="True"
     x:DataType="viewmodel:FriendsViewModel"
     BackgroundColor="{StaticResource NavigationPrimary}"
@@ -34,8 +35,9 @@
     <Grid>
         <CollectionView
             BackgroundColor="{StaticResource AcrylicSurface}"
-            ItemsSource="{Binding Friends}"
+            ItemsSource="{Binding FriendsGrouped}"
             SelectionMode="None"
+            IsGrouped="True"
             VerticalOptions="FillAndExpand">
             <CollectionView.Header>
                 <Grid BackgroundColor="{StaticResource NavigationPrimary}">
@@ -158,6 +160,16 @@
                     </pancake:PancakeView>
                 </Grid>
             </CollectionView.Header>
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="model:FriendGroup">
+                    <StackLayout Padding="18,12,0,0">
+                        <Label FontFamily="AnimalCrossing"
+                                FontSize="Medium"
+                                Text="{Binding Key}"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="shared:FriendStatus">
                     <SwipeView BackgroundColor="Transparent" IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsNotBusy}">
