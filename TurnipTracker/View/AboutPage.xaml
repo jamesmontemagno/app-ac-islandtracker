@@ -117,6 +117,23 @@
                             Padding="12"
                             CornerRadius="10"
                             TouchUpCommand="{Binding OpenBrowserCommand}"
+                            TouchUpCommandParameter="survey">
+                            <Label
+                                HorizontalOptions="Center"
+                                FontSize="Medium"
+                                Text="Survey"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                        </effectsview:SfEffectsView>
+                    </sharpnado:MaterialFrame>
+
+                    <sharpnado:MaterialFrame
+                        Padding="0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding OpenBrowserCommand}"
                             TouchUpCommandParameter="newsletter">
                             <Label
                                 HorizontalOptions="Center"
