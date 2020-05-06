@@ -28,7 +28,7 @@ namespace TurnipTracker
                     "SwipeView_Experimental"
                 });
 
-            
+
 
             MainPage = new AppShell();
         }
@@ -79,13 +79,24 @@ namespace TurnipTracker
         {
 
 #if !DEBUG
-            Distribute.UpdateTrack = UpdateTrack.Private;
-            AppCenter.Start($"ios={AppCenteriOS};" +
-                $"android={AppCenterAndroid};" +
-                $"uwp={AppCenterUWP}", 
-                typeof(Analytics), 
-                typeof(Crashes),
-                typeof(Distribute));
+            if (!IsStore)
+            {
+                Distribute.UpdateTrack = UpdateTrack.Private;
+                AppCenter.Start($"ios={AppCenteriOS};" +
+                    $"android={AppCenterAndroid};" +
+                    $"uwp={AppCenterUWP}",
+                    typeof(Analytics),
+                    typeof(Crashes),
+                    typeof(Distribute));
+            }
+            else
+            {
+                AppCenter.Start($"ios={AppCenteriOS};" +
+                    $"android={AppCenterAndroid};" +
+                    $"uwp={AppCenterUWP}",
+                    typeof(Analytics),
+                    typeof(Crashes));
+            }
 #endif
             OnResume();
         }
