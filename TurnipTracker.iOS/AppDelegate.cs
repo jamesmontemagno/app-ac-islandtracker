@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
-using Sharpnado.Presentation.Forms.iOS;
 using Syncfusion.SfNumericTextBox.XForms.iOS;
 using Syncfusion.XForms.iOS.ComboBox;
 using Syncfusion.XForms.iOS.MaskedEdit;
@@ -42,7 +41,7 @@ namespace TurnipTracker.iOS
             Syncfusion.XForms.iOS.EffectsView.SfEffectsViewRenderer.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
             Syncfusion.XForms.iOS.Expander.SfExpanderRenderer.Init();
-            SharpnadoInitializer.Initialize(enableInternalLogger: true);
+            Sharpnado.MaterialFrame.iOS.iOSMaterialFrameRenderer.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
