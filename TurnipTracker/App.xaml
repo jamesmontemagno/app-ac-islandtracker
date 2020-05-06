@@ -3,10 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"
              mc:Ignorable="d"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
+             xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
              x:Class="TurnipTracker.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -87,14 +86,6 @@
                 <Setter Property="HeightRequest" Value="42"/>
                 <Setter Property="WidthRequest" Value="42"/>
                 <Setter Property="Padding" Value="0"/>
-            </Style>
-
-             <Style x:Key="BottomTabStyle" TargetType="tabs:BottomTabItem">
-                <Setter Property="SelectedTabColor" Value="{StaticResource AccentColor}" />
-                <Setter Property="UnselectedLabelColor" Value="Gray" />
-                <Setter Property="UnselectedIconColor" Value="LightGray" />
-                <Setter Property="LabelSize" Value="14" />
-                <Setter Property="IconSize" Value="28" />
             </Style>
 
             <Style x:Key="SocialPancake" TargetType="pancake:PancakeView">

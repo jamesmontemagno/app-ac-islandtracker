@@ -5,7 +5,7 @@
     xmlns:model="clr-namespace:TurnipTracker.Model"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:sharpnado="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
+    xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
     mc:Ignorable="d"
     Shell.NavBarIsVisible="False">
         <Grid RowSpacing="12"
