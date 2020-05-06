@@ -128,6 +128,7 @@
 
                     <sharpnado:MaterialFrame
                         Padding="0"
+                        Margin="0,8,0,0"
                         HorizontalOptions="FillAndExpand"
                         Style="{StaticResource AcrylicFrame}">
                         <effectsview:SfEffectsView
