@@ -12,6 +12,7 @@ namespace TurnipTracker.Functions.Helpers
 {
     public static class Utils
     {
+        public static string FriendCodePassword => Environment.GetEnvironmentVariable("FRIEND_CODE_PASS");
         public static string ParseToken(HttpRequest request)
         {
             var header = AuthenticationHeaderValue.Parse(request.Headers["Authorization"]);

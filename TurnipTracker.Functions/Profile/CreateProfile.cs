@@ -49,7 +49,15 @@ namespace TurnipTracker.Functions
             {
                 return new BadRequestErrorMessageResult("Invalid data to process request");
             }
-
+            var encryptedFriendCode = string.Empty;
+            try
+            { 
+                encryptedFriendCode = Cipher.Encrypt(user.FriendCode, Utils.FriendCodePassword, user.PublicKey);
+            }
+            catch (Exception ex)
+            {
+                log.LogError("Unable to decrypt friendcode: " + ex.Message);
+            }
             var userEntity = new UserEntity(user.PublicKey, privateKey)
             {
                 Name = user.Name,
@@ -58,7 +66,7 @@ namespace TurnipTracker.Functions
                 TimeZone = user.TimeZone,
                 Status = user.Status ?? string.Empty,
                 TurnipUpdateTimeUTC = DateTime.UtcNow,
-                FriendCode = user.FriendCode ?? string.Empty
+                FriendCode = encryptedFriendCode
             };
 
             try
