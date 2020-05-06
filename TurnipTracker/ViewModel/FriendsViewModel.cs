@@ -224,7 +224,7 @@ namespace TurnipTracker.ViewModel
 
                 var statuses = friendsTask.Result;
                 forceRefresh = false;
-                await Task.Delay(5000);
+                // await Task.Delay(5000);
                 Friends.ReplaceRange(statuses.OrderByDescending(s => s.TurnipUpdateTimeUTC));
 
                 UpdateFriendsGroups();

@@ -11,7 +11,7 @@ using Android.App;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("TurnipTracker.Android")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright © Refractored LLC  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
@@ -32,5 +32,5 @@ using Android.App;
 #if DEBUG
 [assembly: Application(Debuggable=true, NetworkSecurityConfig = "@xml/network_security_config")]
 #else
-[assembly: Application(Debuggable=false)]
+[assembly: Application(Debuggable=false, AllowBackup = false)]
 #endif

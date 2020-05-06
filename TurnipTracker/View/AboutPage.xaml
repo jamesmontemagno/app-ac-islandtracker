@@ -43,25 +43,54 @@
                 CornerRadius="36,36,0,0"
                 Elevation="8">
                 <StackLayout Padding="12" Spacing="4">
-
-                    <Button
-                        AutomationProperties.IsInAccessibleTree="True"
-                        Command="{Binding OpenBrowserCommand}"
-                        CommandParameter="survey"
-                        Style="{StaticResource ButtonRoundedCorners}"
-                        Text="Take Survey" />
-
+                    
                     <Label
                         Margin="0,0,0,0"
                         FontSize="Medium"
-                        Text="Thanks for beta testing Island Tracker! I really appreciate it. If you run into any issues or have a suggestion, please send me an email by using the nifty button below."
+                        Text="Thanks purchasing Island Tracker and support independent development!  If you run into any issues or have a suggestion, please send me an email by using the nifty buttons below."
                         TextColor="{StaticResource TextPrimaryColor}" />
 
-                    <Button
-                        AutomationProperties.IsInAccessibleTree="True"
-                        Command="{Binding SendEmailCommand}"
-                        Style="{StaticResource ButtonRoundedCorners}"
-                        Text="Send Bug Report/Feedback" />
+                    <Label
+                        Margin="0,24,0,0"
+                        FontFamily="AnimalCrossing"
+                        FontSize="Large"
+                        Text="Support:"
+                        TextColor="{StaticResource TextPrimaryColor}" />
+                    
+                    <sharpnado:MaterialFrame
+                        Padding="0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding OpenBrowserCommand}"
+                            TouchUpCommandParameter="featurerequest">
+                            <Label
+                                HorizontalOptions="Center"
+                                FontSize="Medium"
+                                Text="Feature Request"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                        </effectsview:SfEffectsView>
+                    </sharpnado:MaterialFrame>
+
+                    
+                    <sharpnado:MaterialFrame
+                        Padding="0"
+                        Margin="0,8,0,0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding SendEmailCommand}">
+                            <Label
+                                HorizontalOptions="Center"
+                                FontSize="Medium"
+                                Text="Email Support"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                        </effectsview:SfEffectsView>
+                    </sharpnado:MaterialFrame>
 
                     <StackLayout Orientation="Horizontal">
                         <CheckBox IsChecked="{Binding AttachDetails}" />
@@ -71,12 +100,67 @@
                             VerticalOptions="Center" />
                     </StackLayout>
 
-                    <Button
-                        x:Name="ButonAddJames"
-                        Clicked="ButonAddJames_Clicked"
-                        Style="{StaticResource ButtonRoundedCorners}"
-                        Text="Add James as Friend" />
+                   
 
+                    <Label
+                        Margin="0,24,0,0"
+                        FontFamily="AnimalCrossing"
+                        FontSize="Large"
+                        Text="More Island Tracker:"
+                        TextColor="{StaticResource TextPrimaryColor}" />
+
+                    <sharpnado:MaterialFrame
+                        Padding="0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding OpenBrowserCommand}"
+                            TouchUpCommandParameter="survey">
+                            <Label
+                                HorizontalOptions="Center"
+                                FontSize="Medium"
+                                Text="Survey"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                        </effectsview:SfEffectsView>
+                    </sharpnado:MaterialFrame>
+
+                    <sharpnado:MaterialFrame
+                        Padding="0"
+                        Margin="0,8,0,0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding OpenBrowserCommand}"
+                            TouchUpCommandParameter="newsletter">
+                            <Label
+                                HorizontalOptions="Center"
+                                FontSize="Medium"
+                                Text="Newsletter"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                        </effectsview:SfEffectsView>
+                    </sharpnado:MaterialFrame>
+
+                    <sharpnado:MaterialFrame
+                        Padding="0"
+                        Margin="0,8,0,0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding ShareWithFriendsCommand}"
+                            TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
+                            <Label
+                                HorizontalOptions="Center"
+                                FontSize="Medium"
+                                Text="Share with Friends"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                        </effectsview:SfEffectsView>
+                    </sharpnado:MaterialFrame>
 
                     <Label
                         Margin="0,24,0,0"
@@ -260,6 +344,7 @@
                             TouchUpCommand="{Binding OpenBrowserCommand}"
                             TouchUpCommandParameter="terms">
                             <Label
+                                HorizontalOptions="Center"
                                 FontSize="Medium"
                                 Text="Terms and Conditions"
                                 TextColor="{StaticResource TextPrimaryColor}" />
@@ -276,6 +361,7 @@
                             TouchUpCommand="{Binding OpenBrowserCommand}"
                             TouchUpCommandParameter="privacy">
                             <Label
+                                HorizontalOptions="Center"
                                 FontSize="Medium"
                                 Text="Privacy Policy"
                                 TextColor="{StaticResource TextPrimaryColor}" />
@@ -291,11 +377,18 @@
                             CornerRadius="10"
                             TouchUpCommand="{Binding DeleteAccountCommand}">
                             <Label
+                                HorizontalOptions="Center"
                                 FontSize="Medium"
                                 Text="Delete Account"
                                 TextColor="{StaticResource TextPrimaryColor}" />
                         </effectsview:SfEffectsView>
                     </sharpnado:MaterialFrame>
+
+                    <Label Text="{Binding AppInfo}"
+                           HorizontalOptions="Center"
+                           Margin="0,8,0,0"
+                           TextColor="{StaticResource TextPrimaryColor}"
+                           FontSize="Small"/>
                 </StackLayout>
             </pancake:PancakeView>
         </Grid>

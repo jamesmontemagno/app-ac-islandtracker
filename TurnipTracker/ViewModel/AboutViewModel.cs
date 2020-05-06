@@ -9,6 +9,7 @@ using Microsoft.AppCenter.Analytics;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
 using Newtonsoft.Json;
+using TurnipTracker.Helpers;
 using TurnipTracker.Model;
 using TurnipTracker.Services;
 using Xamarin.Essentials;
@@ -34,8 +35,11 @@ namespace TurnipTracker.ViewModel
 
         public AsyncCommand TransferCommand { get; }
         public AsyncCommand DeleteAccountCommand { get; }
+        public AsyncCommand<Xamarin.Forms.View> ShareWithFriendsCommand { get; }
 
         public List<AttributionItem> Attributions { get; }
+
+        public string AppInfo => $"{Xamarin.Essentials.AppInfo.VersionString} ({Xamarin.Essentials.AppInfo.BuildString})";
 
 
         List<(string Title, string Key, string Platforms)> podcasts;
@@ -45,6 +49,7 @@ namespace TurnipTracker.ViewModel
             SendEmailCommand = new AsyncCommand(SendEmail);
             DeleteAccountCommand = new AsyncCommand(DeleteAccount);
             OpenBrowserCommand = new AsyncCommand<string>(OpenBrowser);
+            ShareWithFriendsCommand = new AsyncCommand<Xamarin.Forms.View>(ShareWithFriends);
             TransferCommand = new AsyncCommand(Transfer);
 
             Attributions = new List<AttributionItem>
@@ -116,9 +121,11 @@ namespace TurnipTracker.ViewModel
 
             var url = type switch
             {
+                "featurerequest" => "https://github.com/jamesmontemagno/islandtracker-feedback",
+                "newsletter" => "https://mailchi.mp/06f065f73ce9/acislandtracker",
                 "terms" => "https://refractored.ghost.io/terms/",
                 "privacy" => "https://refractored.ghost.io/about/",
-                "survey" => "https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAINl_EhURU9ZTVRZWVE0WExFMEJXTDhTSlkxQVZRSi4u",
+                "survey" => App.IsStore ? "https://forms.microsoft.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAINl_EhUNTRGN0RKVkc4U01DOFRYODk0QkxWNVIxUi4u" : "https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAINl_EhURU9ZTVRZWVE0WExFMEJXTDhTSlkxQVZRSi4u",
                 "coffee" => "https://www.buymeacoffee.com/jamesmontemagno",
                 "resizetizernt" => "https://raw.githubusercontent.com/jamesmontemagno/app-ac-islandtracker/master/Licenses/resizetizernt.txt",
                 "fontawesome" => "https://fontawesome.com/",
@@ -174,6 +181,25 @@ namespace TurnipTracker.ViewModel
             }
         }
 
+        async Task ShareWithFriends(Xamarin.Forms.View element)
+        {
+            try
+            {
+                Analytics.TrackEvent("ShareWithFriends");
+                var bounds = element.GetAbsoluteBounds();
+
+                await Share.RequestAsync(new ShareTextRequest
+                {
+                    PresentationSourceBounds = bounds.ToSystemRectangle(),
+                    Title = "Island Tracker for ACNH",
+                    Text = "Checkout Island Tracker for ACNH and track turnips with me: https://islandtracker.app"
+                });
+            }
+            catch (Exception)
+            {
+            }
+        }
+
 
         async Task SendEmail()
         {
@@ -183,8 +209,8 @@ namespace TurnipTracker.ViewModel
                 var key = await SettingsService.GetPublicKey();
                 var message = new EmailMessage
                 {
-                    Subject = $"Island Tracker Issue. Public Key: {key}",
-                    Body = "Describe issue here.",
+                    Subject = $"Island Tracker Issue. {AppInfo}",
+                    Body = $"Describe issue here. Public Key: {key}",
                    To = new List<string> { "acislandtracker@gmail.com"}
                 };
 

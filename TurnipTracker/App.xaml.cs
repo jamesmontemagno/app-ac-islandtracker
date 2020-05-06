@@ -51,6 +51,8 @@ namespace TurnipTracker
         public const string PutUpdateTurnipPricesKey = "AC_PutUpdateTurnipPricesKey";
         public const string PostCreateProfileKey = "AC_PostCreateProfileKey";
 
+        public static bool IsStore => "AC_IsStore" == "true" ? true : false;
+
         const string AppCenteriOS = "AC_IOS";
         const string AppCenterAndroid = "AC_ANDROID";
         const string AppCenterUWP = "AC_UWP";

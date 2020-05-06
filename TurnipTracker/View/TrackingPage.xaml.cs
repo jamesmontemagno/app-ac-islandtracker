@@ -26,7 +26,8 @@ namespace TurnipTracker.View
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if(DateTime.Now.DayOfYear > 129 && SettingsService.AskForSurvey)
+            
+            if(!App.IsStore && DateTime.Now.DayOfYear >= 127 && SettingsService.AskForSurvey)
             {
                 SettingsService.AskForSurvey = false;
                 if(await DisplayAlert("Survey Time!", "Thanks for testing Island Tracker. Please take 2 minutes to provide feedback on the app! <3", "OK", "Not now"))

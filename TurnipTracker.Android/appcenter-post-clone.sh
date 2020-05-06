@@ -19,6 +19,9 @@ sed -i '' "s|AC_PostCreateProfileKey|$AC_PostCreateProfileKey|g" $BUILD_REPOSITO
 sed -i '' "s|AC_PostRemoveFriendRequestKey|$AC_PostRemoveFriendRequestKey|g" $BUILD_REPOSITORY_LOCALPATH/TurnipTracker/App.xaml.cs
 sed -i '' "s|AC_GetFriendRequestCountKey|$AC_GetFriendRequestCountKey|g" $BUILD_REPOSITORY_LOCALPATH/TurnipTracker/App.xaml.cs
 
+if [ "$APPCENTER_BRANCH" == "appstore" ]; then
+sed -i '' "s|AC_IsStore|$AC_IsStore|g" $BUILD_REPOSITORY_LOCALPATH/TurnipTracker/App.xaml.cs
+fi
 
 cat $BUILD_REPOSITORY_LOCALPATH/TurnipTracker/App.xaml.cs
 
