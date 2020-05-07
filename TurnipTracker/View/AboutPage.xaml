@@ -47,7 +47,7 @@
                     <Label
                         Margin="0,0,0,0"
                         FontSize="Medium"
-                        Text="Thanks purchasing Island Tracker and support independent development!  If you run into any issues or have a suggestion, please send me an email by using the nifty buttons below."
+                        Text="Thanks purchasing Island Tracker and supporting independent development!  If you run into any issues or have a suggestion, please send me an email by using the nifty buttons below."
                         TextColor="{StaticResource TextPrimaryColor}" />
 
                     <Label
