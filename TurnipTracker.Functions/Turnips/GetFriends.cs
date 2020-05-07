@@ -89,6 +89,17 @@ namespace TurnipTracker.Functions
                     var friend = t.Result?.Results?.FirstOrDefault();
                     if (friend == null)
                         continue;
+
+                    var friendCode = string.Empty;
+                    try
+                    {
+                        friendCode = Cipher.Decrypt(friend.FriendCode, Utils.FriendCodePassword, friend.PublicKey);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.LogError("Unable to decrypt friendcode: " + ex.Message);
+                    }
+
                     statuses.Add(new FriendStatus
                     {
                         AMPrice = friend.AMPrice,
@@ -103,7 +114,7 @@ namespace TurnipTracker.Functions
                         TurnipUpdateDayOfYear = friend.TurnipUpdateDayOfYear,
                         TurnipUpdateTimeUTC = friend.TurnipUpdateTimeUTC,
                         TurnipUpdateYear = friend.TurnipUpdateYear,
-                        FriendCode = friend.FriendCode
+                        FriendCode = friendCode
                     });
                 }
 

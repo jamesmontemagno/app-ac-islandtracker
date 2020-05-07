@@ -67,13 +67,21 @@ namespace TurnipTracker.Functions
             if (userEntity == null)
                 return new BadRequestErrorMessageResult("Unable to locate your user account.");
 
-
+            var encryptedFriendCode = string.Empty;
+            try
+            {
+                encryptedFriendCode = Cipher.Encrypt(user.FriendCode, Utils.FriendCodePassword, user.PublicKey);
+            }
+            catch (Exception ex)
+            {
+                log.LogError("Unable to decrypt friendcode: " + ex.Message);
+            }
             userEntity.Name = user.Name;
             userEntity.IslandName = user.IslandName;
             userEntity.Fruit = user.Fruit;
             userEntity.TimeZone = user.TimeZone;
             userEntity.Status = user.Status ?? string.Empty;
-            userEntity.FriendCode = user.FriendCode ?? string.Empty;
+            userEntity.FriendCode = encryptedFriendCode;
 
             try
             {
