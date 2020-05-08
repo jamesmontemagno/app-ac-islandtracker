@@ -69,6 +69,8 @@ namespace TurnipTracker.Functions
             userEntity.TurnipUpdateDayOfYear = turnipUpdate.DayOfYear;
             userEntity.TurnipUpdateYear = turnipUpdate.Year;
             userEntity.TurnipUpdateTimeUTC = turnipUpdate.TurnipUpdateTimeUTC;
+            userEntity.MaxPrediction = turnipUpdate.MaxPrediction;
+            userEntity.MinPrediction = turnipUpdate.MinPrediction;
 
             try
             {

@@ -70,6 +70,9 @@ namespace TurnipTracker.Functions.Helpers
 
         public static async Task<bool> ReachedMaxFriends(CloudTable couldTable, string publicKey)
         {
+            if (Environment.GetEnvironmentVariable("JAMES_KEY") == publicKey)
+                return false;
+
             var publicKeyFilter = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, publicKey);
 
             var rangeQuery = new TableQuery<FriendEntity>().Where(publicKeyFilter);

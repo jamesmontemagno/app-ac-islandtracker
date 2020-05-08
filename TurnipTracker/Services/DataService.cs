@@ -129,7 +129,7 @@ namespace TurnipTracker.Services
             }
         }
 
-        public async Task UpdateTurnipPrices(Day day)
+        public async Task UpdateTurnipPrices(Day day, int min, int max)
         {
             day ??= GetCurrentWeek()[(int)DateTime.Now.DayOfWeek];
             var key = await SettingsService.GetPublicKey();
@@ -141,7 +141,9 @@ namespace TurnipTracker.Services
                 Year = DateTime.Now.Year,
                 DayOfYear = DateTime.Now.DayOfYear,
                 PublicKey = key,
-                TurnipUpdateTimeUTC = DateTime.UtcNow
+                TurnipUpdateTimeUTC = DateTime.UtcNow,
+                MaxPrediction = max,
+                MinPrediction = min
             };
 
             var content = JsonConvert.SerializeObject(turnipUpdate);

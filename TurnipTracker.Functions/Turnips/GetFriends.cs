@@ -114,7 +114,9 @@ namespace TurnipTracker.Functions
                         TurnipUpdateDayOfYear = friend.TurnipUpdateDayOfYear,
                         TurnipUpdateTimeUTC = friend.TurnipUpdateTimeUTC,
                         TurnipUpdateYear = friend.TurnipUpdateYear,
-                        FriendCode = friendCode
+                        FriendCode = friendCode,
+                        MaxPrediction = friend.MaxPrediction,
+                        MinPrediction = friend.MinPrediction
                     });
                 }
 

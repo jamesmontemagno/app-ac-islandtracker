@@ -181,16 +181,11 @@ namespace TurnipTracker.ViewModel
 
             var low = 0;
             var high = 0;
-            foreach (var day in Days)
+            for (var i = (int)DateTime.Now.DayOfWeek; i < Days.Count; i++)
             {
-
+                var day = Days[i];
                 if (day == sunday)
-                {
-
-                    var val = day.BuyPrice ?? 0;
-                    continue;
-                }
-
+                    continue; 
 
                 if (!day.PriceAM.HasValue)
                 {
@@ -246,7 +241,7 @@ namespace TurnipTracker.ViewModel
             try
             {
                 IsBusy = true;
-                await DataService.UpdateTurnipPrices(SelectedDay);
+                await DataService.UpdateTurnipPrices(SelectedDay, Min, Max);
                 await DisplayAlert("Turnip prices synced", "You are all set!");
                 NeedsSync = false;
                 OnPropertyChanged(nameof(NeedsSync));
