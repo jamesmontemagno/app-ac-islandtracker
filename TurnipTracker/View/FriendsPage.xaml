@@ -30,6 +30,7 @@
             <converters:LastUpdateDateTimeConverter x:Key="LastUpdateDateTimeConverter" />
             <converters:StringEmptyConverter x:Key="StringEmptyConverter"/>
             <converters:HasFriendsCodeConverter x:Key="HasFriendsCodeConverter"/>
+            <converters:FriendPredictionConverter x:Key="FriendPredictionConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
@@ -319,21 +320,30 @@
                                                 VerticalOptions="Center">
 
                                                 <Label
-                                                    FontSize="Large"
+                                                    FontSize="Medium"
+                                                    HorizontalOptions="Center"
                                                     IsVisible="{Binding BuyPrice, Converter={StaticResource EmptyBellConverter}}"
                                                     Text="{Binding BuyPrice, StringFormat='Buy: {0} 🔔'}"
                                                     TextColor="{StaticResource TextPrimaryColor}" />
 
                                                 <Label
-                                                    FontSize="Large"
+                                                    FontSize="Medium"
+                                                    HorizontalOptions="Center"
                                                     IsVisible="{Binding AMPrice, Converter={StaticResource EmptyBellConverter}}"
                                                     Text="{Binding AMPrice, StringFormat='AM: {0} 🔔'}"
                                                     TextColor="{StaticResource TextPrimaryColor}" />
 
                                                 <Label
-                                                    FontSize="Large"
+                                                    FontSize="Medium"
+                                                    HorizontalOptions="Center"
                                                     IsVisible="{Binding PMPrice, Converter={StaticResource EmptyBellConverter}}"
                                                     Text="{Binding PMPrice, StringFormat='PM: {0} 🔔'}"
+                                                    TextColor="{StaticResource TextPrimaryColor}" />
+                                                
+                                                <Label
+                                                    FontSize="Small"
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding ., Converter={StaticResource FriendPredictionConverter}}"
                                                     TextColor="{StaticResource TextPrimaryColor}" />
                                             </StackLayout>
 

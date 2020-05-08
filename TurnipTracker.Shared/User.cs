@@ -26,6 +26,9 @@ namespace TurnipTracker.Shared
         public int AMPrice { get; set; }
         public int PMPrice { get; set; }
 
+        public int MaxPrediction { get; set; }
+        public int MinPrediction { get; set; }
+
         public int BuyPrice { get; set; }
 
         //could be smallint
@@ -50,6 +53,8 @@ namespace TurnipTracker.Shared
         //could be small int
         public int AMPrice { get; set; }
         public int PMPrice { get; set; }
+        public int MaxPrediction { get; set; }
+        public int MinPrediction { get; set; }
 
         public int BuyPrice { get; set; }
 
