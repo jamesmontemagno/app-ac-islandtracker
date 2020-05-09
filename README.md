@@ -1,11 +1,23 @@
 # Island Tracker for Animal Crossing
  Animal Crossing Turnip Tracking Mobile App
+ Island Tracker is the ultimate Animal Crossing New Horizons app to help you get the most out of your turnips by getting daily predictions and sharing your prices with friends.
 
- Build with [Xamarin.Forms](https://xamarin.com), Azure Functions, and Azure Table Storage!
+-> Get predictions and trends so you know when to sell
+-> Share turnip prices with up to 10 friends
+-> Easiest way to share switch friend codes!
+-> Ensure you always get the most $ for your turnips
+-> Helpful turnip calculators
+
+Island Tracker is here so you never have to mass text message your friends again asking them for their turnip prices. Create your friend list, share turnip prices, get rewarded in Animal Crossing!
+
+Built with [Xamarin.Forms](https://xamarin.com), Azure Functions, and Azure Table Storage!
  
- ![](turniptracker.gif)
+![](Art/apps.png)
 
+## Available today
 
+[![](/Art/download-on-app-store.png)](https://itunes.apple.com/app/id1510177414?mt=8)
+[![](/Art/download-on-google-play.png)](https://play.google.com/store/apps/details?id=com.refractored.islandtracker)
 
 ## Build Status
 
