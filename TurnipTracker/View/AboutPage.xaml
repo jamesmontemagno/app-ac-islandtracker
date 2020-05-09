@@ -286,11 +286,13 @@
                                 Margin="0,0,0,0"
                                 FontSize="Small"
                                 Text="Buy me a coffee:"
+                                IsVisible="{OnPlatform Android=true, iOS=false}"
                                 TextColor="{StaticResource TextPrimaryColor}" />
                             <pancake:PancakeView
                                 Grid.Row="3"
                                 AutomationProperties.HelpText="Button - James' buy me a coffee"
                                 AutomationProperties.IsInAccessibleTree="True"
+                                IsVisible="{OnPlatform Android=true, iOS=false}"
                                 HorizontalOptions="Center"
                                 Style="{StaticResource SocialPancake}">
                                 <effectsview:SfEffectsView
