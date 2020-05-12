@@ -21,14 +21,18 @@ namespace TurnipTracker.View
 
 
             vm.RequestCount = SettingsService.FriendRequestCount;
-            if(!(await vm.RegisterFriendClipboard()))
+
+
+            if(!App.ReceivedAppLink && !(await vm.RegisterFriendClipboard()))
             {
 #if !DEBUG
                 // if older than 1 hour then refresh
-                if (SettingsService.HasRegistered && SettingsService.LastFriendsUpdate < DateTime.UtcNow.AddHours(-1))
+                if (SettingsService.HasRegistered && SettingsService.AutoRefreshFriends && SettingsService.LastFriendsUpdate < DateTime.UtcNow.AddHours(-SettingsService.RefreshAfterHours))
                     _ = vm.RefreshCommand.ExecuteAsync().ContinueWith((r) => { });
 #endif         
             }
+
+            App.ReceivedAppLink = false;
 
 
             base.OnAppearing();

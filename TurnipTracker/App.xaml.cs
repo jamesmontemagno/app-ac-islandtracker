@@ -58,6 +58,8 @@ namespace TurnipTracker
         const string AppCenterUWP = "AC_UWP";
         const string SyncFusionKey = "AC_SYNC";
 
+        public static bool ReceivedAppLink { get; set; } = false;
+
         protected override async void OnAppLinkRequestReceived(Uri uri)
         {
             base.OnAppLinkRequestReceived(uri);
@@ -65,6 +67,8 @@ namespace TurnipTracker
             var key = await SettingsService.GetPublicKey();
             if (uri.PathAndQuery.Contains(key))
                 return;
+
+            ReceivedAppLink = true;
 
             await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
 

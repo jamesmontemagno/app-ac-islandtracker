@@ -31,6 +31,7 @@ namespace TurnipTracker.ViewModel
     {
         public AsyncCommand SendEmailCommand { get; }
         public AsyncCommand SubscribeCommand { get; }
+        public AsyncCommand GoToSettingsCommand { get; }
         public AsyncCommand<string> OpenBrowserCommand { get; }
 
         public AsyncCommand TransferCommand { get; }
@@ -47,6 +48,7 @@ namespace TurnipTracker.ViewModel
         {
             SubscribeCommand = new AsyncCommand(Subscribe);
             SendEmailCommand = new AsyncCommand(SendEmail);
+            GoToSettingsCommand = new AsyncCommand(GoToSettings);
             DeleteAccountCommand = new AsyncCommand(DeleteAccount);
             OpenBrowserCommand = new AsyncCommand<string>(OpenBrowser);
             ShareWithFriendsCommand = new AsyncCommand<Xamarin.Forms.View>(ShareWithFriends);
@@ -84,6 +86,9 @@ namespace TurnipTracker.ViewModel
                 ("RSS", "dispatch_rss", DevicePlatform.Android + "_" + DevicePlatform.iOS),
             };
         }
+
+        Task GoToSettings() =>
+            Xamarin.Forms.Shell.Current.GoToAsync("//about/settings");
 
         bool attachDetails = true;
         public bool AttachDetails
@@ -233,16 +238,11 @@ namespace TurnipTracker.ViewModel
             }
         }
 
-        int clickCount = 0;
         async Task Transfer()
         {
-            clickCount++;
-            if (clickCount < 25)
-                return;
-            clickCount = 0;
+           
             var choice = await App.Current.MainPage.DisplayActionSheet("Transfer profile?", "Cancel", null, "Transfer to another device", "Transfer to this device");
-
-            
+                      
 
             if (choice.Contains("another"))
             {

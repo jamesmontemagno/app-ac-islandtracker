@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TurnipTracker.ViewModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,6 +16,7 @@ namespace TurnipTracker.View
         public AboutPage()
         {
             InitializeComponent();
+            BindingContext = new AboutViewModel();
         }
 
         async void ButonAddJames_Clicked(object sender, EventArgs e)

@@ -31,6 +31,7 @@
             <x:String x:Key="IconWrench">&#xf0ad;</x:String>
             <x:String x:Key="IconCode">&#xf121;</x:String>
             <x:String x:Key="IconCompute">&#xf1ec;</x:String>
+            <x:String x:Key="IconSettings">&#xf013;</x:String>
 
             <x:String x:Key="IconGraph">&#xf1fe;</x:String>
 

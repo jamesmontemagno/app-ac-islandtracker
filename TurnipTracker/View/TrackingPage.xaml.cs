@@ -8,10 +8,11 @@ namespace TurnipTracker.View
 {
     public partial class TrackingPage : ContentPage
     {
+        TrackingViewModel vm;
         public TrackingPage()
         {
             InitializeComponent();
-            BindingContext = new TrackingViewModel();
+            BindingContext = vm = new TrackingViewModel();
             Chart.SuspendSeriesNotification();
         }
 
@@ -26,15 +27,7 @@ namespace TurnipTracker.View
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            
-            if(!App.IsStore && DateTime.Now.DayOfYear >= 127 && SettingsService.AskForSurvey)
-            {
-                SettingsService.AskForSurvey = false;
-                if(await DisplayAlert("Survey Time!", "Thanks for testing Island Tracker. Please take 2 minutes to provide feedback on the app! <3", "OK", "Not now"))
-                {
-                    await Xamarin.Essentials.Browser.OpenAsync("https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAINl_EhURU9ZTVRZWVE0WExFMEJXTDhTSlkxQVZRSi4u");
-                }
-            }
+            vm.OnAppearing();
         }
     }
 }

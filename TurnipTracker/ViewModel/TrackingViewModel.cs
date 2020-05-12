@@ -256,5 +256,13 @@ namespace TurnipTracker.ViewModel
                 IsBusy = false;
             }
         }
+
+
+        public bool ShowFirstTimeBuying => !SettingsService.HideFirstTimeBuying;
+
+        public void OnAppearing()
+        {
+            OnPropertyChanged(nameof(ShowFirstTimeBuying));
+        }
     }
 }

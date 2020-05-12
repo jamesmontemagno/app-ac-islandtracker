@@ -56,6 +56,9 @@
     <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="View\SettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="View\UtilsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
