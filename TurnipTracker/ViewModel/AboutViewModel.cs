@@ -88,7 +88,7 @@ namespace TurnipTracker.ViewModel
         }
 
         Task GoToSettings() =>
-            Xamarin.Forms.Shell.Current.GoToAsync("//about/settings");
+            Xamarin.Forms.Shell.Current.GoToAsync("settings");
 
         bool attachDetails = true;
         public bool AttachDetails

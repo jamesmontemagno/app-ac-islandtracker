@@ -24,7 +24,8 @@ namespace TurnipTracker.View
             {
                 ["page"] = page
             });
-            await Shell.Current.GoToAsync($"//utils/{page}");
+            //we only navigate to pages from utils page
+            await Shell.Current.GoToAsync(page);
         }
     }
 }

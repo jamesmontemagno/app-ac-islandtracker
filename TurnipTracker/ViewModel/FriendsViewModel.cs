@@ -135,7 +135,7 @@ namespace TurnipTracker.ViewModel
                 ["page"] = "friendrequests"
             });
 
-            await Shell.Current.GoToAsync("//friends/friendrequests");
+            await Shell.Current.GoToAsync("friendrequests");
         }
 
         public AsyncCommand<string> RegisterFriendCommand { get; }
@@ -179,7 +179,8 @@ namespace TurnipTracker.ViewModel
                     if (uriString.Contains(key))
                         return false;
 
-                    await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
+                    // we are already on the friends page, so no need to use the host.
+                    await Shell.Current.GoToAsync($"{uri.PathAndQuery}");
                     return true;
                 }
             }
