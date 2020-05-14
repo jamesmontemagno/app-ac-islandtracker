@@ -14,7 +14,7 @@ namespace TurnipTracker
             InitializeComponent();
 
             if(!SettingsService.FirstRun)
-                TabBar.CurrentItem = TabBar.Items[1];
+                MainTabBar.CurrentItem = MainTabBar.Items[1];
 
             Routing.RegisterRoute("invite", typeof(SubmitFriendRequestPage));
             Routing.RegisterRoute("settings", typeof(SettingsPage));
