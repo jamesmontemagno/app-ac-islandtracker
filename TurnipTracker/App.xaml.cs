@@ -84,23 +84,26 @@ namespace TurnipTracker
         {
 
 #if !DEBUG
-            if (!IsStore)
+            if (DeviceInfo.DeviceType == DeviceType.Physical)
             {
-                Distribute.UpdateTrack = UpdateTrack.Private;
-                AppCenter.Start($"ios={AppCenteriOS};" +
-                    $"android={AppCenterAndroid};" +
-                    $"uwp={AppCenterUWP}",
-                    typeof(Analytics),
-                    typeof(Crashes),
-                    typeof(Distribute));
-            }
-            else
-            {
-                AppCenter.Start($"ios={AppCenteriOS};" +
-                    $"android={AppCenterAndroid};" +
-                    $"uwp={AppCenterUWP}",
-                    typeof(Analytics),
-                    typeof(Crashes));
+                if (!IsStore)
+                {
+                    Distribute.UpdateTrack = UpdateTrack.Private;
+                    AppCenter.Start($"ios={AppCenteriOS};" +
+                        $"android={AppCenterAndroid};" +
+                        $"uwp={AppCenterUWP}",
+                        typeof(Analytics),
+                        typeof(Crashes),
+                        typeof(Distribute));
+                }
+                else
+                {
+                    AppCenter.Start($"ios={AppCenteriOS};" +
+                        $"android={AppCenterAndroid};" +
+                        $"uwp={AppCenterUWP}",
+                        typeof(Analytics),
+                        typeof(Crashes));
+                }
             }
 #endif
             OnResume();

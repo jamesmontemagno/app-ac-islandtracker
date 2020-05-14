@@ -29,7 +29,7 @@
     
     <!-- Your Pages -->
     
-    <TabBar x:Name="TabBar">
+    <TabBar x:Name="MainTabBar">
         <Tab Title="Profile" Route="profile">
             <Tab.Icon>
                 <FontImageSource Glyph="{StaticResource IconProfile}" FontFamily="FA-S" />

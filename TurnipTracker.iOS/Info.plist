@@ -19,7 +19,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>12.0</string>
+	<string>11.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>Island Tracker</string>
 	<key>CFBundleIdentifier</key>

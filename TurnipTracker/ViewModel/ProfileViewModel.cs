@@ -7,7 +7,6 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
-using NodaTime.TimeZones;
 using TurnipTracker.Model;
 using TurnipTracker.Services;
 
