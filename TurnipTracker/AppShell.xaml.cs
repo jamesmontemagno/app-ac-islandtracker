@@ -17,6 +17,7 @@ namespace TurnipTracker
                 TabBar.CurrentItem = TabBar.Items[1];
 
             Routing.RegisterRoute("invite", typeof(SubmitFriendRequestPage));
+            Routing.RegisterRoute("settings", typeof(SettingsPage));
             Routing.RegisterRoute("friendrequests", typeof(FriendRequestPage));
             Routing.RegisterRoute("calc-howmanybells", typeof(CalcHowManyBells));
             Routing.RegisterRoute("calc-howmanyturnips", typeof(CalcHowManyTurnips));

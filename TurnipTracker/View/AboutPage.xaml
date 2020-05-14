@@ -17,9 +17,9 @@
     BackgroundColor="{StaticResource NavigationPrimary}"
     Shell.NavBarIsVisible="False"
     mc:Ignorable="d">
-    <ContentPage.BindingContext>
+    <d:ContentPage.BindingContext>
         <viewmodel:AboutViewModel />
-    </ContentPage.BindingContext>
+    </d:ContentPage.BindingContext>
     <ScrollView>
         <Grid
             Padding="{OnPlatform Android='0,12,0,0',
@@ -37,6 +37,20 @@
                 Text="About"
                 TextColor="White" />
             <pancake:PancakeView
+                Margin="0,0,12,0"
+                AutomationProperties.HelpText="Button - Close Page"
+                AutomationProperties.IsInAccessibleTree="True"
+                HorizontalOptions="End"
+                Style="{StaticResource SocialPancake}"
+                VerticalOptions="Center">
+                <effectsview:SfEffectsView CornerRadius="20" TouchUpCommand="{Binding GoToSettingsCommand}">
+                    <Label
+                        FontFamily="FA-S"
+                        Style="{StaticResource SocialLabel}"
+                        Text="{StaticResource IconSettings}" />
+                </effectsview:SfEffectsView>
+            </pancake:PancakeView>
+            <pancake:PancakeView
                 Grid.Row="1"
                 Padding="12,12,12,0"
                 BackgroundColor="{StaticResource AcrylicSurface}"
@@ -51,7 +65,7 @@
                         TextColor="{StaticResource TextPrimaryColor}" />
 
                     <Label
-                        Margin="0,24,0,0"
+                        Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
                         Text="Support:"
@@ -103,7 +117,7 @@
                    
 
                     <Label
-                        Margin="0,24,0,0"
+                        Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
                         Text="More Island Tracker:"
@@ -163,7 +177,7 @@
                     </sharpnado:MaterialFrame>
 
                     <Label
-                        Margin="0,24,0,0"
+                        Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
                         Text="More Nintendo:"
@@ -206,15 +220,11 @@
 
 
                     <Label
-                        Margin="0,24,0,0"
+                        Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
                         Text="Created by:"
-                        TextColor="{StaticResource TextPrimaryColor}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding TransferCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
+                        TextColor="{StaticResource TextPrimaryColor}"/>
                     <sharpnado:MaterialFrame
                         Padding="0"
                         HorizontalOptions="FillAndExpand"
@@ -309,7 +319,7 @@
                     </sharpnado:MaterialFrame>
 
                     <Label
-                        Margin="0,24,0,0"
+                        Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
                         Text="Made possible by:"
@@ -331,7 +341,46 @@
                         </StackLayout>
                     </sharpnado:MaterialFrame>
                     <Label
-                        Margin="0,24,0,0"
+                        Margin="24,24,0,0"
+                        FontFamily="AnimalCrossing"
+                        FontSize="Large"
+                        Text="Account:"
+                        TextColor="{StaticResource TextPrimaryColor}" />
+                    <sharpnado:MaterialFrame
+                        Padding="0"
+                        Margin="0,8,0,0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding TransferCommand}">
+                            <Label
+                                HorizontalOptions="Center"
+                                FontSize="Medium"
+                                Text="Transfer Account"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                        </effectsview:SfEffectsView>
+                    </sharpnado:MaterialFrame>
+                    <sharpnado:MaterialFrame
+                        Padding="0"
+                        Margin="0,8,0,0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding DeleteAccountCommand}">
+                            <Label
+                                HorizontalOptions="Center"
+                                FontSize="Medium"
+                                Text="Delete Account"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                        </effectsview:SfEffectsView>
+                    </sharpnado:MaterialFrame>
+                    
+                    <Label
+                        Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
                         Text="Misc:"
@@ -368,23 +417,7 @@
                                 Text="Privacy Policy"
                                 TextColor="{StaticResource TextPrimaryColor}" />
                         </effectsview:SfEffectsView>
-                    </sharpnado:MaterialFrame>
-                    <sharpnado:MaterialFrame
-                        Padding="0"
-                        Margin="0,8,0,0"
-                        HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource AcrylicFrame}">
-                        <effectsview:SfEffectsView
-                            Padding="12"
-                            CornerRadius="10"
-                            TouchUpCommand="{Binding DeleteAccountCommand}">
-                            <Label
-                                HorizontalOptions="Center"
-                                FontSize="Medium"
-                                Text="Delete Account"
-                                TextColor="{StaticResource TextPrimaryColor}" />
-                        </effectsview:SfEffectsView>
-                    </sharpnado:MaterialFrame>
+                    </sharpnado:MaterialFrame>                    
 
                     <Label Text="{Binding AppInfo}"
                            HorizontalOptions="Center"

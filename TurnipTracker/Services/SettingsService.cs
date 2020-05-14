@@ -97,6 +97,23 @@ namespace TurnipTracker.Services
             set => Preferences.Set(nameof(FirstFriendRequest), value);
         }
 
+        public static bool HideFirstTimeBuying
+        {
+            get => Preferences.Get(nameof(HideFirstTimeBuying), false);
+            set => Preferences.Set(nameof(HideFirstTimeBuying), value);
+        }
+
+        public static bool AutoRefreshFriends
+        {
+            get => Preferences.Get(nameof(AutoRefreshFriends), true);
+            set => Preferences.Set(nameof(AutoRefreshFriends), value);
+        }
+
+        public static int RefreshAfterHours
+        {
+            get => Preferences.Get(nameof(RefreshAfterHours), 2);
+            set => Preferences.Set(nameof(RefreshAfterHours), value);
+        }
 
         public static DateTime LastFriendsUpdate
         {

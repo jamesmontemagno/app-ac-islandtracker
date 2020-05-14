@@ -58,6 +58,8 @@ namespace TurnipTracker
         const string AppCenterUWP = "AC_UWP";
         const string SyncFusionKey = "AC_SYNC";
 
+        public static bool ReceivedAppLink { get; set; } = false;
+
         protected override async void OnAppLinkRequestReceived(Uri uri)
         {
             base.OnAppLinkRequestReceived(uri);
@@ -66,6 +68,9 @@ namespace TurnipTracker
             if (uri.PathAndQuery.Contains(key))
                 return;
 
+            ReceivedAppLink = true;
+
+            // the app is just starting so we need to make sure to navigate to "friends" first
             await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
 
             Analytics.TrackEvent("RegisterFriend", new Dictionary<string, string>

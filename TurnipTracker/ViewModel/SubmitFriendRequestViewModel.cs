@@ -52,14 +52,14 @@ namespace TurnipTracker.ViewModel
         public string Name
         {
             get => name;
-            set => SetProperty(ref name, Uri.UnescapeDataString(value));
+            set => SetProperty(ref name, Uri.UnescapeDataString(value ?? string.Empty));
         }
 
         string id;
         public string Id
         {
             get => id;
-            set => SetProperty(ref id, Uri.UnescapeDataString(value));
+            set => SetProperty(ref id, Uri.UnescapeDataString(value ?? string.Empty));
         }
 
 

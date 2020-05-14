@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TurnipTracker.View.SettingsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:TurnipTracker.Model"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
+    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel" xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    Shell.NavBarIsVisible="False"
+    Shell.PresentationMode="ModalAnimated"
+    x:DataType="viewmodel:SettingsViewModel"
+    mc:Ignorable="d">
+    <d:ContentPage.BindingContext>
+        <viewmodel:SettingsViewModel />
+    </d:ContentPage.BindingContext>
+    <ScrollView>
+        <Grid
+            Padding="{OnPlatform Android='0,12,0,0',
+                                 iOS='0,24,0,0'}"
+            BackgroundColor="{StaticResource NavigationPrimary}"
+            RowSpacing="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <pancake:PancakeView
+                Margin="0,0,12,0"
+                AutomationProperties.HelpText="Button - Close Page"
+                AutomationProperties.IsInAccessibleTree="True"
+                HorizontalOptions="End"
+                Style="{StaticResource SocialPancake}"
+                VerticalOptions="Center">
+                <effectsview:SfEffectsView CornerRadius="20" TouchUpCommand="{Binding CloseCommand}">
+                    <Label
+                        FontFamily="FA-S"
+                        Style="{StaticResource SocialLabel}"
+                        Text="{StaticResource IconDeny}" />
+                </effectsview:SfEffectsView>
+            </pancake:PancakeView>
+            <Label
+                FontFamily="AnimalCrossing"
+                FontSize="44"
+                HorizontalOptions="Center"
+                Text="Settings"
+                TextColor="White" />
+            <pancake:PancakeView
+                Grid.Row="1"
+                Padding="12,12,12,0"
+                BackgroundColor="{StaticResource AcrylicSurface}"
+                CornerRadius="36,36,0,0"
+                Elevation="8">
+                <StackLayout Padding="12" Spacing="4">
+
+                    <Label
+                        Margin="24,24,0,0"
+                        FontFamily="AnimalCrossing"
+                        FontSize="Large"
+                        Text="Tracking:"
+                        TextColor="{StaticResource TextPrimaryColor}" />
+                    <sharpnado:MaterialFrame
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding HideFirstTimeBuying}" />
+                                <Label
+                            Text="Hide First Time Buying"
+                            TextColor="{StaticResource TextPrimaryColor}"
+                            VerticalOptions="Center" />
+                            </StackLayout>
+                        </StackLayout>
+                    </sharpnado:MaterialFrame>
+
+
+                    <Label
+                        Margin="24,24,0,0"
+                        FontFamily="AnimalCrossing"
+                        FontSize="Large"
+                        Text="Friends:"
+                        TextColor="{StaticResource TextPrimaryColor}" />
+
+                    <sharpnado:MaterialFrame
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding AutoRefreshFriends}" />
+                                <Label
+                                    Text="Auto Refresh Friends"
+                                    TextColor="{StaticResource TextPrimaryColor}"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+
+                            <inputLayout:SfTextInputLayout
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource NavigationPrimary}"
+                                    Hint="Auto Refresh After">
+
+                                <combobox:SfComboBox
+                                x:Name="ComboBoxAutoRefreshHours"
+                                BackgroundColor="Transparent"
+                                DropDownItemHeight="50"
+                                DropDownTextSize="24"
+                                HeightRequest="55"
+                                IsEnabled="{Binding AutoRefreshFriends}"
+                                SelectedIndex="{Binding RefreshAfterHours, Mode=TwoWay}"
+                                TextColor="{StaticResource TextPrimaryColor}"
+                                TextSize="20"
+                                VerticalOptions="Start">
+                                    <combobox:SfComboBox.ComboBoxSource>
+                                        <ListCollection:List x:TypeArguments="x:String">
+                                            <x:String>1 Hour</x:String>
+                                            <x:String>2 Hours</x:String>
+                                            <x:String>4 Hours</x:String>
+                                            <x:String>6 Hours</x:String>
+                                            <x:String>12 Hours</x:String>
+                                            <x:String>24 Hours</x:String>
+                                        </ListCollection:List>
+                                    </combobox:SfComboBox.ComboBoxSource>
+                                </combobox:SfComboBox>
+                            </inputLayout:SfTextInputLayout>
+                        </StackLayout>
+                    </sharpnado:MaterialFrame>
+                </StackLayout>
+            </pancake:PancakeView>
+        </Grid>
+    </ScrollView>
+</ContentPage>

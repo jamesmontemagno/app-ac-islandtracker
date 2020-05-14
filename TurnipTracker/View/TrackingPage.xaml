@@ -136,7 +136,7 @@
                                 EnableTooltip="true"
                                 High="High"
                                 ItemsSource="{Binding ChartData}"
-                                Label="Turnip Guaranteed Min/Potential Max"
+                                Label="Guaranteed Min/Potential Max"
                                 Low="Low"
                                 SplineType="Natural"
                                 StrokeColor="{StaticResource GraphGradiantStart}"
@@ -227,28 +227,15 @@
                             Grid.Row="0"
                             Margin="4"
                             Style="{StaticResource AcrylicFrame}">
-                            <Grid ColumnSpacing="0" RowSpacing="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                            <StackLayout Spacing="0">
                                 <Label
-                                    Grid.ColumnSpan="2"
                                     Margin="0,0,0,4"
                                     FontFamily="AnimalCrossing"
                                     FontSize="Medium"
                                     Text="Turnip buying on your island"
                                     TextColor="{StaticResource TextPrimaryColor}" />
                                 <inputLayout:SfTextInputLayout
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="2"
-                                    Margin="0,0,0,-12"
+                                    Margin="0,0,0,0"
                                     ContainerType="Outlined"
                                     FocusedColor="{StaticResource NavigationPrimary}"
                                     Hint="Daisy Mae's Price"
@@ -271,51 +258,42 @@
                                         Visual="Material"
                                         Value="{Binding SelectedDay.BuyPrice}" />
                                 </inputLayout:SfTextInputLayout>
-                                <CheckBox
-                                    Grid.Row="2"
-                                    Margin="-4,0,0,0"
-                                    IsChecked="{Binding SelectedDay.FirstPurchase}"
-                                    VerticalOptions="Center"
-                                    Visual="Material"
-                                    Color="{StaticResource NavigationPrimary}" />
+                                <StackLayout Orientation="Horizontal" Spacing="0"
+                                             Margin="-4,-16,0,0"
+                                        IsVisible="{Binding ShowFirstTimeBuying}">
+                                    <CheckBox
+                                        IsChecked="{Binding SelectedDay.FirstPurchase}"
+                                        VerticalOptions="Center"
+                                        Visual="Material"
+                                        Color="{StaticResource NavigationPrimary}" />
+                                    <Label
+                                        FontSize="Small"
+                                        Margin="-8,0,0,0"
+                                        Text="First Time Buying Turnips?"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+
                                 <Label
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    Margin="-8,2,0,0"
-                                    FontFamily="AnimalCrossing"
-                                    FontSize="Medium"
-                                    Text="First Time Buying Turnips?"
-                                    TextColor="{StaticResource TextPrimaryColor}"
-                                    VerticalOptions="Center" />
-                                <Label
-                                    Grid.Row="3"
-                                    Grid.ColumnSpan="2"
                                     Margin="0"
                                     FontSize="Micro"
                                     HorizontalOptions="Center"
                                     Text="Available from 5AM to Noon"
                                     TextColor="{StaticResource TextPrimaryColor}" />
-                            </Grid>
+                            </StackLayout>
                         </sharpnado:MaterialFrame>
 
                         <sharpnado:MaterialFrame
                             Grid.Row="1"
                             Margin="4"
                             Style="{StaticResource AcrylicFrame}">
-                            <Grid ColumnSpacing="0" RowSpacing="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+                            <StackLayout Spacing="0">
                                 <Label
-                                    Margin="0,0,0,4"
                                     FontFamily="AnimalCrossing"
                                     FontSize="Medium"
                                     Text="Actual purchase price"
                                     TextColor="{StaticResource TextPrimaryColor}" />
                                 <inputLayout:SfTextInputLayout
-                                    Grid.Row="1"
                                     Margin="0,0,0,0"
                                     ContainerType="Outlined"
                                     FocusedColor="{StaticResource NavigationPrimary}"
@@ -340,13 +318,12 @@
                                         Value="{Binding SelectedDay.ActualPurchasePrice}" />
                                 </inputLayout:SfTextInputLayout>
                                 <Label
-                                    Grid.Row="2"
                                     Margin="0"
                                     FontSize="Micro"
                                     HorizontalOptions="Center"
-                                    Text="Only if you purchased your turnips on a friend's island."
+                                    Text="If you purchased your turnips on a friend's island."
                                     TextColor="{StaticResource TextPrimaryColor}" />
-                            </Grid>
+                            </StackLayout>
                         </sharpnado:MaterialFrame>
 
                         <sharpnado:MaterialFrame
@@ -368,8 +345,10 @@
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>
 
-                        <Grid Grid.Row="3" IsVisible="{Binding IsToday}"
-                              Padding="4">
+                        <Grid
+                            Grid.Row="3"
+                            Padding="4"
+                            IsVisible="{Binding IsToday}">
                             <Label
                                 FontFamily="AnimalCrossing"
                                 FontSize="Micro"
@@ -554,14 +533,17 @@
                                     VerticalOptions="Center" />
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>
-                        <Grid IsVisible="{Binding IsToday}" Grid.Row="3"
-                              Grid.ColumnSpan="2">
-                            <Label IsVisible="{Binding NeedsSync}"
-                                   TextColor="{StaticResource GraphMin}"
-                                   FontSize="Micro"
-                                   FontFamily="AnimalCrossing"
-                                   HorizontalOptions="Center"
-                                   Text="Don't forget to sync!"/>
+                        <Grid
+                            Grid.Row="3"
+                            Grid.ColumnSpan="2"
+                            IsVisible="{Binding IsToday}">
+                            <Label
+                                FontFamily="AnimalCrossing"
+                                FontSize="Micro"
+                                HorizontalOptions="Center"
+                                IsVisible="{Binding NeedsSync}"
+                                Text="Don't forget to sync!"
+                                TextColor="{StaticResource GraphMin}" />
                         </Grid>
                         <Label
                             Grid.Row="4"
@@ -570,7 +552,7 @@
                             FontSize="Micro"
                             HorizontalOptions="Center"
                             IsVisible="{Binding Min, Converter={StaticResource EmptyBellConverter}}"
-                            Text="{Binding Min, StringFormat='Guaranteed Weekly Min: {0}'}"
+                            Text="{Binding Min, StringFormat='Guaranteed Min: {0}'}"
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="End" />
                         <Label
@@ -581,7 +563,7 @@
                             FontSize="Micro"
                             HorizontalOptions="Center"
                             IsVisible="{Binding Max, Converter={StaticResource EmptyBellConverter}}"
-                            Text="{Binding Max, StringFormat='Potential Weekly Max: {0}'}"
+                            Text="{Binding Max, StringFormat='Potential Max: {0}'}"
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="End" />
                     </Grid>
