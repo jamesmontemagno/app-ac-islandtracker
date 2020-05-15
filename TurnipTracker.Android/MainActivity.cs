@@ -42,6 +42,10 @@ namespace TurnipTracker.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
+
+        string uriString = string.Empty;
+
+
         protected override void OnNewIntent(Intent intent)
         {
             base.OnNewIntent(intent);
@@ -49,15 +53,34 @@ namespace TurnipTracker.Droid
             if(intent.Action == Intent.ActionSend &&
                 intent.Type == "text/plain")
             {
-                var uriString = intent.GetStringExtra(Intent.ExtraText);
-                if (!string.IsNullOrWhiteSpace(uriString) &&
-                    uriString.StartsWith("acislandtracker:"))
+                var extra = intent.GetStringExtra(Intent.ExtraText);
+                if (!string.IsNullOrWhiteSpace(extra) &&
+                    extra.StartsWith("acislandtracker:"))
                 {
-                    var url = new Uri(uriString);
-                    Xamarin.Forms.Application.Current.SendOnAppLinkRequestReceived(url);
+                    uriString = extra;
                 }
             }
 
+        }
+
+        protected override void OnStart()
+        {
+            if(!string.IsNullOrWhiteSpace(uriString))
+            {
+                try
+                {
+                    Xamarin.Forms.Application.Current.SendOnAppLinkRequestReceived(new Uri(uriString));
+                    
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    uriString = string.Empty;
+                }
+            }
+            base.OnStart();
         }
 
         public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
