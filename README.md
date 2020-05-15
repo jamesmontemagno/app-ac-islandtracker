@@ -33,7 +33,7 @@ Built with [Xamarin.Forms](https://xamarin.com), Azure Functions, and Azure Tabl
 * [Monkey Cache](https://github.com/jamesmontemagno/monkey-cache)
 * [Mvvm Helpers](https://github.com/jamesmontemagno/mvvm-helpers)
 * [PancakeView](https://github.com/sthewissen/Xamarin.Forms.PancakeView)
-* [Resizetizer.NT](https://raw.githubusercontent.com/Redth/ResizetizerNT)
+* [Resizetizer.NT](https://github.com/Redth/ResizetizerNT)
 * [Sharpnado - MaterialFrame & More](https://github.com/roubachof/Sharpnado.Presentation.Forms)
 * [Syncfusion - ComboBox, MaskedEdit, NumericTextBox, Shimmer, Effects, TextInputLayout](https://www.syncfusion.com/xamarin)
 
