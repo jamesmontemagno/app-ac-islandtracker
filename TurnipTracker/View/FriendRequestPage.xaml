@@ -174,6 +174,24 @@
                             VerticalOptions="Center" />
                     </effectsview:SfEffectsView>
                 </sharpnado:MaterialFrame>
+
+                <sharpnado:MaterialFrame
+                        Padding="0"
+                        Margin="0,48,0,0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                    <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding ShareWithFriendsCommand}"
+                            TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
+                        <Label
+                                HorizontalOptions="Center"
+                                FontSize="Medium"
+                                Text="Share App with Friends"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                    </effectsview:SfEffectsView>
+                </sharpnado:MaterialFrame>
             </StackLayout>
         </StackLayout>
     </Grid>

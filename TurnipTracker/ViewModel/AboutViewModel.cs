@@ -36,8 +36,6 @@ namespace TurnipTracker.ViewModel
 
         public AsyncCommand TransferCommand { get; }
         public AsyncCommand DeleteAccountCommand { get; }
-        public AsyncCommand<Xamarin.Forms.View> ShareWithFriendsCommand { get; }
-
         public List<AttributionItem> Attributions { get; }
 
         public string AppInfo => $"{Xamarin.Essentials.AppInfo.VersionString} ({Xamarin.Essentials.AppInfo.BuildString})";
@@ -51,7 +49,6 @@ namespace TurnipTracker.ViewModel
             GoToSettingsCommand = new AsyncCommand(GoToSettings);
             DeleteAccountCommand = new AsyncCommand(DeleteAccount);
             OpenBrowserCommand = new AsyncCommand<string>(OpenBrowser);
-            ShareWithFriendsCommand = new AsyncCommand<Xamarin.Forms.View>(ShareWithFriends);
             TransferCommand = new AsyncCommand(Transfer);
 
             Attributions = new List<AttributionItem>
@@ -186,24 +183,6 @@ namespace TurnipTracker.ViewModel
             }
         }
 
-        async Task ShareWithFriends(Xamarin.Forms.View element)
-        {
-            try
-            {
-                Analytics.TrackEvent("ShareWithFriends");
-                var bounds = element.GetAbsoluteBounds();
-
-                await Share.RequestAsync(new ShareTextRequest
-                {
-                    PresentationSourceBounds = bounds.ToSystemRectangle(),
-                    Title = "Island Tracker for ACNH",
-                    Text = "Checkout Island Tracker for ACNH and track turnips with me: https://islandtracker.app"
-                });
-            }
-            catch (Exception)
-            {
-            }
-        }
 
 
         async Task SendEmail()
