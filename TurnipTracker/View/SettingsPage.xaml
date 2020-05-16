@@ -75,6 +75,7 @@
                             <StackLayout Orientation="Horizontal">
                                 <CheckBox IsChecked="{Binding HideFirstTimeBuying}" Style="{StaticResource CheckBoxStyle}" />
                                 <Label
+                                    Margin="-8,0,0,0"
                                     Text="Hide First Time Buying"
                                     TextColor="{StaticResource TextPrimaryColor}"
                                     VerticalOptions="Center" />
@@ -98,6 +99,7 @@
                             <StackLayout Orientation="Horizontal">
                                 <CheckBox IsChecked="{Binding AutoRefreshFriends}" Style="{StaticResource CheckBoxStyle}" />
                                 <Label
+                                    Margin="-8,0,0,0"
                                     Text="Auto Refresh Friends"
                                     TextColor="{StaticResource TextPrimaryColor}"
                                     VerticalOptions="Center" />

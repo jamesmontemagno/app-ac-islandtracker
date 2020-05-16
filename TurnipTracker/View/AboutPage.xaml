@@ -110,6 +110,7 @@
                         <CheckBox IsChecked="{Binding AttachDetails}"
                                   Style="{StaticResource CheckBoxStyle}"/>
                         <Label
+                            Margin="-8,0,0,0"
                             Text="Add Turnip Details"
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="Center" />
