@@ -7,17 +7,18 @@
     xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:TurnipTracker.Model"
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
-    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel" xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
     ios:Page.UseSafeArea="True"
+    x:DataType="viewmodel:SettingsViewModel"
+    BackgroundColor="{StaticResource NavigationPrimary}"
     Shell.NavBarIsVisible="False"
     Shell.PresentationMode="ModalAnimated"
-    x:DataType="viewmodel:SettingsViewModel"
-            BackgroundColor="{StaticResource NavigationPrimary}"
     mc:Ignorable="d">
     <d:ContentPage.BindingContext>
         <viewmodel:SettingsViewModel />
@@ -67,17 +68,16 @@
                         Text="Tracking:"
                         TextColor="{StaticResource TextPrimaryColor}" />
                     <sharpnado:MaterialFrame
+                        Padding="12"
                         HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource AcrylicFrame}"
-                        Padding="12">
+                        Style="{StaticResource AcrylicFrame}">
                         <StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding HideFirstTimeBuying}"
-                                  Style="{StaticResource CheckBoxStyle}" />
+                                <CheckBox IsChecked="{Binding HideFirstTimeBuying}" Style="{StaticResource CheckBoxStyle}" />
                                 <Label
-                            Text="Hide First Time Buying"
-                            TextColor="{StaticResource TextPrimaryColor}"
-                            VerticalOptions="Center" />
+                                    Text="Hide First Time Buying"
+                                    TextColor="{StaticResource TextPrimaryColor}"
+                                    VerticalOptions="Center" />
                             </StackLayout>
                         </StackLayout>
                     </sharpnado:MaterialFrame>
@@ -91,13 +91,12 @@
                         TextColor="{StaticResource TextPrimaryColor}" />
 
                     <sharpnado:MaterialFrame
+                        Padding="12"
                         HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource AcrylicFrame}"
-                        Padding="12">
+                        Style="{StaticResource AcrylicFrame}">
                         <StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding AutoRefreshFriends}"
-                                  Style="{StaticResource CheckBoxStyle}"/>
+                                <CheckBox IsChecked="{Binding AutoRefreshFriends}" Style="{StaticResource CheckBoxStyle}" />
                                 <Label
                                     Text="Auto Refresh Friends"
                                     TextColor="{StaticResource TextPrimaryColor}"
@@ -105,19 +104,21 @@
                             </StackLayout>
 
                             <inputLayout:SfTextInputLayout
-                                    ContainerType="Outlined"
-                                    FocusedColor="{StaticResource NavigationPrimary}"
-                                    Hint="Auto Refresh After">
+                                ContainerType="Outlined"
+                                FocusedColor="{StaticResource NavigationPrimary}"
+                                Hint="Auto Refresh After">
 
                                 <combobox:SfComboBox
-                                x:Name="ComboBoxAutoRefreshHours"
-                                BackgroundColor="Transparent"
-                                DropDownTextSize="24"
-                                IsEnabled="{Binding AutoRefreshFriends, Mode=TwoWay}"
-                                SelectedIndex="{Binding RefreshAfterHours, Mode=TwoWay}"
-                                TextColor="{StaticResource TextPrimaryColor}"
-                                TextSize="20"
-                                VerticalOptions="Start">
+                                    x:Name="ComboBoxAutoRefreshHours"
+                                    BackgroundColor="Transparent"
+                                    DropDownItemHeight="{OnPlatform Android=50}"
+                                    DropDownTextSize="24"
+                                    HeightRequest="{OnPlatform Android=55}"
+                                    IsEnabled="{Binding AutoRefreshFriends, Mode=TwoWay}"
+                                    SelectedIndex="{Binding RefreshAfterHours, Mode=TwoWay}"
+                                    TextColor="{StaticResource TextPrimaryColor}"
+                                    TextSize="20"
+                                    VerticalOptions="Start">
                                     <combobox:SfComboBox.ComboBoxSource>
                                         <ListCollection:List x:TypeArguments="x:String">
                                             <x:String>1 Hour</x:String>
