@@ -160,8 +160,13 @@ namespace TurnipTracker.ViewModel
             return false;
         }
 
+        bool parsing;
         async Task<bool> RegisterFriend(string uriString)
         {
+            if (parsing)
+                return false;
+
+            parsing = true;
             try
             {
                 if (string.IsNullOrWhiteSpace(uriString))
@@ -180,13 +185,17 @@ namespace TurnipTracker.ViewModel
                         return false;
 
                     // we are already on the friends page, so no need to use the host.
-                    await Shell.Current.GoToAsync($"{uri.PathAndQuery}");
+                    await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
                     return true;
                 }
             }
             catch (Exception ex)
             {
                 Crashes.TrackError(ex);
+            }
+            finally
+            {
+                parsing = false;
             }
 
             return false;
