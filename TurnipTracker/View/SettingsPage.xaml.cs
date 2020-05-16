@@ -1,5 +1,6 @@
 ﻿using TurnipTracker.ViewModel;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace TurnipTracker.View
@@ -12,6 +13,14 @@ namespace TurnipTracker.View
         {
             InitializeComponent();
             BindingContext = vm = new SettingsViewModel();
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            var safeInsets = On<Xamarin.Forms.PlatformConfiguration.iOS>().SafeAreaInsets();
+            safeInsets.Bottom = 0;
+            Padding = safeInsets;
+            base.OnSizeAllocated(width, height);
         }
 
         protected override void OnAppearing()

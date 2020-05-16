@@ -29,7 +29,11 @@ namespace TurnipTracker.ViewModel
         public bool AutoRefreshFriends
         {
             get => SettingsService.AutoRefreshFriends;
-            set => SettingsService.AutoRefreshFriends = value;
+            set
+            {
+                SettingsService.AutoRefreshFriends = value;
+                OnPropertyChanged();
+            }
         }
 
         public int RefreshAfterHours

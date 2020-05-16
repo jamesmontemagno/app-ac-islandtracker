@@ -124,6 +124,11 @@
                 <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
                 <Setter Property="TextColor" Value="{StaticResource NavigationPrimary}"/>
             </Style>
+
+            <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
+                <Setter Property="Visual" Value="Material"/>
+                <Setter Property="Color" Value="{StaticResource NavigationPrimary}"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

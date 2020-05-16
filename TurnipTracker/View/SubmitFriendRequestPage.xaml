@@ -13,14 +13,14 @@
     </ContentPage.BindingContext>
     <ScrollView>
         <Grid RowSpacing="12"
-              Padding="{OnPlatform Android='0,12,0,0', iOS='0,24,0,0'}"
+              Padding="{OnPlatform Android='0,12,0,0', iOS='0,12,0,0'}"
               BackgroundColor="{StaticResource NavigationPrimary}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label HorizontalOptions="Center" Text="Friend Request"
-                   TextColor="White" FontSize="44"
+                   TextColor="White" FontSize="36"
                    FontFamily="AnimalCrossing"/>
         <pancake:PancakeView CornerRadius="36,36,0,0"
                                  Grid.Row="1"
