@@ -65,10 +65,12 @@
                         TextColor="{StaticResource TextPrimaryColor}" />
                     <sharpnado:MaterialFrame
                         HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource AcrylicFrame}">
+                        Style="{StaticResource AcrylicFrame}"
+                        Padding="12">
                         <StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding HideFirstTimeBuying}" />
+                                <CheckBox IsChecked="{Binding HideFirstTimeBuying}"
+                                  Style="{StaticResource CheckBoxStyle}" />
                                 <Label
                             Text="Hide First Time Buying"
                             TextColor="{StaticResource TextPrimaryColor}"
@@ -87,10 +89,12 @@
 
                     <sharpnado:MaterialFrame
                         HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource AcrylicFrame}">
+                        Style="{StaticResource AcrylicFrame}"
+                        Padding="12">
                         <StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding AutoRefreshFriends}" />
+                                <CheckBox IsChecked="{Binding AutoRefreshFriends}"
+                                  Style="{StaticResource CheckBoxStyle}"/>
                                 <Label
                                     Text="Auto Refresh Friends"
                                     TextColor="{StaticResource TextPrimaryColor}"
@@ -108,7 +112,7 @@
                                 DropDownItemHeight="50"
                                 DropDownTextSize="24"
                                 HeightRequest="55"
-                                IsEnabled="{Binding AutoRefreshFriends}"
+                                IsEnabled="{Binding AutoRefreshFriends, Mode=TwoWay}"
                                 SelectedIndex="{Binding RefreshAfterHours, Mode=TwoWay}"
                                 TextColor="{StaticResource TextPrimaryColor}"
                                 TextSize="20"

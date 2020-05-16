@@ -258,17 +258,18 @@
                                         Visual="Material"
                                         Value="{Binding SelectedDay.BuyPrice}" />
                                 </inputLayout:SfTextInputLayout>
-                                <StackLayout Orientation="Horizontal" Spacing="0"
-                                             Margin="-4,-16,0,0"
-                                        IsVisible="{Binding ShowFirstTimeBuying}">
+                                <StackLayout
+                                    Margin="-4,-16,0,0"
+                                    IsVisible="{Binding ShowFirstTimeBuying}"
+                                    Orientation="Horizontal"
+                                    Spacing="0">
                                     <CheckBox
                                         IsChecked="{Binding SelectedDay.FirstPurchase}"
-                                        VerticalOptions="Center"
-                                        Visual="Material"
-                                        Color="{StaticResource NavigationPrimary}" />
+                                        Style="{StaticResource CheckBoxStyle}"
+                                        VerticalOptions="Center" />
                                     <Label
-                                        FontSize="Small"
                                         Margin="-8,0,0,0"
+                                        FontSize="Small"
                                         Text="First Time Buying Turnips?"
                                         TextColor="{StaticResource TextPrimaryColor}"
                                         VerticalOptions="Center" />

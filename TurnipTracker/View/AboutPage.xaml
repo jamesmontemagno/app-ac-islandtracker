@@ -107,7 +107,8 @@
                     </sharpnado:MaterialFrame>
 
                     <StackLayout Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding AttachDetails}" />
+                        <CheckBox IsChecked="{Binding AttachDetails}"
+                                  Style="{StaticResource CheckBoxStyle}"/>
                         <Label
                             Text="Add Turnip Details"
                             TextColor="{StaticResource TextPrimaryColor}"

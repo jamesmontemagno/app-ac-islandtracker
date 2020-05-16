@@ -212,20 +212,21 @@
                                     <Grid Padding="12">
                                         <sharpnado:MaterialFrame Padding="0" Style="{StaticResource AcrylicFrame}">
                                             <effectsview:SfEffectsView
-                                                Padding="24,12"
+                                                Padding="12,12"
                                                 CornerRadius="10"
                                                 TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=RemoveFriendCommand}"
                                                 TouchUpCommandParameter="{Binding .}">
                                                 <StackLayout VerticalOptions="Center">
                                                     <Label
                                                         FontFamily="FA-R"
-                                                        FontSize="24"
+                                                        FontSize="18"
                                                         HorizontalOptions="Center"
                                                         Text="{StaticResource IconTrash}"
                                                         TextColor="{StaticResource TextPrimaryColor}" />
                                                     <Label
                                                         HorizontalOptions="Center"
                                                         Text="Remove"
+                                                        FontSize="Small"
                                                         TextColor="{StaticResource TextPrimaryColor}" />
                                                 </StackLayout>
                                             </effectsview:SfEffectsView>
@@ -241,14 +242,14 @@
                                     <Grid Padding="12">
                                         <sharpnado:MaterialFrame Padding="0" Style="{StaticResource AcrylicFrame}">
                                             <effectsview:SfEffectsView
-                                                Padding="24,12"
+                                                Padding="12,12"
                                                 CornerRadius="10"
                                                 TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=ViewFriendCodeCommand}"
                                                 TouchUpCommandParameter="{Binding FriendCode}">
                                                 <StackLayout VerticalOptions="Center">
                                                     <Label
                                                         FontFamily="FA-S"
-                                                        FontSize="24"
+                                                        FontSize="18"
                                                         HorizontalOptions="Center"
                                                         Text="{StaticResource IconCode}"
                                                         TextColor="{StaticResource TextPrimaryColor}" />
