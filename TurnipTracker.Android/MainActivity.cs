@@ -34,6 +34,7 @@ namespace TurnipTracker.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             LoadApplication(new App());
+            ParseIntent(Intent);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -42,45 +43,27 @@ namespace TurnipTracker.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-
-        string uriString = string.Empty;
-
-
-        protected override void OnNewIntent(Intent intent)
+        void ParseIntent(Intent intent)
         {
-            base.OnNewIntent(intent);
 
-            if(intent.Action == Intent.ActionSend &&
+            if (intent.Action == Intent.ActionSend &&
                 intent.Type == "text/plain")
             {
                 var extra = intent.GetStringExtra(Intent.ExtraText);
                 if (!string.IsNullOrWhiteSpace(extra) &&
                     extra.StartsWith("acislandtracker:"))
                 {
-                    uriString = extra;
+                    Xamarin.Forms.Application.Current.SendOnAppLinkRequestReceived(new Uri(extra));
                 }
             }
-
         }
 
-        protected override void OnStart()
+
+        protected override void OnNewIntent(Intent intent)
         {
-            if(!string.IsNullOrWhiteSpace(uriString))
-            {
-                try
-                {
-                    Xamarin.Forms.Application.Current.SendOnAppLinkRequestReceived(new Uri(uriString));
-                    
-                }
-                catch (Exception)
-                {
-                }
-                finally
-                {
-                    uriString = string.Empty;
-                }
-            }
-            base.OnStart();
+            base.OnNewIntent(intent);
+
+            ParseIntent(intent);
         }
 
         public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)

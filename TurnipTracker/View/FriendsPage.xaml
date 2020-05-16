@@ -381,8 +381,32 @@
                 <Label
                     FontSize="Medium"
                     HorizontalOptions="Center"
-                    Text="No friends yet, send a friend request by pressing the arrow above share your invite code with a friend to start sharing turnip prices."
+                    Text="No friends yet, send a friend request by pressing the arrow above to share your invite code with a friend to start sharing turnip prices."
                     TextColor="{StaticResource TextPrimaryColor}" />
+
+
+                <Label
+                    FontSize="Medium"
+                    Margin="0,48,0,0"
+                    HorizontalOptions="Center"
+                    Text="If your friends don't have Island Tracker, share the app with them."
+                    TextColor="{StaticResource TextPrimaryColor}" />
+                <sharpnado:MaterialFrame
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource AcrylicFrame}">
+                    <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding ShareWithFriendsCommand}"
+                            TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
+                        <Label
+                                HorizontalOptions="Center"
+                                FontSize="Medium"
+                                Text="Share App with Friends"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                    </effectsview:SfEffectsView>
+                </sharpnado:MaterialFrame>
             </StackLayout>
         </StackLayout>
     </Grid>
