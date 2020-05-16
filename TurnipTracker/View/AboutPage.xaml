@@ -23,7 +23,7 @@
     <ScrollView>
         <Grid
             Padding="{OnPlatform Android='0,12,0,0',
-                                 iOS='0,24,0,0'}"
+                                 iOS='0,12,0,0'}"
             BackgroundColor="{StaticResource NavigationPrimary}"
             RowSpacing="12">
             <Grid.RowDefinitions>

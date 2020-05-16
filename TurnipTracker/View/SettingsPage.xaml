@@ -12,9 +12,12 @@
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
     xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel" xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    ios:Page.UseSafeArea="True"
     Shell.NavBarIsVisible="False"
     Shell.PresentationMode="ModalAnimated"
     x:DataType="viewmodel:SettingsViewModel"
+            BackgroundColor="{StaticResource NavigationPrimary}"
     mc:Ignorable="d">
     <d:ContentPage.BindingContext>
         <viewmodel:SettingsViewModel />
@@ -22,7 +25,7 @@
     <ScrollView>
         <Grid
             Padding="{OnPlatform Android='0,12,0,0',
-                                 iOS='0,24,0,0'}"
+                                 iOS='0,12,0,0'}"
             BackgroundColor="{StaticResource NavigationPrimary}"
             RowSpacing="12">
             <Grid.RowDefinitions>
@@ -109,9 +112,7 @@
                                 <combobox:SfComboBox
                                 x:Name="ComboBoxAutoRefreshHours"
                                 BackgroundColor="Transparent"
-                                DropDownItemHeight="50"
                                 DropDownTextSize="24"
-                                HeightRequest="55"
                                 IsEnabled="{Binding AutoRefreshFriends, Mode=TwoWay}"
                                 SelectedIndex="{Binding RefreshAfterHours, Mode=TwoWay}"
                                 TextColor="{StaticResource TextPrimaryColor}"

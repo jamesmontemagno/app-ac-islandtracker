@@ -8,13 +8,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    ios:Page.UseSafeArea="True"
+    BackgroundColor="{StaticResource NavigationPrimary}"
     Shell.NavBarIsVisible="False"
     mc:Ignorable="d">
 
 
     <Grid
         Padding="{OnPlatform Android='0,12,0,0',
-                             iOS='0,24,0,0'}"
+                             iOS='0,12,0,0'}"
         BackgroundColor="{StaticResource NavigationPrimary}"
         RowSpacing="12">
         <Grid.RowDefinitions>
