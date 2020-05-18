@@ -15,6 +15,7 @@
     ios:Page.UseSafeArea="True"
     x:DataType="viewmodel:AboutViewModel"
     BackgroundColor="{StaticResource NavigationPrimary}"
+    Shell.PresentationMode="ModalAnimated"
     Shell.NavBarIsVisible="False"
     mc:Ignorable="d">
     <d:ContentPage.BindingContext>
@@ -32,22 +33,22 @@
             </Grid.RowDefinitions>
             <Label
                 FontFamily="AnimalCrossing"
-                FontSize="44"
+                FontSize="38"
                 HorizontalOptions="Center"
                 Text="About"
                 TextColor="White" />
             <pancake:PancakeView
                 Margin="0,0,12,0"
-                AutomationProperties.HelpText="Button - Close Page"
+                AutomationProperties.HelpText="Button - Settings Page"
                 AutomationProperties.IsInAccessibleTree="True"
                 HorizontalOptions="End"
                 Style="{StaticResource SocialPancake}"
                 VerticalOptions="Center">
-                <effectsview:SfEffectsView CornerRadius="20" TouchUpCommand="{Binding GoToSettingsCommand}">
+                <effectsview:SfEffectsView CornerRadius="20" TouchUpCommand="{Binding CloseCommand}">
                     <Label
                         FontFamily="FA-S"
                         Style="{StaticResource SocialLabel}"
-                        Text="{StaticResource IconSettings}" />
+                        Text="{StaticResource IconDeny}" />
                 </effectsview:SfEffectsView>
             </pancake:PancakeView>
             <pancake:PancakeView
@@ -68,7 +69,7 @@
                         Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
-                        Text="Support:"
+                        Text="Support"
                         TextColor="{StaticResource TextPrimaryColor}" />
                     
                     <sharpnado:MaterialFrame
@@ -122,7 +123,7 @@
                         Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
-                        Text="More Island Tracker:"
+                        Text="More Island Tracker"
                         TextColor="{StaticResource TextPrimaryColor}" />
 
                     <sharpnado:MaterialFrame
@@ -182,7 +183,7 @@
                         Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
-                        Text="More Nintendo:"
+                        Text="More Nintendo"
                         TextColor="{StaticResource TextPrimaryColor}" />
                     <sharpnado:MaterialFrame
                         Padding="0"
@@ -225,7 +226,7 @@
                         Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
-                        Text="Created by:"
+                        Text="Created by"
                         TextColor="{StaticResource TextPrimaryColor}"/>
                     <sharpnado:MaterialFrame
                         Padding="0"
@@ -324,7 +325,7 @@
                         Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
-                        Text="Made possible by:"
+                        Text="Made possible by"
                         TextColor="{StaticResource TextPrimaryColor}" />
                     <sharpnado:MaterialFrame HorizontalOptions="FillAndExpand" Style="{StaticResource AcrylicFrame}">
                         <StackLayout BindableLayout.ItemsSource="{Binding Attributions}" Spacing="12">
@@ -342,50 +343,13 @@
                             </BindableLayout.ItemTemplate>
                         </StackLayout>
                     </sharpnado:MaterialFrame>
-                    <Label
-                        Margin="24,24,0,0"
-                        FontFamily="AnimalCrossing"
-                        FontSize="Large"
-                        Text="Account:"
-                        TextColor="{StaticResource TextPrimaryColor}" />
-                    <sharpnado:MaterialFrame
-                        Padding="0"
-                        Margin="0,8,0,0"
-                        HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource AcrylicFrame}">
-                        <effectsview:SfEffectsView
-                            Padding="12"
-                            CornerRadius="10"
-                            TouchUpCommand="{Binding TransferCommand}">
-                            <Label
-                                HorizontalOptions="Center"
-                                FontSize="Medium"
-                                Text="Transfer Account"
-                                TextColor="{StaticResource TextPrimaryColor}" />
-                        </effectsview:SfEffectsView>
-                    </sharpnado:MaterialFrame>
-                    <sharpnado:MaterialFrame
-                        Padding="0"
-                        Margin="0,8,0,0"
-                        HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource AcrylicFrame}">
-                        <effectsview:SfEffectsView
-                            Padding="12"
-                            CornerRadius="10"
-                            TouchUpCommand="{Binding DeleteAccountCommand}">
-                            <Label
-                                HorizontalOptions="Center"
-                                FontSize="Medium"
-                                Text="Delete Account"
-                                TextColor="{StaticResource TextPrimaryColor}" />
-                        </effectsview:SfEffectsView>
-                    </sharpnado:MaterialFrame>
+                   
                     
                     <Label
                         Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
-                        Text="Misc:"
+                        Text="Misc"
                         TextColor="{StaticResource TextPrimaryColor}" />
                     <sharpnado:MaterialFrame
                         Padding="0"

@@ -16,11 +16,12 @@
     <PackageReference Include="Syncfusion.Xamarin.Expander" Version="18.1.0.52" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.1.0.52" />
     <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="18.1.0.52" />
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.726" />  
+    <PackageReference Include="Syncfusion.Xamarin.SfNumericUpDown" Version="18.1.0.52" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.772" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.1-beta" />
     <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.4.2" />
-    <PackageReference Include="Xamarin.Forms.Visual.Material" Version="4.6.0.726" />
+    <PackageReference Include="Xamarin.Forms.Visual.Material" Version="4.6.0.772" />
     <PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox" Version="18.1.0.52" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.1.0.52" />
@@ -52,6 +53,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="View\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="View\SettingsPage.xaml">

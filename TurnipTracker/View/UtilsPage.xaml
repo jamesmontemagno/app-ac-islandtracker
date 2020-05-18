@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
         <Label
             FontFamily="AnimalCrossing"
-            FontSize="44"
+            FontSize="38"
             HorizontalOptions="Center"
             Text="Compute"
             TextColor="White" />

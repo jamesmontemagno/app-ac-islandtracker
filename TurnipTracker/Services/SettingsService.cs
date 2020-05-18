@@ -138,5 +138,12 @@ namespace TurnipTracker.Services
             get => Preferences.Get(nameof(AskForSurvey), true);
             set => Preferences.Set(nameof(AskForSurvey), value);
         }
+
+
+        public static int CalcTurnipsSlots
+        {
+            get => Preferences.Get(nameof(CalcTurnipsSlots), 40);
+            set => Preferences.Set(nameof(CalcTurnipsSlots), value);
+        }
     }
 }

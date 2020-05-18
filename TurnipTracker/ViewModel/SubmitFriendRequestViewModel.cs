@@ -13,11 +13,9 @@ namespace TurnipTracker.ViewModel
     public class SubmitFriendRequestViewModel : ViewModelBase
     {
         public AsyncCommand RequestFriendCommand { get; }
-        public AsyncCommand CloseCommand { get; }
         public SubmitFriendRequestViewModel()
         {
             RequestFriendCommand = new AsyncCommand(RequestFriend);
-            CloseCommand = new AsyncCommand(Close);
         }
 
         bool submitted;
@@ -102,11 +100,6 @@ namespace TurnipTracker.ViewModel
             }
 
 
-        }
-
-        async Task Close()
-        {
-            await Shell.Current.GoToAsync("..");
         }
     }
 }

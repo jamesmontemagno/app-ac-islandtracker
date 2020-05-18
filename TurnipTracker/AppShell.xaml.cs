@@ -21,6 +21,8 @@ namespace TurnipTracker
             Routing.RegisterRoute("friendrequests", typeof(FriendRequestPage));
             Routing.RegisterRoute("calc-howmanybells", typeof(CalcHowManyBells));
             Routing.RegisterRoute("calc-howmanyturnips", typeof(CalcHowManyTurnips));
+            Routing.RegisterRoute("profile", typeof(ProfilePage));
+            Routing.RegisterRoute("about", typeof(AboutPage));
         }
     }
 }

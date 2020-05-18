@@ -3,11 +3,11 @@ namespace TurnipTracker.Model
 {
     public enum Fruit
     {
-        Apple,
-        Cherry,
-        Orange,
-        Peach,
-        Pear
+        Apple = 0,
+        Cherry = 1,
+        Orange = 2,
+        Peach = 3,
+        Pear = 4
     }
 
     public class FruitItem

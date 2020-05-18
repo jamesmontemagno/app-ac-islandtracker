@@ -56,7 +56,7 @@
                         <Label
                             Margin="42,0,0,0"
                             FontFamily="AnimalCrossing"
-                            FontSize="44"
+                            FontSize="38"
                             HorizontalOptions="Center"
                             Text="{Binding SelectedDay.DayLong}"
                             TextColor="White" />
@@ -183,7 +183,7 @@
                 <StackLayout Padding="12,0" Spacing="0">
                     <StackLayout
                         x:Name="CollectionViewDay"
-                        Margin="0,24,0,0"
+                        Margin="0,12,0,0"
                         BindableLayout.ItemsSource="{Binding Days}"
                         HorizontalOptions="Center"
                         Orientation="Horizontal"
@@ -212,7 +212,7 @@
 
                     <!--  Buy Days  -->
                     <Grid
-                        Margin="0,24,0,0"
+                        Margin="0,12,0,0"
                         IsVisible="{Binding SelectedDay.IsSunday}"
                         RowSpacing="12"
                         VerticalOptions="FillAndExpand">
@@ -220,11 +220,16 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
                         <sharpnado:MaterialFrame
                             Grid.Row="0"
+                            Grid.ColumnSpan="2"
                             Margin="4"
                             Style="{StaticResource AcrylicFrame}">
                             <StackLayout Spacing="0">
@@ -286,7 +291,8 @@
 
                         <sharpnado:MaterialFrame
                             Grid.Row="1"
-                            Margin="4"
+                            Grid.ColumnSpan="2"
+                            Margin="4,4,4,0"
                             Style="{StaticResource AcrylicFrame}">
                             <StackLayout Spacing="0">
                                 <Label
@@ -329,40 +335,66 @@
 
                         <sharpnado:MaterialFrame
                             Grid.Row="2"
-                            Margin="0,0,0,8"
-                            HorizontalOptions="Center"
+                            Grid.Column="0"
+                            Margin="24,0,12,8"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center"
                             IsVisible="{Binding IsToday}"
                             Style="{StaticResource AcrylicButton}">
                             <effectsview:SfEffectsView
                                 Padding="18,0"
                                 CornerRadius="27"
                                 IsEnabled="{Binding IsNotBusy}"
-                                TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
-                                <Label
-                                    FontSize="20"
-                                    Text="Sync"
-                                    TextColor="{StaticResource TextPrimaryColor}"
-                                    VerticalOptions="Center" />
+                                TouchUpCommand="{Binding ComputeCommand}">
+                                <StackLayout Spacing="12" Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label
+                                        FontSize="18"
+                                        Text="{StaticResource IconCompute}"
+                                        FontFamily="FA-S"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center"/>
+                                    <Label
+                                        FontSize="18"
+                                        Text="Compute"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center"/>
+                                </StackLayout>
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>
 
-                        <Grid
-                            Grid.Row="3"
-                            Padding="4"
-                            IsVisible="{Binding IsToday}">
-                            <Label
-                                FontFamily="AnimalCrossing"
-                                FontSize="Micro"
-                                HorizontalOptions="Center"
-                                IsVisible="{Binding NeedsSync}"
-                                Text="Don't forget to sync!"
-                                TextColor="{StaticResource GraphMin}" />
-                        </Grid>
+                        <sharpnado:MaterialFrame
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="12,0,24,8"
+                            HorizontalOptions="FillAndExpand"
+                            IsVisible="{Binding IsToday}"
+                            Style="{StaticResource AcrylicButton}"
+                            VerticalOptions="Center">
+                            <effectsview:SfEffectsView
+                                Padding="18,0"
+                                CornerRadius="27"
+                                IsEnabled="{Binding IsNotBusy}"
+                                TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
+                                <StackLayout Spacing="12" Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label
+                                        FontSize="18"
+                                        Text="{StaticResource IconRefresh}"
+                                        FontFamily="FA-S"
+                                        TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
+                                        VerticalOptions="Center"/>
+                                    <Label
+                                        FontSize="18"
+                                        Text="Sync"
+                                        TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
+                                        VerticalOptions="Center"/>
+                                </StackLayout>
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
                     </Grid>
 
                     <!--  Sell Days  -->
                     <Grid
-                        Margin="0,24,0,0"
+                        Margin="0,12,0,0"
                         IsVisible="{Binding SelectedDay.IsNotSunday}"
                         RowSpacing="12"
                         VerticalOptions="FillAndExpand">
@@ -371,7 +403,6 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -394,7 +425,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Label
                                     FontFamily="AnimalCrossing"
-                                    FontSize="Large"
+                                    FontSize="Medium"
                                     Text="Morning"
                                     TextColor="{StaticResource TextPrimaryColor}" />
                                 <inputLayout:SfTextInputLayout
@@ -462,7 +493,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Label
                                     FontFamily="AnimalCrossing"
-                                    FontSize="Large"
+                                    FontSize="Medium"
                                     Text="Afternoon"
                                     TextColor="{StaticResource TextPrimaryColor}" />
                                 <inputLayout:SfTextInputLayout
@@ -517,37 +548,33 @@
                         <sharpnado:MaterialFrame
                             Grid.Row="2"
                             Grid.ColumnSpan="2"
-                            Margin="12,0,0,0"
                             HorizontalOptions="Center"
                             IsVisible="{Binding IsToday}"
                             Style="{StaticResource AcrylicButton}"
                             VerticalOptions="Center">
                             <effectsview:SfEffectsView
-                                Padding="18,0"
+                                Padding="24,0"
                                 CornerRadius="27"
                                 IsEnabled="{Binding IsNotBusy}"
                                 TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
-                                <Label
-                                    FontSize="20"
-                                    Text="Sync"
-                                    TextColor="{StaticResource TextPrimaryColor}"
-                                    VerticalOptions="Center" />
+                                <StackLayout Spacing="12" Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label
+                                        FontSize="18"
+                                        Text="{StaticResource IconRefresh}"
+                                        FontFamily="FA-S"
+                                        TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
+                                        VerticalOptions="Center"/>
+                                    <Label
+                                        FontSize="18"
+                                        Text="Sync"
+                                        TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
+                                        VerticalOptions="Center"/>
+                                </StackLayout>
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>
-                        <Grid
-                            Grid.Row="3"
-                            Grid.ColumnSpan="2"
-                            IsVisible="{Binding IsToday}">
-                            <Label
-                                FontFamily="AnimalCrossing"
-                                FontSize="Micro"
-                                HorizontalOptions="Center"
-                                IsVisible="{Binding NeedsSync}"
-                                Text="Don't forget to sync!"
-                                TextColor="{StaticResource GraphMin}" />
-                        </Grid>
+
                         <Label
-                            Grid.Row="4"
+                            Grid.Row="3"
                             Margin="0,0,0,8"
                             FontFamily="AnimalCrossing"
                             FontSize="Micro"
@@ -557,7 +584,7 @@
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="End" />
                         <Label
-                            Grid.Row="4"
+                            Grid.Row="3"
                             Grid.Column="1"
                             Margin="0,0,0,8"
                             FontFamily="AnimalCrossing"

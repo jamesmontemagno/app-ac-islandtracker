@@ -8,13 +8,13 @@
     xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:TurnipTracker.Model"
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:shared="clr-namespace:TurnipTracker.Shared;assembly=TurnipTracker.Shared"
     xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
     xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
     xmlns:view="clr-namespace:TurnipTracker.View"
     xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
-    xmlns:model="clr-namespace:TurnipTracker.Model"
     ios:Page.UseSafeArea="True"
     x:DataType="viewmodel:FriendsViewModel"
     BackgroundColor="{StaticResource NavigationPrimary}"
@@ -28,17 +28,17 @@
             <converters:FruitImageConverter x:Key="FruitImageConverter" />
             <converters:EmptyBellConverter x:Key="EmptyBellConverter" />
             <converters:LastUpdateDateTimeConverter x:Key="LastUpdateDateTimeConverter" />
-            <converters:StringEmptyConverter x:Key="StringEmptyConverter"/>
-            <converters:HasFriendsCodeConverter x:Key="HasFriendsCodeConverter"/>
-            <converters:FriendPredictionConverter x:Key="FriendPredictionConverter"/>
+            <converters:StringEmptyConverter x:Key="StringEmptyConverter" />
+            <converters:HasFriendsCodeConverter x:Key="HasFriendsCodeConverter" />
+            <converters:FriendPredictionConverter x:Key="FriendPredictionConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
         <CollectionView
             BackgroundColor="{StaticResource AcrylicSurface}"
+            IsGrouped="True"
             ItemsSource="{Binding FriendsGrouped}"
             SelectionMode="None"
-            IsGrouped="True"
             VerticalOptions="FillAndExpand">
             <CollectionView.Header>
                 <Grid BackgroundColor="{StaticResource NavigationPrimary}">
@@ -71,8 +71,8 @@
                                 <effectsview:SfEffectsView
                                     Padding="18,12,12,12"
                                     CornerRadius="10"
-                                    TouchUpCommand="{Binding GoToFriendRequestCommand}"
-                                    IsEnabled="{Binding IsNotBusy}">
+                                    IsEnabled="{Binding IsNotBusy}"
+                                    TouchUpCommand="{Binding GoToFriendRequestCommand}">
                                     <Grid ColumnSpacing="12">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
@@ -93,14 +93,17 @@
                                             Text="Requests"
                                             TextColor="{StaticResource TextPrimaryColor}"
                                             VerticalOptions="Center" />
-                                        <pancake:PancakeView Grid.Column="3"
-                                                             Style="{StaticResource BadgePancake}"
-                                                             IsVisible="{Binding RequestCount, Converter={StaticResource StringEmptyConverter}}"
-                                                             CornerRadius="4">
-                                            <Label Text="{Binding RequestCount}" 
-                                                             VerticalOptions="Center"
-                                                             HorizontalOptions="Center"
-                                                   TextColor="White" FontSize="Small"/>
+                                        <pancake:PancakeView
+                                            Grid.Column="3"
+                                            CornerRadius="4"
+                                            IsVisible="{Binding RequestCount, Converter={StaticResource StringEmptyConverter}}"
+                                            Style="{StaticResource BadgePancake}">
+                                            <Label
+                                                FontSize="Small"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding RequestCount}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
                                         </pancake:PancakeView>
                                     </Grid>
                                 </effectsview:SfEffectsView>
@@ -116,8 +119,8 @@
                                 <effectsview:SfEffectsView
                                     Padding="18,12"
                                     CornerRadius="10"
-                                    TouchUpCommand="{Binding SendFriendRequestCommand}"
                                     IsEnabled="{Binding IsNotBusy}"
+                                    TouchUpCommand="{Binding SendFriendRequestCommand}"
                                     TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
                                     <Label
                                         FontFamily="FA-S"
@@ -164,10 +167,11 @@
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="model:FriendGroup">
                     <StackLayout Padding="18,12,0,0">
-                        <Label FontFamily="AnimalCrossing"
-                                FontSize="Medium"
-                                Text="{Binding Key}"
-                                TextColor="{StaticResource TextPrimaryColor}" />
+                        <Label
+                            FontFamily="AnimalCrossing"
+                            FontSize="Medium"
+                            Text="{Binding Key}"
+                            TextColor="{StaticResource TextPrimaryColor}" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
@@ -204,7 +208,7 @@
                             </SwipeView.LeftItems>-->
                         <SwipeView.RightItems>
                             <SwipeItems>
-                               
+
                                 <SwipeItemView
                                     AutomationProperties.HelpText="Button - Remove Friend"
                                     AutomationProperties.IsInAccessibleTree="True"
@@ -224,9 +228,9 @@
                                                         Text="{StaticResource IconTrash}"
                                                         TextColor="{StaticResource TextPrimaryColor}" />
                                                     <Label
+                                                        FontSize="Small"
                                                         HorizontalOptions="Center"
                                                         Text="Remove"
-                                                        FontSize="Small"
                                                         TextColor="{StaticResource TextPrimaryColor}" />
                                                 </StackLayout>
                                             </effectsview:SfEffectsView>
@@ -234,11 +238,11 @@
                                     </Grid>
                                 </SwipeItemView>
                                 <SwipeItemView
+                                    Margin="0,0,0,0"
                                     AutomationProperties.HelpText="Button - View Friend Code"
                                     AutomationProperties.IsInAccessibleTree="True"
-                                    IsVisible="{Binding FriendCode, Converter={StaticResource HasFriendsCodeConverter}}"
                                     BackgroundColor="{StaticResource AcrylicSurface}"
-                                    Margin="0,0,0,0">
+                                    IsVisible="{Binding FriendCode, Converter={StaticResource HasFriendsCodeConverter}}">
                                     <Grid Padding="12">
                                         <sharpnado:MaterialFrame Padding="0" Style="{StaticResource AcrylicFrame}">
                                             <effectsview:SfEffectsView
@@ -340,7 +344,7 @@
                                                     IsVisible="{Binding PMPrice, Converter={StaticResource EmptyBellConverter}}"
                                                     Text="{Binding PMPrice, StringFormat='PM: {0} 🔔'}"
                                                     TextColor="{StaticResource TextPrimaryColor}" />
-                                                
+
                                                 <Label
                                                     FontSize="Small"
                                                     HorizontalOptions="Center"
@@ -357,11 +361,11 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.Footer>
-                <StackLayout HorizontalOptions="Center" Padding="36,4">
+                <StackLayout Padding="36,4" HorizontalOptions="Center">
                     <Label
-                        HorizontalOptions="Center"
-                        FontSize="Micro"
                         FontFamily="AnimalCrossing"
+                        FontSize="Micro"
+                        HorizontalOptions="Center"
                         Text="{Binding LastUpdate}"
                         TextColor="{StaticResource TextPrimaryColor}" />
                 </StackLayout>
@@ -387,25 +391,26 @@
 
 
                 <Label
-                    FontSize="Medium"
                     Margin="0,48,0,0"
+                    FontSize="Medium"
                     HorizontalOptions="Center"
                     Text="If your friends don't have Island Tracker, share the app with them."
                     TextColor="{StaticResource TextPrimaryColor}" />
                 <sharpnado:MaterialFrame
-                        Padding="0"
-                        HorizontalOptions="Center"
-                        Style="{StaticResource AcrylicFrame}">
+                    Padding="0"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource AcrylicButton}">
                     <effectsview:SfEffectsView
-                            Padding="12"
-                            CornerRadius="10"
-                            TouchUpCommand="{Binding ShareWithFriendsCommand}"
-                            TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
+                        Padding="18,0"
+                        CornerRadius="10"
+                        TouchUpCommand="{Binding ShareWithFriendsCommand}"
+                        TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
                         <Label
-                                HorizontalOptions="Center"
-                                FontSize="Medium"
-                                Text="Share App with Friends"
-                                TextColor="{StaticResource TextPrimaryColor}" />
+                            FontSize="Medium"
+                            HorizontalOptions="Center"
+                            Text="Share App with Friends"
+                            TextColor="{StaticResource TextPrimaryColor}"
+                            VerticalOptions="Center" />
                     </effectsview:SfEffectsView>
                 </sharpnado:MaterialFrame>
             </StackLayout>

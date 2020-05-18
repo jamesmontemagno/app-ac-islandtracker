@@ -12,36 +12,43 @@ using TurnipTracker.Services;
 
 namespace TurnipTracker.ViewModel
 {
-    public class ProfileViewModel : ViewModelBase
+    public class HomeViewModel : ViewModelBase
     {
+
+        public AsyncCommand FirstRunCommand { get; }
         public AsyncCommand UpsertProfileCommand { get; }
         public Profile Profile { get; }
-        public ObservableRangeCollection<FruitItem> Fruits { get; }
 
-        public bool NeedsProfile => !SettingsService.HasRegistered;
         bool needsSync;
         public bool NeedsSync
         {
             get => needsSync;
             set => SetProperty(ref needsSync, value);
         }
-        public ProfileViewModel()
+
+        public HomeViewModel()
         {
             if (Xamarin.Forms.DesignMode.IsDesignModeEnabled)
                 return;
 
             Profile = DataService.GetProfile();
             Profile.SaveProfileAction = SaveProfile;
-            Fruits = new ObservableRangeCollection<FruitItem>
-            {
-                new FruitItem { Icon = "apple.png", Name="Apple"},
-                new FruitItem { Icon = "cherry.png", Name="Cherry"},
-                new FruitItem { Icon = "orange.png", Name="Orange"},
-                new FruitItem { Icon = "peach.png", Name="Peach"},
-                new FruitItem { Icon = "pear.png", Name="Pear"},
-            };
 
             UpsertProfileCommand = new AsyncCommand(UpsertProfile);
+
+            FirstRunCommand = new AsyncCommand(FirstRun);
+        }
+
+
+        async Task FirstRun()
+        {
+
+            if (SettingsService.FirstRun)
+            {
+                SettingsService.FirstRun = false;
+                await DisplayAlert("Welcome!", "Get started with Island Tracker by filling in your profile. Then head over to the tracking section to track turnip prices and get predictions. Finally, sync everything to the cloud and share with your friends.");
+                await GoToAsync("profile");
+            }
         }
 
         void SaveProfile()
@@ -55,15 +62,17 @@ namespace TurnipTracker.ViewModel
             if (IsBusy)
                 return;
 
-            if (string.IsNullOrWhiteSpace(Profile.Name))
+            if (!SettingsService.HasRegistered)
             {
-                await DisplayAlert("Update Profile", "Please enter your nickname.");
+                await DisplayAlert("Create Profile", "Please create your profile first.");
+                await GoToAsync("profile");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(Profile.IslandName))
+            if (string.IsNullOrWhiteSpace(Profile.Name) ||  string.IsNullOrWhiteSpace(Profile.IslandName))
             {
-                await DisplayAlert("Update Profile", "Please enter your island name.");
+                await DisplayAlert("Profile needs updates", "Please ensure your profile has a nickname and island name.");
+                await GoToAsync("profile");
                 return;
             }
 
@@ -81,8 +90,6 @@ namespace TurnipTracker.ViewModel
                 IsBusy = true;
                 await DataService.UpsertUserProfile(Profile);
                 await DisplayAlert("Profile synced", "You are all set!");
-
-                OnPropertyChanged(nameof(NeedsProfile));
                 NeedsSync = false;
             }
             catch (Exception ex)

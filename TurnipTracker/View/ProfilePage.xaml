@@ -16,15 +16,22 @@
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
     xmlns:view="clr-namespace:TurnipTracker.View"
-    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
+    xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel" 
+    xmlns:converters="clr-namespace:TurnipTracker.Converters"
     ios:Page.UseSafeArea="True"
     x:DataType="viewmodel:ProfileViewModel"
     BackgroundColor="{StaticResource NavigationPrimary}"
     Shell.NavBarIsVisible="False"
+    Shell.PresentationMode="ModalAnimated"
     mc:Ignorable="d">
     <d:ContentPage.BindingContext>
         <viewmodel:ProfileViewModel />
     </d:ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:SelectedDayColorConverter x:Key="SelectedDayColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid>
         <ScrollView>
@@ -39,10 +46,27 @@
                 </Grid.RowDefinitions>
                 <Label
                     FontFamily="AnimalCrossing"
-                    FontSize="44"
+                    FontSize="38"
                     HorizontalOptions="Center"
                     Text="Profile"
                     TextColor="White" />
+                <pancake:PancakeView
+                    Margin="0,0,12,0"
+                    AutomationProperties.HelpText="Button - Close Page"
+                    AutomationProperties.IsInAccessibleTree="True"
+                    HorizontalOptions="End"
+                    Style="{StaticResource SocialPancake}"
+                    VerticalOptions="Center">
+                    <effectsview:SfEffectsView
+                        CornerRadius="20"
+                        IsEnabled="{Binding IsNotBusy}"
+                        TouchUpCommand="{Binding CloseCommand}">
+                        <Label
+                            FontFamily="FA-S"
+                            Style="{StaticResource SocialLabel}"
+                            Text="{StaticResource IconDeny}" />
+                    </effectsview:SfEffectsView>
+                </pancake:PancakeView>
                 <pancake:PancakeView
                     Grid.Row="1"
                     Padding="12,12,12,0"
@@ -138,48 +162,42 @@
                                 BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
                                 FontSize="24"
                                 IsEnabled="{Binding IsNotBusy}"
-                                Mask="SW-0000-0000-0000"
                                 Keyboard="Numeric"
+                                Mask="SW-0000-0000-0000"
                                 TextColor="{StaticResource TextPrimaryColor}"
                                 VerticalOptions="Center"
                                 Value="{Binding Profile.FriendCode}" />
                         </sharpnado:MaterialFrame>
 
-                        <Label
-                            Margin="24,12,0,0"
-                            FontFamily="AnimalCrossing"
-                            FontSize="Medium"
-                            Text="Emoji Status"
-                            TextColor="{StaticResource TextPrimaryColor}" />
-                        <StackLayout Orientation="Horizontal">
 
-                            <sharpnado:MaterialFrame
-                                Padding="{OnPlatform Android='12,0',
-                                                     iOS='12'}"
-                                HorizontalOptions="FillAndExpand"
-                                Style="{StaticResource AcrylicFrame}">
-                                <controls:BorderlessEntry
-                                    BackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
-                                    FontSize="24"
-                                    IsEnabled="{Binding IsNotBusy}"
-                                    Text="{Binding Profile.Status}"
-                                    TextColor="{StaticResource TextPrimaryColor}" />
-                            </sharpnado:MaterialFrame>
-                            <sharpnado:MaterialFrame Margin="12,0,0,0" Style="{StaticResource AcrylicButton}">
-                                <effectsview:SfEffectsView
-                                    x:Name="ButtonSave"
-                                    Padding="18,0"
-                                    CornerRadius="27"
-                                    IsEnabled="{Binding IsNotBusy}"
-                                    TouchUpCommand="{Binding UpsertProfileCommand}">
+                        <sharpnado:MaterialFrame Style="{StaticResource AcrylicButton}"
+                                                 Margin="0,24,0,0"
+                                                 HorizontalOptions="End">
+                            <effectsview:SfEffectsView
+                                x:Name="ButtonSave"
+                                Padding="36,0"
+                                CornerRadius="27"
+                                IsEnabled="{Binding IsNotBusy}"
+                                TouchUpCommand="{Binding UpsertProfileCommand}">
+                                <StackLayout
+                                    HorizontalOptions="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="12">
                                     <Label
-                                        FontSize="20"
-                                        Text="Sync"
-                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        FontFamily="FA-S"
+                                        FontSize="18"
+                                        Text="{StaticResource IconRefresh}"
+                                        TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
                                         VerticalOptions="Center" />
-                                </effectsview:SfEffectsView>
-                            </sharpnado:MaterialFrame>
-                        </StackLayout>
+                                    <Label
+                                        FontSize="18"
+                                        Text="Sync"
+                                        TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+
                         <Label
                             FontSize="Micro"
                             HorizontalOptions="Center"

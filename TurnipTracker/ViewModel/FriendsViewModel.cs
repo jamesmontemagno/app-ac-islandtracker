@@ -130,12 +130,7 @@ namespace TurnipTracker.ViewModel
 
             forceRefresh = true;
 
-            Analytics.TrackEvent("Navigation", new Dictionary<string, string>
-            {
-                ["page"] = "friendrequests"
-            });
-
-            await Shell.Current.GoToAsync("friendrequests");
+            await GoToAsync("friendrequests");
         }
 
         public AsyncCommand<string> RegisterFriendCommand { get; }
@@ -185,7 +180,7 @@ namespace TurnipTracker.ViewModel
                         return false;
 
                     // we are already on the friends page, so no need to use the host.
-                    await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
+                    await GoToAsync($"//{uri.Host}/{uri.PathAndQuery}", uri.Host);
                     return true;
                 }
             }

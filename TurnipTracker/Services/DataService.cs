@@ -57,15 +57,28 @@ namespace TurnipTracker.Services
             lock (locker)
             {
                 var profile = barrel.Get<Profile>("profile");
-                return profile ?? new Profile
+                profile ??= new Profile
                 {
                     Fruit = (int)Model.Fruit.Apple,
                     Status = "😍",
                     Name = string.Empty,
                     FriendCode = string.Empty,
                     IslandName = string.Empty,
+                    GateStatusValidUntil = DateTime.UtcNow,
+                    DodoCode = string.Empty,
+                    GateStatus = (int)Model.GateStatus.Closed,
+                    GatesOpenLength = .5,
                     TimeZone = string.Empty
                 };
+
+                if(profile.GateStatus != (int)GateStatus.Closed && profile.GateStatusValidUntil < DateTime.UtcNow)
+                {
+                    profile.GateStatus = (int)GateStatus.Closed;
+                    profile.DodoCode = string.Empty;
+                    profile.GatesOpenLength = .5;
+                }
+
+                return profile;
             }
         }
 
