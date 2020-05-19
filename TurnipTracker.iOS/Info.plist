@@ -55,6 +55,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>Icon58</string>
 		</dict>
 	</array>
 </dict>

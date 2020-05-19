@@ -217,5 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_splash_logo.png" />
+    <BundleResource Include="Resources\Icon58.png" />
   </ItemGroup>
 </Project>
