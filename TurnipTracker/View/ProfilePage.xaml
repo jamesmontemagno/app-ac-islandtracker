@@ -191,7 +191,7 @@
                                         VerticalOptions="Center" />
                                     <Label
                                         FontSize="18"
-                                        Text="Sync"
+                                        Text="{Binding SyncCreateText}"
                                         TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
                                         VerticalOptions="Center" />
                                 </StackLayout>
@@ -202,7 +202,7 @@
                             FontSize="Micro"
                             HorizontalOptions="Center"
                             IsVisible="{Binding NeedsProfile}"
-                            Text="Fill in info and press Sync to create your profile."
+                            Text="Fill in your info and press Create to get started."
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="CenterAndExpand" />
 

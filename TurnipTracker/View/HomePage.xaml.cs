@@ -15,6 +15,14 @@ namespace TurnipTracker.View
             BindingContext = vm = new HomeViewModel();
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            if (vm.IsBusy)
+                return false;
+
+            return base.OnBackButtonPressed();
+        }
+
         protected override async void OnAppearing()
         {
             base.OnAppearing();

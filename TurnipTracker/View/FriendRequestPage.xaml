@@ -79,51 +79,55 @@
                                     Type="Article"
                                     VerticalOptions="FillAndExpand">
                                     <shimmer:SfShimmer.Content>
-                                        <sharpnado:MaterialFrame Padding="18" Style="{StaticResource AcrylicFrame}">
-                                            <Grid ColumnSpacing="12" RowSpacing="4">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
-                                                </Grid.RowDefinitions>
-                                                <Label
-                                                    FontSize="Large"
-                                                    Text="{Binding Name}"
-                                                    TextColor="{StaticResource TextPrimaryColor}"
-                                                    VerticalOptions="EndAndExpand" />
-                                                <Label
-                                                    Grid.Row="1"
-                                                    FontSize="Medium"
-                                                    Text="{Binding IslandName}"
-                                                    TextColor="{StaticResource TextPrimaryColor}"
-                                                    VerticalOptions="StartAndExpand" />
+                                        <Grid Padding="4,12">
+                                            <sharpnado:MaterialFrame Padding="18" Style="{StaticResource AcrylicFrame}">
+                                                <Grid ColumnSpacing="12" RowSpacing="4">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
+                                                    <Label
+                                                        FontSize="Large"
+                                                        Text="{Binding Name}"
+                                                        TextColor="{StaticResource TextPrimaryColor}"
+                                                        VerticalOptions="EndAndExpand" />
+                                                    <Label
+                                                        Grid.Row="1"
+                                                        FontSize="Medium"
+                                                        Text="{Binding IslandName}"
+                                                        TextColor="{StaticResource TextPrimaryColor}"
+                                                        VerticalOptions="StartAndExpand" />
 
 
-                                                <StackLayout
-                                                    Grid.Row="2"
-                                                    HorizontalOptions="Center"
-                                                    Orientation="Horizontal"
-                                                    Spacing="12">
+                                                    <StackLayout
+                                                        Grid.Row="2"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalOptions="End"
+                                                        Orientation="Horizontal"
+                                                        Spacing="12"
+                                                        Padding="4">
 
-                                                    <Button
-                                                        BorderColor="Red"
-                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendRequestViewModel}}, Path=DenyFriendRequestCommand}"
-                                                        CommandParameter="{Binding .}"
-                                                        Style="{StaticResource ButtonRoundedCorners}"
-                                                        Text="Deny"
-                                                        TextColor="Red" />
+                                                        <Button
+                                                            BorderColor="Red"
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendRequestViewModel}}, Path=DenyFriendRequestCommand}"
+                                                            CommandParameter="{Binding .}"
+                                                            Style="{StaticResource ButtonRoundedCorners}"
+                                                            Text="Deny"
+                                                            TextColor="Red" />
 
-                                                    <Button
-                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendRequestViewModel}}, Path=ApproveFriendRequestCommand}"
-                                                        CommandParameter="{Binding .}"
-                                                        HorizontalOptions="FillAndExpand"
-                                                        Style="{StaticResource ButtonRoundedCorners}"
-                                                        Text="Approve Request" />
+                                                        <Button
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendRequestViewModel}}, Path=ApproveFriendRequestCommand}"
+                                                            CommandParameter="{Binding .}"
+                                                            HorizontalOptions="FillAndExpand"
+                                                            Style="{StaticResource ButtonRoundedCorners}"
+                                                            Text="Approve" />
 
-                                                </StackLayout>
+                                                    </StackLayout>
 
-                                            </Grid>
-                                        </sharpnado:MaterialFrame>
+                                                </Grid>
+                                            </sharpnado:MaterialFrame>
+                                        </Grid>
                                     </shimmer:SfShimmer.Content>
                                 </shimmer:SfShimmer>
                             </Grid>

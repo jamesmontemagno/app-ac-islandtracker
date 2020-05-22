@@ -16,7 +16,9 @@ namespace TurnipTracker.Model
                 if (!day.PriceAM.HasValue)
                 {
                     var (min, max) = dailyMinMax.GetMinMax(i, isPM: false);
-                    if (min == max)
+                    if (min == 0 && max == 999)
+                        day.PredictionAM = $"🔮 ???";
+                    else if (min == max)
                         day.PredictionAM = $"🔮 {min}";
                     else
                         day.PredictionAM = $"🔮 {min}-{max}";
@@ -34,7 +36,10 @@ namespace TurnipTracker.Model
                 if (!day.PricePM.HasValue)
                 {
                     var (min, max) = dailyMinMax.GetMinMax(i, isPM: true);
-                    if (min == max)
+
+                    if (min == 0 && max == 999)
+                        day.PredictionPM = $"🔮 ???";
+                    else if (min == max)
                         day.PredictionPM = $"🔮 {min}";
                     else
                         day.PredictionPM = $"🔮 {min}-{max}";

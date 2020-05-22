@@ -101,15 +101,26 @@ namespace TurnipTracker.ViewModel
         public int Min
         {
             get => min;
-            set => SetProperty(ref min, value);
+            set
+            {
+                if (SetProperty(ref min, value))
+                    OnPropertyChanged(nameof(MinString));
+            }
         }
 
         int max = 0;
         public int Max
         {
             get => max;
-            set => SetProperty(ref max, value);
+            set
+            {
+                if (SetProperty(ref max, value))
+                    OnPropertyChanged(nameof(MaxString));
+            }
         }
+
+        public string MinString => Min == 0 ? "Guaranteed Min: ???" : $"Guarenteed Min: {Min}";
+        public string MaxString => Max == 999 ? "Potential Max: ???" : $"Potential Max: {Max}";
 
 
         void OnDaySelected(Day day) => MainThread.BeginInvokeOnMainThread(() =>
@@ -257,7 +268,7 @@ namespace TurnipTracker.ViewModel
 
             if (!SettingsService.HasRegistered)
             {
-                await App.Current.MainPage.DisplayAlert("Register First", "Please register your account on the profile tab.", "OK");
+                await App.Current.MainPage.DisplayAlert("Register First", "Please create a profile before syncing turnip prices.", "OK");
                 return;
             }
 
@@ -274,7 +285,6 @@ namespace TurnipTracker.ViewModel
             {
                 IsBusy = true;
                 await DataService.UpdateTurnipPrices(SelectedDay, Min, Max);
-                await DisplayAlert("Turnip prices synced", "You are all set!");
                 NeedsSync = false;
             }
             catch (Exception ex)

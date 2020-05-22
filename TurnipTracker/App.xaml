@@ -34,6 +34,9 @@
             <x:String x:Key="IconSettings">&#xf013;</x:String>
             <x:String x:Key="IconHome">&#xf965;</x:String>
             <x:String x:Key="IconProfileBadge">&#xf007;</x:String>
+            <x:String x:Key="IconBFF">&#xf500;</x:String>
+            <x:String x:Key="IconGateOpen">&#xf52b;</x:String>
+            <x:String x:Key="IconDodoCode">&#xf535;</x:String>
 
             <x:String x:Key="IconGraph">&#xf1fe;</x:String>
 

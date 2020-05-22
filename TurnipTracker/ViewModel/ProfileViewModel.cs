@@ -16,8 +16,8 @@ namespace TurnipTracker.ViewModel
     {
         public AsyncCommand UpsertProfileCommand { get; }
         public Profile Profile { get; }
-        public ObservableRangeCollection<FruitItem> Fruits { get; }
 
+        public string SyncCreateText => SettingsService.HasRegistered ? "Sync" : "Create";
         public bool NeedsProfile => !SettingsService.HasRegistered;
         bool needsSync;
         public bool NeedsSync
@@ -32,14 +32,6 @@ namespace TurnipTracker.ViewModel
 
             Profile = DataService.GetProfile();
             Profile.SaveProfileAction = SaveProfile;
-            Fruits = new ObservableRangeCollection<FruitItem>
-            {
-                new FruitItem { Icon = "apple.png", Name="Apple"},
-                new FruitItem { Icon = "cherry.png", Name="Cherry"},
-                new FruitItem { Icon = "orange.png", Name="Orange"},
-                new FruitItem { Icon = "peach.png", Name="Peach"},
-                new FruitItem { Icon = "pear.png", Name="Pear"},
-            };
 
             UpsertProfileCommand = new AsyncCommand(UpsertProfile);
         }
@@ -48,6 +40,7 @@ namespace TurnipTracker.ViewModel
         {
             DataService.SaveProfile(Profile);
             NeedsSync = true;
+            SettingsService.UpdateProfile = true;
         }
 
         async Task UpsertProfile()
@@ -80,9 +73,9 @@ namespace TurnipTracker.ViewModel
             {
                 IsBusy = true;
                 await DataService.UpsertUserProfile(Profile);
-                await DisplayAlert("Profile synced", "You are all set!");
 
                 OnPropertyChanged(nameof(NeedsProfile));
+                OnPropertyChanged(nameof(SyncCreateText));
                 NeedsSync = false;
             }
             catch (Exception ex)

@@ -116,7 +116,10 @@ namespace TurnipTracker.Functions
                         TurnipUpdateYear = friend.TurnipUpdateYear,
                         FriendCode = friendCode,
                         MaxPrediction = friend.MaxPrediction,
-                        MinPrediction = friend.MinPrediction
+                        MinPrediction = friend.MinPrediction,
+                        DodoCode = friend.DodoCode ?? string.Empty,
+                        GateClosesAtUTC = friend.GateClosesAtUTC.HasValue ? friend.GateClosesAtUTC.Value : DateTime.UtcNow,
+                        GateStatus = friend.GateStatus
                     });
                 }
 

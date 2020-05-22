@@ -100,12 +100,13 @@ namespace TurnipTracker.Model
             get => gatesOpenLength;
             set
             {
-                GateStatusValidUntil = DateTime.UtcNow.AddMinutes(60 * value);
+                GateClosesAtUTC = DateTime.UtcNow.AddMinutes(60 * value);
                 SetProperty(ref gatesOpenLength, value, onChanged: SaveProfileAction);
             }
         }
 
-        public DateTime GateStatusValidUntil { get; set; } = DateTime.UtcNow;
+        [JsonIgnore]
+        public DateTime GateClosesAtUTC { get; set; } = DateTime.UtcNow;
 
         public string TimeZone { get; set; }
     }

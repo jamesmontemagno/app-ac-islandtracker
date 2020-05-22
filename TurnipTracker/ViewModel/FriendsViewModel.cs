@@ -79,7 +79,7 @@ namespace TurnipTracker.ViewModel
         {
             if(!SettingsService.HasRegistered)
             {
-                await DisplayAlert("Register First", "Please register your account on the profile tab.");
+                await DisplayAlert("Register First", "Please create a profile before sending friend requests.");
                 return;
             }
 
@@ -124,7 +124,7 @@ namespace TurnipTracker.ViewModel
         {
             if (!SettingsService.HasRegistered)
             {
-                await App.Current.MainPage.DisplayAlert("Register First", "Please register your account on the profile tab.", "OK");
+                await App.Current.MainPage.DisplayAlert("Register First", "Create a profile before checking friend requests.", "OK");
                 return;
             }
 
@@ -204,7 +204,7 @@ namespace TurnipTracker.ViewModel
 
             if (!SettingsService.HasRegistered)
             {
-                await DisplayAlert("Register First", "Please register your account on the profile tab.");
+                await DisplayAlert("Register First", "Please create a profile before syncing friends.");
                 return;
             }
 

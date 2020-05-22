@@ -579,8 +579,7 @@
                             FontFamily="AnimalCrossing"
                             FontSize="Micro"
                             HorizontalOptions="Center"
-                            IsVisible="{Binding Min, Converter={StaticResource EmptyBellConverter}}"
-                            Text="{Binding Min, StringFormat='Guaranteed Min: {0}'}"
+                            Text="{Binding MinString}"
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="End" />
                         <Label
@@ -590,8 +589,7 @@
                             FontFamily="AnimalCrossing"
                             FontSize="Micro"
                             HorizontalOptions="Center"
-                            IsVisible="{Binding Max, Converter={StaticResource EmptyBellConverter}}"
-                            Text="{Binding Max, StringFormat='Potential Max: {0}'}"
+                            Text="{Binding MaxString}"
                             TextColor="{StaticResource TextPrimaryColor}"
                             VerticalOptions="End" />
                     </Grid>

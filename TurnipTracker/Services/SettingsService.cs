@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Xamarin.Essentials;
 
 namespace TurnipTracker.Services
@@ -22,7 +24,25 @@ namespace TurnipTracker.Services
         public static async Task<string> GetPublicKey()
         {
             if (string.IsNullOrWhiteSpace(publicCache))
-                publicCache = await GetKey(publicKey);
+            {
+                try
+                {
+                    publicCache = await GetKey(publicKey);
+
+                    if(Preferences.Get(publicKey, string.Empty) == string.Empty)
+                        publicCache = Preferences.Get(publicKey, string.Empty);
+
+                }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex, new Dictionary<string, string>
+                    {
+                        ["key"] = "public"
+                    });
+
+                    publicCache = Preferences.Get(publicKey, string.Empty);
+                }
+            }
 
             return publicCache;
         }
@@ -30,7 +50,24 @@ namespace TurnipTracker.Services
         public static async Task<string> GetPrivateKey()
         {
             if (string.IsNullOrWhiteSpace(privateCache))
-                privateCache = await GetKey(privateKey);
+            {
+                try
+                {
+                    privateCache = await GetKey(privateKey);
+
+                    if (Preferences.Get(privateKey, string.Empty) == string.Empty)
+                        privateCache = Preferences.Get(privateKey, string.Empty);
+                }
+                catch(Exception ex)
+                {
+                    Crashes.TrackError(ex, new Dictionary<string, string>
+                    {
+                        ["key"] = "private"
+                    });
+
+                    privateCache = Preferences.Get(privateKey, string.Empty);
+                }
+            }
 
             return privateCache;
         }
@@ -60,8 +97,10 @@ namespace TurnipTracker.Services
                 return false;
 
             await SecureStorage.SetAsync(privateKey, key0);
+            Preferences.Set(privateKey, key0);
             privateCache = key0;
             await SecureStorage.SetAsync(publicKey, key1);
+            Preferences.Set(publicKey, key1);
             publicCache = key1;
             return true;
         }
@@ -74,6 +113,7 @@ namespace TurnipTracker.Services
             {
                 val = Guid.NewGuid().ToString();
                 await SecureStorage.SetAsync(key, val);
+                Preferences.Set(key, val);
             }
 
             return val;
@@ -83,6 +123,12 @@ namespace TurnipTracker.Services
         {
             get => Preferences.Get(nameof(FirstRun), true);
             set => Preferences.Set(nameof(FirstRun), value);
+        }
+
+        public static bool UpdateProfile
+        {
+            get => Preferences.Get(nameof(UpdateProfile), false);
+            set => Preferences.Set(nameof(UpdateProfile), value);
         }
 
         public static bool HasRegistered
@@ -144,6 +190,12 @@ namespace TurnipTracker.Services
         {
             get => Preferences.Get(nameof(CalcTurnipsSlots), 40);
             set => Preferences.Set(nameof(CalcTurnipsSlots), value);
+        }
+
+        public static bool ForceRefreshFriends
+        {
+            get => Preferences.Get(nameof(ForceRefreshFriends), false);
+            set => Preferences.Set(nameof(ForceRefreshFriends), value);
         }
     }
 }

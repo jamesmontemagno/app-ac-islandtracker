@@ -31,6 +31,9 @@
             <converters:StringEmptyConverter x:Key="StringEmptyConverter" />
             <converters:HasFriendsCodeConverter x:Key="HasFriendsCodeConverter" />
             <converters:FriendPredictionConverter x:Key="FriendPredictionConverter" />
+            <converters:IsGateStatusConverter x:Key="IsGateStatusConverter" />
+            <converters:ExpiresAtConverter x:Key="ExpiresAtConverter" />
+            <converters:IsGateOpenConverter x:Key="IsGateOpenConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
@@ -178,34 +181,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="shared:FriendStatus">
                     <SwipeView BackgroundColor="Transparent" IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=IsNotBusy}">
-                        <!--<SwipeView.LeftItems>
-                                <SwipeItems>
-                                    <SwipeItemView BackgroundColor="{StaticResource AcrylicSurface}"
-                                                     AutomationProperties.IsInAccessibleTree="True"
-                                                     AutomationProperties.HelpText="Button - Favorite Friend">
-                                        <Grid Padding="12">
-                                        <sharpnado:MaterialFrame
-                                                Style="{StaticResource AcrylicFrame}"
-                                                Padding="0">
-                                            <effectsview:SfEffectsView
-                                                    Padding="24,12"
-                                                    CornerRadius="10" >
-                                                <StackLayout VerticalOptions="Center">
-                                                    <Label Text="{StaticResource IconFavorite}"
-                                                           FontSize="24"
-                                                           FontFamily="FA-R"
-                                                           HorizontalOptions="Center"
-                                                           TextColor="{StaticResource TextPrimaryColor}"/>
-                                                    <Label Text="Favorite"
-                                                           HorizontalOptions="Center"
-                                                           TextColor="{StaticResource TextPrimaryColor}"/>
-                                                </StackLayout>
-                                            </effectsview:SfEffectsView>
-                                        </sharpnado:MaterialFrame>
-                                         </Grid>
-                                    </SwipeItemView>
-                                </SwipeItems>
-                            </SwipeView.LeftItems>-->
+
                         <SwipeView.RightItems>
                             <SwipeItems>
 
@@ -213,7 +189,7 @@
                                     AutomationProperties.HelpText="Button - Remove Friend"
                                     AutomationProperties.IsInAccessibleTree="True"
                                     BackgroundColor="{StaticResource AcrylicSurface}">
-                                    <Grid Padding="12">
+                                    <Grid Padding="6,12,12,12">
                                         <sharpnado:MaterialFrame Padding="0" Style="{StaticResource AcrylicFrame}">
                                             <effectsview:SfEffectsView
                                                 Padding="12,12"
@@ -243,25 +219,39 @@
                                     AutomationProperties.IsInAccessibleTree="True"
                                     BackgroundColor="{StaticResource AcrylicSurface}"
                                     IsVisible="{Binding FriendCode, Converter={StaticResource HasFriendsCodeConverter}}">
-                                    <Grid Padding="12">
+                                    <Grid Padding="12,12,6,12">
                                         <sharpnado:MaterialFrame Padding="0" Style="{StaticResource AcrylicFrame}">
                                             <effectsview:SfEffectsView
-                                                Padding="12,12"
+                                                Padding="20,12"
                                                 CornerRadius="10"
                                                 TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=ViewFriendCodeCommand}"
                                                 TouchUpCommandParameter="{Binding FriendCode}">
-                                                <StackLayout VerticalOptions="Center">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
                                                     <Label
                                                         FontFamily="FA-S"
                                                         FontSize="18"
                                                         HorizontalOptions="Center"
                                                         Text="{StaticResource IconCode}"
-                                                        TextColor="{StaticResource TextPrimaryColor}" />
-                                                    <Label
-                                                        HorizontalOptions="Center"
-                                                        Text="Friend Code"
-                                                        TextColor="{StaticResource TextPrimaryColor}" />
-                                                </StackLayout>
+                                                        TextColor="{StaticResource TextPrimaryColor}"
+                                                        VerticalOptions="End" />
+                                                    <StackLayout
+                                                        Grid.Row="1"
+                                                        Spacing="0"
+                                                        VerticalOptions="Start">
+                                                        <Label
+                                                            HorizontalOptions="Center"
+                                                            Text="Friend"
+                                                            TextColor="{StaticResource TextPrimaryColor}" />
+                                                        <Label
+                                                            HorizontalOptions="Center"
+                                                            Text="Code"
+                                                            TextColor="{StaticResource TextPrimaryColor}" />
+                                                    </StackLayout>
+                                                </Grid>
                                             </effectsview:SfEffectsView>
                                         </sharpnado:MaterialFrame>
                                     </Grid>
@@ -280,6 +270,7 @@
                                     <sharpnado:MaterialFrame Padding="18" Style="{StaticResource AcrylicFrame}">
                                         <Grid ColumnSpacing="12" RowSpacing="4">
                                             <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
@@ -350,6 +341,46 @@
                                                     HorizontalOptions="Center"
                                                     Text="{Binding ., Converter={StaticResource FriendPredictionConverter}}"
                                                     TextColor="{StaticResource TextPrimaryColor}" />
+                                            </StackLayout>
+
+                                            <StackLayout
+                                                Grid.Row="5"
+                                                Grid.ColumnSpan="3"
+                                                HorizontalOptions="Center"
+                                                IsVisible="{Binding ., Converter={StaticResource IsGateOpenConverter}}"
+                                                Orientation="Horizontal">
+
+                                                <Label
+                                                    FontFamily="FA-S"
+                                                    FontSize="Small"
+                                                    VerticalOptions="Center"
+                                                    Text="{StaticResource IconGateOpen}" />
+
+
+                                                <Label
+                                                    Margin="0,0,8,0"
+                                                    FontSize="Small"
+                                                    VerticalOptions="Center"
+                                                    Text="{Binding GateClosesAtUTC, Converter={StaticResource ExpiresAtConverter}}" />
+
+                                                <Label
+                                                    FontFamily="FA-S"
+                                                    FontSize="Small"
+                                                    VerticalOptions="Center"
+                                                    IsVisible="{Binding GateStatus, Converter={StaticResource IsGateStatusConverter}, ConverterParameter=2}"
+                                                    Text="{StaticResource IconBFF}" />
+                                                <Label
+                                                    FontFamily="FA-S"
+                                                    FontSize="Small"
+                                                    VerticalOptions="Center"
+                                                    IsVisible="{Binding GateStatus, Converter={StaticResource IsGateStatusConverter}, ConverterParameter=3}"
+                                                    Text="{StaticResource IconDodoCode}" />
+                                                <Label
+                                                    FontSize="Small"
+                                                    IsVisible="{Binding GateStatus, Converter={StaticResource IsGateStatusConverter}, ConverterParameter=3}"
+                                                    Text="{Binding DodoCode}"
+                                                    VerticalOptions="Center" />
+
                                             </StackLayout>
 
                                         </Grid>

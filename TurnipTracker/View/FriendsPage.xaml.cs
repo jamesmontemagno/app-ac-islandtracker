@@ -29,6 +29,11 @@ namespace TurnipTracker.View
                 // if older than 1 hour then refresh
                 if (SettingsService.HasRegistered && SettingsService.AutoRefreshFriends && SettingsService.LastFriendsUpdate < DateTime.UtcNow.AddHours(-SettingsService.RefreshAfterHours))
                     _ = vm.RefreshCommand.ExecuteAsync().ContinueWith((r) => { });
+                else if(SettingsService.ForceRefreshFriends)
+                {
+                    SettingsService.ForceRefreshFriends = false;
+                    _ = vm.RefreshCommand.ExecuteAsync().ContinueWith((r) => { });
+                }
 #endif         
             }
 

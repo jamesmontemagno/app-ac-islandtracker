@@ -17,7 +17,7 @@ namespace TurnipTracker.ViewModel
 
         public AsyncCommand FirstRunCommand { get; }
         public AsyncCommand UpsertProfileCommand { get; }
-        public Profile Profile { get; }
+        public Profile Profile { get; set; }
 
         bool needsSync;
         public bool NeedsSync
@@ -42,14 +42,22 @@ namespace TurnipTracker.ViewModel
 
         async Task FirstRun()
         {
-
             if (SettingsService.FirstRun)
             {
                 SettingsService.FirstRun = false;
-                await DisplayAlert("Welcome!", "Get started with Island Tracker by filling in your profile. Then head over to the tracking section to track turnip prices and get predictions. Finally, sync everything to the cloud and share with your friends.");
+                await DisplayAlert("Welcome!", "Welcome to Island Tracker, your social turnip tracking companion. Let's get started by creating your profile.");
                 await GoToAsync("profile");
             }
+            else if(SettingsService.UpdateProfile)
+            {
+                SettingsService.UpdateProfile = false;
+                Profile = DataService.GetProfile();
+                Profile.SaveProfileAction = SaveProfile;
+                OnPropertyChanged(nameof(Profile));
+            }
         }
+
+
 
         void SaveProfile()
         {
@@ -64,7 +72,7 @@ namespace TurnipTracker.ViewModel
 
             if (!SettingsService.HasRegistered)
             {
-                await DisplayAlert("Create Profile", "Please create your profile first.");
+                await DisplayAlert("Create Profile", "Please create your profile before updating your status.");
                 await GoToAsync("profile");
                 return;
             }
@@ -73,6 +81,13 @@ namespace TurnipTracker.ViewModel
             {
                 await DisplayAlert("Profile needs updates", "Please ensure your profile has a nickname and island name.");
                 await GoToAsync("profile");
+                return;
+            }
+
+            if(Profile.GateStatus == 3 && Profile.DodoCode?.Length != 5)
+            {
+                await DisplayAlert("Invalid Dodo Code", "Please enter a valid Dodo code, it should be 5 characters in length.");
+                
                 return;
             }
 
@@ -89,7 +104,6 @@ namespace TurnipTracker.ViewModel
             {
                 IsBusy = true;
                 await DataService.UpsertUserProfile(Profile);
-                await DisplayAlert("Profile synced", "You are all set!");
                 NeedsSync = false;
             }
             catch (Exception ex)
