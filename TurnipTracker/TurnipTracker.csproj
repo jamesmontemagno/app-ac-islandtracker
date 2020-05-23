@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Plugin.StoreReview" Version="2.0.0.5" />
     <PackageReference Include="Resizetizer.NT" Version="0.1.0-preview8" />
     <PackageReference Include="Sharpnado.MaterialFrame" Version="1.1.0" />
     <PackageReference Include="Syncfusion.Xamarin.Expander" Version="18.1.0.53" />

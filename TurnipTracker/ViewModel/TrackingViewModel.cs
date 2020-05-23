@@ -286,6 +286,26 @@ namespace TurnipTracker.ViewModel
                 IsBusy = true;
                 await DataService.UpdateTurnipPrices(SelectedDay, Min, Max);
                 NeedsSync = false;
+
+
+                if(SettingsService.SyncCount < 30)
+                {
+                    SettingsService.SyncCount++;
+                    if(SettingsService.SyncCount == 30)
+                    {
+                        if(DeviceInfo.Platform == DevicePlatform.Android)
+                        {
+                            if(await DisplayAlert("Rate Island Tracker?", "Thank you for being a dedicated Island Tracker user! Would you like to help us out by rating the app?", "Yes please!", "Not now"))
+                            {
+                                Plugin.StoreReview.CrossStoreReview.Current.OpenStoreReviewPage("com.refractored.islandtracker");
+                            }
+                        }
+                        else
+                        {
+                            Plugin.StoreReview.CrossStoreReview.Current.RequestReview();
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

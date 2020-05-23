@@ -197,5 +197,12 @@ namespace TurnipTracker.Services
             get => Preferences.Get(nameof(ForceRefreshFriends), false);
             set => Preferences.Set(nameof(ForceRefreshFriends), value);
         }
+
+        public static int SyncCount
+        {
+            get => Preferences.Get(nameof(SyncCount), 0);
+            set => Preferences.Set(nameof(SyncCount), value);
+        }
+
     }
 }
