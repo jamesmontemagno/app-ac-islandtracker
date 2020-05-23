@@ -132,6 +132,7 @@
                                 IsEnabled="{Binding IsNotBusy}"
                                 SelectedIndex="{Binding Profile.Fruit, Mode=TwoWay}"
                                 TextColor="{StaticResource TextPrimaryColor}"
+                                DropDownBackgroundColor="{StaticResource AcrylicSurface}"
                                 TextSize="20"
                                 VerticalOptions="Start">
                                 <combobox:SfComboBox.ComboBoxSource>

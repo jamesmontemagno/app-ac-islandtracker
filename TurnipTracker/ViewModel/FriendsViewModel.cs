@@ -58,7 +58,7 @@ namespace TurnipTracker.ViewModel
             set => SetProperty(ref requestCount, value);
         }
 
-        bool forceRefresh = false;
+        public bool ForceRefresh { get; set; }
 
         public string LastUpdate
         {
@@ -128,7 +128,7 @@ namespace TurnipTracker.ViewModel
                 return;
             }
 
-            forceRefresh = true;
+            ForceRefresh = true;
 
             await GoToAsync("friendrequests");
         }
@@ -221,14 +221,14 @@ namespace TurnipTracker.ViewModel
                     OnPropertyChanged(nameof(ShowNoFriends));
                 }
 
-                var friendsTask = DataService.GetFriendsAsync(forceRefresh);
-                var countTask = DataService.GetFriendRequestCountAsync(forceRefresh);
+                var friendsTask = DataService.GetFriendsAsync(ForceRefresh);
+                var countTask = DataService.GetFriendRequestCountAsync(ForceRefresh);
                 await Task.WhenAll(friendsTask, countTask);
                 if (friendsTask.IsFaulted && friendsTask.Exception != null)
                     throw friendsTask.Exception;
 
                 var statuses = friendsTask.Result;
-                forceRefresh = false;
+                ForceRefresh = false;
                 // await Task.Delay(5000);
                 Friends.ReplaceRange(statuses.OrderByDescending(s => s.TurnipUpdateTimeUTC));
 
@@ -300,7 +300,7 @@ namespace TurnipTracker.ViewModel
 
                 await DataService.RemoveFriendAsync(friendStatus.PublicKey);
                 Friends.Remove(friendStatus);
-                forceRefresh = true;
+                ForceRefresh = true;
                 UpdateFriendsGroups();
                 OnPropertyChanged(nameof(ShowNoFriends));
                 DataService.ClearCache(DataService.FriendKey);

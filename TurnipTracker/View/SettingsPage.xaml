@@ -116,6 +116,7 @@
                                 <combobox:SfComboBox
                                     x:Name="ComboBoxAutoRefreshHours"
                                     BackgroundColor="Transparent"
+                                    DropDownBackgroundColor="{StaticResource AcrylicSurface}"
                                     DropDownItemHeight="{OnPlatform Android=50}"
                                     DropDownTextSize="24"
                                     HeightRequest="{OnPlatform Android=55}"
@@ -145,8 +146,8 @@
                         Text="Account"
                         TextColor="{StaticResource TextPrimaryColor}" />
                     <sharpnado:MaterialFrame
-                        Padding="0"
                         Margin="0,0,0,0"
+                        Padding="0"
                         HorizontalOptions="FillAndExpand"
                         Style="{StaticResource AcrylicFrame}">
                         <effectsview:SfEffectsView
@@ -154,15 +155,15 @@
                             CornerRadius="10"
                             TouchUpCommand="{Binding TransferCommand}">
                             <Label
-                                HorizontalOptions="Center"
                                 FontSize="Medium"
+                                HorizontalOptions="Center"
                                 Text="Transfer Account"
                                 TextColor="{StaticResource TextPrimaryColor}" />
                         </effectsview:SfEffectsView>
                     </sharpnado:MaterialFrame>
                     <sharpnado:MaterialFrame
-                        Padding="0"
                         Margin="0,8,0,0"
+                        Padding="0"
                         HorizontalOptions="FillAndExpand"
                         Style="{StaticResource AcrylicFrame}">
                         <effectsview:SfEffectsView
@@ -170,8 +171,8 @@
                             CornerRadius="10"
                             TouchUpCommand="{Binding DeleteAccountCommand}">
                             <Label
-                                HorizontalOptions="Center"
                                 FontSize="Medium"
+                                HorizontalOptions="Center"
                                 Text="Delete Account"
                                 TextColor="{StaticResource TextPrimaryColor}" />
                         </effectsview:SfEffectsView>

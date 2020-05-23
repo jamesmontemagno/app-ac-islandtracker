@@ -403,7 +403,7 @@
             </CollectionView.Footer>
         </CollectionView>
         <StackLayout
-            Padding="12"
+            Padding="12,24"
             HorizontalOptions="FillAndExpand"
             IsVisible="{Binding ShowNoFriends}"
             VerticalOptions="CenterAndExpand">

@@ -32,6 +32,7 @@ namespace TurnipTracker.View
                 else if(SettingsService.ForceRefreshFriends)
                 {
                     SettingsService.ForceRefreshFriends = false;
+                    vm.ForceRefresh = true;
                     _ = vm.RefreshCommand.ExecuteAsync().ContinueWith((r) => { });
                 }
 #endif         
