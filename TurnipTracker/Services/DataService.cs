@@ -71,12 +71,12 @@ namespace TurnipTracker.Services
                     TimeZone = string.Empty
                 };
 
-                if(profile.GateStatus != (int)GateStatus.Closed && profile.GateClosesAtUTC < DateTime.UtcNow)
-                {
-                    profile.GateStatus = (int)GateStatus.Closed;
-                    profile.DodoCode = string.Empty;
-                    profile.GatesOpenLength = .5;
-                }
+                //if(profile.GateStatus != (int)GateStatus.Closed && profile.GateClosesAtUTC < DateTime.UtcNow)
+                //{
+                //    profile.GateStatus = (int)GateStatus.Closed;
+                //    profile.DodoCode = string.Empty;
+                //    profile.GatesOpenLength = .5;
+                //}
 
                 return profile;
             }
