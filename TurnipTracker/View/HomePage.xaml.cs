@@ -27,13 +27,13 @@ namespace TurnipTracker.View
         {
             base.OnAppearing();
 
-            ComboBoxGateStatus.ComboBoxSource = new List<string>
-            {
-                "Closed",
-                "Open to Everyone",
-                "Open to Best Friends",
-                "Dodo Code"
-            };
+            //ComboBoxGateStatus.ComboBoxSource = new List<string>
+            //{
+            //    "Closed",
+            //    "Open to Everyone",
+            //    "Open to Best Friends",
+            //    "Dodo Code"
+            //};
 
             ComboBoxGateStatus.SelectedItem = ComboBoxGateStatus.ComboBoxSource[vm.Profile.GateStatus];
 
