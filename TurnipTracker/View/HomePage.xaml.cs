@@ -23,10 +23,14 @@ namespace TurnipTracker.View
             return base.OnBackButtonPressed();
         }
 
+        bool first = true;
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            ComboBoxGateStatus.SelectedItem = ComboBoxGateStatus.ComboBoxSource[vm.Profile.GateStatus];
+            if(first)
+                ComboBoxGateStatus.SelectedItem = ComboBoxGateStatus.ComboBoxSource[vm.Profile.GateStatus];
+
+            first = false;
 
             await vm.FirstRunCommand.ExecuteAsync();
            

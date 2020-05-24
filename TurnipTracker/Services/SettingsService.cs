@@ -102,6 +102,8 @@ namespace TurnipTracker.Services
             await SecureStorage.SetAsync(publicKey, key1);
             Preferences.Set(publicKey, key1);
             publicCache = key1;
+
+            SettingsService.TransferedIn = true;
             return true;
         }
 
@@ -202,6 +204,12 @@ namespace TurnipTracker.Services
         {
             get => Preferences.Get(nameof(SyncCount), 0);
             set => Preferences.Set(nameof(SyncCount), value);
+        }
+
+        public static bool TransferedIn
+        {
+            get => Preferences.Get(nameof(TransferedIn), false);
+            set => Preferences.Set(nameof(TransferedIn), value);
         }
 
     }

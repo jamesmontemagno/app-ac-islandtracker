@@ -58,7 +58,7 @@
                     Style="{StaticResource SocialPancake}"
                     VerticalOptions="Center">
                     <effectsview:SfEffectsView
-                        CornerRadius="20"
+                        CornerRadius="{OnPlatform Android=20, iOS=10}"
                         IsEnabled="{Binding IsNotBusy}"
                         TouchUpCommand="{Binding CloseCommand}">
                         <Label

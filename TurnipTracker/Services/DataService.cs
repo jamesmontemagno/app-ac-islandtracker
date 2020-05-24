@@ -71,12 +71,12 @@ namespace TurnipTracker.Services
                     TimeZone = string.Empty
                 };
 
-                if(profile.GateStatus != (int)GateStatus.Closed && profile.GateClosesAtUTC < DateTime.UtcNow)
-                {
-                    profile.GateStatus = (int)GateStatus.Closed;
-                    profile.DodoCode = string.Empty;
-                    profile.GatesOpenLength = .5;
-                }
+                //if(profile.GateStatus != (int)GateStatus.Closed && profile.GateClosesAtUTC < DateTime.UtcNow)
+                //{
+                //    profile.GateStatus = (int)GateStatus.Closed;
+                //    profile.DodoCode = string.Empty;
+                //    profile.GatesOpenLength = .5;
+                //}
 
                 return profile;
             }
@@ -245,8 +245,9 @@ namespace TurnipTracker.Services
 
         async Task SetHeader()
         {
-            if (client.DefaultRequestHeaders.Authorization == null)
+            if (client.DefaultRequestHeaders.Authorization == null || SettingsService.TransferedIn)
             {
+                SettingsService.TransferedIn = false;
                 var key = await SettingsService.GetPrivateKey();
                 var encoding = Encoding.GetEncoding("iso-8859-1");
                 var authenticationBytes = encoding.GetBytes(key);
