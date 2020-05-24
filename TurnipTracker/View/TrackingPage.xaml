@@ -339,7 +339,6 @@
                             Margin="24,0,12,8"
                             HorizontalOptions="FillAndExpand"
                             VerticalOptions="Center"
-                            IsVisible="{Binding IsToday}"
                             Style="{StaticResource AcrylicButton}">
                             <effectsview:SfEffectsView
                                 Padding="18,0"
@@ -367,7 +366,6 @@
                             Grid.Column="1"
                             Margin="12,0,24,8"
                             HorizontalOptions="FillAndExpand"
-                            IsVisible="{Binding IsToday}"
                             Style="{StaticResource AcrylicButton}"
                             VerticalOptions="Center">
                             <effectsview:SfEffectsView

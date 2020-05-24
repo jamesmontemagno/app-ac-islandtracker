@@ -23,14 +23,21 @@ namespace TurnipTracker.View
             return base.OnBackButtonPressed();
         }
 
-        bool first = true;
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if(first)
-                ComboBoxGateStatus.SelectedItem = ComboBoxGateStatus.ComboBoxSource[vm.Profile.GateStatus];
 
-            first = false;
+            ComboBoxGateStatus.ComboBoxSource = new List<string>
+            {
+                "Closed",
+                "Open to Everyone",
+                "Open to Best Friends",
+                "Dodo Code"
+            };
+
+            ComboBoxGateStatus.SelectedItem = ComboBoxGateStatus.ComboBoxSource[vm.Profile.GateStatus];
+
+            
 
             await vm.FirstRunCommand.ExecuteAsync();
            
