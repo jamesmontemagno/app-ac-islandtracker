@@ -30,7 +30,7 @@ namespace TurnipTracker.View
             //ComboBoxGateStatus.ComboBoxSource = new List<string>
             //{
             //    "Closed",
-            //    "Open to Everyone",
+            //    "Open to All Friends",
             //    "Open to Best Friends",
             //    "Dodo Code"
             //};

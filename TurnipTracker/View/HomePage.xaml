@@ -119,7 +119,7 @@
                                     Grid.Row="1"
                                     ContainerType="Outlined"
                                     FocusedColor="{StaticResource NavigationPrimary}"
-                                    Hint="Emoji Staus">
+                                    Hint="Emoji Status">
                                     <controls:BorderlessEntry
                                         BackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                         FontSize="22"
@@ -154,7 +154,7 @@
                                             <combobox:SfComboBox.ComboBoxSource>
                                                 <ListCollection:List x:TypeArguments="x:String">
                                                     <x:String>Closed</x:String>
-                                                    <x:String>Open to Everyone</x:String>
+                                                    <x:String>Open to All Friends</x:String>
                                                     <x:String>Open to Best Friends</x:String>
                                                     <x:String>Dodo Code</x:String>
                                                 </ListCollection:List>
