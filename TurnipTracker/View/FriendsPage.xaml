@@ -353,6 +353,7 @@
                                                 <Label
                                                     FontFamily="FA-S"
                                                     FontSize="Small"
+                                                    TextColor="{StaticResource TextPrimaryColor}"
                                                     VerticalOptions="Center"
                                                     Text="{StaticResource IconGateOpen}" />
 
@@ -360,6 +361,7 @@
                                                 <Label
                                                     Margin="0,0,8,0"
                                                     FontSize="Small"
+                                                    TextColor="{StaticResource TextPrimaryColor}"
                                                     VerticalOptions="Center"
                                                     Text="{Binding GateClosesAtUTC, Converter={StaticResource ExpiresAtConverter}}" />
 
@@ -367,16 +369,19 @@
                                                     FontFamily="FA-S"
                                                     FontSize="Small"
                                                     VerticalOptions="Center"
+                                                    TextColor="{StaticResource TextPrimaryColor}"
                                                     IsVisible="{Binding GateStatus, Converter={StaticResource IsGateStatusConverter}, ConverterParameter=2}"
                                                     Text="{StaticResource IconBFF}" />
                                                 <Label
                                                     FontFamily="FA-S"
                                                     FontSize="Small"
+                                                    TextColor="{StaticResource TextPrimaryColor}"
                                                     VerticalOptions="Center"
                                                     IsVisible="{Binding GateStatus, Converter={StaticResource IsGateStatusConverter}, ConverterParameter=3}"
                                                     Text="{StaticResource IconDodoCode}" />
                                                 <Label
                                                     FontSize="Small"
+                                                    TextColor="{StaticResource TextPrimaryColor}"
                                                     IsVisible="{Binding GateStatus, Converter={StaticResource IsGateStatusConverter}, ConverterParameter=3}"
                                                     Text="{Binding DodoCode}"
                                                     VerticalOptions="Center" />

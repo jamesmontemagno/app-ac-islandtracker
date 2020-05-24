@@ -336,24 +336,24 @@
                         <sharpnado:MaterialFrame
                             Grid.Row="2"
                             Grid.Column="0"
-                            Margin="24,0,12,8"
+                            Margin="10,0,5,8"
                             HorizontalOptions="FillAndExpand"
                             VerticalOptions="Center"
                             Style="{StaticResource AcrylicButton}">
                             <effectsview:SfEffectsView
-                                Padding="18,0"
+                                Padding="12,0"
                                 CornerRadius="27"
                                 IsEnabled="{Binding IsNotBusy}"
                                 TouchUpCommand="{Binding ComputeCommand}">
                                 <StackLayout Spacing="12" Orientation="Horizontal" HorizontalOptions="Center">
                                     <Label
-                                        FontSize="18"
+                                        FontSize="16"
                                         Text="{StaticResource IconCompute}"
                                         FontFamily="FA-S"
                                         TextColor="{StaticResource TextPrimaryColor}"
                                         VerticalOptions="Center"/>
                                     <Label
-                                        FontSize="18"
+                                        FontSize="16"
                                         Text="Compute"
                                         TextColor="{StaticResource TextPrimaryColor}"
                                         VerticalOptions="Center"/>
@@ -364,24 +364,24 @@
                         <sharpnado:MaterialFrame
                             Grid.Row="2"
                             Grid.Column="1"
-                            Margin="12,0,24,8"
+                            Margin="5,0,10,8"
                             HorizontalOptions="FillAndExpand"
                             Style="{StaticResource AcrylicButton}"
                             VerticalOptions="Center">
                             <effectsview:SfEffectsView
-                                Padding="18,0"
+                                Padding="12,0"
                                 CornerRadius="27"
                                 IsEnabled="{Binding IsNotBusy}"
                                 TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
                                 <StackLayout Spacing="12" Orientation="Horizontal" HorizontalOptions="Center">
                                     <Label
-                                        FontSize="18"
+                                        FontSize="16"
                                         Text="{StaticResource IconRefresh}"
                                         FontFamily="FA-S"
                                         TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
                                         VerticalOptions="Center"/>
                                     <Label
-                                        FontSize="18"
+                                        FontSize="16"
                                         Text="Sync"
                                         TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
                                         VerticalOptions="Center"/>
@@ -551,19 +551,19 @@
                             Style="{StaticResource AcrylicButton}"
                             VerticalOptions="Center">
                             <effectsview:SfEffectsView
-                                Padding="24,0"
+                                Padding="12,0"
                                 CornerRadius="27"
                                 IsEnabled="{Binding IsNotBusy}"
                                 TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
                                 <StackLayout Spacing="12" Orientation="Horizontal" HorizontalOptions="Center">
                                     <Label
-                                        FontSize="18"
+                                        FontSize="16"
                                         Text="{StaticResource IconRefresh}"
                                         FontFamily="FA-S"
                                         TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
                                         VerticalOptions="Center"/>
                                     <Label
-                                        FontSize="18"
+                                        FontSize="16"
                                         Text="Sync"
                                         TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
                                         VerticalOptions="Center"/>

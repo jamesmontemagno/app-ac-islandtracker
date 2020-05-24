@@ -70,11 +70,13 @@
                                 FontFamily="FA-R"
                                 FontSize="Medium"
                                 HorizontalOptions="Center"
+                                TextColor="{StaticResource TextPrimaryColor}"
                                 Style="{StaticResource SocialLabel}"
                                 Text="{StaticResource IconProfileBadge}" />
                             <Label
                                 FontSize="Micro"
                                 Text="Profile"
+                                TextColor="{StaticResource TextPrimaryColor}"
                                 VerticalOptions="Center" />
                         </StackLayout>
                     </effectsview:SfEffectsView>
@@ -119,7 +121,7 @@
                                     Grid.Row="1"
                                     ContainerType="Outlined"
                                     FocusedColor="{StaticResource NavigationPrimary}"
-                                    Hint="Emoji Staus">
+                                    Hint="Emoji Status">
                                     <controls:BorderlessEntry
                                         BackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
                                         FontSize="22"
@@ -154,7 +156,7 @@
                                             <combobox:SfComboBox.ComboBoxSource>
                                                 <ListCollection:List x:TypeArguments="x:String">
                                                     <x:String>Closed</x:String>
-                                                    <x:String>Open to Everyone</x:String>
+                                                    <x:String>Open to All Friends</x:String>
                                                     <x:String>Open to Best Friends</x:String>
                                                     <x:String>Dodo Code</x:String>
                                                 </ListCollection:List>
@@ -325,7 +327,7 @@
             IsVisible="{Binding IsBusy}"
             VerticalOptions="Center">
             <busyindicator:SfBusyIndicator
-                Title="Syncing profile..."
+                Title="Syncing status..."
                 AnimationType="Box"
                 EnableAnimation="{Binding IsBusy}"
                 TextColor="{StaticResource TextPrimaryColor}"
