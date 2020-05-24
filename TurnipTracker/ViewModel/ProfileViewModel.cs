@@ -63,10 +63,6 @@ namespace TurnipTracker.ViewModel
             if (!(await CheckConnectivity("Check connectivity", "Unable to update profile, please check internet and try again")))
                 return;
 
-            //doesn't need sync
-            if (!NeedsSync)
-                return;
-
             Analytics.TrackEvent("SyncProfile");
 
             try

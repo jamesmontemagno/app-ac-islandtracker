@@ -20,6 +20,8 @@ namespace TurnipTracker.Services
 
         const string publicKey = "user_public_key_stable";
         const string privateKey = "user_private_key_stable";
+        const string publicKeyPref = "user_public_key_stable_pref";
+        const string privateKeyPref = "user_private_key_stable_pref";
 
         public static async Task<string> GetPublicKey()
         {
@@ -29,8 +31,8 @@ namespace TurnipTracker.Services
                 {
                     publicCache = await GetKey(publicKey);
 
-                    if(Preferences.Get(publicKey, string.Empty) == string.Empty)
-                        publicCache = Preferences.Get(publicKey, string.Empty);
+                    if(Preferences.Get(publicKeyPref, string.Empty) == string.Empty)
+                        Preferences.Set(publicKeyPref, publicCache);
 
                 }
                 catch (Exception ex)
@@ -40,7 +42,7 @@ namespace TurnipTracker.Services
                         ["key"] = "public"
                     });
 
-                    publicCache = Preferences.Get(publicKey, string.Empty);
+                    publicCache = Preferences.Get(publicKeyPref, string.Empty);
                 }
             }
 
@@ -55,8 +57,8 @@ namespace TurnipTracker.Services
                 {
                     privateCache = await GetKey(privateKey);
 
-                    if (Preferences.Get(privateKey, string.Empty) == string.Empty)
-                        privateCache = Preferences.Get(privateKey, string.Empty);
+                    if (Preferences.Get(privateKeyPref, string.Empty) == string.Empty)
+                        Preferences.Set(privateKeyPref, privateCache);
                 }
                 catch(Exception ex)
                 {
@@ -65,7 +67,7 @@ namespace TurnipTracker.Services
                         ["key"] = "private"
                     });
 
-                    privateCache = Preferences.Get(privateKey, string.Empty);
+                    privateCache = Preferences.Get(privateKeyPref, string.Empty);
                 }
             }
 
@@ -97,10 +99,10 @@ namespace TurnipTracker.Services
                 return false;
 
             await SecureStorage.SetAsync(privateKey, key0);
-            Preferences.Set(privateKey, key0);
+            Preferences.Set(privateKeyPref, key0);
             privateCache = key0;
             await SecureStorage.SetAsync(publicKey, key1);
-            Preferences.Set(publicKey, key1);
+            Preferences.Set(publicKeyPref, key1);
             publicCache = key1;
 
             SettingsService.TransferedIn = true;
@@ -115,7 +117,7 @@ namespace TurnipTracker.Services
             {
                 val = Guid.NewGuid().ToString();
                 await SecureStorage.SetAsync(key, val);
-                Preferences.Set(key, val);
+                Preferences.Set(key+"_pref", val);
             }
 
             return val;
