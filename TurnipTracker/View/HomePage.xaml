@@ -56,7 +56,7 @@
                     Style="{StaticResource SocialPancakeWithText}"
                     VerticalOptions="Center">
                     <effectsview:SfEffectsView
-                        CornerRadius="14"
+                        CornerRadius="22"
                         IsEnabled="{Binding IsNotBusy}"
                         TouchUpCommand="{Binding GoToCommand}"
                         TouchUpCommandParameter="profile">
