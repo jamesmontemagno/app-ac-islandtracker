@@ -97,27 +97,27 @@
 
                         <sharpnado:MaterialFrame HorizontalOptions="FillAndExpand" Style="{StaticResource AcrylicFrame}">
 
-                            <Grid RowSpacing="4" ColumnSpacing="0">
+                            <Grid ColumnSpacing="0" RowSpacing="4">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Label
+                                    Grid.ColumnSpan="2"
                                     FontFamily="AnimalCrossing"
                                     FontSize="Medium"
-                                    Grid.ColumnSpan="2"
                                     Text="Social"
                                     TextColor="{StaticResource TextPrimaryColor}" />
 
 
                                 <inputLayout:SfTextInputLayout
-                                    ContainerType="Outlined"
                                     Grid.Row="1"
+                                    ContainerType="Outlined"
                                     FocusedColor="{StaticResource NavigationPrimary}"
                                     Hint="Emoji Staus">
                                     <controls:BorderlessEntry
@@ -127,75 +127,81 @@
                                         Text="{Binding Profile.Status}"
                                         TextColor="{StaticResource TextPrimaryColor}" />
                                 </inputLayout:SfTextInputLayout>
-                            <StackLayout Spacing="4" Grid.Row="2" Grid.ColumnSpan="2">
+                                <StackLayout
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="2"
+                                    Spacing="4">
 
 
-                                <Label
-                                    FontFamily="AnimalCrossing"
-                                    FontSize="Medium"
-                                    Text="Island Gate"
-                                    TextColor="{StaticResource TextPrimaryColor}" />
-                                <inputLayout:SfTextInputLayout
-                                    ContainerType="Outlined"
-                                    FocusedColor="{StaticResource NavigationPrimary}"
-                                    Hint="Status">
-                                    <combobox:SfComboBox
-                                        x:Name="ComboBoxGateStatus"
-                                        BackgroundColor="Transparent"
-                                        DropDownItemHeight="{OnPlatform Android=50}"
-                                        DropDownTextSize="18"
-                                        HeightRequest="{OnPlatform Android=50}"
-                                        SelectedIndex="{Binding Profile.GateStatus, Mode=TwoWay}"
-                                        TextColor="{StaticResource TextPrimaryColor}"
-                                        VerticalOptions="Start">
-                                        <combobox:SfComboBox.ComboBoxSource>
-                                            <ListCollection:List x:TypeArguments="x:String">
-                                                <x:String>Closed</x:String>
-                                                <x:String>Open to Everyone</x:String>
-                                                <x:String>Open to Best Friends</x:String>
-                                                <x:String>Dodo Code</x:String>
-                                            </ListCollection:List>
-                                        </combobox:SfComboBox.ComboBoxSource>
-                                    </combobox:SfComboBox>
-                                </inputLayout:SfTextInputLayout>
-                                <Grid Margin="0,-8,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="AnimalCrossing"
+                                        FontSize="Medium"
+                                        Text="Island Gate"
+                                        TextColor="{StaticResource TextPrimaryColor}" />
                                     <inputLayout:SfTextInputLayout
                                         ContainerType="Outlined"
                                         FocusedColor="{StaticResource NavigationPrimary}"
-                                        Hint="Hours Open">
-                                        <updown:SfNumericUpDown
-                                            Maximum="24"
-                                            MaximumDecimalDigits="1"
-                                            Minimum="0.5"
-                                            ParsingMode="Double"
-                                            SpinButtonAlignment="Both"
-                                            StepValue=".5"
-                                            Value="{Binding Profile.GatesOpenLength}"
-                                            TextAlignment="Center"
-                                            TextColor="{StaticResource TextPrimaryColor}" />
-                                    </inputLayout:SfTextInputLayout>
-                                    <inputLayout:SfTextInputLayout
-                                        Grid.Column="1"
-                                        ContainerType="Outlined"
-                                        FocusedColor="{StaticResource NavigationPrimary}"
-                                        Hint="Dodo Code">
-                                        <maskededit:SfMaskedEdit
-                                            BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
-                                            Mask="[0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z]"
-                                            MaskType="RegEx"
+                                        Hint="Status">
+                                        <combobox:SfComboBox
+                                            x:Name="ComboBoxGateStatus"
+                                            BackgroundColor="Transparent"
+                                            DropDownItemHeight="{OnPlatform Android=50}"
+                                            DropDownTextSize="18"
+                                            HeightRequest="{OnPlatform Android=50}"
+                                            IsEnabled="{Binding IsNotBusy}"
+                                            SelectedIndex="{Binding Profile.GateStatus, Mode=TwoWay}"
                                             TextColor="{StaticResource TextPrimaryColor}"
-                                            VerticalOptions="Center"
-                                            Value="{Binding Profile.DodoCode}"
-                                            ClearButtonVisibility="WhileEditing"/>
+                                            VerticalOptions="Start">
+                                            <combobox:SfComboBox.ComboBoxSource>
+                                                <ListCollection:List x:TypeArguments="x:String">
+                                                    <x:String>Closed</x:String>
+                                                    <x:String>Open to Everyone</x:String>
+                                                    <x:String>Open to Best Friends</x:String>
+                                                    <x:String>Dodo Code</x:String>
+                                                </ListCollection:List>
+                                            </combobox:SfComboBox.ComboBoxSource>
+                                        </combobox:SfComboBox>
                                     </inputLayout:SfTextInputLayout>
-                                </Grid>
+                                    <Grid Margin="0,-8,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <inputLayout:SfTextInputLayout
+                                            ContainerType="Outlined"
+                                            FocusedColor="{StaticResource NavigationPrimary}"
+                                            Hint="Hours Open">
+                                            <updown:SfNumericUpDown
+                                                IsEnabled="{Binding IsNotBusy}"
+                                                Maximum="24"
+                                                MaximumDecimalDigits="1"
+                                                Minimum="0.5"
+                                                ParsingMode="Double"
+                                                SpinButtonAlignment="Both"
+                                                StepValue=".5"
+                                                TextAlignment="Center"
+                                                TextColor="{StaticResource TextPrimaryColor}"
+                                                Value="{Binding Profile.GatesOpenLength}" />
+                                        </inputLayout:SfTextInputLayout>
+                                        <inputLayout:SfTextInputLayout
+                                            Grid.Column="1"
+                                            ContainerType="Outlined"
+                                            FocusedColor="{StaticResource NavigationPrimary}"
+                                            Hint="Dodo Code">
+                                            <maskededit:SfMaskedEdit
+                                                BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
+                                                ClearButtonVisibility="WhileEditing"
+                                                IsEnabled="{Binding IsNotBusy}"
+                                                Mask="[0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z]"
+                                                MaskType="RegEx"
+                                                TextColor="{StaticResource TextPrimaryColor}"
+                                                VerticalOptions="Center"
+                                                Value="{Binding Profile.DodoCode}" />
+                                        </inputLayout:SfTextInputLayout>
+                                    </Grid>
 
 
-                            </StackLayout>
+                                </StackLayout>
                             </Grid>
                         </sharpnado:MaterialFrame>
 

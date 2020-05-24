@@ -105,7 +105,6 @@ namespace TurnipTracker.Model
             }
         }
 
-        [JsonIgnore]
         public DateTime GateClosesAtUTC { get; set; } = DateTime.UtcNow;
 
         public string TimeZone { get; set; }
