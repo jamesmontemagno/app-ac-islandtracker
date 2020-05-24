@@ -90,7 +90,7 @@ namespace TurnipTracker.Services
             }
         }
 
-        int GetWeekOfYear() =>
+        public int GetWeekOfYear() =>
             myCI.Calendar.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW);
 
         string GetCurrentWeekKey() =>
