@@ -13,7 +13,7 @@ namespace TurnipTracker.ViewModel
 {
     public class TrackingViewModel : ViewModelBase
     {
-
+        public AsyncCommand ComputeCommand { get; }
         public AsyncCommand UpdateTurnipPricesCommand { get; }
         public List<Day> Days { get; }
 
@@ -40,6 +40,34 @@ namespace TurnipTracker.ViewModel
 
             DaySelectedCommand = new Command<Day>(OnDaySelected);
             UpdateTurnipPricesCommand = new AsyncCommand(UpdateTurnipPrices);
+            ComputeCommand = new AsyncCommand(Compute);
+        }
+
+        async Task Compute()
+        {
+            if (IsBusy)
+                return;
+
+            var result = await App.Current.MainPage.DisplayActionSheet("Turnip Calculators", "Cancel", null, "How Many Bells Do I Need?", "How Many Turnips Can I Buy?");
+
+            var page = result switch
+            {
+                "How Many Bells Do I Need?" => "calc-howmanybells",
+                "How Many Turnips Can I Buy?" => "calc-howmanyturnips",
+                _ => string.Empty
+            };
+
+            if (string.IsNullOrWhiteSpace(page))
+                return;
+
+            var price = SelectedDay.ActualPurchasePrice.HasValue ? 
+                SelectedDay.ActualPurchasePrice.Value : 
+                (SelectedDay.BuyPrice.HasValue ? SelectedDay.BuyPrice.Value : 0);
+
+
+            await GoToAsync($"{page}?Price={price}", page);
+
+
         }
 
         Day selectedDay;
@@ -61,22 +89,38 @@ namespace TurnipTracker.ViewModel
             }
         }
 
-        public bool NeedsSync { get; set; }
+        bool needsSync;
+        public bool NeedsSync
+        {
+            get => needsSync;
+            set => SetProperty(ref needsSync, value);
+        }
         public bool IsToday => Days.IndexOf(SelectedDay) == (int)DateTime.Now.DayOfWeek;
 
         int min = 0;
         public int Min
         {
             get => min;
-            set => SetProperty(ref min, value);
+            set
+            {
+                if (SetProperty(ref min, value))
+                    OnPropertyChanged(nameof(MinString));
+            }
         }
 
         int max = 0;
         public int Max
         {
             get => max;
-            set => SetProperty(ref max, value);
+            set
+            {
+                if (SetProperty(ref max, value))
+                    OnPropertyChanged(nameof(MaxString));
+            }
         }
+
+        public string MinString => Min == 0 ? "Guaranteed Min: ???" : $"Guarenteed Min: {Min}";
+        public string MaxString => Max == 999 ? "Potential Max: ???" : $"Potential Max: {Max}";
 
 
         void OnDaySelected(Day day) => MainThread.BeginInvokeOnMainThread(() =>
@@ -89,7 +133,6 @@ namespace TurnipTracker.ViewModel
             if(IsToday && SettingsService.HasRegistered)
             {
                 NeedsSync = true;
-                OnPropertyChanged(nameof(NeedsSync));
             }    
             DataService.SaveCurrentWeek(Days);
             UpdatePredications();
@@ -225,15 +268,15 @@ namespace TurnipTracker.ViewModel
 
             if (!SettingsService.HasRegistered)
             {
-                await App.Current.MainPage.DisplayAlert("Register First", "Please register your account on the profile tab.", "OK");
+                await App.Current.MainPage.DisplayAlert("Register First", "Please create a profile before syncing turnip prices.", "OK");
                 return;
             }
 
             if (!(await CheckConnectivity("Check connectivity", "Unable to update prices, please check internet and try again")))
                 return;
 
-            var sync = await DisplayAlert("Sync prices?", "Are you sure you want to sync your prices to the cloud?", "Yes, sync", "Cancel");
-            if (!sync)
+            //doesn't need sync
+            if (!NeedsSync)
                 return;
 
             Analytics.TrackEvent("SyncTurnipPrices");
@@ -242,9 +285,27 @@ namespace TurnipTracker.ViewModel
             {
                 IsBusy = true;
                 await DataService.UpdateTurnipPrices(SelectedDay, Min, Max);
-                await DisplayAlert("Turnip prices synced", "You are all set!");
                 NeedsSync = false;
-                OnPropertyChanged(nameof(NeedsSync));
+
+
+                if(SettingsService.SyncCount < 30)
+                {
+                    SettingsService.SyncCount++;
+                    if(SettingsService.SyncCount == 30)
+                    {
+                        if(DeviceInfo.Platform == DevicePlatform.Android)
+                        {
+                            if(await DisplayAlert("Rate Island Tracker?", "Thank you for being a dedicated Island Tracker user! Would you like to help us out by rating the app?", "Yes please!", "Not now"))
+                            {
+                                Plugin.StoreReview.CrossStoreReview.Current.OpenStoreReviewPage("com.refractored.islandtracker");
+                            }
+                        }
+                        else
+                        {
+                            Plugin.StoreReview.CrossStoreReview.Current.RequestReview();
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

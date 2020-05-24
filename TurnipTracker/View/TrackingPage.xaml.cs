@@ -16,6 +16,14 @@ namespace TurnipTracker.View
             Chart.SuspendSeriesNotification();
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            if (vm.IsBusy)
+                return false;
+
+            return base.OnBackButtonPressed();
+        }
+
         private void SfExpander_Expanded(object sender, Syncfusion.XForms.Expander.ExpandedAndCollapsedEventArgs e)
         {
             if (ChartExpander.IsExpanded)

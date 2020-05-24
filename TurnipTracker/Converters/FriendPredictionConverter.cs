@@ -15,7 +15,7 @@ namespace TurnipTracker.Converters
             if (value is FriendStatus status)
             {
                 if (status.MinPrediction == 0 || status.MinPrediction == 999 || status.MaxPrediction == 0 || status.MaxPrediction == 999)
-                    return string.Empty;
+                    return $"🔮 ???";
 
                 if (status.MinPrediction == status.MaxPrediction)
                     return $"🔮 {status.MinPrediction}";

@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using Syncfusion.SfNumericTextBox.XForms.iOS;
+using Syncfusion.SfNumericUpDown.XForms.iOS;
 using Syncfusion.XForms.iOS.ComboBox;
 using Syncfusion.XForms.iOS.MaskedEdit;
 using Syncfusion.XForms.iOS.Shimmer;
@@ -36,7 +37,7 @@ namespace TurnipTracker.iOS
             SfTextInputLayoutRenderer.Init();
 
             SfShimmerRenderer.Init();
-
+            SfNumericUpDownRenderer.Init();
             new Syncfusion.SfBusyIndicator.XForms.iOS.SfBusyIndicatorRenderer();
             Syncfusion.XForms.iOS.EffectsView.SfEffectsViewRenderer.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();

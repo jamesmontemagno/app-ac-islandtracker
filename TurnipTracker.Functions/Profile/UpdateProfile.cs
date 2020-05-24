@@ -82,6 +82,9 @@ namespace TurnipTracker.Functions
             userEntity.TimeZone = user.TimeZone;
             userEntity.Status = user.Status ?? string.Empty;
             userEntity.FriendCode = encryptedFriendCode;
+            userEntity.GateClosesAtUTC = user.GateClosesAtUTC.HasValue ? user.GateClosesAtUTC.Value : DateTime.UtcNow;
+            userEntity.GateStatus = user.GateStatus;
+            userEntity.DodoCode = user.DodoCode;
 
             try
             {

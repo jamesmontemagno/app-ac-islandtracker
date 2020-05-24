@@ -12,9 +12,9 @@
     xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
     xmlns:viewmodel="clr-namespace:TurnipTracker.ViewModel"
     x:DataType="viewmodel:FriendRequestViewModel"
+    BackgroundColor="{StaticResource NavigationPrimary}"
     Shell.NavBarIsVisible="False"
     Shell.PresentationMode="ModalAnimated"
-    BackgroundColor="{StaticResource NavigationPrimary}"
     mc:Ignorable="d">
     <ContentPage.BindingContext>
         <viewmodel:FriendRequestViewModel />
@@ -79,49 +79,55 @@
                                     Type="Article"
                                     VerticalOptions="FillAndExpand">
                                     <shimmer:SfShimmer.Content>
-                                        <sharpnado:MaterialFrame Padding="18" Style="{StaticResource AcrylicFrame}">
-                                            <Grid ColumnSpacing="12" RowSpacing="4">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
-                                                </Grid.RowDefinitions>
-                                                <Label
-                                                    FontSize="Large"
-                                                    Text="{Binding Name}"
-                                                    TextColor="{StaticResource TextPrimaryColor}"
-                                                    VerticalOptions="EndAndExpand" />
-                                                <Label
-                                                    Grid.Row="1"
-                                                    FontSize="Medium"
-                                                    Text="{Binding IslandName}"
-                                                    TextColor="{StaticResource TextPrimaryColor}"
-                                                    VerticalOptions="StartAndExpand" />
+                                        <Grid Padding="4,12">
+                                            <sharpnado:MaterialFrame Padding="18" Style="{StaticResource AcrylicFrame}">
+                                                <Grid ColumnSpacing="12" RowSpacing="4">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
+                                                    <Label
+                                                        FontSize="Large"
+                                                        Text="{Binding Name}"
+                                                        TextColor="{StaticResource TextPrimaryColor}"
+                                                        VerticalOptions="EndAndExpand" />
+                                                    <Label
+                                                        Grid.Row="1"
+                                                        FontSize="Medium"
+                                                        Text="{Binding IslandName}"
+                                                        TextColor="{StaticResource TextPrimaryColor}"
+                                                        VerticalOptions="StartAndExpand" />
 
 
-                                                <StackLayout
-                                                    Grid.Row="2"
-                                                    Orientation="Horizontal"
-                                                    Spacing="12"
-                                                    HorizontalOptions="Center">
+                                                    <StackLayout
+                                                        Grid.Row="2"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalOptions="End"
+                                                        Orientation="Horizontal"
+                                                        Spacing="12"
+                                                        Padding="4">
 
-                                                    <Button Style="{StaticResource ButtonRoundedCorners}"
+                                                        <Button
                                                             BorderColor="Red"
-                                                            TextColor="Red"
                                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendRequestViewModel}}, Path=DenyFriendRequestCommand}"
                                                             CommandParameter="{Binding .}"
-                                                            Text="Deny"/>
+                                                            Style="{StaticResource ButtonRoundedCorners}"
+                                                            Text="Deny"
+                                                            TextColor="Red" />
 
-                                                    <Button Style="{StaticResource ButtonRoundedCorners}"
-                                                            HorizontalOptions="FillAndExpand"
+                                                        <Button
                                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendRequestViewModel}}, Path=ApproveFriendRequestCommand}"
                                                             CommandParameter="{Binding .}"
-                                                            Text="Approve Request"/>
-                                                    
-                                                </StackLayout>
+                                                            HorizontalOptions="FillAndExpand"
+                                                            Style="{StaticResource ButtonRoundedCorners}"
+                                                            Text="Approve" />
 
-                                            </Grid>
-                                        </sharpnado:MaterialFrame>
+                                                    </StackLayout>
+
+                                                </Grid>
+                                            </sharpnado:MaterialFrame>
+                                        </Grid>
                                     </shimmer:SfShimmer.Content>
                                 </shimmer:SfShimmer>
                             </Grid>
@@ -177,20 +183,20 @@
                 </sharpnado:MaterialFrame>
 
                 <sharpnado:MaterialFrame
-                        Padding="0"
-                        Margin="0,48,0,0"
-                        HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource AcrylicFrame}">
+                    Padding="0"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource AcrylicButton}">
                     <effectsview:SfEffectsView
-                            Padding="12"
-                            CornerRadius="10"
-                            TouchUpCommand="{Binding ShareWithFriendsCommand}"
-                            TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
+                        Padding="18,0"
+                        CornerRadius="10"
+                        TouchUpCommand="{Binding ShareWithFriendsCommand}"
+                        TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
                         <Label
-                                HorizontalOptions="Center"
-                                FontSize="Medium"
-                                Text="Share App with Friends"
-                                TextColor="{StaticResource TextPrimaryColor}" />
+                            FontSize="Medium"
+                            HorizontalOptions="Center"
+                            Text="Share App with Friends"
+                            TextColor="{StaticResource TextPrimaryColor}"
+                            VerticalOptions="Center" />
                     </effectsview:SfEffectsView>
                 </sharpnado:MaterialFrame>
             </StackLayout>

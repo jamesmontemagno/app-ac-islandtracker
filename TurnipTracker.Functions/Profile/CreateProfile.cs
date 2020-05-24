@@ -66,7 +66,8 @@ namespace TurnipTracker.Functions
                 TimeZone = user.TimeZone,
                 Status = user.Status ?? string.Empty,
                 TurnipUpdateTimeUTC = DateTime.UtcNow,
-                FriendCode = encryptedFriendCode
+                FriendCode = encryptedFriendCode,
+                GateClosesAtUTC = DateTime.UtcNow
             };
 
             try

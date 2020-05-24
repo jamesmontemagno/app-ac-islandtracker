@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AppCenter.Analytics;
 using MvvmHelpers;
@@ -12,11 +13,20 @@ namespace TurnipTracker.ViewModel
 {
     public class ViewModelBase : BaseViewModel
     {
-
+        public AsyncCommand<string> GoToCommand { get; }
+        public AsyncCommand CloseCommand { get; }
         public ViewModelBase()
         {
             ShareWithFriendsCommand = new AsyncCommand<Xamarin.Forms.View>(ShareWithFriends);
+            CloseCommand = new AsyncCommand(Close);
+            GoToCommand = new AsyncCommand<string>(GoTo);
         }
+
+        Task GoTo(string page) => GoToAsync(page);
+
+        Task Close() =>
+            GoToAsync("..");
+
         DataService dataService;
         public DataService DataService => dataService ??= DependencyService.Get<DataService>();
 
@@ -49,6 +59,23 @@ namespace TurnipTracker.ViewModel
             catch (Exception)
             {
             }
+        }
+
+        bool navigating;
+        public async Task GoToAsync(string page, string tracker = null)
+        {
+            if (navigating)
+                return;
+
+            Analytics.TrackEvent("Navigation", new Dictionary<string, string>
+            {
+                ["page"] = tracker ?? page
+            });
+
+            await Shell.Current.GoToAsync(page);
+
+            navigating = false;
+
         }
 
         public Task DisplayAlert(string title, string message) =>
