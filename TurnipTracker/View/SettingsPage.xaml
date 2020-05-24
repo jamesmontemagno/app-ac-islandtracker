@@ -116,7 +116,7 @@
                                 <combobox:SfComboBox
                                     x:Name="ComboBoxAutoRefreshHours"
                                     BackgroundColor="Transparent"
-                                    DropDownBackgroundColor="{StaticResource AcrylicSurface}"
+                                    DropDownBackgroundColor="White"
                                     DropDownItemHeight="{OnPlatform Android=50}"
                                     DropDownTextSize="24"
                                     HeightRequest="{OnPlatform Android=55}"

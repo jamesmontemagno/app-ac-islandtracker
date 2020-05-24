@@ -15,11 +15,13 @@ namespace TurnipTracker.ViewModel
     {
         public AsyncCommand ComputeCommand { get; }
         public AsyncCommand UpdateTurnipPricesCommand { get; }
-        public List<Day> Days { get; }
+        public List<Day> Days { get; private set; }
 
         public ObservableRangeCollection<ChartDataModel> ChartData { get; }
 
         public Command<Day> DaySelectedCommand { get; }
+
+        int week, day;
 
         public TrackingViewModel()
         {
@@ -29,7 +31,8 @@ namespace TurnipTracker.ViewModel
 
             ChartData = new ObservableRangeCollection<ChartDataModel>();
 
-
+            day = DateTime.Now.DayOfYear;
+            week = DataService.GetWeekOfYear();
             Days = DataService.GetCurrentWeek();
             foreach (var day in Days)
                 day.SaveCurrentWeekAction = SaveCurrentWeek;
@@ -41,6 +44,24 @@ namespace TurnipTracker.ViewModel
             DaySelectedCommand = new Command<Day>(OnDaySelected);
             UpdateTurnipPricesCommand = new AsyncCommand(UpdateTurnipPrices);
             ComputeCommand = new AsyncCommand(Compute);
+        }
+
+
+        public void OnAppearing()
+        {
+            OnPropertyChanged(nameof(ShowFirstTimeBuying));
+
+            //check if it is a new week
+            if(day != DateTime.Now.DayOfYear && week != DataService.GetWeekOfYear())
+            {
+                day = DateTime.Now.DayOfYear;
+                week = DataService.GetWeekOfYear();
+                Days = DataService.GetCurrentWeek();
+                foreach (var day in Days)
+                    day.SaveCurrentWeekAction = SaveCurrentWeek;
+
+                SelectedDay = Days[(int)DateTime.Now.DayOfWeek];
+            }
         }
 
         async Task Compute()
@@ -317,9 +338,5 @@ namespace TurnipTracker.ViewModel
 
         public bool ShowFirstTimeBuying => !SettingsService.HideFirstTimeBuying;
 
-        public void OnAppearing()
-        {
-            OnPropertyChanged(nameof(ShowFirstTimeBuying));
-        }
     }
 }
