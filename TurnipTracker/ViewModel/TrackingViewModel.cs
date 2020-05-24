@@ -275,10 +275,6 @@ namespace TurnipTracker.ViewModel
             if (!(await CheckConnectivity("Check connectivity", "Unable to update prices, please check internet and try again")))
                 return;
 
-            //doesn't need sync
-            if (!NeedsSync)
-                return;
-
             Analytics.TrackEvent("SyncTurnipPrices");
 
             try
