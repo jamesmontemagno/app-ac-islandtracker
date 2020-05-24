@@ -80,6 +80,33 @@ namespace TurnipTracker.Model
             set => SetProperty(ref fruit, value, onChanged: SaveProfileAction);
         }
 
+        int gateStatus = (int)Model.GateStatus.Closed;
+        public int GateStatus
+        {
+            get => gateStatus;
+            set => SetProperty(ref gateStatus, value, onChanged: SaveProfileAction);
+        }
+
+        string dodoCode = string.Empty;
+        public string DodoCode
+        {
+            get => dodoCode;
+            set => SetProperty(ref dodoCode, value, onChanged: SaveProfileAction);
+        }
+
+        double gatesOpenLength = 0.5;
+        public double GatesOpenLength
+        {
+            get => gatesOpenLength;
+            set
+            {
+                GateClosesAtUTC = DateTime.UtcNow.AddMinutes(60 * value);
+                SetProperty(ref gatesOpenLength, value, onChanged: SaveProfileAction);
+            }
+        }
+
+        public DateTime GateClosesAtUTC { get; set; } = DateTime.UtcNow;
+
         public string TimeZone { get; set; }
     }
 }

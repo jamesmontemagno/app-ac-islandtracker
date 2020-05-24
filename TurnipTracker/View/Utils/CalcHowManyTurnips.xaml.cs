@@ -9,13 +9,31 @@ using Xamarin.Forms.Xaml;
 
 namespace TurnipTracker.View.Utils
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    [QueryProperty(nameof(Price), nameof(Price))]
     public partial class CalcHowManyTurnips : ContentPage
     {
         public CalcHowManyTurnips()
         {
             InitializeComponent();
         }
+
+        public string Price
+        {
+            set
+            {
+                if (int.TryParse(Uri.UnescapeDataString(value ?? string.Empty), out var price) && price > 0)
+                {
+                    EntryTurnipPrice.Value = (double)price;
+                }
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            ValueChanged(null, null);
+        }
+
 
         private void ValueChanged(object sender, Syncfusion.SfNumericTextBox.XForms.ValueEventArgs e)
         {

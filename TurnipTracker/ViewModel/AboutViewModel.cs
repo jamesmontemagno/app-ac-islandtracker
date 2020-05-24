@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Microsoft.AppCenter.Analytics;
-using MvvmHelpers;
 using MvvmHelpers.Commands;
 using Newtonsoft.Json;
-using TurnipTracker.Helpers;
 using TurnipTracker.Model;
 using TurnipTracker.Services;
 using Xamarin.Essentials;
@@ -31,12 +27,9 @@ namespace TurnipTracker.ViewModel
     {
         public AsyncCommand SendEmailCommand { get; }
         public AsyncCommand SubscribeCommand { get; }
-        public AsyncCommand GoToSettingsCommand { get; }
         public AsyncCommand<string> OpenBrowserCommand { get; }
 
-        public AsyncCommand TransferCommand { get; }
-        public AsyncCommand DeleteAccountCommand { get; }
-        public List<AttributionItem> Attributions { get; }
+       public List<AttributionItem> Attributions { get; }
 
         public string AppInfo => $"{Xamarin.Essentials.AppInfo.VersionString} ({Xamarin.Essentials.AppInfo.BuildString})";
 
@@ -46,11 +39,8 @@ namespace TurnipTracker.ViewModel
         {
             SubscribeCommand = new AsyncCommand(Subscribe);
             SendEmailCommand = new AsyncCommand(SendEmail);
-            GoToSettingsCommand = new AsyncCommand(GoToSettings);
-            DeleteAccountCommand = new AsyncCommand(DeleteAccount);
             OpenBrowserCommand = new AsyncCommand<string>(OpenBrowser);
-            TransferCommand = new AsyncCommand(Transfer);
-
+            
             Attributions = new List<AttributionItem>
             {
                 new AttributionItem { Tag = "ac-nh-turnip-prices", Text = "Mike Bryant - Turnip predictor algorithm"},
@@ -83,9 +73,6 @@ namespace TurnipTracker.ViewModel
                 ("RSS", "dispatch_rss", DevicePlatform.Android + "_" + DevicePlatform.iOS),
             };
         }
-
-        Task GoToSettings() =>
-            Xamarin.Forms.Shell.Current.GoToAsync("settings");
 
         bool attachDetails = true;
         public bool AttachDetails
@@ -162,26 +149,7 @@ namespace TurnipTracker.ViewModel
             await Browser.OpenAsync(url);
         }
 
-        async Task DeleteAccount()
-        {
-            try
-            {
-                Analytics.TrackEvent("DeleteAccount");
-                var info = await SettingsService.TransferOut();
-                var message = new EmailMessage
-                {
-                    Subject = $"Delete Island Tracker Account",
-                    Body = info,
-                    To = new List<string> { "acislandtracker@gmail.com" }
-                };
-
-                await Email.ComposeAsync(message);
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Unable to send email", "Email acislandtracker@gmail.com directly.");
-            }
-        }
+       
 
 
 
@@ -216,51 +184,6 @@ namespace TurnipTracker.ViewModel
                 await DisplayAlert("Unable to send email", "Email acislandtracker@gmail.com directly.");
             }
         }
-
-        async Task Transfer()
-        {
-           
-            var choice = await App.Current.MainPage.DisplayActionSheet("Transfer profile?", "Cancel", null, "Transfer to another device", "Transfer to this device");
-                      
-
-            if (choice.Contains("another"))
-            {
-                
-                if (await DisplayAlert("Transfer profile out", "This will export your credentials that you can re-import on another device. Your credentials will remain on this device. Do you want to proceed?", "Yes, transfer", "Cancel"))
-                {
-                    var info = await SettingsService.TransferOut();
-                    await Share.RequestAsync(info);
-
-                    Analytics.TrackEvent("Transfer", new Dictionary<string, string>
-                    {
-                        ["type"] = "out"
-                    });
-                }
-            }
-            else if (choice.Contains("this device"))
-            {
-                if (await DisplayAlert("Transfer in profile?", "Warning! This will start a transfer process that will override your existing profile. Ensure that you have exported your existing profile first as you can not go back. Do you still want to proceed?", "Yes, transfer in", "Cancel"))
-                {
-                    var info = await App.Current.MainPage.DisplayPromptAsync("Entry transfer code", "Enter your transfer code that you exported to continue.", "OK", "Cancel");
-
-                    if (string.IsNullOrWhiteSpace(info) || info == "Cancel")
-                        return;
-
-                    Analytics.TrackEvent("Transfer", new Dictionary<string, string>
-                    {
-                        ["type"] = "in"
-                    });
-
-                    if (await SettingsService.TransferIn(info))
-                    {
-                        await DisplayAlert("Success", "Your profile has been updated. Ensure you update information in the app and sync with the cloud.");
-                    }
-                    else
-                    {
-                        await DisplayAlert("Error", "Please contact support with your transfer code for help.");
-                    }
-                }
-            }
-        }
+       
     }
 }

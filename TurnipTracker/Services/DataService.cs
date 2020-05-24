@@ -57,15 +57,28 @@ namespace TurnipTracker.Services
             lock (locker)
             {
                 var profile = barrel.Get<Profile>("profile");
-                return profile ?? new Profile
+                profile ??= new Profile
                 {
                     Fruit = (int)Model.Fruit.Apple,
                     Status = "😍",
                     Name = string.Empty,
                     FriendCode = string.Empty,
                     IslandName = string.Empty,
+                    GateClosesAtUTC = DateTime.UtcNow,
+                    DodoCode = string.Empty,
+                    GateStatus = (int)Model.GateStatus.Closed,
+                    GatesOpenLength = .5,
                     TimeZone = string.Empty
                 };
+
+                if(profile.GateStatus != (int)GateStatus.Closed && profile.GateClosesAtUTC < DateTime.UtcNow)
+                {
+                    profile.GateStatus = (int)GateStatus.Closed;
+                    profile.DodoCode = string.Empty;
+                    profile.GatesOpenLength = .5;
+                }
+
+                return profile;
             }
         }
 
@@ -105,15 +118,18 @@ namespace TurnipTracker.Services
         public async Task UpsertUserProfile(Profile profile)
         {
             profile ??= GetProfile();
-  
+
             var user = new User
-            { 
+            {
                 Fruit = profile.Fruit,
                 IslandName = profile.IslandName,
                 Name = profile.Name,
                 Status = profile.Status ?? string.Empty,
                 TimeZone = profile.TimeZone ?? string.Empty,
-                FriendCode = profile.FriendCode ?? string.Empty
+                FriendCode = profile.FriendCode ?? string.Empty,
+                DodoCode = profile.DodoCode ?? string.Empty,
+                GateStatus = profile.GateStatus,
+                GateClosesAtUTC = profile.GateClosesAtUTC
             };
             user.PublicKey = await SettingsService.GetPublicKey();
             if (SettingsService.HasRegistered)

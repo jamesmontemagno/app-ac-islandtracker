@@ -5,20 +5,20 @@ using Xamarin.Forms;
 
 namespace TurnipTracker.Converters
 {
-    public class LastUpdateDateTimeConverter : IValueConverter
+    public class ExpiresAtConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return false;
-            if (value is FriendStatus status)
+            if (value is DateTime time && time != null && time > DateTime.UtcNow)
             {
-                if (status.TurnipUpdateYear == 0 || status.TurnipUpdateDayOfYear == 0)
-                    return string.Empty;
-                var dt = new DateTime(status.TurnipUpdateYear, 1, 1).AddDays(status.TurnipUpdateDayOfYear - 1);
+                var local = time.ToLocalTime();
+                if (local.Day == DateTime.Now.Day)
+                    return $"Closes @{local.ToShortTimeString()}";
+                else
+                    return $"Closes @{local.ToShortTimeString()} tmw";
 
-                var island = dt.ToShortDateString();
-                return $"{island}  @{status.TurnipUpdateTimeUTC.ToLocalTime().ToShortTimeString()}";
             }
 
             return string.Empty;

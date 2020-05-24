@@ -58,7 +58,7 @@ namespace TurnipTracker.ViewModel
             set => SetProperty(ref requestCount, value);
         }
 
-        bool forceRefresh = false;
+        public bool ForceRefresh { get; set; }
 
         public string LastUpdate
         {
@@ -79,7 +79,7 @@ namespace TurnipTracker.ViewModel
         {
             if(!SettingsService.HasRegistered)
             {
-                await DisplayAlert("Register First", "Please register your account on the profile tab.");
+                await DisplayAlert("Register First", "Please create a profile before sending friend requests.");
                 return;
             }
 
@@ -124,18 +124,13 @@ namespace TurnipTracker.ViewModel
         {
             if (!SettingsService.HasRegistered)
             {
-                await App.Current.MainPage.DisplayAlert("Register First", "Please register your account on the profile tab.", "OK");
+                await App.Current.MainPage.DisplayAlert("Register First", "Create a profile before checking friend requests.", "OK");
                 return;
             }
 
-            forceRefresh = true;
+            ForceRefresh = true;
 
-            Analytics.TrackEvent("Navigation", new Dictionary<string, string>
-            {
-                ["page"] = "friendrequests"
-            });
-
-            await Shell.Current.GoToAsync("friendrequests");
+            await GoToAsync("friendrequests");
         }
 
         public AsyncCommand<string> RegisterFriendCommand { get; }
@@ -185,7 +180,7 @@ namespace TurnipTracker.ViewModel
                         return false;
 
                     // we are already on the friends page, so no need to use the host.
-                    await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
+                    await GoToAsync($"//{uri.Host}/{uri.PathAndQuery}", uri.Host);
                     return true;
                 }
             }
@@ -209,7 +204,7 @@ namespace TurnipTracker.ViewModel
 
             if (!SettingsService.HasRegistered)
             {
-                await DisplayAlert("Register First", "Please register your account on the profile tab.");
+                await DisplayAlert("Register First", "Please create a profile before syncing friends.");
                 return;
             }
 
@@ -226,14 +221,14 @@ namespace TurnipTracker.ViewModel
                     OnPropertyChanged(nameof(ShowNoFriends));
                 }
 
-                var friendsTask = DataService.GetFriendsAsync(forceRefresh);
-                var countTask = DataService.GetFriendRequestCountAsync(forceRefresh);
+                var friendsTask = DataService.GetFriendsAsync(ForceRefresh);
+                var countTask = DataService.GetFriendRequestCountAsync(ForceRefresh);
                 await Task.WhenAll(friendsTask, countTask);
                 if (friendsTask.IsFaulted && friendsTask.Exception != null)
                     throw friendsTask.Exception;
 
                 var statuses = friendsTask.Result;
-                forceRefresh = false;
+                ForceRefresh = false;
                 // await Task.Delay(5000);
                 Friends.ReplaceRange(statuses.OrderByDescending(s => s.TurnipUpdateTimeUTC));
 
@@ -305,7 +300,7 @@ namespace TurnipTracker.ViewModel
 
                 await DataService.RemoveFriendAsync(friendStatus.PublicKey);
                 Friends.Remove(friendStatus);
-                forceRefresh = true;
+                ForceRefresh = true;
                 UpdateFriendsGroups();
                 OnPropertyChanged(nameof(ShowNoFriends));
                 DataService.ClearCache(DataService.FriendKey);

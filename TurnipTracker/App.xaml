@@ -32,6 +32,11 @@
             <x:String x:Key="IconCode">&#xf121;</x:String>
             <x:String x:Key="IconCompute">&#xf1ec;</x:String>
             <x:String x:Key="IconSettings">&#xf013;</x:String>
+            <x:String x:Key="IconHome">&#xf965;</x:String>
+            <x:String x:Key="IconProfileBadge">&#xf007;</x:String>
+            <x:String x:Key="IconBFF">&#xf500;</x:String>
+            <x:String x:Key="IconGateOpen">&#xf52b;</x:String>
+            <x:String x:Key="IconDodoCode">&#xf535;</x:String>
 
             <x:String x:Key="IconGraph">&#xf1fe;</x:String>
 
@@ -97,6 +102,13 @@
                 <Setter Property="WidthRequest" Value="40"/>
                 <Setter Property="HeightRequest" Value="40"/>
                 <Setter Property="CornerRadius" Value="20"/>
+            </Style>
+
+            <Style x:Key="SocialPancakeWithText" TargetType="pancake:PancakeView">
+                <Setter Property="Elevation" Value="2"/>
+                <Setter Property="Visual" Value="Material"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="25"/>
             </Style>
 
             <Style x:Key="BadgePancake" TargetType="pancake:PancakeView">

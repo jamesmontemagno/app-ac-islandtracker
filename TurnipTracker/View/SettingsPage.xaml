@@ -40,7 +40,10 @@
                 HorizontalOptions="End"
                 Style="{StaticResource SocialPancake}"
                 VerticalOptions="Center">
-                <effectsview:SfEffectsView CornerRadius="20" TouchUpCommand="{Binding CloseCommand}">
+                <effectsview:SfEffectsView
+                    CornerRadius="20"
+                    IsEnabled="{Binding IsNotBusy}"
+                    TouchUpCommand="{Binding CloseCommand}">
                     <Label
                         FontFamily="FA-S"
                         Style="{StaticResource SocialLabel}"
@@ -49,7 +52,7 @@
             </pancake:PancakeView>
             <Label
                 FontFamily="AnimalCrossing"
-                FontSize="44"
+                FontSize="38"
                 HorizontalOptions="Center"
                 Text="Settings"
                 TextColor="White" />
@@ -65,7 +68,7 @@
                         Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
-                        Text="Tracking:"
+                        Text="Tracking"
                         TextColor="{StaticResource TextPrimaryColor}" />
                     <sharpnado:MaterialFrame
                         Padding="12"
@@ -88,7 +91,7 @@
                         Margin="24,24,0,0"
                         FontFamily="AnimalCrossing"
                         FontSize="Large"
-                        Text="Friends:"
+                        Text="Friends"
                         TextColor="{StaticResource TextPrimaryColor}" />
 
                     <sharpnado:MaterialFrame
@@ -113,6 +116,7 @@
                                 <combobox:SfComboBox
                                     x:Name="ComboBoxAutoRefreshHours"
                                     BackgroundColor="Transparent"
+                                    DropDownBackgroundColor="{StaticResource AcrylicSurface}"
                                     DropDownItemHeight="{OnPlatform Android=50}"
                                     DropDownTextSize="24"
                                     HeightRequest="{OnPlatform Android=55}"
@@ -134,6 +138,44 @@
                                 </combobox:SfComboBox>
                             </inputLayout:SfTextInputLayout>
                         </StackLayout>
+                    </sharpnado:MaterialFrame>
+                    <Label
+                        Margin="24,24,0,0"
+                        FontFamily="AnimalCrossing"
+                        FontSize="Large"
+                        Text="Account"
+                        TextColor="{StaticResource TextPrimaryColor}" />
+                    <sharpnado:MaterialFrame
+                        Margin="0,0,0,0"
+                        Padding="0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding TransferCommand}">
+                            <Label
+                                FontSize="Medium"
+                                HorizontalOptions="Center"
+                                Text="Transfer Account"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                        </effectsview:SfEffectsView>
+                    </sharpnado:MaterialFrame>
+                    <sharpnado:MaterialFrame
+                        Margin="0,8,0,0"
+                        Padding="0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource AcrylicFrame}">
+                        <effectsview:SfEffectsView
+                            Padding="12"
+                            CornerRadius="10"
+                            TouchUpCommand="{Binding DeleteAccountCommand}">
+                            <Label
+                                FontSize="Medium"
+                                HorizontalOptions="Center"
+                                Text="Delete Account"
+                                TextColor="{StaticResource TextPrimaryColor}" />
+                        </effectsview:SfEffectsView>
                     </sharpnado:MaterialFrame>
                 </StackLayout>
             </pancake:PancakeView>

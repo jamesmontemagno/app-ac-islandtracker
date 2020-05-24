@@ -46,5 +46,8 @@ namespace TurnipTracker.Shared
         public int TurnipUpdateYear { get; set; }
         public DateTime TurnipUpdateTimeUTC { get; set; }
         public string FriendCode { get; set; }
+        public string DodoCode { get; set; }
+        public int GateStatus { get; set; }
+        public DateTime? GateClosesAtUTC { get; set; }
     }
 }

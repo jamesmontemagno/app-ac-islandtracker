@@ -68,6 +68,7 @@ namespace TurnipTracker.ViewModel
                 forceRefresh = true;
 
                 SettingsService.FriendRequestCount = FriendRequests.Count == 0 ? string.Empty : FriendRequests.Count.ToString();
+                SettingsService.ForceRefreshFriends = true;
             }
             catch (HttpResponseException hrex) when (!string.IsNullOrWhiteSpace(hrex.Message))
             {

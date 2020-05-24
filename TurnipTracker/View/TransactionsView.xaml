@@ -17,7 +17,7 @@
             </Grid.RowDefinitions>
             <Label HorizontalOptions="Center"
                    Text="Transactions"
-                   TextColor="White" FontSize="44"
+                   TextColor="White" FontSize="38"
                    FontFamily="AnimalCrossing"/>
             <pancake:PancakeView CornerRadius="36,36,0,0" Grid.Row="1"
                                  Padding="0"
