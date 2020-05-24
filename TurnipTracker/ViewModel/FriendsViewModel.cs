@@ -268,16 +268,42 @@ namespace TurnipTracker.ViewModel
             OnPropertyChanged(nameof(ShowNoFriends));
         }
 
+        int sortOption = 0;
+        public int SortOption
+        {
+            get => sortOption;
+            set
+            {
+                if (SetProperty(ref sortOption, value))
+                    UpdateFriendsGroups();
+            }
+        }
+
         void UpdateFriendsGroups()
         {
-            var today = Friends.Where(f => f.TurnipUpdateTimeUTC.ToLocalTime().DayOfYear == DateTime.Now.DayOfYear).ToList();
-            var older = Friends.Where(f => f.TurnipUpdateTimeUTC.ToLocalTime().DayOfYear != DateTime.Now.DayOfYear).ToList();
+            if (sortOption == 0)
+            {
+                var today = Friends.Where(f => f.TurnipUpdateTimeUTC.ToLocalTime().DayOfYear == DateTime.Now.DayOfYear).ToList();
+                var older = Friends.Where(f => f.TurnipUpdateTimeUTC.ToLocalTime().DayOfYear != DateTime.Now.DayOfYear).ToList();
 
-            FriendsGrouped.Clear();
-            if (today.Count > 0)
-                FriendsGrouped.Add(new FriendGroup("Updated Today", today));
-            if (older.Count > 0)
-                FriendsGrouped.Add(new FriendGroup("Older Updates", older));
+                FriendsGrouped.Clear();
+                if (today.Count > 0)
+                    FriendsGrouped.Add(new FriendGroup("Updated Today", today));
+                if (older.Count > 0)
+                    FriendsGrouped.Add(new FriendGroup("Older Updates", older));
+            }
+            else
+            {
+                var open = Friends.Where(f => f.GateStatus != 0 && f.GateClosesAtUTC.HasValue && f.GateClosesAtUTC.Value > DateTime.UtcNow).OrderBy(f => f.GateClosesAtUTC.Value).ToList();
+                var closed = Friends.Where(f => f.GateStatus == 0 || !f.GateClosesAtUTC.HasValue || f.GateClosesAtUTC.Value <= DateTime.UtcNow).ToList();
+
+                FriendsGrouped.Clear();
+                if (open.Count > 0)
+                    FriendsGrouped.Add(new FriendGroup("Open", open));
+                if (closed.Count > 0)
+                    FriendsGrouped.Add(new FriendGroup("Closed", closed));
+
+            }
         }
 
         public AsyncCommand<FriendStatus> RemoveFriendCommand { get; set; }
