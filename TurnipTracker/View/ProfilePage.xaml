@@ -128,7 +128,6 @@
                                 DropDownItemHeight="50"
                                 DropDownTextSize="24"
                                 HeightRequest="55"
-                                IsEnabled="{Binding IsNotBusy}"
                                 SelectedIndex="{Binding Profile.Fruit, Mode=TwoWay}"
                                 TextColor="{StaticResource TextPrimaryColor}"
                                 DropDownBackgroundColor="{StaticResource AcrylicSurface}"

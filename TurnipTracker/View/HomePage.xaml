@@ -56,7 +56,7 @@
                     Style="{StaticResource SocialPancakeWithText}"
                     VerticalOptions="Center">
                     <effectsview:SfEffectsView
-                        CornerRadius="14"
+                        CornerRadius="22"
                         IsEnabled="{Binding IsNotBusy}"
                         TouchUpCommand="{Binding GoToCommand}"
                         TouchUpCommandParameter="profile">
@@ -148,7 +148,6 @@
                                             DropDownItemHeight="{OnPlatform Android=50}"
                                             DropDownTextSize="18"
                                             HeightRequest="{OnPlatform Android=50}"
-                                            IsEnabled="{Binding IsNotBusy}"
                                             SelectedIndex="{Binding Profile.GateStatus, Mode=TwoWay}"
                                             TextColor="{StaticResource TextPrimaryColor}"
                                             VerticalOptions="Start">
