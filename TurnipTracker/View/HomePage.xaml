@@ -148,7 +148,7 @@
                                             DropDownItemHeight="{OnPlatform Android=50}"
                                             DropDownTextSize="18"
                                             HeightRequest="{OnPlatform Android=50}"
-                                            IsEnabled="{Binding IsNotBusy}"
+                                            IsEnabled="{Binding IsNotBusy, Mode=TwoWay}"
                                             SelectedIndex="{Binding Profile.GateStatus, Mode=TwoWay}"
                                             TextColor="{StaticResource TextPrimaryColor}"
                                             VerticalOptions="Start">
