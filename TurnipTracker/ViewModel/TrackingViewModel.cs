@@ -119,8 +119,8 @@ namespace TurnipTracker.ViewModel
             }
         }
 
-        public string MinString => Min == 0 ? "Guaranteed Min: ???" : $"Guarenteed Min: {Min}";
-        public string MaxString => Max == 999 ? "Potential Max: ???" : $"Potential Max: {Max}";
+        public string MinString => (Min == 0 || Min == 999) ? "Guaranteed Min: ???" : $"Guarenteed Min: {Min}";
+        public string MaxString => (Max == 0 || Max == 999) ? "Potential Max: ???" : $"Potential Max: {Max}";
 
 
         void OnDaySelected(Day day) => MainThread.BeginInvokeOnMainThread(() =>
