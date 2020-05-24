@@ -3,6 +3,8 @@
     x:Class="TurnipTracker.View.FriendsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:collection="clr-namespace:System.Collections.Generic;assembly=netstandard"
     xmlns:converters="clr-namespace:TurnipTracker.Converters"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
@@ -155,14 +157,46 @@
                                         VerticalOptions="Center" />
                                 </effectsview:SfEffectsView>
                             </sharpnado:MaterialFrame>
-                            <Label
+                            <StackLayout
                                 Grid.Row="1"
                                 Grid.ColumnSpan="3"
-                                Margin="4,0"
-                                FontFamily="AnimalCrossing"
-                                FontSize="36"
-                                Text="Friends"
-                                TextColor="{StaticResource TextPrimaryColor}" />
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Horizontal">
+                                <Label
+                                    Margin="4,0"
+                                    FontFamily="AnimalCrossing"
+                                    FontSize="36"
+                                    Text="Friends"
+                                    TextColor="{StaticResource TextPrimaryColor}" />
+                                <buttons:SfSegmentedControl
+                                    Margin="4,0"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="{StaticResource TextPrimaryColor}"
+                                    BorderThickness="2"
+                                    CornerRadius="14"
+                                    FontColor="{StaticResource TextPrimaryColor}"
+                                    FontSize="Small"
+                                    HorizontalOptions="EndAndExpand"
+                                    SegmentCornerRadius="14"
+                                    SegmentHeight="28"
+                                    SegmentPadding="0"
+                                    SegmentWidth="90"
+                                    SelectedIndex="{Binding SortOption, Mode=TwoWay}"
+                                    SelectionTextColor="White"
+                                    VerticalOptions="End"
+                                    VisibleSegmentsCount="2">
+                                    <buttons:SfSegmentedControl.SelectionIndicatorSettings>
+                                        <buttons:SelectionIndicatorSettings
+                                            CornerRadius="14"
+                                            StrokeThickness="0"
+                                            Color="{StaticResource NavigationPrimary}" />
+                                    </buttons:SfSegmentedControl.SelectionIndicatorSettings>
+                                    <collection:List x:TypeArguments="x:String">
+                                        <x:String>Updates</x:String>
+                                        <x:String>Gates</x:String>
+                                    </collection:List>
+                                </buttons:SfSegmentedControl>
+                            </StackLayout>
                         </Grid>
                     </pancake:PancakeView>
                 </Grid>
@@ -274,7 +308,6 @@
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -282,10 +315,10 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
                                             <Image
-                                                Grid.RowSpan="4"
-                                                HeightRequest="28"
+                                                Grid.RowSpan="2"
+                                                HeightRequest="24"
                                                 Source="{Binding Fruit, Converter={StaticResource FruitImageConverter}}"
-                                                WidthRequest="28" />
+                                                WidthRequest="24" />
                                             <Label
                                                 Grid.Column="1"
                                                 FontSize="Large"
@@ -300,20 +333,19 @@
                                             <Label
                                                 Grid.Row="2"
                                                 Grid.Column="1"
-                                                FontSize="Small"
+                                                FontSize="Medium"
                                                 Text="{Binding Status}"
-                                                TextColor="{StaticResource TextPrimaryColor}" />
-                                            <Label
-                                                Grid.Row="3"
-                                                Grid.Column="1"
-                                                FontSize="Micro"
-                                                Text="{Binding ., Converter={StaticResource LastUpdateDateTimeConverter}}"
                                                 TextColor="{StaticResource TextPrimaryColor}" />
 
                                             <StackLayout
-                                                Grid.RowSpan="4"
+                                                Grid.RowSpan="3"
                                                 Grid.Column="2"
                                                 VerticalOptions="Center">
+
+                                                <Label
+                                                    FontSize="Micro"
+                                                    Text="{Binding ., Converter={StaticResource LastUpdateDateTimeConverter}}"
+                                                    TextColor="{StaticResource TextPrimaryColor}" />
 
                                                 <Label
                                                     FontSize="Medium"
@@ -344,7 +376,8 @@
                                             </StackLayout>
 
                                             <StackLayout
-                                                Grid.Row="5"
+                                                Grid.Row="3"
+                                                Margin="0,4,0,0"
                                                 Grid.ColumnSpan="3"
                                                 HorizontalOptions="Center"
                                                 IsVisible="{Binding ., Converter={StaticResource IsGateOpenConverter}}"
@@ -353,37 +386,37 @@
                                                 <Label
                                                     FontFamily="FA-S"
                                                     FontSize="Small"
+                                                    Text="{StaticResource IconGateOpen}"
                                                     TextColor="{StaticResource TextPrimaryColor}"
-                                                    VerticalOptions="Center"
-                                                    Text="{StaticResource IconGateOpen}" />
+                                                    VerticalOptions="Center" />
 
 
                                                 <Label
                                                     Margin="0,0,8,0"
                                                     FontSize="Small"
+                                                    Text="{Binding GateClosesAtUTC, Converter={StaticResource ExpiresAtConverter}}"
                                                     TextColor="{StaticResource TextPrimaryColor}"
-                                                    VerticalOptions="Center"
-                                                    Text="{Binding GateClosesAtUTC, Converter={StaticResource ExpiresAtConverter}}" />
+                                                    VerticalOptions="Center" />
 
                                                 <Label
                                                     FontFamily="FA-S"
                                                     FontSize="Small"
-                                                    VerticalOptions="Center"
-                                                    TextColor="{StaticResource TextPrimaryColor}"
                                                     IsVisible="{Binding GateStatus, Converter={StaticResource IsGateStatusConverter}, ConverterParameter=2}"
-                                                    Text="{StaticResource IconBFF}" />
+                                                    Text="{StaticResource IconBFF}"
+                                                    TextColor="{StaticResource TextPrimaryColor}"
+                                                    VerticalOptions="Center" />
                                                 <Label
                                                     FontFamily="FA-S"
                                                     FontSize="Small"
-                                                    TextColor="{StaticResource TextPrimaryColor}"
-                                                    VerticalOptions="Center"
                                                     IsVisible="{Binding GateStatus, Converter={StaticResource IsGateStatusConverter}, ConverterParameter=3}"
-                                                    Text="{StaticResource IconDodoCode}" />
+                                                    Text="{StaticResource IconDodoCode}"
+                                                    TextColor="{StaticResource TextPrimaryColor}"
+                                                    VerticalOptions="Center" />
                                                 <Label
                                                     FontSize="Small"
-                                                    TextColor="{StaticResource TextPrimaryColor}"
                                                     IsVisible="{Binding GateStatus, Converter={StaticResource IsGateStatusConverter}, ConverterParameter=3}"
                                                     Text="{Binding DodoCode}"
+                                                    TextColor="{StaticResource TextPrimaryColor}"
                                                     VerticalOptions="Center" />
 
                                             </StackLayout>

@@ -43,6 +43,7 @@ namespace TurnipTracker.iOS
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
             Syncfusion.XForms.iOS.Expander.SfExpanderRenderer.Init();
             Sharpnado.MaterialFrame.iOS.iOSMaterialFrameRenderer.Init();
+            Syncfusion.XForms.iOS.Buttons.SfSegmentedControlRenderer.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

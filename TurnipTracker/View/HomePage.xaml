@@ -255,7 +255,7 @@
                                 TouchUpCommandParameter="about">
                                 <Grid ColumnSpacing="12">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="24" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Label
@@ -277,6 +277,40 @@
                         <sharpnado:MaterialFrame
                             Margin="0,4,0,0"
                             Padding="0"
+                            AutomationProperties.HelpText="Button - Share page"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            HorizontalOptions="FillAndExpand"
+                            Style="{StaticResource AcrylicFrame}">
+                            <effectsview:SfEffectsView
+                                Padding="18,12,12,12"
+                                CornerRadius="10"
+                                IsEnabled="{Binding IsNotBusy}"
+                                TouchUpCommand="{Binding ShareWithFriendsCommand}"
+                                TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
+                                <Grid ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="24" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="FA-S"
+                                        FontSize="20"
+                                        HorizontalOptions="Center"
+                                        Text="{StaticResource IconShare}"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="Medium"
+                                        Text="Share App with Friends"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+                        <sharpnado:MaterialFrame
+                            Margin="0,4,0,0"
+                            Padding="0"
                             AutomationProperties.HelpText="Button - Settings page"
                             AutomationProperties.IsInAccessibleTree="True"
                             HorizontalOptions="FillAndExpand"
@@ -289,7 +323,7 @@
                                 TouchUpCommandParameter="settings">
                                 <Grid ColumnSpacing="12">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="24" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Label
