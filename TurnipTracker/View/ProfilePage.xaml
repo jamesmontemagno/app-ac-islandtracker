@@ -88,6 +88,7 @@
                             <maskededit:SfMaskedEdit
                                 BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
                                 FontSize="24"
+                                BackgroundColor="Transparent"
                                 IsEnabled="{Binding IsNotBusy}"
                                 TextColor="{StaticResource TextPrimaryColor}"
                                 Value="{Binding Profile.Name}" />
@@ -107,6 +108,7 @@
                             <maskededit:SfMaskedEdit
                                 BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
                                 FontSize="24"
+                                BackgroundColor="Transparent"
                                 IsEnabled="{Binding IsNotBusy}"
                                 TextColor="{StaticResource TextPrimaryColor}"
                                 Value="{Binding Profile.IslandName}" />
@@ -165,6 +167,7 @@
                                 Mask="SW-0000-0000-0000"
                                 TextColor="{StaticResource TextPrimaryColor}"
                                 VerticalOptions="Center"
+                                BackgroundColor="Transparent"
                                 Value="{Binding Profile.FriendCode}" />
                         </sharpnado:MaterialFrame>
 

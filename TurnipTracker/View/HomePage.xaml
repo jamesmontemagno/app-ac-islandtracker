@@ -70,11 +70,13 @@
                                 FontFamily="FA-R"
                                 FontSize="Medium"
                                 HorizontalOptions="Center"
+                                TextColor="{StaticResource TextPrimaryColor}"
                                 Style="{StaticResource SocialLabel}"
                                 Text="{StaticResource IconProfileBadge}" />
                             <Label
                                 FontSize="Micro"
                                 Text="Profile"
+                                TextColor="{StaticResource TextPrimaryColor}"
                                 VerticalOptions="Center" />
                         </StackLayout>
                     </effectsview:SfEffectsView>
@@ -325,7 +327,7 @@
             IsVisible="{Binding IsBusy}"
             VerticalOptions="Center">
             <busyindicator:SfBusyIndicator
-                Title="Syncing profile..."
+                Title="Syncing status..."
                 AnimationType="Box"
                 EnableAnimation="{Binding IsBusy}"
                 TextColor="{StaticResource TextPrimaryColor}"
