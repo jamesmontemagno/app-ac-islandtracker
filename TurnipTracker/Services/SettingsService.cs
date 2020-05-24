@@ -30,7 +30,7 @@ namespace TurnipTracker.Services
                     publicCache = await GetKey(publicKey);
 
                     if(Preferences.Get(publicKey, string.Empty) == string.Empty)
-                        publicCache = Preferences.Get(publicKey, string.Empty);
+                        Preferences.Set(publicKey, publicCache);
 
                 }
                 catch (Exception ex)
@@ -56,7 +56,7 @@ namespace TurnipTracker.Services
                     privateCache = await GetKey(privateKey);
 
                     if (Preferences.Get(privateKey, string.Empty) == string.Empty)
-                        privateCache = Preferences.Get(privateKey, string.Empty);
+                        Preferences.Set(privateKey, privateCache);
                 }
                 catch(Exception ex)
                 {
