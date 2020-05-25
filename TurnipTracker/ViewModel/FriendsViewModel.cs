@@ -21,6 +21,7 @@ namespace TurnipTracker.ViewModel
         public ObservableRangeCollection<FriendStatus> Friends { get; }
         public ObservableRangeCollection<FriendGroup> FriendsGrouped { get; }
         public bool ShowNoFriends => FriendsGrouped.Count == 0;
+        public bool HasFriends => !ShowNoFriends;
 
         public AsyncCommand<string> ViewFriendCodeCommand { get; }
 
@@ -266,6 +267,7 @@ namespace TurnipTracker.ViewModel
                 IsBusy = false;
             }
             OnPropertyChanged(nameof(ShowNoFriends));
+            OnPropertyChanged(nameof(HasFriends));
         }
 
         int sortOption = 0;
@@ -329,6 +331,7 @@ namespace TurnipTracker.ViewModel
                 ForceRefresh = true;
                 UpdateFriendsGroups();
                 OnPropertyChanged(nameof(ShowNoFriends));
+                OnPropertyChanged(nameof(HasFriends));
                 DataService.ClearCache(DataService.FriendKey);
             }
             catch (HttpResponseException hrex) when (!string.IsNullOrWhiteSpace(hrex.Message))
