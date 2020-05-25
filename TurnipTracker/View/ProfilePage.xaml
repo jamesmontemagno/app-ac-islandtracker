@@ -164,7 +164,9 @@
                                 FontSize="24"
                                 IsEnabled="{Binding IsNotBusy}"
                                 Keyboard="Numeric"
+                                
                                 Mask="SW-0000-0000-0000"
+                                ClearButtonVisibility="WhileEditing"
                                 TextColor="{StaticResource TextPrimaryColor}"
                                 VerticalOptions="Center"
                                 BackgroundColor="Transparent"
