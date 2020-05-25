@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Fonts\CustomFont.ttf" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Plugin.StoreReview" Version="2.0.0.5" />
     <PackageReference Include="Resizetizer.NT" Version="0.1.0-preview8" />
     <PackageReference Include="Sharpnado.MaterialFrame" Version="1.1.0" />
@@ -52,27 +48,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TurnipTracker.Shared\TurnipTracker.Shared.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="View\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="View\SettingsPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="View\UtilsPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="View\Utils\CalcHowManyBells.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="View\Utils\CalcHowManyTurnips.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>

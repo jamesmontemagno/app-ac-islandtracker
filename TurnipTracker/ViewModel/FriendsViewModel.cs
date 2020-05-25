@@ -36,6 +36,7 @@ namespace TurnipTracker.ViewModel
             SendFriendRequestCommand = new AsyncCommand<Xamarin.Forms.View>(SendFriendRequest);
             RemoveFriendCommand = new AsyncCommand<FriendStatus>(RemoveFriend);
             GoToFriendRequestCommand = new AsyncCommand(GoToFriendRequest);
+            AddFriendManuallyCommand = new AsyncCommand(AddFriendManually);
             var cache = DataService.GetCache<IEnumerable<FriendStatus>>(DataService.FriendKey);
             if (cache != null)
             {
@@ -74,6 +75,48 @@ namespace TurnipTracker.ViewModel
         }
 
 
+        public AsyncCommand AddFriendManuallyCommand { get; set; }
+
+        async Task AddFriendManually()
+        {
+            var clip = string.Empty;
+            if (Clipboard.HasText)
+            {
+                var val = await Clipboard.GetTextAsync();
+                if(val != null & val.StartsWith("acislandtracker://"))
+                {
+                    clip = val;
+                    await Clipboard.SetTextAsync(string.Empty);
+                }
+            }
+            var link = await App.Current.MainPage.DisplayPromptAsync("Enter friend's invite link", "Paste in your friend's invite link that they sent you.", "Submit", "Cancel", "acislandtracker://", initialValue: clip);
+
+            if (link != null && link.StartsWith("acislandtracker://"))
+            {
+                try
+                {
+                    var uri = new Uri(link);
+
+                    if (Clipboard.HasText)
+                    {
+                        var val = await Clipboard.GetTextAsync();
+                        if (val != null & val.StartsWith("acislandtracker://"))
+                        {
+                            await Clipboard.SetTextAsync(string.Empty);
+                        }
+                    }
+
+                    await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
+                    Analytics.TrackEvent("AddFriendManually");
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+
         public AsyncCommand<Xamarin.Forms.View> SendFriendRequestCommand { get; set; }
 
         async Task SendFriendRequest(Xamarin.Forms.View element)
@@ -84,15 +127,15 @@ namespace TurnipTracker.ViewModel
                 return;
             }
 
-            if(SettingsService.FirstFriendRequest)
+            if (SettingsService.FirstFriendRequest)
             {
-                await DisplayAlert("How to send a request", 
+                await DisplayAlert("How to send a request",
                     "Looks like this is your first time sending a friend request! Exciting! Simply share the friend invite link with your friends and have them click the link to open Island Tracker or copy it to their clipboard and go to their friends tab. Once they request you as a friend you will see the request in the 'Request' section above that you can either approve or deny.");
                 SettingsService.FirstFriendRequest = false;
             }
 
             var name = DataService.GetProfile().Name;
-            if(string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 await DisplayAlert("Update Profile", "Please update profile before sending a friend request.");
                 return;

@@ -54,6 +54,7 @@
                 FontFamily="AnimalCrossing"
                 FontSize="38"
                 HorizontalOptions="Center"
+                VerticalOptions="Center"
                 Text="Settings"
                 TextColor="White" />
             <pancake:PancakeView

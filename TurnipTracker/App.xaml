@@ -38,6 +38,7 @@
             <x:String x:Key="IconGateOpen">&#xf52b;</x:String>
             <x:String x:Key="IconDodoCode">&#xf535;</x:String>
             <x:String x:Key="IconShare">&#xf1e0;</x:String>
+            <x:String x:Key="IconStar">&#xf005;</x:String>
 
             <x:String x:Key="IconGraph">&#xf1fe;</x:String>
 

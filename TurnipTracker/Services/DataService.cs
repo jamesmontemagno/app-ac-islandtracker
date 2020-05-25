@@ -171,7 +171,7 @@ namespace TurnipTracker.Services
         public async Task SubmitFriendRequestAsync(string requesterKey)
         {
             var publicKey = await SettingsService.GetPublicKey();
-            var content = JsonConvert.SerializeObject(new FriendRequest { MyPublicKey = publicKey, FriendPublicKey = requesterKey });
+            var content = JsonConvert.SerializeObject(new FriendRequest { MyPublicKey = publicKey, FriendPublicKey = requesterKey, ProUser = SettingsService.IsPro });
 
 
             await PostAsync($"api/SubmitFriendRequest?code={App.PostSubmitFriendRequestKey}", content);
@@ -193,7 +193,7 @@ namespace TurnipTracker.Services
         public async Task ApproveFriendRequestAsync(string friendToApproveKey)
         {
             var publicKey = await SettingsService.GetPublicKey();
-            var content = JsonConvert.SerializeObject(new FriendRequest { MyPublicKey = publicKey, FriendPublicKey = friendToApproveKey });
+            var content = JsonConvert.SerializeObject(new FriendRequest { MyPublicKey = publicKey, FriendPublicKey = friendToApproveKey, ProUser = SettingsService.IsPro });
             await PostAsync($"api/ApproveFriendRequest?code={App.PostApproveFriendRequestKey}", content);
         }
 

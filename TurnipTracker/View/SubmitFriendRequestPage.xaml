@@ -124,7 +124,7 @@
                 <Button Style="{StaticResource ButtonRoundedCorners}"
                         IsEnabled="{Binding IsNotBusy}"
                         IsVisible="{Binding ShowClose}"
-                        Margin="0,24,0,0"
+                        Margin="0,24,0,24"
                         VerticalOptions="End"
                         Text="Close"
                         Command="{Binding CloseCommand}"/>

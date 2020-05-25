@@ -135,6 +135,12 @@ namespace TurnipTracker.Services
             set => Preferences.Set(nameof(UpdateProfile), value);
         }
 
+        public static bool IsPro
+        {
+            get => Preferences.Get(nameof(IsPro), false);
+            set => Preferences.Set(nameof(IsPro), value);
+        }
+
         public static bool HasRegistered
         {
             get => Preferences.Get(nameof(HasRegistered), false);
