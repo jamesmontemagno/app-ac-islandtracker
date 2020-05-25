@@ -38,7 +38,8 @@
             FontSize="38"
             HorizontalOptions="Center"
             Text="Requests"
-            TextColor="White" />
+            TextColor="White"
+            VerticalOptions="Center" />
         <pancake:PancakeView
             Grid.ColumnSpan="2"
             Margin="0,0,12,0"
@@ -47,7 +48,10 @@
             HorizontalOptions="End"
             Style="{StaticResource SocialPancake}"
             VerticalOptions="Center">
-            <effectsview:SfEffectsView CornerRadius="20" TouchUp="SfEffectsView_TouchUp">
+            <effectsview:SfEffectsView
+                CornerRadius="20"
+                IsEnabled="{Binding IsNotBusy}"
+                TouchUpCommand="{Binding CloseCommand}">
                 <Label
                     FontFamily="FA-S"
                     Style="{StaticResource SocialLabel}"
@@ -103,10 +107,10 @@
                                                     <StackLayout
                                                         Grid.Row="2"
                                                         Margin="0,4,0,0"
+                                                        Padding="4"
                                                         HorizontalOptions="End"
                                                         Orientation="Horizontal"
-                                                        Spacing="12"
-                                                        Padding="4">
+                                                        Spacing="12">
 
                                                         <Button
                                                             BorderColor="Red"

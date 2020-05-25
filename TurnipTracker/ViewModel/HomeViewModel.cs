@@ -99,6 +99,7 @@ namespace TurnipTracker.ViewModel
             try
             {
                 IsBusy = true;
+                OnPropertyChanged(nameof(IsProAndNotBusy));
                 await DataService.UpsertUserProfile(Profile);
                 NeedsSync = false;
             }
@@ -110,6 +111,7 @@ namespace TurnipTracker.ViewModel
             finally
             {
                 IsBusy = false;
+                OnPropertyChanged(nameof(IsProAndNotBusy));
             }
         }
     }

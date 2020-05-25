@@ -55,9 +55,10 @@
                         HasShadow="{OnPlatform Android=True,
                                                iOS=False}"
                         VerticalOptions="FillAndExpand">
-                        <Grid Padding="12,12,12,0">
+                        <Grid Padding="12,12,12,0" ColumnSpacing="8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
@@ -74,7 +75,7 @@
                                 HorizontalOptions="FillAndExpand"
                                 Style="{StaticResource AcrylicFrame}">
                                 <effectsview:SfEffectsView
-                                    Padding="18,12,12,12"
+                                    Padding="18,10,10,10"
                                     CornerRadius="10"
                                     IsEnabled="{Binding IsNotBusy}"
                                     TouchUpCommand="{Binding GoToFriendRequestCommand}">
@@ -87,14 +88,14 @@
                                         </Grid.ColumnDefinitions>
                                         <Label
                                             FontFamily="FA-S"
-                                            FontSize="20"
+                                            FontSize="16"
                                             HorizontalOptions="Center"
                                             Text="{StaticResource IconInbox}"
                                             TextColor="{StaticResource TextPrimaryColor}"
                                             VerticalOptions="Center" />
                                         <Label
                                             Grid.Column="1"
-                                            FontSize="Medium"
+                                            FontSize="Small"
                                             Text="Requests"
                                             TextColor="{StaticResource TextPrimaryColor}"
                                             VerticalOptions="Center" />
@@ -104,7 +105,7 @@
                                             IsVisible="{Binding RequestCount, Converter={StaticResource StringEmptyConverter}}"
                                             Style="{StaticResource BadgePancake}">
                                             <Label
-                                                FontSize="Small"
+                                                FontSize="Micro"
                                                 HorizontalOptions="Center"
                                                 Text="{Binding RequestCount}"
                                                 TextColor="White"
@@ -116,7 +117,30 @@
 
                             <sharpnado:MaterialFrame
                                 Grid.Column="1"
-                                Margin="4,12"
+                                Margin="0,12"
+                                Padding="0"
+                                AutomationProperties.HelpText="Button - Send Friend Request"
+                                AutomationProperties.IsInAccessibleTree="True"
+                                Style="{StaticResource AcrylicFrame}">
+                                <effectsview:SfEffectsView
+                                    Padding="18,12"
+                                    CornerRadius="10"
+                                    IsEnabled="{Binding IsNotBusy}"
+                                    TouchUpCommand="{Binding AddFriendManuallyCommand}"
+                                    TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
+                                    <Label
+                                        FontFamily="FA-S"
+                                        FontSize="16"
+                                        HorizontalOptions="Center"
+                                        Text="{StaticResource IconFriendAdd}"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center" />
+                                </effectsview:SfEffectsView>
+                            </sharpnado:MaterialFrame>
+
+                            <sharpnado:MaterialFrame
+                                Grid.Column="2"
+                                Margin="0,12"
                                 Padding="0"
                                 AutomationProperties.HelpText="Button - Send Friend Request"
                                 AutomationProperties.IsInAccessibleTree="True"
@@ -129,7 +153,7 @@
                                     TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
                                     <Label
                                         FontFamily="FA-S"
-                                        FontSize="20"
+                                        FontSize="16"
                                         HorizontalOptions="Center"
                                         Text="{StaticResource IconSend}"
                                         TextColor="{StaticResource TextPrimaryColor}"
@@ -137,8 +161,8 @@
                                 </effectsview:SfEffectsView>
                             </sharpnado:MaterialFrame>
                             <sharpnado:MaterialFrame
-                                Grid.Column="2"
-                                Margin="4,12"
+                                Grid.Column="3"
+                                Margin="0,12"
                                 Padding="0"
                                 AutomationProperties.HelpText="Button - Refresh Friend Information"
                                 AutomationProperties.IsInAccessibleTree="True"
@@ -150,7 +174,7 @@
                                     TouchUpCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=RefreshCommand}">
                                     <Label
                                         FontFamily="FA-S"
-                                        FontSize="20"
+                                        FontSize="16"
                                         HorizontalOptions="Center"
                                         Text="&#xf021;"
                                         TextColor="{StaticResource TextPrimaryColor}"
@@ -159,7 +183,7 @@
                             </sharpnado:MaterialFrame>
                             <StackLayout
                                 Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.ColumnSpan="4"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="Start"
                                 Orientation="Horizontal">

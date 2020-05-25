@@ -69,9 +69,16 @@ namespace TurnipTracker
                 return;
 
             ReceivedAppLink = true;
+            try
+            {
 
-            // the app is just starting so we need to make sure to navigate to "friends" first
-            await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
+                // the app is just starting so we need to make sure to navigate to "friends" first
+                await Shell.Current.GoToAsync($"//{uri.Host}/{uri.PathAndQuery}");
+            }
+            catch
+            {
+                return;
+            }
 
             Analytics.TrackEvent("RegisterFriend", new Dictionary<string, string>
             {

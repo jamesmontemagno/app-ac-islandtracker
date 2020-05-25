@@ -13,6 +13,8 @@ namespace TurnipTracker
         {
             InitializeComponent();
 
+            SettingsService.IsPro = true;
+
             if(!SettingsService.FirstRun)
                 MainTabBar.CurrentItem = MainTabBar.Items[1];
 
@@ -23,6 +25,7 @@ namespace TurnipTracker
             Routing.RegisterRoute("calc-howmanyturnips", typeof(CalcHowManyTurnips));
             Routing.RegisterRoute("profile", typeof(ProfilePage));
             Routing.RegisterRoute("about", typeof(AboutPage));
+            Routing.RegisterRoute("pro", typeof(ProPage));
         }
     }
 }

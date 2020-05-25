@@ -41,15 +41,5 @@ namespace TurnipTracker.View
 
             return base.OnBackButtonPressed();
         }
-
-        async void ButtonClose_Clicked(System.Object sender, System.EventArgs e)
-        {
-            await Shell.Current.GoToAsync("..");
-        }
-
-        async void SfEffectsView_TouchUp(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("..");
-        }
     }
 }

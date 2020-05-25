@@ -56,10 +56,11 @@
                         <Label
                             Margin="42,0,0,0"
                             FontFamily="AnimalCrossing"
-                            FontSize="38"
+                            FontSize="34"
                             HorizontalOptions="Center"
                             Text="{Binding SelectedDay.DayLong}"
-                            TextColor="White" />
+                            TextColor="White"
+                            VerticalOptions="Center" />
                     </Grid>
                 </expander:SfExpander.Header>
                 <expander:SfExpander.Content>
@@ -223,10 +224,10 @@
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        
+
                         <sharpnado:MaterialFrame
                             Grid.Row="0"
                             Grid.ColumnSpan="2"
@@ -338,25 +339,28 @@
                             Grid.Column="0"
                             Margin="10,0,5,8"
                             HorizontalOptions="FillAndExpand"
-                            VerticalOptions="Center"
-                            Style="{StaticResource AcrylicButton}">
+                            Style="{StaticResource AcrylicButton}"
+                            VerticalOptions="Center">
                             <effectsview:SfEffectsView
                                 Padding="12,0"
                                 CornerRadius="27"
                                 IsEnabled="{Binding IsNotBusy}"
                                 TouchUpCommand="{Binding ComputeCommand}">
-                                <StackLayout Spacing="12" Orientation="Horizontal" HorizontalOptions="Center">
+                                <StackLayout
+                                    HorizontalOptions="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="12">
                                     <Label
+                                        FontFamily="FA-S"
                                         FontSize="16"
                                         Text="{StaticResource IconCompute}"
-                                        FontFamily="FA-S"
                                         TextColor="{StaticResource TextPrimaryColor}"
-                                        VerticalOptions="Center"/>
+                                        VerticalOptions="Center" />
                                     <Label
                                         FontSize="16"
                                         Text="Compute"
                                         TextColor="{StaticResource TextPrimaryColor}"
-                                        VerticalOptions="Center"/>
+                                        VerticalOptions="Center" />
                                 </StackLayout>
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>
@@ -367,24 +371,28 @@
                             Margin="5,0,10,8"
                             HorizontalOptions="FillAndExpand"
                             Style="{StaticResource AcrylicButton}"
+                            IsVisible="{Binding IsToday}"
                             VerticalOptions="Center">
                             <effectsview:SfEffectsView
                                 Padding="12,0"
                                 CornerRadius="27"
                                 IsEnabled="{Binding IsNotBusy}"
                                 TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
-                                <StackLayout Spacing="12" Orientation="Horizontal" HorizontalOptions="Center">
+                                <StackLayout
+                                    HorizontalOptions="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="12">
                                     <Label
+                                        FontFamily="FA-S"
                                         FontSize="16"
                                         Text="{StaticResource IconRefresh}"
-                                        FontFamily="FA-S"
                                         TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
-                                        VerticalOptions="Center"/>
+                                        VerticalOptions="Center" />
                                     <Label
                                         FontSize="16"
                                         Text="Sync"
                                         TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
-                                        VerticalOptions="Center"/>
+                                        VerticalOptions="Center" />
                                 </StackLayout>
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>
@@ -551,22 +559,25 @@
                             Style="{StaticResource AcrylicButton}"
                             VerticalOptions="Center">
                             <effectsview:SfEffectsView
-                                Padding="12,0"
+                                Padding="24,0"
                                 CornerRadius="27"
                                 IsEnabled="{Binding IsNotBusy}"
                                 TouchUpCommand="{Binding UpdateTurnipPricesCommand}">
-                                <StackLayout Spacing="12" Orientation="Horizontal" HorizontalOptions="Center">
+                                <StackLayout
+                                    HorizontalOptions="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="12">
                                     <Label
+                                        FontFamily="FA-S"
                                         FontSize="16"
                                         Text="{StaticResource IconRefresh}"
-                                        FontFamily="FA-S"
                                         TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
-                                        VerticalOptions="Center"/>
+                                        VerticalOptions="Center" />
                                     <Label
                                         FontSize="16"
                                         Text="Sync"
                                         TextColor="{Binding NeedsSync, Converter={StaticResource SelectedDayColorConverter}}"
-                                        VerticalOptions="Center"/>
+                                        VerticalOptions="Center" />
                                 </StackLayout>
                             </effectsview:SfEffectsView>
                         </sharpnado:MaterialFrame>

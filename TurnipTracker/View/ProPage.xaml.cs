@@ -11,12 +11,13 @@ using Xamarin.Forms.Xaml;
 namespace TurnipTracker.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AboutPage : ContentPage
+    public partial class ProPage : ContentPage
     {
-        public AboutPage()
+        public ProPage()
         {
             InitializeComponent();
-            BindingContext = new AboutViewModel();
+            BindingContext = new ProViewModel();
         }
+
     }
 }

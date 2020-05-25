@@ -22,6 +22,11 @@ namespace TurnipTracker.ViewModel
             GoToCommand = new AsyncCommand<string>(GoTo);
         }
 
+        public bool IsProAndNotBusy
+        {
+            get => SettingsService.IsPro && IsNotBusy;
+        }
+
         Task GoTo(string page) => GoToAsync(page);
 
         Task Close() =>

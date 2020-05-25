@@ -47,7 +47,8 @@
                     FontSize="38"
                     HorizontalOptions="Center"
                     Text="Home"
-                    TextColor="White" />
+                    TextColor="White"
+                    VerticalOptions="Center" />
                 <pancake:PancakeView
                     Margin="0,0,12,0"
                     AutomationProperties.HelpText="Button - Profile Page"
@@ -70,9 +71,9 @@
                                 FontFamily="FA-R"
                                 FontSize="Medium"
                                 HorizontalOptions="Center"
-                                TextColor="{StaticResource TextPrimaryColor}"
                                 Style="{StaticResource SocialLabel}"
-                                Text="{StaticResource IconProfileBadge}" />
+                                Text="{StaticResource IconProfileBadge}"
+                                TextColor="{StaticResource TextPrimaryColor}" />
                             <Label
                                 FontSize="Micro"
                                 Text="Profile"
@@ -143,7 +144,8 @@
                                     <inputLayout:SfTextInputLayout
                                         ContainerType="Outlined"
                                         FocusedColor="{StaticResource NavigationPrimary}"
-                                        Hint="Status">
+                                        Hint="Status"
+                                        IsEnabled="{Binding IsProAndNotBusy}">
                                         <combobox:SfComboBox
                                             x:Name="ComboBoxGateStatus"
                                             BackgroundColor="Transparent"
@@ -173,7 +175,7 @@
                                             FocusedColor="{StaticResource NavigationPrimary}"
                                             Hint="Hours Open">
                                             <updown:SfNumericUpDown
-                                                IsEnabled="{Binding IsNotBusy}"
+                                                IsEnabled="{Binding IsProAndNotBusy}"
                                                 Maximum="24"
                                                 MaximumDecimalDigits="1"
                                                 Minimum="0.5"
@@ -192,7 +194,7 @@
                                             <maskededit:SfMaskedEdit
                                                 BorderColor="{StaticResource AcrylicFrameBackgroundColor}"
                                                 ClearButtonVisibility="WhileEditing"
-                                                IsEnabled="{Binding IsNotBusy}"
+                                                IsEnabled="{Binding IsProAndNotBusy}"
                                                 Mask="[0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z]"
                                                 MaskType="RegEx"
                                                 TextColor="{StaticResource TextPrimaryColor}"
@@ -243,7 +245,7 @@
                             TextColor="{StaticResource TextPrimaryColor}" />
                         <sharpnado:MaterialFrame
                             Padding="0"
-                            AutomationProperties.HelpText="Button - About page"
+                            AutomationProperties.HelpText="Button - Share page"
                             AutomationProperties.IsInAccessibleTree="True"
                             HorizontalOptions="FillAndExpand"
                             Style="{StaticResource AcrylicFrame}">
@@ -252,7 +254,7 @@
                                 CornerRadius="10"
                                 IsEnabled="{Binding IsNotBusy}"
                                 TouchUpCommand="{Binding GoToCommand}"
-                                TouchUpCommandParameter="about">
+                                TouchUpCommandParameter="pro">
                                 <Grid ColumnSpacing="12">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="24" />
@@ -262,13 +264,13 @@
                                         FontFamily="FA-S"
                                         FontSize="20"
                                         HorizontalOptions="Center"
-                                        Text="{StaticResource IconAbout}"
+                                        Text="{StaticResource IconStar}"
                                         TextColor="{StaticResource TextPrimaryColor}"
                                         VerticalOptions="Center" />
                                     <Label
                                         Grid.Column="1"
                                         FontSize="Medium"
-                                        Text="About Island Tracker"
+                                        Text="Island Tracker Pro"
                                         TextColor="{StaticResource TextPrimaryColor}"
                                         VerticalOptions="Center" />
                                 </Grid>
@@ -303,6 +305,40 @@
                                         Grid.Column="1"
                                         FontSize="Medium"
                                         Text="Share App with Friends"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+                        <sharpnado:MaterialFrame
+                            Margin="0,4,0,0"
+                            Padding="0"
+                            AutomationProperties.HelpText="Button - About page"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            HorizontalOptions="FillAndExpand"
+                            Style="{StaticResource AcrylicFrame}">
+                            <effectsview:SfEffectsView
+                                Padding="18,12,12,12"
+                                CornerRadius="10"
+                                IsEnabled="{Binding IsNotBusy}"
+                                TouchUpCommand="{Binding GoToCommand}"
+                                TouchUpCommandParameter="about">
+                                <Grid ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="24" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="FA-S"
+                                        FontSize="20"
+                                        HorizontalOptions="Center"
+                                        Text="{StaticResource IconAbout}"
+                                        TextColor="{StaticResource TextPrimaryColor}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="Medium"
+                                        Text="About Island Tracker"
                                         TextColor="{StaticResource TextPrimaryColor}"
                                         VerticalOptions="Center" />
                                 </Grid>
