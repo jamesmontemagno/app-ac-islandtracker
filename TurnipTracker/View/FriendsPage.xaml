@@ -279,10 +279,12 @@
                                                         <Label
                                                             HorizontalOptions="Center"
                                                             Text="Friend"
+                                                            FontSize="Small"
                                                             TextColor="{StaticResource TextPrimaryColor}" />
                                                         <Label
                                                             HorizontalOptions="Center"
                                                             Text="Code"
+                                                            FontSize="Small"
                                                             TextColor="{StaticResource TextPrimaryColor}" />
                                                     </StackLayout>
                                                 </Grid>
