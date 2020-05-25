@@ -161,6 +161,7 @@
                                 Grid.Row="1"
                                 Grid.ColumnSpan="3"
                                 HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Start"
                                 Orientation="Horizontal">
                                 <Label
                                     Margin="4,0"
@@ -170,10 +171,11 @@
                                     TextColor="{StaticResource TextPrimaryColor}" />
                                 <buttons:SfSegmentedControl
                                     Margin="4,0"
+                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=HasFriends}"
                                     BackgroundColor="Transparent"
                                     BorderColor="{StaticResource TextPrimaryColor}"
                                     BorderThickness="2"
-                                    CornerRadius="14"
+                                    CornerRadius="16"
                                     FontColor="{StaticResource TextPrimaryColor}"
                                     FontSize="Small"
                                     HorizontalOptions="EndAndExpand"
@@ -183,7 +185,7 @@
                                     SegmentWidth="90"
                                     SelectedIndex="{Binding SortOption, Mode=TwoWay}"
                                     SelectionTextColor="White"
-                                    VerticalOptions="End"
+                                    VerticalOptions="Center"
                                     VisibleSegmentsCount="2">
                                     <buttons:SfSegmentedControl.SelectionIndicatorSettings>
                                         <buttons:SelectionIndicatorSettings
