@@ -60,6 +60,8 @@ namespace TurnipTracker.ViewModel
                 foreach (var day in Days)
                     day.SaveCurrentWeekAction = SaveCurrentWeek;
 
+                OnPropertyChanged(nameof(Days));
+
                 SelectedDay = Days[(int)DateTime.Now.DayOfWeek];
             }
         }
