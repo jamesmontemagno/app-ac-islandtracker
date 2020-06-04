@@ -28,7 +28,7 @@ namespace TurnipTracker.Functions
             [Table("User")] CloudTable userTable,
             ILogger log)
         {
-            log.LogInformation($"C# HTTP trigger {nameof(SubmitFriendRequest)} function processed a request.");
+            log.LogInformation($"C# HTTP trigger {nameof(GetFriends)} function processed a request.");
 
 
             var privateKey = Utils.ParseToken(req);

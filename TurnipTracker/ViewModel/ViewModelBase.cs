@@ -22,10 +22,11 @@ namespace TurnipTracker.ViewModel
             GoToCommand = new AsyncCommand<string>(GoTo);
         }
 
-        public bool IsProAndNotBusy
-        {
-            get => SettingsService.IsPro && IsNotBusy;
-        }
+        public bool IsProAndNotBusy => IsPro && IsNotBusy;
+
+        public bool IsPro => SettingsService.IsPro;
+
+        public bool IsNotPro => !IsPro;
 
         Task GoTo(string page) => GoToAsync(page);
 

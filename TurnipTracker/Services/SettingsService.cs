@@ -141,6 +141,12 @@ namespace TurnipTracker.Services
             set => Preferences.Set(nameof(IsPro), value);
         }
 
+        public static bool NeedsProSync
+        {
+            get => Preferences.Get(nameof(NeedsProSync), false);
+            set => Preferences.Set(nameof(NeedsProSync), value);
+        }
+
         public static bool HasRegistered
         {
             get => Preferences.Get(nameof(HasRegistered), false);
@@ -220,5 +226,10 @@ namespace TurnipTracker.Services
             set => Preferences.Set(nameof(TransferedIn), value);
         }
 
+        public static string ProReceipt
+        {
+            get => Preferences.Get(nameof(ProReceipt), string.Empty);
+            set => Preferences.Set(nameof(ProReceipt), value);
+        }
     }
 }

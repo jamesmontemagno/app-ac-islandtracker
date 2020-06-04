@@ -12,9 +12,7 @@ namespace TurnipTracker
         public AppShell()
         {
             InitializeComponent();
-
-            SettingsService.IsPro = true;
-
+            
             if(!SettingsService.FirstRun)
                 MainTabBar.CurrentItem = MainTabBar.Items[1];
 
