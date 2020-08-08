@@ -231,5 +231,11 @@ namespace TurnipTracker.Services
             get => Preferences.Get(nameof(ProReceipt), string.Empty);
             set => Preferences.Set(nameof(ProReceipt), value);
         }
+
+        public static string ProPrice
+        {
+            get => Preferences.Get(nameof(ProPrice), string.Empty);
+            set => Preferences.Set(nameof(ProPrice), value);
+        }
     }
 }

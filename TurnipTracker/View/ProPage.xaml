@@ -76,7 +76,7 @@
                             Margin="0,0,0,0"
                             FontSize="Medium"
                             IsVisible="{Binding IsNotPro}"
-                            Text="Upgrade to Island Tracker Pro today to unlock awesome features for your Animal Crossing adventures"
+                            Text="{Binding ProPrice, StringFormat='Upgrade to Island Tracker Pro for {0} today to unlock awesome features for your Animal Crossing adventures'}"
                             TextColor="{StaticResource TextPrimaryColor}" />
                         
                         <sharpnado:MaterialFrame
@@ -116,7 +116,7 @@
                                         TextColor="{StaticResource TextPrimaryColor}" />
                                     <Label
                                         FontSize="Medium"
-                                        Text="🤝 Add up to 10 friends"
+                                        Text="🤝 Add up to 15 friends"
                                         TextColor="{StaticResource TextPrimaryColor}" />
                                     <Label
                                         FontSize="Medium"

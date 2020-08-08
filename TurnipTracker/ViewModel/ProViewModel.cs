@@ -7,7 +7,6 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using MvvmHelpers.Commands;
 using Plugin.InAppBilling;
-using Plugin.InAppBilling.Abstractions;
 using TurnipTracker.Services;
 
 namespace TurnipTracker.ViewModel
@@ -17,6 +16,51 @@ namespace TurnipTracker.ViewModel
         public ProViewModel()
         {
 
+        }
+
+        public string ProPrice => SettingsService.ProPrice;
+
+        public AsyncCommand GetPriceCommand =>
+            new AsyncCommand(GetPrice);
+
+        async Task GetPrice()
+        {
+            if (IsBusy)
+                return;            
+
+          
+            IsBusy = true;
+
+            try
+            {
+
+                //Check Offline
+
+                var connected = await CrossInAppBilling.Current.ConnectAsync();
+
+                if (!connected)
+                {
+                    return;
+                }
+
+                var items = await CrossInAppBilling.Current.GetProductInfoAsync(ItemType.InAppPurchase, productId);
+
+                var item = items.FirstOrDefault(i => i.ProductId == productId);
+                if(item != null)
+                {
+                    SettingsService.ProPrice = item.LocalizedPrice;
+                    OnPropertyChanged(nameof(ProPrice));
+                }
+            }
+            catch(Exception ex)
+            {
+                //it is alright that we couldn't get the price
+            }
+            finally
+            {
+                await CrossInAppBilling.Current.DisconnectAsync();
+                IsBusy = false;
+            }
         }
 
         public bool NeedsProSync => IsPro && SettingsService.NeedsProSync;
@@ -50,7 +94,7 @@ namespace TurnipTracker.ViewModel
                 Analytics.TrackEvent("ProPurchase-Connected");
 
                 //check purchases
-                var purchase = await CrossInAppBilling.Current.PurchaseAsync(productId, ItemType.InAppPurchase, "acislandtracker");
+                var purchase = await CrossInAppBilling.Current.PurchaseAsync(productId, ItemType.InAppPurchase);
 
                 if (purchase == null)
                 {
@@ -72,6 +116,15 @@ namespace TurnipTracker.ViewModel
                     SettingsService.IsPro = true;
 
                     SettingsService.NeedsProSync = true;
+
+                    try
+                    {
+                        await CrossInAppBilling.Current.AcknowledgePurchaseAsync(purchase.PurchaseToken);
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
 
                     try
                     {
@@ -200,6 +253,27 @@ namespace TurnipTracker.ViewModel
                     OnPropertyChanged(nameof(NeedsProSync));
                     OnPropertyChanged(nameof(IsPro));
                     OnPropertyChanged(nameof(IsNotPro));
+
+                    var purchase = purchases.FirstOrDefault(p => p.ProductId == productId);
+
+                    if(string.IsNullOrWhiteSpace(SettingsService.ProReceipt))
+                    {
+
+                        SettingsService.ProReceipt = purchase?.PurchaseToken ?? string.Empty;
+                    }
+
+                    var ack = purchase?.IsAcknowledged ?? true;
+                    if(!ack)
+                    {
+                        try
+                        {
+                            await CrossInAppBilling.Current.AcknowledgePurchaseAsync(purchase.PurchaseToken);
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                    }
                 }
                 else
                 {
@@ -234,6 +308,35 @@ namespace TurnipTracker.ViewModel
         async Task SyncProStatus()
         {
 
+            if (!await CheckConnectivity("Offline", "You seem to be offline, check your internet connectivity and try again."))
+                return;
+
+            IsBusy = true;
+
+            if (IsBusy)
+                return;
+
+            try
+            {
+                await DataService.CreateProStatus(new Shared.ProStatus
+                {
+                    IsPro = true,
+                    Receipt = SettingsService.ProReceipt ?? string.Empty
+                });
+                SettingsService.NeedsProSync = false;
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Pro status sync", "Purchase successful, but it looks like something went wrong syncing with server, please try again.");
+
+                Crashes.TrackError(ex);
+            }
+            finally
+            {
+                OnPropertyChanged(nameof(NeedsProSync));
+                OnPropertyChanged(nameof(IsPro));
+                OnPropertyChanged(nameof(IsNotPro));
+            }
         }
 
         public AsyncCommand RetrieveProStatusCommand =>
