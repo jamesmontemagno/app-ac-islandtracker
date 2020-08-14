@@ -87,7 +87,7 @@ namespace TurnipTracker.ViewModel
 
                 if (!connected)
                 {
-                    await DisplayAlert("Unable to Connect", "Unable to connect go app store, check your internet connectivity and try again.");
+                    await DisplayAlert("Unable to Connect", "Unable to connect to the app store, check your internet connectivity and try again.");
                     return;
                 }
 
@@ -233,7 +233,7 @@ namespace TurnipTracker.ViewModel
 
                 if (!connected)
                 {
-                    await DisplayAlert("Unable to Connect","Unable to connect go app store, check your internet connectivity and try again.");
+                    await DisplayAlert("Unable to Connect","Unable to connect to the app store, check your internet connectivity and try again.");
                     return;
                 }
 
