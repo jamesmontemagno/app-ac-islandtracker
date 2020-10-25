@@ -3,6 +3,8 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "MAX_FRIENDS": "10"
+    "MAX_FRIENDS": "10",
+    "MAX_FREE_FRIENDS": "1",
+    "ENABLE_PRO":  "false"
   }
 }

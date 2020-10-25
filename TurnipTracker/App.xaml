@@ -1,12 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
-             x:Class="TurnipTracker.App">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="TurnipTracker.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
+    mc:Ignorable="d">
     <Application.Resources>
         <ResourceDictionary>
             <x:String x:Key="IconProfile">&#xf2bd;</x:String>
@@ -63,87 +64,93 @@
             <x:Int32 x:Key="BottomBarHeight">66</x:Int32>
 
             <Style x:Key="AcrylicFrame" TargetType="sharpnado:MaterialFrame">
-                <Setter Property="MaterialTheme" Value="Acrylic"/>
-                <Setter Property="CornerRadius" Value="10"/>
-                <Setter Property="LightThemeBackgroundColor" Value="{StaticResource AcrylicFrameBackgroundColor}"/>
+                <Setter Property="MaterialTheme" Value="Acrylic" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="LightThemeBackgroundColor" Value="{StaticResource AcrylicFrameBackgroundColor}" />
             </Style>
 
-            <Style x:Key="AcrylicButton" TargetType="sharpnado:MaterialFrame" BasedOn="{StaticResource AcrylicFrame}">
-                <Setter Property="CornerRadius" Value="27"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="HeightRequest" Value="54"/>
-                <Setter Property="Padding" Value="0"/>
-            </Style>
-            
-            <Style x:Key="AcrylicFAB" TargetType="sharpnado:MaterialFrame" BasedOn="{StaticResource AcrylicFrame}">
-                <Setter Property="CornerRadius" Value="27"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="HorizontalOptions" Value="End"/>
-                <Setter Property="VerticalOptions" Value="End"/>
-                <Setter Property="HeightRequest" Value="54"/>
-                <Setter Property="WidthRequest" Value="54"/>
-                <Setter Property="Padding" Value="0"/>
+            <Style
+                x:Key="AcrylicButton"
+                BasedOn="{StaticResource AcrylicFrame}"
+                TargetType="sharpnado:MaterialFrame">
+                <Setter Property="CornerRadius" Value="27" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HeightRequest" Value="54" />
+                <Setter Property="Padding" Value="0" />
             </Style>
 
-            <Style x:Key="AcrylicFABSmall" TargetType="sharpnado:MaterialFrame" BasedOn="{StaticResource AcrylicFrame}">
-                <Setter Property="CornerRadius" Value="21"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="HeightRequest" Value="42"/>
-                <Setter Property="WidthRequest" Value="42"/>
-                <Setter Property="Padding" Value="0"/>
+            <Style
+                x:Key="AcrylicFAB"
+                BasedOn="{StaticResource AcrylicFrame}"
+                TargetType="sharpnado:MaterialFrame">
+                <Setter Property="CornerRadius" Value="27" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="HeightRequest" Value="54" />
+                <Setter Property="WidthRequest" Value="54" />
+                <Setter Property="Padding" Value="0" />
+            </Style>
+
+            <Style
+                x:Key="AcrylicFABSmall"
+                BasedOn="{StaticResource AcrylicFrame}"
+                TargetType="sharpnado:MaterialFrame">
+                <Setter Property="CornerRadius" Value="21" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HeightRequest" Value="42" />
+                <Setter Property="WidthRequest" Value="42" />
+                <Setter Property="Padding" Value="0" />
             </Style>
 
             <Style x:Key="SocialPancake" TargetType="pancake:PancakeView">
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="Elevation" Value="2"/>
-                <Setter Property="Visual" Value="Material"/>
-                <Setter Property="BackgroundColor" Value="White"/>
-                <Setter Property="WidthRequest" Value="40"/>
-                <Setter Property="HeightRequest" Value="40"/>
-                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Visual" Value="Material" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="WidthRequest" Value="40" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="CornerRadius" Value="20" />
             </Style>
 
             <Style x:Key="SocialPancakeWithText" TargetType="pancake:PancakeView">
-                <Setter Property="Elevation" Value="2"/>
-                <Setter Property="Visual" Value="Material"/>
-                <Setter Property="BackgroundColor" Value="White"/>
-                <Setter Property="CornerRadius" Value="22"/>
-                <Setter Property="HeightRequest" Value="44"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="Visual" Value="Material" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="CornerRadius" Value="22" />
+                <Setter Property="HeightRequest" Value="44" />
+                <Setter Property="VerticalOptions" Value="Center" />
             </Style>
 
             <Style x:Key="BadgePancake" TargetType="pancake:PancakeView">
-                <Setter Property="Padding" Value="8,0"/>
-                <Setter Property="Elevation" Value="2"/>
-                <Setter Property="Visual" Value="Material"/>
-                <Setter Property="BackgroundColor" Value="{StaticResource NavigationPrimary}"/>
+                <Setter Property="Padding" Value="8,0" />
+                <Setter Property="Visual" Value="Material" />
+                <Setter Property="BackgroundColor" Value="{StaticResource NavigationPrimary}" />
             </Style>
 
             <Style x:Key="SocialLabel" TargetType="Label">
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="FontSize" Value="Small"/>
-                <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}"/>
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
             </Style>
 
             <Style x:Key="ButtonRoundedCorners" TargetType="Button">
-                <Setter Property="Visual" Value="Material"/>
-                <Setter Property="BorderColor" Value="{StaticResource NavigationPrimary}"/>
-                <Setter Property="BorderWidth" Value="2"/>
-                <Setter Property="CornerRadius" Value="22"/>
-                <Setter Property="HeightRequest" Value="44"/>
-                <Setter Property="Padding" Value="12,0"/>
-                <Setter Property="BackgroundColor" Value="{StaticResource AcrylicFrameBackgroundColor}"/>
-                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-                <Setter Property="TextColor" Value="{StaticResource NavigationPrimary}"/>
+                <Setter Property="Visual" Value="Material" />
+                <Setter Property="BorderColor" Value="{StaticResource NavigationPrimary}" />
+                <Setter Property="BorderWidth" Value="2" />
+                <Setter Property="CornerRadius" Value="22" />
+                <Setter Property="HeightRequest" Value="44" />
+                <Setter Property="Padding" Value="12,0" />
+                <Setter Property="BackgroundColor" Value="{StaticResource AcrylicFrameBackgroundColor}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="TextColor" Value="{StaticResource NavigationPrimary}" />
             </Style>
 
             <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
-                <Setter Property="Visual" Value="Material"/>
-                <Setter Property="Color" Value="{StaticResource NavigationPrimary}"/>
+                <Setter Property="Visual" Value="Material" />
+                <Setter Property="Color" Value="{StaticResource NavigationPrimary}" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

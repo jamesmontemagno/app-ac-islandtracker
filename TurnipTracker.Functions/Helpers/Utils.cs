@@ -68,7 +68,7 @@ namespace TurnipTracker.Functions.Helpers
             return (await cloudTable.ExecuteQuerySegmentedAsync(rangeQuery, null)).FirstOrDefault();
         }
 
-        public static async Task<bool> ReachedMaxFriends(CloudTable couldTable, string publicKey)
+        public static async Task<bool> ReachedMaxFriends(CloudTable couldTable, string publicKey, bool proUser)
         {
             if (Environment.GetEnvironmentVariable("JAMES_KEY") == publicKey)
                 return false;
@@ -78,7 +78,16 @@ namespace TurnipTracker.Functions.Helpers
             var rangeQuery = new TableQuery<FriendEntity>().Where(publicKeyFilter);
             var friends = await couldTable.ExecuteQuerySegmentedAsync(rangeQuery, null);
             var count = friends.Count();
-            var max = int.Parse(Environment.GetEnvironmentVariable("MAX_FRIENDS"));
+
+            var enablePro = bool.Parse(Environment.GetEnvironmentVariable("ENABLE_PRO"));
+
+            // if pro is enabled then check the different values
+            int max;
+            if (enablePro)
+                max = proUser ? int.Parse(Environment.GetEnvironmentVariable("MAX_FRIENDS")) : int.Parse(Environment.GetEnvironmentVariable("MAX_FREE_FRIENDS"));
+            else
+                max = int.Parse(Environment.GetEnvironmentVariable("MAX_FRIENDS"));
+
             return count >= max;
         }
 

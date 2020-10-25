@@ -63,8 +63,7 @@
             Grid.ColumnSpan="2"
             Padding="12,12,12,0"
             BackgroundColor="{StaticResource AcrylicSurface}"
-            CornerRadius="36,36,0,0"
-            Elevation="8">
+            CornerRadius="36,36,0,0">
             <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy, Mode=OneWay}">
                 <CollectionView
                     BackgroundColor="{StaticResource AcrylicSurface}"

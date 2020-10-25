@@ -61,8 +61,7 @@
                     Grid.Row="1"
                     Padding="12,12,12,0"
                     BackgroundColor="{StaticResource AcrylicSurface}"
-                    CornerRadius="36,36,0,0"
-                    Elevation="8">
+                    CornerRadius="36,36,0,0">
                     <StackLayout Padding="12" Spacing="4">
 
                         <Label
@@ -206,7 +205,6 @@
             Padding="36,12"
             BackgroundColor="{StaticResource AcrylicSurface}"
             CornerRadius="56,0,0,56"
-            Elevation="8"
             HorizontalOptions="Center"
             IsVisible="{Binding IsBusy}"
             VerticalOptions="Center">

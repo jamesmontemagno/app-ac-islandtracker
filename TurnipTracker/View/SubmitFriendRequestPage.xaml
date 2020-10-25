@@ -24,7 +24,6 @@
                    FontFamily="AnimalCrossing"/>
         <pancake:PancakeView CornerRadius="36,36,0,0"
                                  Grid.Row="1"
-                                 Elevation="8"
                                  Padding="12,12,12,12"
                                  BackgroundColor="{StaticResource AcrylicSurface}">
             <StackLayout Spacing="4" Padding="12">

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AppCenter.Analytics;
 using MvvmHelpers.Commands;
+using TurnipTracker.Helpers;
 using TurnipTracker.Services;
 using Xamarin.Essentials;
 
@@ -10,17 +11,17 @@ namespace TurnipTracker.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
-        public AsyncCommand TransferCommand { get; }
+        public AsyncCommand<Xamarin.Forms.View> TransferCommand { get; }
         public AsyncCommand DeleteAccountCommand { get; }
 
         public SettingsViewModel()
         {
-            TransferCommand = new AsyncCommand(Transfer);
+            TransferCommand = new AsyncCommand<Xamarin.Forms.View>(Transfer);
             DeleteAccountCommand = new AsyncCommand(DeleteAccount);
 
         }
 
-        async Task Transfer()
+        async Task Transfer(Xamarin.Forms.View element)
         {
 
             var choice = await App.Current.MainPage.DisplayActionSheet("Transfer profile?", "Cancel", null, "Transfer to another device", "Transfer to this device");
@@ -32,7 +33,14 @@ namespace TurnipTracker.ViewModel
                 if (await DisplayAlert("Transfer profile out", "This will export your credentials that you can re-import on another device. Your credentials will remain on this device. Do you want to proceed?", "Yes, transfer", "Cancel"))
                 {
                     var info = await SettingsService.TransferOut();
-                    await Share.RequestAsync(info);
+                    var bounds = element.GetAbsoluteBounds();
+
+                    await Share.RequestAsync(new ShareTextRequest
+                    {
+                        PresentationSourceBounds = bounds.ToSystemRectangle(),
+                        Title = "Island Tracker for ACNH Backup Codes",
+                        Text = info
+                    });
 
                     Analytics.TrackEvent("Transfer", new Dictionary<string, string>
                     {

@@ -53,7 +53,7 @@ namespace TurnipTracker.Functions
 
             try
             {
-                if (await Utils.ReachedMaxFriends(friendTable, friendRequest.MyPublicKey))
+                if (await Utils.ReachedMaxFriends(friendTable, friendRequest.MyPublicKey, friendRequest.ProUser))
                 {
                     return new BadRequestErrorMessageResult("You have reached the max friend count at this time.");
                 }
