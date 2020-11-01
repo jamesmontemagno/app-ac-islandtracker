@@ -11,8 +11,8 @@ namespace TurnipTracker.Services
     public static class SettingsService
     {
 #if DEBUG
-        static string publicCache = "2e179afb-8233-46f2-8a44-eecdc7f514da";
-        static string privateCache = "26bd6522-2f85-41b0-8bdd-abec010ece1f";
+        static string publicCache = DeviceInfo.Platform == DevicePlatform.iOS ? "8e179afb-8233-46f2-8a44-eecdc7f514da" : "9e179afb-8233-46f2-8a44-eecdc7f514da";
+        static string privateCache = DeviceInfo.Platform == DevicePlatform.iOS ? "86bd6522-2f85-41b0-8bdd-abec010ece1f" : "96bd6522-2f85-41b0-8bdd-abec010ece1f";
 #else
         static string publicCache = string.Empty;
         static string privateCache = string.Empty;

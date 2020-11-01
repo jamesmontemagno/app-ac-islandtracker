@@ -72,6 +72,9 @@ namespace TurnipTracker.Functions
 
             try
             {
+#if DEBUG
+                userEntity.ETag = "*";
+#endif
                 // Create the InsertOrReplace table operation
                 var insertOrMergeOperation = TableOperation.InsertOrMerge(userEntity);
 
