@@ -33,11 +33,15 @@ namespace TurnipTracker
             MainPage = new AppShell();
         }
 
+        // Use Azure functions hosted hosted in Bret Johnson's MSDN azure account
+        public static string BaseUrl = "https://turniptrackerfunctions20210109025913.azurewebsites.net";
+#if false
 #if DEBUG
         static string ip = DeviceInfo.Platform == DevicePlatform.Android ? "10.0.2.2" : "localhost";
         public static string BaseUrl = $"http://{ip}:7071";
 #else
         public const string BaseUrl = "AC_BASEURL";
+#endif
 #endif
 
         public const string GetFriendsKey = "AC_GetFriendsKey";
