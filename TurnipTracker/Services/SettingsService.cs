@@ -10,13 +10,13 @@ namespace TurnipTracker.Services
 {
     public static class SettingsService
     {
-#if DEBUG
-        static string publicCache = DeviceInfo.Platform == DevicePlatform.iOS ? "8e179afb-8233-46f2-8a44-eecdc7f514da" : "9e179afb-8233-46f2-8a44-eecdc7f514da";
-        static string privateCache = DeviceInfo.Platform == DevicePlatform.iOS ? "86bd6522-2f85-41b0-8bdd-abec010ece1f" : "96bd6522-2f85-41b0-8bdd-abec010ece1f";
-#else
+//#if DEBUG
+//        static string publicCache = DeviceInfo.Platform == DevicePlatform.iOS ? "8e179afb-8233-46f2-8a44-eecdc7f514da" : "9e179afb-8233-46f2-8a44-eecdc7f514da";
+//        static string privateCache = DeviceInfo.Platform == DevicePlatform.iOS ? "86bd6522-2f85-41b0-8bdd-abec010ece1f" : "96bd6522-2f85-41b0-8bdd-abec010ece1f";
+//#else
         static string publicCache = string.Empty;
         static string privateCache = string.Empty;
-#endif
+//#endif
 
         const string publicKey = "user_public_key_stable";
         const string privateKey = "user_private_key_stable";
@@ -98,10 +98,10 @@ namespace TurnipTracker.Services
             if (!Guid.TryParse(key0, out _) || !Guid.TryParse(key1, out _))
                 return false;
 
-            await SecureStorage.SetAsync(privateKey, key0);
+            Preferences.Set(privateKey, key0);
             Preferences.Set(privateKeyPref, key0);
             privateCache = key0;
-            await SecureStorage.SetAsync(publicKey, key1);
+            Preferences.Set(publicKey, key1);
             Preferences.Set(publicKeyPref, key1);
             publicCache = key1;
 
@@ -111,12 +111,12 @@ namespace TurnipTracker.Services
 
         static async Task<string> GetKey(string key)
         {
-            var val = await SecureStorage.GetAsync(key);
+            var val = Preferences.Get(key, string.Empty);
 
             if (string.IsNullOrWhiteSpace(val))
             {
                 val = Guid.NewGuid().ToString();
-                await SecureStorage.SetAsync(key, val);
+                Preferences.Set(key, val);
                 Preferences.Set(key+"_pref", val);
             }
 
