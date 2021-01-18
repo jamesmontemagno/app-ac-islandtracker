@@ -55,7 +55,10 @@ namespace TurnipTracker.Functions
             {
                 if (await Utils.ReachedMaxFriends(friendTable, friendRequest.MyPublicKey, friendRequest.ProUser))
                 {
-                    return new BadRequestErrorMessageResult("You have reached the max friend count at this time.");
+                    if(friendRequest.ProUser)
+                        return new BadRequestErrorMessageResult("You have reached the max friend count at this time.");
+                    else
+                        return new BadRequestErrorMessageResult("You have reached the max friend count at this time. Please upgrade to Island Tracker Pro.");
                 }
             }
             catch (Exception ex)

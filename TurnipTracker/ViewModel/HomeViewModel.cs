@@ -54,7 +54,13 @@ namespace TurnipTracker.ViewModel
                 Profile = DataService.GetProfile();
                 Profile.SaveProfileAction = SaveProfile;
                 OnPropertyChanged(nameof(Profile));
+                OnPropertyChanged(nameof(IsProAndNotBusy));
             }
+            else
+            {
+                OnPropertyChanged(nameof(IsProAndNotBusy));
+            }
+
         }
 
 
