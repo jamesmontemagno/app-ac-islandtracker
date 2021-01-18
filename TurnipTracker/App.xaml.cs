@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using Microsoft.AppCenter.Distribute;
 using TurnipTracker.Services;
 using TurnipTracker.View;
 using Xamarin.Essentials;
@@ -101,8 +100,7 @@ namespace TurnipTracker
                         $"android={AppCenterAndroid};" +
                         $"uwp={AppCenterUWP}",
                         typeof(Analytics),
-                        typeof(Crashes),
-                        typeof(Distribute));
+                        typeof(Crashes));
                 }
                 else
                 {

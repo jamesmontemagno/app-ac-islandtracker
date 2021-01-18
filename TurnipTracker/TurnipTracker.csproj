@@ -26,7 +26,6 @@
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.3.0.42" />
     <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit" Version="18.3.0.42" />
     <PackageReference Include="MonkeyCache.FileStore" Version="1.4.0-beta" />
-    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="4.1.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.1.0" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.1.0" />
     <PackageReference Include="Microsoft.AppCenter" Version="4.1.0" />
