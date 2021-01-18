@@ -79,7 +79,7 @@ namespace TurnipTracker.Functions.Helpers
             var friends = await couldTable.ExecuteQuerySegmentedAsync(rangeQuery, null);
             var count = friends.Count();
 
-            var enablePro = bool.Parse(Environment.GetEnvironmentVariable("ENABLE_PRO"));
+            bool.TryParse(Environment.GetEnvironmentVariable("ENABLE_PRO"), out var enablePro);
 
             // if pro is enabled then check the different values
             int max;

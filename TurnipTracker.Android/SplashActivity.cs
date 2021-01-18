@@ -6,9 +6,7 @@ using AndroidX.AppCompat.App;
 
 namespace TurnipTracker.Droid
 {
-    [Activity(Label = "Island Tracker", 
-        Icon = "@mipmap/icon", 
-        RoundIcon = "@mipmap/icon",
+    [Activity(Label = "Island Tracker",
         Theme = "@style/SplashTheme",
         MainLauncher = true)]
     public class SplashActivity : AppCompatActivity

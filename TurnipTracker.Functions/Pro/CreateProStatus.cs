@@ -44,7 +44,6 @@ namespace TurnipTracker.Functions.Pro
 
             if (status == null ||
                 string.IsNullOrWhiteSpace(status.PublicKey) ||
-                string.IsNullOrWhiteSpace(status.Receipt) ||
                 !status.IsPro)
             {
                 return new BadRequestErrorMessageResult("Invalid data to process request");
@@ -52,7 +51,7 @@ namespace TurnipTracker.Functions.Pro
            
             var proEntity = new ProStatusEntity(status.PublicKey, privateKey)
             {
-                Receipt = status.Receipt
+                Receipt = status.Receipt ?? string.Empty
             };
 
             try

@@ -119,7 +119,7 @@ namespace TurnipTracker.Services
         {
             status.PublicKey = await SettingsService.GetPublicKey();            
             var content = JsonConvert.SerializeObject(status);
-            await PostAsync($"api/CreateProStatus?code={App.PostCreateProfileKey}", content);            
+            await PostAsync($"api/CreateProStatus?code={App.PostProStatusKey}", content);            
         }
 
         public async Task UpsertUserProfile(Profile profile)

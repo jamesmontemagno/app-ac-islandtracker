@@ -11,8 +11,8 @@ namespace TurnipTracker.Services
     public static class SettingsService
     {
 #if DEBUG
-        static string publicCache = "2e179afb-8233-46f2-8a44-eecdc7f514da";
-        static string privateCache = "26bd6522-2f85-41b0-8bdd-abec010ece1f";
+        static string publicCache = "1e179afb-8233-46f2-8a44-eecdc7f514da";
+        static string privateCache = "16bd6522-2f85-41b0-8bdd-abec010ece1f";
 #else
         static string publicCache = string.Empty;
         static string privateCache = string.Empty;
@@ -236,6 +236,12 @@ namespace TurnipTracker.Services
         {
             get => Preferences.Get(nameof(ProPrice), string.Empty);
             set => Preferences.Set(nameof(ProPrice), value);
+        }
+
+        public static DateTime ProPriceDate
+        {
+            get => Preferences.Get(nameof(ProPriceDate), DateTime.UtcNow);
+            set => Preferences.Set(nameof(ProPriceDate), value);
         }
     }
 }

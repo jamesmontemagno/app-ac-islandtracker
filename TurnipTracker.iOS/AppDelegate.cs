@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using StoreKit;
 using Syncfusion.SfNumericTextBox.XForms.iOS;
 using Syncfusion.SfNumericUpDown.XForms.iOS;
 using Syncfusion.XForms.iOS.ComboBox;
 using Syncfusion.XForms.iOS.MaskedEdit;
 using Syncfusion.XForms.iOS.Shimmer;
 using Syncfusion.XForms.iOS.TextInputLayout;
+using TurnipTracker.Services;
 using UIKit;
 
 namespace TurnipTracker.iOS
@@ -46,6 +48,10 @@ namespace TurnipTracker.iOS
             Syncfusion.XForms.iOS.Buttons.SfSegmentedControlRenderer.Init();
             LoadApplication(new App());
 
+            //initialize current one.
+            Plugin.InAppBilling.InAppBillingImplementation.OnShouldAddStorePayment = OnShouldAddStorePayment;
+            var current = Plugin.InAppBilling.CrossInAppBilling.Current;
+
             return base.FinishedLaunching(app, options);
         }
 
@@ -59,6 +65,13 @@ namespace TurnipTracker.iOS
             }*/
             return true;
 
+        }
+
+        bool OnShouldAddStorePayment(SKPaymentQueue queue, SKPayment payment, SKProduct product)
+        {
+            SettingsService.IsPro = true;
+            SettingsService.NeedsProSync = true;
+            return true;
         }
 
 

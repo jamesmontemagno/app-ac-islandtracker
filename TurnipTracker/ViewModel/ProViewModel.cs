@@ -18,6 +18,13 @@ namespace TurnipTracker.ViewModel
 
         }
 
+        string busyTitle = "Verifying Pro...";
+        public string BusyTitle
+        {
+            get => busyTitle;
+            set => SetProperty(ref busyTitle, value);
+        }
+
         public string ProPrice => SettingsService.ProPrice;
 
         public AsyncCommand GetPriceCommand =>
@@ -26,13 +33,37 @@ namespace TurnipTracker.ViewModel
         async Task GetPrice()
         {
             if (IsBusy)
-                return;            
+                return;
 
-          
+            if (IsPro)
+                return;
+
+
+            if(string.IsNullOrWhiteSpace(SettingsService.ProPrice) || SettingsService.ProPriceDate.AddDays(2) < DateTime.UtcNow)
+            {
+
+            }
+            else
+            {
+                return;
+            }
+
+
+
+            BusyTitle = "Syncing prices...";
+
             IsBusy = true;
 
             try
             {
+
+#if DEBUG
+                SettingsService.ProPrice = "$2.99";
+                OnPropertyChanged(nameof(ProPrice));
+                return;
+#endif
+
+
 
                 //Check Offline
 
@@ -50,6 +81,8 @@ namespace TurnipTracker.ViewModel
                 {
                     SettingsService.ProPrice = item.LocalizedPrice;
                     OnPropertyChanged(nameof(ProPrice));
+
+                    SettingsService.ProPriceDate = DateTime.UtcNow;
                 }
             }
             catch(Exception ex)
@@ -75,8 +108,10 @@ namespace TurnipTracker.ViewModel
             if (!await CheckConnectivity("Offline", "You seem to be offline, check your internet connectivity and try again."))
                 return;
 
+            BusyTitle = "";
             Analytics.TrackEvent("ProPurchase-Start");
             IsBusy = true;
+
 
             try
             {
@@ -209,7 +244,7 @@ namespace TurnipTracker.ViewModel
         public AsyncCommand RestorePurchasesCommand =>
             new AsyncCommand(RestorePurchases);
 
-        const string productId = "com.refractored.acislandtracker.pro";
+        const string productId = "islandtrackerpro";
 
         async Task RestorePurchases()
         {
@@ -220,6 +255,7 @@ namespace TurnipTracker.ViewModel
             if (!await CheckConnectivity("Offline", "You seem to be offline, check your internet connectivity and try again."))
                 return;
 
+            BusyTitle = "Verifying purchase...";
             IsBusy = true;
 
             try
@@ -274,6 +310,7 @@ namespace TurnipTracker.ViewModel
 
                         }
                     }
+
                 }
                 else
                 {
@@ -311,10 +348,13 @@ namespace TurnipTracker.ViewModel
             if (!await CheckConnectivity("Offline", "You seem to be offline, check your internet connectivity and try again."))
                 return;
 
-            IsBusy = true;
 
             if (IsBusy)
                 return;
+
+
+            BusyTitle = "Syncing status...";
+            IsBusy = true;
 
             try
             {
@@ -327,12 +367,13 @@ namespace TurnipTracker.ViewModel
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Pro status sync", "Purchase successful, but it looks like something went wrong syncing with server, please try again.");
+                await DisplayAlert("Pro status sync", "It looks like something went wrong syncing with server, please try again.");
 
                 Crashes.TrackError(ex);
             }
             finally
             {
+                IsBusy = false;
                 OnPropertyChanged(nameof(NeedsProSync));
                 OnPropertyChanged(nameof(IsPro));
                 OnPropertyChanged(nameof(IsNotPro));
@@ -348,6 +389,7 @@ namespace TurnipTracker.ViewModel
             if (IsBusy)
                 return;
 
+            BusyTitle = "Verifying purchase...";
             IsBusy = true;
             try
             {

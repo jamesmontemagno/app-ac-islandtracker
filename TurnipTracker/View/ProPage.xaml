@@ -75,7 +75,7 @@
                             Margin="0,0,0,0"
                             FontSize="Medium"
                             IsVisible="{Binding IsNotPro}"
-                            Text="{Binding ProPrice, StringFormat='Upgrade to Island Tracker Pro for {0} today to unlock awesome features for your Animal Crossing adventures'}"
+                            Text="{Binding ProPrice, StringFormat='Upgrade to Island Tracker Pro ({0}) today to unlock awesome features for your Animal Crossing adventures'}"
                             TextColor="{StaticResource TextPrimaryColor}" />
                         
                         <sharpnado:MaterialFrame
@@ -209,7 +209,7 @@
             IsVisible="{Binding IsBusy}"
             VerticalOptions="Center">
             <busyindicator:SfBusyIndicator
-                Title="Verifying Pro..."
+                Title="{Binding BusyTitle}"
                 AnimationType="Box"
                 EnableAnimation="{Binding IsBusy}"
                 TextColor="{StaticResource TextPrimaryColor}"

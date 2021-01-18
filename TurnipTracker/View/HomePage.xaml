@@ -138,7 +138,7 @@
                                     <Label
                                         FontFamily="AnimalCrossing"
                                         FontSize="Medium"
-                                        Text="Island Gate"
+                                        Text="Island Gate (Pro)"
                                         TextColor="{StaticResource TextPrimaryColor}" />
                                     <inputLayout:SfTextInputLayout
                                         ContainerType="Outlined"
