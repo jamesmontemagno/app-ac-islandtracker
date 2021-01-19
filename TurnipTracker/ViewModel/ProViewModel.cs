@@ -209,6 +209,9 @@ namespace TurnipTracker.ViewModel
                     case PurchaseError.PaymentNotAllowed:
                         message = "Payment does not seem to be enabled/allowed, please try again.";
                         break;
+                    case PurchaseError.UserCancelled:
+                        //don't do anything
+                        break;
                     default:
                         message = "Something has gone wrong, please try again.";
                         break;
