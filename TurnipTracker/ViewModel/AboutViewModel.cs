@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AppCenter.Analytics;
 using MvvmHelpers.Commands;
@@ -29,7 +30,7 @@ namespace TurnipTracker.ViewModel
         public AsyncCommand SubscribeCommand { get; }
         public AsyncCommand<string> OpenBrowserCommand { get; }
 
-       public List<AttributionItem> Attributions { get; }
+        public List<AttributionItem> Attributions { get; }
 
         public string AppInfo => $"{Xamarin.Essentials.AppInfo.VersionString} ({Xamarin.Essentials.AppInfo.BuildString})";
 
@@ -40,7 +41,7 @@ namespace TurnipTracker.ViewModel
             SubscribeCommand = new AsyncCommand(Subscribe);
             SendEmailCommand = new AsyncCommand(SendEmail);
             OpenBrowserCommand = new AsyncCommand<string>(OpenBrowser);
-            
+
             Attributions = new List<AttributionItem>
             {
                 new AttributionItem { Tag = "ac-nh-turnip-prices", Text = "Mike Bryant - Turnip predictor algorithm"},
@@ -149,7 +150,7 @@ namespace TurnipTracker.ViewModel
             await Browser.OpenAsync(url);
         }
 
-       
+
 
 
 
@@ -157,13 +158,23 @@ namespace TurnipTracker.ViewModel
         {
             try
             {
-                Analytics.TrackEvent("SendEmail");
                 var key = await SettingsService.GetPublicKey();
+                var builder = new StringBuilder();
+                builder.AppendLine($"App Version: {Xamarin.Essentials.AppInfo.VersionString} | Build: {Xamarin.Essentials.AppInfo.BuildString}");
+                builder.AppendLine($"OS: {DeviceInfo.Platform}");
+                builder.AppendLine($"OS Version: {DeviceInfo.VersionString}");
+                builder.AppendLine($"Manufacturer: {DeviceInfo.Manufacturer}");
+                builder.AppendLine($"Device Model: {DeviceInfo.Model}");
+                builder.AppendLine($"Public Key: {key}");
+                builder.AppendLine(string.Empty);
+                builder.AppendLine("Please let me know what issues you are having here:");
+
+                Analytics.TrackEvent("SendEmail");
                 var message = new EmailMessage
                 {
                     Subject = $"Island Tracker Issue. {AppInfo}",
-                    Body = $"Describe issue here. Public Key: {key}",
-                   To = new List<string> { "acislandtracker@gmail.com"}
+                    Body = builder.ToString(),
+                    To = new List<string> { "acislandtracker@gmail.com" }
                 };
 
                 if (AttachDetails)
@@ -184,6 +195,6 @@ namespace TurnipTracker.ViewModel
                 await DisplayAlert("Unable to send email", "Email acislandtracker@gmail.com directly.");
             }
         }
-       
+
     }
 }
