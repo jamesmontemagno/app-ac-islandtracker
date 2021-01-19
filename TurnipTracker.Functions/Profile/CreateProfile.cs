@@ -88,17 +88,25 @@ namespace TurnipTracker.Functions
                 bool.TryParse(Environment.GetEnvironmentVariable("AUTO_PRO"), out var autoPro);
                 if (autoPro)
                 {
-                    var proEntity = new ProStatusEntity(user.PublicKey, privateKey)
+                    try
                     {
-                        Receipt = "pre-pro"
-                    };
 
-                    // Create the InsertOrReplace table operation
-                    var insertOrMergeOperationPro = TableOperation.InsertOrMerge(proEntity);
+                        var proEntity = new ProStatusEntity(user.PublicKey, privateKey)
+                        {
+                            Receipt = "pre-pro"
+                        };
 
-                    // Execute the operation.
-                    var resultPro = await proTable.ExecuteAsync(insertOrMergeOperationPro);
-                    var insertedPro = resultPro.Result as ProStatusEntity;
+                        // Create the InsertOrReplace table operation
+                        var insertOrMergeOperationPro = TableOperation.InsertOrMerge(proEntity);
+
+                        // Execute the operation.
+                        var resultPro = await proTable.ExecuteAsync(insertOrMergeOperationPro);
+                        var insertedPro = resultPro.Result as ProStatusEntity;
+                    }
+                    catch(Exception expro)
+                    {
+                        log.LogError($"Error {nameof(CreateProfile)} - Error: " + expro.Message);
+                    }
                 }
             }
             catch(Exception ex)
