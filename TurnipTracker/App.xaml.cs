@@ -95,7 +95,7 @@ namespace TurnipTracker
             {
                 if (!IsStore)
                 {
-                    Distribute.UpdateTrack = UpdateTrack.Private;
+                    //Distribute.UpdateTrack = UpdateTrack.Private;
                     AppCenter.Start($"ios={AppCenteriOS};" +
                         $"android={AppCenterAndroid};" +
                         $"uwp={AppCenterUWP}",
