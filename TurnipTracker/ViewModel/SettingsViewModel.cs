@@ -50,7 +50,7 @@ namespace TurnipTracker.ViewModel
             }
             else if (choice.Contains("this device"))
             {
-                if (await DisplayAlert("Transfer in profile?", "Warning! This will start a transfer process that will override your existing profile. Ensure that you have exported your existing profile first as you can not go back. Do you still want to proceed?", "Yes, transfer in", "Cancel"))
+                if (await DisplayAlert("Transfer in profile?", "Warning! This will start a transfer process that will override your existing profile. Ensure that you have exported your existing profile first as you can not go back. When a new account is imported your Pro status will be reset and you will have to retrieve it again. Do you still want to proceed?", "Yes, transfer in", "Cancel"))
                 {
                     var info = await App.Current.MainPage.DisplayPromptAsync("Entry transfer code", "Enter your transfer code that you exported to continue.", "OK", "Cancel");
 
@@ -65,6 +65,8 @@ namespace TurnipTracker.ViewModel
                     if (await SettingsService.TransferIn(info))
                     {
                         await DisplayAlert("Success", "Your profile has been updated. Ensure you update information in the app and sync with the cloud.");
+                        SettingsService.IsPro = false;
+                        SettingsService.NeedsProSync = false;
                     }
                     else
                     {
