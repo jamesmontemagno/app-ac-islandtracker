@@ -33,7 +33,7 @@
 	<key>CFBundleName</key>
 	<string>Island Tracker</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>2.0.1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>acislandtracker</string>
