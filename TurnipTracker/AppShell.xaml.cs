@@ -13,7 +13,10 @@ namespace TurnipTracker
         {
             InitializeComponent();
 
-            SettingsService.IsPro = true;
+#if DEBUG
+            //SettingsService.IsPro = true;
+            //SettingsService.NeedsProSync = true;
+#endif
 
             if(!SettingsService.FirstRun)
                 MainTabBar.CurrentItem = MainTabBar.Items[1];

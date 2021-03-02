@@ -54,15 +54,14 @@
                 FontFamily="AnimalCrossing"
                 FontSize="38"
                 HorizontalOptions="Center"
-                VerticalOptions="Center"
                 Text="Settings"
-                TextColor="White" />
+                TextColor="White"
+                VerticalOptions="Center" />
             <pancake:PancakeView
                 Grid.Row="1"
                 Padding="12,12,12,0"
                 BackgroundColor="{StaticResource AcrylicSurface}"
-                CornerRadius="36,36,0,0"
-                Elevation="8">
+                CornerRadius="36,36,0,0">
                 <StackLayout Padding="12" Spacing="4">
 
                     <Label
@@ -154,7 +153,8 @@
                         <effectsview:SfEffectsView
                             Padding="12"
                             CornerRadius="10"
-                            TouchUpCommand="{Binding TransferCommand}">
+                            TouchUpCommand="{Binding TransferCommand}"
+                            TouchUpCommandParameter="{Binding Source={RelativeSource Self}}">
                             <Label
                                 FontSize="Medium"
                                 HorizontalOptions="Center"

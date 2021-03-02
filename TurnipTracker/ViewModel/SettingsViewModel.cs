@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AppCenter.Analytics;
 using MvvmHelpers.Commands;
+using TurnipTracker.Helpers;
 using TurnipTracker.Services;
 using Xamarin.Essentials;
 
@@ -10,17 +11,17 @@ namespace TurnipTracker.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
-        public AsyncCommand TransferCommand { get; }
+        public AsyncCommand<Xamarin.Forms.View> TransferCommand { get; }
         public AsyncCommand DeleteAccountCommand { get; }
 
         public SettingsViewModel()
         {
-            TransferCommand = new AsyncCommand(Transfer);
+            TransferCommand = new AsyncCommand<Xamarin.Forms.View>(Transfer);
             DeleteAccountCommand = new AsyncCommand(DeleteAccount);
 
         }
 
-        async Task Transfer()
+        async Task Transfer(Xamarin.Forms.View element)
         {
 
             var choice = await App.Current.MainPage.DisplayActionSheet("Transfer profile?", "Cancel", null, "Transfer to another device", "Transfer to this device");
@@ -32,7 +33,14 @@ namespace TurnipTracker.ViewModel
                 if (await DisplayAlert("Transfer profile out", "This will export your credentials that you can re-import on another device. Your credentials will remain on this device. Do you want to proceed?", "Yes, transfer", "Cancel"))
                 {
                     var info = await SettingsService.TransferOut();
-                    await Share.RequestAsync(info);
+                    var bounds = element.GetAbsoluteBounds();
+
+                    await Share.RequestAsync(new ShareTextRequest
+                    {
+                        PresentationSourceBounds = bounds.ToSystemRectangle(),
+                        Title = "Island Tracker for ACNH Backup Codes",
+                        Text = info
+                    });
 
                     Analytics.TrackEvent("Transfer", new Dictionary<string, string>
                     {
@@ -42,7 +50,7 @@ namespace TurnipTracker.ViewModel
             }
             else if (choice.Contains("this device"))
             {
-                if (await DisplayAlert("Transfer in profile?", "Warning! This will start a transfer process that will override your existing profile. Ensure that you have exported your existing profile first as you can not go back. Do you still want to proceed?", "Yes, transfer in", "Cancel"))
+                if (await DisplayAlert("Transfer in profile?", "Warning! This will start a transfer process that will override your existing profile. Ensure that you have exported your existing profile first as you can not go back. When a new account is imported your Pro status will be reset and you will have to retrieve it again. Do you still want to proceed?", "Yes, transfer in", "Cancel"))
                 {
                     var info = await App.Current.MainPage.DisplayPromptAsync("Entry transfer code", "Enter your transfer code that you exported to continue.", "OK", "Cancel");
 
@@ -57,6 +65,8 @@ namespace TurnipTracker.ViewModel
                     if (await SettingsService.TransferIn(info))
                     {
                         await DisplayAlert("Success", "Your profile has been updated. Ensure you update information in the app and sync with the cloud.");
+                        SettingsService.IsPro = false;
+                        SettingsService.NeedsProSync = false;
                     }
                     else
                     {

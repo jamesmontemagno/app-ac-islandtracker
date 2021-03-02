@@ -13,10 +13,18 @@ namespace TurnipTracker.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProPage : ContentPage
     {
+        ProViewModel vm;
         public ProPage()
         {
             InitializeComponent();
-            BindingContext = new ProViewModel();
+            BindingContext = vm = new ProViewModel();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            vm.GetPriceCommand.ExecuteAsync().ContinueWith((t) => { });
         }
 
     }
