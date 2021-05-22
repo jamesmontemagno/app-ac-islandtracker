@@ -11,6 +11,7 @@ using TurnipTracker.Shared;
 using Microsoft.WindowsAzure.Storage.Table;
 using TurnipTracker.Functions.Helpers;
 using System.Web.Http;
+using TurnipTracker.Functions.Model;
 
 namespace TurnipTracker.Functions
 {
@@ -20,6 +21,7 @@ namespace TurnipTracker.Functions
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             [Table("User")] CloudTable cloudTable,
+            [Table("ProStatus")] CloudTable proTable,
             ILogger log)
         {
             log.LogInformation($"C# HTTP trigger {nameof(CreateProfile)} function processed a request.");
@@ -72,6 +74,9 @@ namespace TurnipTracker.Functions
 
             try
             {
+#if DEBUG
+                userEntity.ETag = "*";
+#endif
                 // Create the InsertOrReplace table operation
                 var insertOrMergeOperation = TableOperation.InsertOrMerge(userEntity);
 
@@ -79,6 +84,30 @@ namespace TurnipTracker.Functions
                 var result = await cloudTable.ExecuteAsync(insertOrMergeOperation);
                 var insertedCustomer = result.Result as UserEntity;
 
+
+                bool.TryParse(Environment.GetEnvironmentVariable("AUTO_PRO"), out var autoPro);
+                if (autoPro)
+                {
+                    try
+                    {
+
+                        var proEntity = new ProStatusEntity(user.PublicKey, privateKey)
+                        {
+                            Receipt = "pre-pro"
+                        };
+
+                        // Create the InsertOrReplace table operation
+                        var insertOrMergeOperationPro = TableOperation.InsertOrMerge(proEntity);
+
+                        // Execute the operation.
+                        var resultPro = await proTable.ExecuteAsync(insertOrMergeOperationPro);
+                        var insertedPro = resultPro.Result as ProStatusEntity;
+                    }
+                    catch(Exception expro)
+                    {
+                        log.LogError($"Error {nameof(CreateProfile)} - Error: " + expro.Message);
+                    }
+                }
             }
             catch(Exception ex)
             {

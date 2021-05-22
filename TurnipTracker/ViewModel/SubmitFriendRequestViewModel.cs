@@ -96,6 +96,7 @@ namespace TurnipTracker.ViewModel
             }
             finally
             {
+                ShowClose = true;
                 IsBusy = false;
             }
 

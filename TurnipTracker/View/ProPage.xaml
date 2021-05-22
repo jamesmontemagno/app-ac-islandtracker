@@ -3,6 +3,7 @@
     x:Class="TurnipTracker.View.ProPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:effectsview="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
@@ -21,88 +22,200 @@
     <d:ContentPage.BindingContext>
         <viewmodel:ProViewModel />
     </d:ContentPage.BindingContext>
-    <ScrollView>
-        <Grid
-            Padding="{OnPlatform Android='0,12,0,0',
-                                 iOS='0,12,0,0'}"
-            BackgroundColor="{StaticResource NavigationPrimary}"
-            RowSpacing="12">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Label
-                FontFamily="AnimalCrossing"
-                FontSize="24"
-                HorizontalOptions="Center"
-                Text="Island Tracker Pro"
-                TextColor="White"
-                VerticalOptions="Center" />
-            <pancake:PancakeView
-                Margin="0,0,12,0"
-                AutomationProperties.HelpText="Button - Close Page"
-                AutomationProperties.IsInAccessibleTree="True"
-                HorizontalOptions="End"
-                Style="{StaticResource SocialPancake}"
-                VerticalOptions="Center">
-                <effectsview:SfEffectsView
-                    CornerRadius="20"
-                    IsEnabled="{Binding IsNotBusy}"
-                    TouchUpCommand="{Binding CloseCommand}">
-                    <Label
-                        FontFamily="FA-S"
-                        Style="{StaticResource SocialLabel}"
-                        Text="{StaticResource IconDeny}" />
-                </effectsview:SfEffectsView>
-            </pancake:PancakeView>
-            <pancake:PancakeView
-                Grid.Row="1"
-                Padding="12,12,12,0"
-                BackgroundColor="{StaticResource AcrylicSurface}"
-                CornerRadius="36,36,0,0"
-                Elevation="8">
-                <StackLayout Padding="12" Spacing="4">
+    <Grid>
+        <ScrollView>
+            <Grid
+                Padding="{OnPlatform Android='0,12,0,0',
+                                     iOS='0,12,0,0'}"
+                BackgroundColor="{StaticResource NavigationPrimary}"
+                RowSpacing="12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label
+                    FontFamily="AnimalCrossing"
+                    FontSize="24"
+                    HorizontalOptions="Center"
+                    Text="Island Tracker Pro"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+                <pancake:PancakeView
+                    Margin="0,0,12,0"
+                    AutomationProperties.HelpText="Button - Close Page"
+                    AutomationProperties.IsInAccessibleTree="True"
+                    HorizontalOptions="End"
+                    Style="{StaticResource SocialPancake}"
+                    VerticalOptions="Center">
+                    <effectsview:SfEffectsView
+                        CornerRadius="20"
+                        IsEnabled="{Binding IsNotBusy}"
+                        TouchUpCommand="{Binding CloseCommand}">
+                        <Label
+                            FontFamily="FA-S"
+                            Style="{StaticResource SocialLabel}"
+                            Text="{StaticResource IconDeny}" />
+                    </effectsview:SfEffectsView>
+                </pancake:PancakeView>
+                <pancake:PancakeView
+                    Grid.Row="1"
+                    Padding="12,12,12,0"
+                    BackgroundColor="{StaticResource AcrylicSurface}"
+                    CornerRadius="36,36,0,0">
+                    <StackLayout Padding="12" Spacing="4">
 
-                    <Label
-                        Margin="0,0,0,0"
-                        FontSize="Medium"
-                        Text="Thanks purchasing Island Tracker and supporting independent development!  With your purchase comes lifetime Pro mode of the app with an ever growing list of features. "
-                        TextColor="{StaticResource TextPrimaryColor}" />
+                        <Label
+                            Margin="0,0,0,0"
+                            FontSize="Medium"
+                            IsVisible="{Binding IsPro}"
+                            Text="Thanks purchasing Island Tracker Pro and supporting independent development!  With your purchase comes lifetime Pro mode of the app with an ever growing list of features. "
+                            TextColor="{StaticResource TextPrimaryColor}" />
 
-                    <Label
-                        Margin="24,24,0,0"
-                        FontFamily="AnimalCrossing"
-                        FontSize="Large"
-                        Text="Pro Features:"
-                        TextColor="{StaticResource TextPrimaryColor}" />
+                        <Label
+                            Margin="0,0,0,0"
+                            FontSize="Medium"
+                            IsVisible="{Binding IsNotPro}"
+                            Text="{Binding ProPrice, StringFormat='Upgrade to Island Tracker Pro ({0}) today to unlock awesome features for your Animal Crossing adventures'}"
+                            TextColor="{StaticResource TextPrimaryColor}" />
+                        
+                        <sharpnado:MaterialFrame
+                            Margin="0,8,0,0"
+                            Padding="0"
+                            HorizontalOptions="FillAndExpand"
+                            IsVisible="{Binding IsNotPro}"
+                            Style="{StaticResource AcrylicFrame}">
+                            <effectsview:SfEffectsView
+                                Padding="12"
+                                CornerRadius="10"
+                                IsEnabled="{Binding IsNotBusy}"
+                                TouchUpCommand="{Binding PurchaseProCommand}">
+                                <Label
+                                    FontSize="Medium"
+                                    HorizontalOptions="Center"
+                                    Text="Upgrade to Island Tracker Pro"
+                                    TextColor="{StaticResource TextPrimaryColor}" />
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+                        <Label
+                            Margin="24,24,0,0"
+                            FontFamily="AnimalCrossing"
+                            FontSize="Large"
+                            Text="Pro Features:"
+                            TextColor="{StaticResource TextPrimaryColor}" />
 
-                    <sharpnado:MaterialFrame
-                        Padding="0"
-                        HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource AcrylicFrame}">
-                        <effectsview:SfEffectsView Padding="24" CornerRadius="10">
-                            <StackLayout Spacing="12">
+                        <sharpnado:MaterialFrame
+                            Padding="0"
+                            HorizontalOptions="FillAndExpand"
+                            Style="{StaticResource AcrylicFrame}">
+                            <effectsview:SfEffectsView Padding="24" CornerRadius="10">
+                                <StackLayout Spacing="12">
+                                    <Label
+                                        FontSize="Medium"
+                                        Text="⛩️ Gate status sync"
+                                        TextColor="{StaticResource TextPrimaryColor}" />
+                                    <Label
+                                        FontSize="Medium"
+                                        Text="🤝 Add up to 15 friends"
+                                        TextColor="{StaticResource TextPrimaryColor}" />
+                                    <Label
+                                        FontSize="Medium"
+                                        Text="📰 Always ad free"
+                                        TextColor="{StaticResource TextPrimaryColor}" />
+                                    <Label
+                                        FontSize="Medium"
+                                        Text="📧 Premium e-mail support"
+                                        TextColor="{StaticResource TextPrimaryColor}" />
+                                    <Label
+                                        FontSize="Medium"
+                                        Text="🌟 All future features"
+                                        TextColor="{StaticResource TextPrimaryColor}" />
+                                </StackLayout>
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+
+                        <sharpnado:MaterialFrame
+                            Margin="0,8,0,0"
+                            Padding="0"
+                            HorizontalOptions="FillAndExpand"
+                            IsVisible="{Binding IsNotPro}"
+                            Style="{StaticResource AcrylicFrame}">
+                            <effectsview:SfEffectsView
+                                Padding="12"
+                                CornerRadius="10"
+                                IsEnabled="{Binding IsNotBusy}"
+                                TouchUpCommand="{Binding RestorePurchasesCommand}">
                                 <Label
                                     FontSize="Medium"
-                                    Text="⛩️ Gate status sync"
+                                    HorizontalOptions="Center"
+                                    Text="Restore Purchase"
                                     TextColor="{StaticResource TextPrimaryColor}" />
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+                        <sharpnado:MaterialFrame
+                            Margin="0,8,0,0"
+                            Padding="0"
+                            HorizontalOptions="FillAndExpand"
+                            IsVisible="{Binding NeedsProSync}"
+                            Style="{StaticResource AcrylicFrame}">
+                            <effectsview:SfEffectsView
+                                Padding="12"
+                                CornerRadius="10"
+                                IsEnabled="{Binding IsNotBusy}"
+                                TouchUpCommand="{Binding SyncProStatusCommand}">
                                 <Label
                                     FontSize="Medium"
-                                    Text="🤝 Add up to 10 friends"
+                                    HorizontalOptions="Center"
+                                    Text="Sync Pro Status"
                                     TextColor="{StaticResource TextPrimaryColor}" />
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+                        <Label FontSize="Micro" 
+                               IsVisible="{Binding NeedsProSync}"
+                               Text="Sync pro status with server for backup."
+                               TextColor="{StaticResource TextPrimaryColor}"
+                               HorizontalOptions="Center"/>
+                        <sharpnado:MaterialFrame
+                            Margin="0,8,0,0"
+                            Padding="0"
+                            HorizontalOptions="FillAndExpand"
+                            IsVisible="{Binding IsNotPro}"
+                            Style="{StaticResource AcrylicFrame}">
+                            <effectsview:SfEffectsView
+                                Padding="12"
+                                CornerRadius="10"
+                                IsEnabled="{Binding IsNotBusy}"
+                                TouchUpCommand="{Binding RetrieveProStatusCommand}">
                                 <Label
                                     FontSize="Medium"
-                                    Text="📧 Premium e-mail support"
+                                    HorizontalOptions="Center"
+                                    Text="Retrieve Pro Status"
                                     TextColor="{StaticResource TextPrimaryColor}" />
-                                <Label
-                                    FontSize="Medium"
-                                    Text="🌟 All future features"
-                                    TextColor="{StaticResource TextPrimaryColor}" />
-                            </StackLayout>
-                        </effectsview:SfEffectsView>
-                    </sharpnado:MaterialFrame>
-                </StackLayout>
-            </pancake:PancakeView>
-        </Grid>
-    </ScrollView>
+                            </effectsview:SfEffectsView>
+                        </sharpnado:MaterialFrame>
+                        <Label FontSize="Micro" 
+                               IsVisible="{Binding IsNotPro}"
+                               Text="Use if transfering account or purchased full priced app."
+                               TextColor="{StaticResource TextPrimaryColor}"
+                               HorizontalOptions="Center"/>
+                    </StackLayout>
+                </pancake:PancakeView>
+            </Grid>
+        </ScrollView>
+        <pancake:PancakeView
+            Padding="36,12"
+            BackgroundColor="{StaticResource AcrylicSurface}"
+            CornerRadius="56,0,0,56"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center">
+            <busyindicator:SfBusyIndicator
+                Title="{Binding BusyTitle}"
+                AnimationType="Box"
+                EnableAnimation="{Binding IsBusy}"
+                TextColor="{StaticResource TextPrimaryColor}"
+                ViewBoxHeight="100"
+                ViewBoxWidth="100"
+                Duration=".2" />
+        </pancake:PancakeView>
+    </Grid>
 </ContentPage>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using Microsoft.AppCenter.Distribute;
 using TurnipTracker.Services;
 using TurnipTracker.View;
 using Xamarin.Essentials;
@@ -39,7 +38,7 @@ namespace TurnipTracker
 #else
         public const string BaseUrl = "AC_BASEURL";
 #endif
-
+        public const string GetProStatusKey = "AC_GetProStatusKey";
         public const string GetFriendsKey = "AC_GetFriendsKey";
         public const string GetFriendRequestsKey = "AC_GetFriendRequestsKey";
         public const string GetFriendRequestCountKey = "AC_GetFriendRequestCountKey";
@@ -50,6 +49,7 @@ namespace TurnipTracker
         public const string PutUpdateProfileKey = "AC_PutUpdateProfileKey";
         public const string PutUpdateTurnipPricesKey = "AC_PutUpdateTurnipPricesKey";
         public const string PostCreateProfileKey = "AC_PostCreateProfileKey";
+        public const string PostProStatusKey = "AC_PostProStatusKey";
 
         public static bool IsStore => "AC_IsStore" == "true" ? true : false;
 
@@ -95,13 +95,12 @@ namespace TurnipTracker
             {
                 if (!IsStore)
                 {
-                    Distribute.UpdateTrack = UpdateTrack.Private;
+                    //Distribute.UpdateTrack = UpdateTrack.Private;
                     AppCenter.Start($"ios={AppCenteriOS};" +
                         $"android={AppCenterAndroid};" +
                         $"uwp={AppCenterUWP}",
                         typeof(Analytics),
-                        typeof(Crashes),
-                        typeof(Distribute));
+                        typeof(Crashes));
                 }
                 else
                 {

@@ -85,7 +85,9 @@ namespace TurnipTracker.Functions
             userEntity.GateClosesAtUTC = user.GateClosesAtUTC.HasValue ? user.GateClosesAtUTC.Value : DateTime.UtcNow;
             userEntity.GateStatus = user.GateStatus;
             userEntity.DodoCode = user.DodoCode;
-
+#if DEBUG
+            userEntity.ETag = "*";
+#endif
             try
             {
                 await Utils.MergeUserEntity(cloudTable, userEntity);

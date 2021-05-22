@@ -52,8 +52,6 @@
                                             iOS='0,12,0,0'}"
                         BackgroundColor="{StaticResource AcrylicSurface}"
                         CornerRadius="36,36,0,0"
-                        HasShadow="{OnPlatform Android=True,
-                                               iOS=False}"
                         VerticalOptions="FillAndExpand">
                         <Grid Padding="12,12,12,0" ColumnSpacing="8">
                             <Grid.ColumnDefinitions>
@@ -185,8 +183,8 @@
                                 Grid.Row="1"
                                 Grid.ColumnSpan="4"
                                 HorizontalOptions="FillAndExpand"
-                                VerticalOptions="Start"
-                                Orientation="Horizontal">
+                                Orientation="Horizontal"
+                                VerticalOptions="Start">
                                 <Label
                                     Margin="4,0"
                                     FontFamily="AnimalCrossing"
@@ -195,7 +193,6 @@
                                     TextColor="{StaticResource TextPrimaryColor}" />
                                 <buttons:SfSegmentedControl
                                     Margin="4,0"
-                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=HasFriends}"
                                     BackgroundColor="Transparent"
                                     BorderColor="{StaticResource TextPrimaryColor}"
                                     BorderThickness="2"
@@ -203,6 +200,7 @@
                                     FontColor="{StaticResource TextPrimaryColor}"
                                     FontSize="Small"
                                     HorizontalOptions="EndAndExpand"
+                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=HasFriends}"
                                     SegmentCornerRadius="14"
                                     SegmentHeight="28"
                                     SegmentPadding="0"
@@ -303,14 +301,14 @@
                                                         Spacing="0"
                                                         VerticalOptions="Start">
                                                         <Label
+                                                            FontSize="Small"
                                                             HorizontalOptions="Center"
                                                             Text="Friend"
-                                                            FontSize="Small"
                                                             TextColor="{StaticResource TextPrimaryColor}" />
                                                         <Label
+                                                            FontSize="Small"
                                                             HorizontalOptions="Center"
                                                             Text="Code"
-                                                            FontSize="Small"
                                                             TextColor="{StaticResource TextPrimaryColor}" />
                                                     </StackLayout>
                                                 </Grid>
@@ -405,8 +403,8 @@
 
                                             <StackLayout
                                                 Grid.Row="3"
-                                                Margin="0,4,0,0"
                                                 Grid.ColumnSpan="3"
+                                                Margin="0,4,0,0"
                                                 HorizontalOptions="Center"
                                                 IsVisible="{Binding ., Converter={StaticResource IsGateOpenConverter}}"
                                                 Orientation="Horizontal">

@@ -71,7 +71,9 @@ namespace TurnipTracker.Functions
             userEntity.TurnipUpdateTimeUTC = turnipUpdate.TurnipUpdateTimeUTC;
             userEntity.MaxPrediction = turnipUpdate.MaxPrediction;
             userEntity.MinPrediction = turnipUpdate.MinPrediction;
-
+#if DEBUG
+            userEntity.ETag = "*";
+#endif
             try
             {
                 await Utils.MergeUserEntity(cloudTable, userEntity);

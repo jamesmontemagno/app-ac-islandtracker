@@ -115,6 +115,13 @@ namespace TurnipTracker.Services
             }
         }
 
+        public async Task CreateProStatus(ProStatus status)
+        {
+            status.PublicKey = await SettingsService.GetPublicKey();            
+            var content = JsonConvert.SerializeObject(status);
+            await PostAsync($"api/CreateProStatus?code={App.PostProStatusKey}", content);            
+        }
+
         public async Task UpsertUserProfile(Profile profile)
         {
             profile ??= GetProfile();
@@ -198,6 +205,7 @@ namespace TurnipTracker.Services
         }
 
         public const string FriendKey = "get_friends";
+        public const string ProStatusKey = "get_pro_status";
         public const string FriendRequestKey = "get_friend_requests";
         public const string FriendRequestCountKey = "get_friend_requests_count";
 
@@ -227,6 +235,13 @@ namespace TurnipTracker.Services
             var publicKey = await SettingsService.GetPublicKey();
 
             return await GetAsync<IEnumerable<FriendStatus>>($"api/GetFriends/{publicKey}?code={App.GetFriendsKey}", FriendKey, 1, forceRefresh);
+        }
+
+        public async Task<ProStatus> GetProStatus()
+        {
+            var publicKey = await SettingsService.GetPublicKey();
+
+            return await GetAsync<ProStatus>($"api/GetProStatus/{publicKey}?code={App.GetProStatusKey}", ProStatusKey, 0, true);
         }
 
         public async Task<IEnumerable<PendingFriendRequest>> GetFriendRequestsAsync(bool forceRefresh = false)

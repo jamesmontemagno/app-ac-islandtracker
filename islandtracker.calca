@@ -1,0 +1,85 @@
+scoreboard_downloads = 7590
+scoreboard_sales = 93.69
+scoreboard_upgrades = scoreboard_sales / (2.99 * .7) => 44.7635
+scoreboard_percent = scoreboard_upgrades / scoreboard_downloads => 0.0059
+
+
+
+users = 150
+cost = .93
+days = 30
+
+transactions = 443870
+capacity = 31
+
+capacity_per_user = capacity/users => 0.2067
+transactions_per_user = transactions/users => 2,959.1333
+
+cost_per_user = cost/users => 0.0062
+cost_per_day = cost_per_user/days => 0.0002
+
+income_per_sale = 3 * .7 => 2.1
+
+profit_so_far = users * income_per_sale => 315
+
+months_of_profit = income_per_sale / cost_per_user => 338.7097
+
+years_of_profit = months_of_profit / 12 => 28.2258
+
+
+new_installs = 1000
+
+run_rate_per_month = cost_per_user * new_installs => 6.2
+
+new_capacity = capacity_per_user * new_installs => 206.6667
+new_transactions = transactions_per_user * new_installs => 2,959,133.3333
+
+transactions_per_unit = 10000
+price_per_unit = .0004
+
+write_per_unit = 10000
+write_price_per_unit = .1
+
+writes_per_user_per_month = 64000 / users => 426.6667
+
+test = .64 / users * new_installs => 4.2667
+
+
+total_write_per_month = writes_per_user_per_month * new_installs => 426,666.6667
+
+writes_unit_costs = total_write_per_month / write_per_unit * write_price_per_unit => 4.2667
+
+egress_price_per_gig = .09
+egress_per_user = 4.2/users => 0.028
+total_egress_per_month = egress_per_user * new_installs => 28
+cost_egress_per_month = (total_egress_per_month  - 5)* egress_price_per_gig => 2.07
+
+
+transaction_units = new_transactions / transactions_per_unit => 295.9133
+
+transaction_unit_costs = transaction_units * price_per_unit => 0.1184
+
+egress = 4.2 GB
+
+monthly = (writes_unit_costs + transaction_unit_costs + cost_egress_per_month + .2) => 6.655
+
+monthly_per_user = monthly / new_installs => 0.0067
+yearly_per_user = monthly_per_user * 12 => 0.0799
+
+total =  monthly + (2 * monthly)+ (3 * monthly)+ (4 * monthly)+ (5 * monthly)+ (6 * monthly)+ (7 * monthly)+ (8 * monthly)+ (9 * monthly)+ (10 * monthly)+ (11 * monthly)+ (12 * monthly) => 519.0925
+
+
+months_needed = income_per_sale / monthly_per_user => 315.5507
+years_needed = months_needed /12 => 26.2959
+
+total_users = new_installs * 12 => 12,000
+
+current_rate = 150 * 12 * income_per_sale => 3,780
+
+current_total_profit = current_rate - 62 => 3,718
+
+pro_converstion = .03
+pro_users_monthly_upgrade = new_installs * pro_converstion => 30
+
+pro_user_profit_per_month = pro_users_monthly_upgrade * income_per_sale => 63
+total_profit_per_year = pro_user_profit_per_month * 12 => 756
